@@ -1,6 +1,7 @@
 
 import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scenarios,shockFields,horizonNotes,scoreWeights} from './data.js';
 import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js';
+import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -94,9 +95,11 @@ function chart(lines,{unit='',periodType='month',height=188}={}){
   const x=d=>dates.length===1?(L+W-R)/2:L+dates.indexOf(d)*(W-R-L)/(dates.length-1);
   const y=v=>B-(v-min)*(B-T)/(max-min);
   const ticks=Array.from({length:5},(_,i)=>min+(max-min)*i/4);
-  const xlabels=dates.filter((d,i)=>i===0||i===dates.length-1||i%Math.ceil(dates.length/7)===0);
+  const tickCount=Math.min(7,dates.length);
+  const xlabels=tickCount===1?dates:Array.from({length:tickCount},(_,i)=>dates[Math.round(i*(dates.length-1)/(tickCount-1))]);
+  const multiYear=dates[0].slice(0,4)!==dates.at(-1).slice(0,4);
   const grid=ticks.map(v=>'<line class="grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'"/><text x="'+(L-7)+'" y="'+(y(v)+3)+'" text-anchor="end">'+num(v,Math.abs(max)<2?2:Math.abs(max)<10?1:0)+'</text>').join('');
-  const datesSvg=xlabels.map(d=>'<text x="'+x(d)+'" y="'+(B+18)+'" text-anchor="middle">'+e(periodType==='month'?smallMonth(d):d)+'</text>').join('');
+  const datesSvg=xlabels.map(d=>'<text x="'+x(d)+'" y="'+(B+18)+'" text-anchor="middle">'+e(periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):d)+'</text>').join('');
   const paths=valid.map(l=>'<polyline points="'+l.points.map(p=>x(p.date)+','+y(p.value)).join(' ')+'" fill="none" stroke="'+l.color+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+l.points.map(p=>'<circle tabindex="0" aria-label="'+e(l.label+' '+displayPeriod(p.date,periodType)+' '+num(p.value)+' '+unit)+'" cx="'+x(p.date)+'" cy="'+y(p.value)+'" r="4" fill="'+l.color+'"><title>'+e(l.label+' · '+displayPeriod(p.date,periodType)+' · '+num(p.value)+' '+unit)+'</title></circle>').join('')).join('');
   return '<div class="chart-wrap"><svg class="chart" viewBox="0 0 '+W+' '+height+'" role="group" aria-label="Historique '+e(unit)+'">'+grid+datesSvg+paths+'</svg><div class="legend">'+valid.map(l=>'<span><i class="dot" style="color:'+l.color+'"></i>'+e(l.label)+'</span>').join('')+'</div></div>';
 }
@@ -161,6 +164,23 @@ function renderOverview(){
     section('Ce qui a changé','Fenêtre relative au point de veille affiché en haut de page',btnSeg('eventWindow',{1:'24 h',7:'7 j',30:'30 j'},state.eventWindow))+panel(eventRows(selected.slice(0,7)))+
     section('Lecture des facteurs','Les signaux sont classés par intensité et par date')+'<div class="grid3">'+panel('<h3 class="positive">Soutiens de prix</h3>'+list(ranked(selected,'positive'),'Aucun soutien documenté.'))+panel('<h3 class="negative">Pressions baissières</h3>'+list(ranked(selected,'negative'),'Aucune pression documentée.'))+panel('<h3 class="mixed">Risques et anticipations</h3>'+list(near,'Aucun risque nouveau documenté.'))+'</div><div style="margin-top:12px">'+pers+'</div>';
 }
+function monthlyHistory(title,rows,names,sourceLinks,note){
+  const period=displayPeriod(rows[0][0],'month')+' – '+displayPeriod(rows.at(-1)[0],'month');
+  const lines=names.map((label,i)=>({label,color:colors[i],points:rows.map(([date,...values])=>({date,value:values[i]/1000}))}));
+  const sourceLine=sourceLinks.map(([name,url])=>link(url,name)).join(' · ');
+  const exactRows=rows.slice().reverse().map(([date,...values])=>[e(displayPeriod(date,'month')),...values.map(value=>valueCell(value,'t',0))]);
+  return section(title,period+' · '+rows.length+' mois · milliers de tonnes')+
+    panel(chart(lines,{unit:'kt',height:222})+'<p class="analysis-text">'+e(note)+'</p>'+
+      '<p class="small">Sources · '+sourceLine+'</p>'+
+      '<details><summary class="small">Voir les chiffres mensuels en tonnes</summary>'+
+      table(['Mois',...names],exactRows)+'</details>');
+}
+function palmHistories(){
+  return monthlyHistory('Malaisie · Historique MPOB',mpobHistory,['Stocks fin de mois','Production de CPO','Exportations d’huile de palme'],
+    mpobHistorySources,'Stocks totaux et exportations d’huile de palme, production d’huile brute. Septembre 2026 est provisoire dans le tableau MPOB.')+
+    monthlyHistory('Inde · Importations SEA India',seaHistory,['Huile de palme','Huile de tournesol','Huile de soja'],
+      seaHistorySources,'Le total palme inclut CPO, oléine brute et RBD, et huile de palmiste brute. Le soja et le tournesol incluent les volumes raffinés comptabilisés par SEA. La révision 2024/25 intègre les flux du Népal.');
+}
 function renderComplex(key){
   const group=groups[key];
   const origin=state.filters.origin||state.originTab[key]||'';
@@ -176,6 +196,7 @@ function renderComplex(key){
   return head(key==='macro'?'Marchés transversaux':'Complexes de marché',group.name,'Analyse de l’offre, de la demande, des stocks et des flux. Les fiches distinguent les chiffres publiés, les projections et les effets attendus.')+
     '<div class="toolbar"><label>Origine analysée</label>'+select('originTab',Object.fromEntries(group.origins.map(k=>[k,origins[k]])),origin,'Toutes les origines')+' <span class="small">'+e(selectedOrigin)+'</span></div>'+
     '<div class="grid4">'+group.channels.map(([title,desc])=>panel('<span class="eyebrow">'+e(title)+'</span><p class="analysis-text">'+e(desc)+'</p>')).join('')+'</div>'+
+    (key==='palm'?palmHistories():'')+
     section('Lecture pour les prix','Données liées au périmètre sélectionné')+panel(events.length?'<p class="analysis-text">'+e(events[0].transmission)+'</p><p class="small">'+e(events[0].caveat)+'</p>':empty('Impact à confirmer. Aucun événement sourcé dans cette sélection.'))+
     section('Fondamentaux','Dernière publication disponible par indicateur')+panel(table(['Produit / origine','Indicateur','Période de référence','Valeur','Source / statut'],last.slice(0,28).map(r=>[e(products[r.product])+'<small>'+e(origins[r.origin])+'</small>',e(metrics[r.metric]),e(displayPeriod(r.period,r.periodType))+'<small>'+e(periodTypes[r.periodType])+'</small>',valueCell(r.value,r.unit,3),link(r.url,r.source)+'<small>'+e(formatDate(r.date)+' · '+labels.status[r.status])+'</small>'])))+
     section('Prix et repères','Cours datés. Une série manquante reste indiquée comme non disponible.')+panel(table(['Série','Dernier repère','Variation','Source'],marketSeries.map(id=>{
