@@ -939,7 +939,7 @@ const controlActions={
   'export-soy-us':()=>{
     const family=state.soyFamily;
     const names=soyHistoryLabels[family].map(name=>name+' (Mt)');
-    const rows=usSoyDisplayRows(family).map(([date,...values])=>[date,...values.map(v=>v===null?'':String(v).replace('.',',')),nopaHistory.get(date)?.source[1]??'']);
+    const rows=usSoyDisplayRows(family).map(([date,...values])=>[date,...values.map(v=>v===null?'':String(Number(v.toFixed(8))).replace('.',',')),nopaHistory.get(date)?.source[1]??'']);
     csv('olea_'+(family==='soy'?'graines_soja':'huile_soja')+'_us.csv',[['Mois',...names,'Publication relayant NOPA'],...rows]);
   },
   'export-feed':exportFeed,
