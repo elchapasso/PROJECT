@@ -3,6 +3,7 @@ import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,see
 import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js';
 import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js';
 import {biofuelReleaseDate,biofuelSeries} from './biofuels.js';
+import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -27,7 +28,7 @@ const icon=(name,size=17)=>'<svg class="ico" width="'+size+'" height="'+size+'" 
 const menu=[
   ['Terminal',[['overview','Vue d’ensemble','grid']]],
   ['Complexes',[['soy','Soja & dérivés','leaf'],['sun','Tournesol','sun'],['palm','Palme','drop'],['rape','Colza & canola','grain']]],
-  ['Analyse',[['drivers','Facteurs de marché','pulse'],['balances','Bilans offre / demande','table'],['cross','Comparaisons & spreads','chart'],['macro','Énergie & géopolitique','bolt'],['biofuels','Biocarburants','drop'],['outlook','Perspectives & scénarios','target']]],
+  ['Analyse',[['drivers','Facteurs de marché','pulse'],['balances','Bilans offre / demande','table'],['demand','Demande','grain'],['cross','Comparaisons & spreads','chart'],['macro','Énergie & géopolitique','bolt'],['biofuels','Biocarburants','drop'],['outlook','Perspectives & scénarios','target']]],
   ['Veille & livrables',[['news','Fil d’actualité','news'],['calendar','Calendrier','calendar'],['reports','Rapports de marché','report'],['comex','Brief COMEX','brief']]],
 ];
 const nav=Object.fromEntries(menu.flatMap(([,items])=>items.map(([id,title])=>[id,title])).concat([['sources','Sources & données']]));
@@ -85,7 +86,7 @@ function series(id,filter=state.filters){
   return {...base,values:Object.fromEntries(points.map(([k,v])=>[k,v.value])),points:Object.fromEntries(points)};
 }
 const linesFrom=(ids)=>ids.map((id,i)=>{const s=series(id);return {label:s.name,color:colors[i%colors.length],points:Object.entries(s.values).map(([date,value])=>({date,value}))};});
-const colors=['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)'];
+const colors=['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)','var(--series-7)'];
 const yearMonths=Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0'));
 const monthName=new Intl.DateTimeFormat('fr-FR',{month:'long',timeZone:'UTC'});
 const monthDate=month=>new Date('2000-'+month+'-01T12:00:00Z');
@@ -227,7 +228,7 @@ function shell(body){
     const change=pct(s.values[last],s.values[prev]);const direction=change>0?'positive':change<0?'negative':'muted';
     return '<div class="tick" title="'+e(last?displayPeriod(last,s.grain)+' · '+s.points[last].source+' · '+s.definition:'Série non disponible')+'"><span>'+e(s.name)+'</span><div><b class="num">'+num(s.values[last],2)+'</b><small class="'+direction+'">'+(change===null?e(last?s.unit:'Non dispo.'):e(percent(change)))+'</small></div></div>';
   }).join('');
-  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(state.page==='biofuels'?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
+  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['biofuels','demand'].includes(state.page)?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
 }
 
 
@@ -282,32 +283,38 @@ function monthlyHistory(title,rows,names,sourceLinks,note){
       '<details><summary class="small">Voir les chiffres mensuels en tonnes</summary>'+
       table(['Mois',...names],exactRows)+'</details>');
 }
-function palmHistories(){
+function mpobHistoryPanel(){
   return monthlyHistory('Malaisie · Historique MPOB',mpobHistory,['Stocks fin de mois','Production de CPO','Exportations d’huile de palme'],
-    mpobHistorySources,'Stocks totaux et exportations d’huile de palme, production d’huile brute. Septembre 2026 est provisoire dans le tableau MPOB.')+
-    monthlyHistory('Inde · Importations SEA India',seaHistory,['Huile de palme','Huile de tournesol','Huile de soja'],
-      seaHistorySources,'Le total palme inclut CPO, oléine brute et RBD, et huile de palmiste brute. Le soja et le tournesol incluent les volumes raffinés comptabilisés par SEA. La révision 2024/25 intègre les flux du Népal.');
+    mpobHistorySources,'Stocks totaux et exportations d’huile de palme, production d’huile brute. Septembre 2026 est provisoire dans le tableau MPOB.');
 }
-const biofuelColors=colors.slice(1);
-const eiaFeedstocks='https://www.eia.gov/dnav/pet/pet_pnp_feedbiofuel_dcu_nus_m.htm';
-function biofuelHistory(title,years,sourceCode){
+const seasonalColors=colors.slice(1);
+function seasonalHistory(title,years,source='',note='',digits=4){
   const latest=years.at(-1);
   const lastMonth=yearMonths[latest.volumes.findLastIndex(Number.isFinite)];
   const lines=years.map(({year,volumes},i)=>({
-    label:year,color:year===latest.year?colors[0]:biofuelColors[i%biofuelColors.length],width:year===latest.year?3.5:2,
+    label:year,color:year===latest.year?colors[0]:seasonalColors[i%seasonalColors.length],width:year===latest.year?3.5:2,
     points:volumes.map((value,m)=>({date:year+'-'+yearMonths[m],value})),
   }));
-  const rows=yearMonths.map((month,m)=>[e(smallMonth('2000-'+month)),...years.map(({volumes})=>num(volumes[m],4))]);
-  const history='https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s='+sourceCode;
-  return section(title,'Dernière observation · '+displayPeriod(latest.year+'-'+lastMonth,'month')+' · millions de tonnes',link(history,'Historique EIA'))+
-    panel(chart(lines,{unit:'Mt',height:244,seasonal:true,label:title+' en millions de tonnes',tooltips:p=>num(p.value,4)+' Mt'})+
+  const rows=yearMonths.map((month,m)=>[e(smallMonth('2000-'+month)),...years.map(({volumes})=>num(volumes[m],digits))]);
+  return section(title,'Dernière observation · '+displayPeriod(latest.year+'-'+lastMonth,'month')+' · millions de tonnes',source)+
+    panel(chart(lines,{unit:'Mt',height:244,seasonal:true,label:title+' en millions de tonnes',tooltips:p=>num(p.value,digits)+' Mt'})+note+
       '<details><summary class="small">Voir les valeurs mensuelles en Mt</summary>'+table(['Mois',...years.map(y=>y.year)],rows)+'</details>');
 }
+const eiaFeedstocks='https://www.eia.gov/dnav/pet/pet_pnp_feedbiofuel_dcu_nus_m.htm';
+const eiaHistory=code=>link('https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s='+code,'Historique EIA');
 function renderBiofuels(){
   return head('Analyse','Biocarburants · États-Unis','Volumes d’huile consommés dans la production américaine de biocarburants. Chaque courbe représente une année, de janvier à décembre.')+
     '<p class="small">'+link(eiaFeedstocks,'EIA · Feedstocks Consumed for Production of Biofuels')+' · Publication du '+e(formatDate(biofuelReleaseDate))+'. Les mois masqués par l’EIA ou encore non publiés restent vides.</p>'+
-    biofuelHistory('Huile de soja · Total',biofuelSeries.soybean,'M_EPOOBDSO_YIFBP_NUS_MMLB')+
-    biofuelHistory('Huile de canola · Total',biofuelSeries.canola,'M_EPOOBDCO_YIFBP_NUS_MMLB');
+    seasonalHistory('Huile de soja · Total',biofuelSeries.soybean,eiaHistory('M_EPOOBDSO_YIFBP_NUS_MMLB'))+
+    seasonalHistory('Huile de canola · Total',biofuelSeries.canola,eiaHistory('M_EPOOBDCO_YIFBP_NUS_MMLB'));
+}
+function renderDemand(){
+  const chinaSources=chinaSoybeanSources.map(([name,url])=>link(url,name)).join(' · ');
+  return head('Analyse','Demande','Suivez les importations indiennes d’huiles végétales et comparez la saisonnalité des importations chinoises de graines de soja.')+
+    monthlyHistory('Inde · Importations SEA India',seaHistory,['Huile de palme','Huile de tournesol','Huile de soja'],
+      seaHistorySources,'Le total palme inclut CPO, oléine brute et RBD, et huile de palmiste brute. Le soja et le tournesol incluent les volumes raffinés comptabilisés par SEA. La révision 2024/25 intègre les flux du Népal.')+
+    seasonalHistory('Chine · Importations de graines de soja',chinaSoybeanImports,'',
+      '<p class="analysis-text">Douanes chinoises (GACC), toutes origines. Une courbe par année civile depuis 2020. Les mois non publiés restent vides.</p><p class="small">Sources · '+chinaSources+'</p>',3);
 }
 function renderComplex(key){
   const group=groups[key];
@@ -324,7 +331,7 @@ function renderComplex(key){
   return head(key==='macro'?'Marchés transversaux':'Complexes de marché',group.name,'Analyse de l’offre, de la demande, des stocks et des flux. Les fiches distinguent les chiffres publiés, les projections et les effets attendus.')+
     '<div class="toolbar"><label>Origine analysée</label>'+select('originTab',Object.fromEntries(group.origins.map(k=>[k,origins[k]])),origin,'Toutes les origines')+' <span class="small">'+e(selectedOrigin)+'</span></div>'+
     '<div class="grid4">'+group.channels.map(([title,desc])=>panel('<span class="eyebrow">'+e(title)+'</span><p class="analysis-text">'+e(desc)+'</p>')).join('')+'</div>'+
-    (key==='palm'?palmHistories():'')+
+    (key==='palm'?mpobHistoryPanel():'')+
     section('Lecture pour les prix','Données liées au périmètre sélectionné')+panel(events.length?'<p class="analysis-text">'+e(events[0].transmission)+'</p><p class="small">'+e(events[0].caveat)+'</p>':empty('Impact à confirmer. Aucun événement sourcé dans cette sélection.'))+
     section('Fondamentaux','Dernière publication disponible par indicateur')+panel(table(['Produit / origine','Indicateur','Période de référence','Valeur','Source / statut'],last.slice(0,28).map(r=>[e(products[r.product])+'<small>'+e(origins[r.origin])+'</small>',e(metrics[r.metric]),e(displayPeriod(r.period,r.periodType))+'<small>'+e(periodTypes[r.periodType])+'</small>',valueCell(r.value,r.unit,3),link(r.url,r.source)+'<small>'+e(formatDate(r.date)+' · '+labels.status[r.status])+'</small>'])))+
     section('Prix et repères','Cours datés. Une série manquante reste indiquée comme non disponible.')+panel(table(['Série','Dernier repère','Variation','Source'],marketSeries.map(id=>{
@@ -593,7 +600,7 @@ function renderSources(){
 const pageRender={
   overview:renderOverview,soy:()=>renderComplex('soy'),sun:()=>renderComplex('sun'),palm:()=>renderComplex('palm'),
   rape:()=>renderComplex('rape'),macro:()=>renderComplex('macro'),drivers:()=>renderFeed(false),news:()=>renderFeed(true),
-  balances:renderBalances,cross:renderCross,biofuels:renderBiofuels,outlook:renderOutlook,calendar:renderCalendar,reports:renderReports,comex:renderComex,sources:renderSources,
+  balances:renderBalances,demand:renderDemand,cross:renderCross,biofuels:renderBiofuels,outlook:renderOutlook,calendar:renderCalendar,reports:renderReports,comex:renderComex,sources:renderSources,
 };
 function render(){
   const active=document.activeElement;
