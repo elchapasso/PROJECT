@@ -9,3 +9,4 @@
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 @page{size:A4;margin:14mm}@media print{html{color-scheme:light!important;background:white!important;color:#162822!important}body.print-brief .shell,body.print-brief .dialog,body.print-brief .toast{display:none!important}body.print-brief .printonly{display:block;font:10pt/1.45 Arial,sans-serif;color:#182922}#printout h1{font-size:24pt;margin:6mm 0 2mm}#printout h2{font-size:15pt;margin:7mm 0 2mm;break-after:avoid}#printout li{margin-bottom:3mm;break-inside:avoid}#printout a{color:#294d3d;text-decoration:none}#printout small{color:#43584e}#printout header{border-bottom:2px solid #416b52;padding-bottom:3mm}}
 
+.chart-seasonal text{font-size:13px}

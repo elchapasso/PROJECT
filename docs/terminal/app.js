@@ -2,6 +2,7 @@
 import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scenarios,shockFields,horizonNotes,scoreWeights} from './data.js';
 import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js';
 import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js';
+import {biofuelReleaseDate,biofuelSeries} from './biofuels.js';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -26,7 +27,7 @@ const icon=(name,size=17)=>'<svg class="ico" width="'+size+'" height="'+size+'" 
 const menu=[
   ['Terminal',[['overview','Vue d’ensemble','grid']]],
   ['Complexes',[['soy','Soja & dérivés','leaf'],['sun','Tournesol','sun'],['palm','Palme','drop'],['rape','Colza & canola','grain']]],
-  ['Analyse',[['drivers','Facteurs de marché','pulse'],['balances','Bilans offre / demande','table'],['cross','Comparaisons & spreads','chart'],['macro','Énergie & géopolitique','bolt'],['outlook','Perspectives & scénarios','target']]],
+  ['Analyse',[['drivers','Facteurs de marché','pulse'],['balances','Bilans offre / demande','table'],['cross','Comparaisons & spreads','chart'],['macro','Énergie & géopolitique','bolt'],['biofuels','Biocarburants','drop'],['outlook','Perspectives & scénarios','target']]],
   ['Veille & livrables',[['news','Fil d’actualité','news'],['calendar','Calendrier','calendar'],['reports','Rapports de marché','report'],['comex','Brief COMEX','brief']]],
 ];
 const nav=Object.fromEntries(menu.flatMap(([,items])=>items.map(([id,title])=>[id,title])).concat([['sources','Sources & données']]));
@@ -85,31 +86,42 @@ function series(id,filter=state.filters){
 }
 const linesFrom=(ids)=>ids.map((id,i)=>{const s=series(id);return {label:s.name,color:colors[i%colors.length],points:Object.entries(s.values).map(([date,value])=>({date,value}))};});
 const colors=['#a8df78','#67c4d8','#e9b674','#d79cec','#e6888c'];
-function chart(lines,{unit='',periodType='month',height=188,tooltips=false}={}){
-  const valid=lines.filter(l=>l.points.length);
+const yearMonths=Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0'));
+function chart(lines,{unit='',periodType='month',height=188,tooltips,seasonal=false,label='Historique '+unit}={}){
+  const valid=lines.filter(l=>l.points.some(p=>Number.isFinite(p.value)));
   if(!valid.length)return empty('Série non disponible pour la sélection.');
-  const dates=[...new Set(valid.flatMap(l=>l.points.map(p=>p.date)))].sort();
-  const numbers=valid.flatMap(l=>l.points.map(p=>p.value));
+  const dates=seasonal?yearMonths:[...new Set(valid.flatMap(l=>l.points.map(p=>p.date)))].sort();
+  const numbers=valid.flatMap(l=>l.points.map(p=>p.value)).filter(Number.isFinite);
   const lo=Math.min(...numbers),hi=Math.max(...numbers),pad=(hi-lo||Math.abs(hi)*.07||1)*.13;
   const min=lo-pad,max=hi+pad,W=670,L=49,R=19,T=12,B=height-28;
   const x=d=>dates.length===1?(L+W-R)/2:L+dates.indexOf(d)*(W-R-L)/(dates.length-1);
+  const pointX=p=>x(seasonal?p.date.slice(5):p.date);
   const y=v=>B-(v-min)*(B-T)/(max-min);
   const ticks=Array.from({length:5},(_,i)=>min+(max-min)*i/4);
   const tickCount=Math.min(7,dates.length);
-  const xlabels=tickCount===1?dates:Array.from({length:tickCount},(_,i)=>dates[Math.round(i*(dates.length-1)/(tickCount-1))]);
+  const xlabels=seasonal||tickCount===1?dates:Array.from({length:tickCount},(_,i)=>dates[Math.round(i*(dates.length-1)/(tickCount-1))]);
   const multiYear=dates[0].slice(0,4)!==dates.at(-1).slice(0,4);
   const grid=ticks.map(v=>'<line class="grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'"/><text x="'+(L-7)+'" y="'+(y(v)+3)+'" text-anchor="end">'+num(v,Math.abs(max)<2?2:Math.abs(max)<10?1:0)+'</text>').join('');
-  const datesSvg=xlabels.map(d=>'<text x="'+x(d)+'" y="'+(B+18)+'" text-anchor="middle">'+e(periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):d)+'</text>').join('');
-  const paths=valid.map(l=>'<polyline points="'+l.points.map(p=>x(p.date)+','+y(p.value)).join(' ')+'" fill="none" stroke="'+l.color+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+l.points.map(p=>{
-    const period=displayPeriod(p.date,periodType);
-    const reading=tooltips?num(p.tonnes,0)+' t':num(p.value)+' '+unit;
-    const detail=l.label+' · '+reading;
-    const attributes=tooltips?' data-period="'+e(period)+'" data-reading="'+e(detail)+'"':'';
-    const title=tooltips?'':'<title>'+e(l.label+' · '+period+' · '+reading)+'</title>';
-    return '<circle tabindex="0" aria-label="'+e(tooltips?period+' · '+detail:l.label+' '+period+' '+reading)+'" cx="'+x(p.date)+'" cy="'+y(p.value)+'" r="4" fill="'+l.color+'"'+attributes+'>'+title+'</circle>';
-  }).join('')).join('');
+  const axisLabel=d=>seasonal?smallMonth('2000-'+d):periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):d;
+  const datesSvg=xlabels.map(d=>'<text x="'+x(d)+'" y="'+(B+18)+'" text-anchor="middle">'+e(axisLabel(d))+'</text>').join('');
+  const paths=valid.map(l=>{
+    const path=l.points.map((p,i)=>{
+      if(!Number.isFinite(p.value))return '';
+      const command=Number.isFinite(l.points[i-1]?.value)?'L':'M';
+      return command+pointX(p)+','+y(p.value);
+    }).join(' ');
+    const dots=l.points.filter(p=>Number.isFinite(p.value)).map(p=>{
+      const period=displayPeriod(p.date,periodType);
+      const reading=tooltips?tooltips(p):num(p.value)+' '+unit;
+      const detail=seasonal?reading:l.label+' · '+reading;
+      const attributes=tooltips?' data-period="'+e(period)+'" data-reading="'+e(detail)+'"':'';
+      const title=tooltips?'':'<title>'+e(l.label+' · '+period+' · '+reading)+'</title>';
+      return '<circle tabindex="0" aria-label="'+e(tooltips?period+' · '+detail:l.label+' '+period+' '+reading)+'" cx="'+pointX(p)+'" cy="'+y(p.value)+'" r="4" fill="'+l.color+'"'+attributes+'>'+title+'</circle>';
+    }).join('');
+    return '<path d="'+path+'" fill="none" stroke="'+l.color+'" stroke-width="'+(l.width??2.5)+'" stroke-linecap="round" stroke-linejoin="round"/>'+dots;
+  }).join('');
   const tooltip=tooltips?'<div class="chart-tooltip" aria-hidden="true" hidden><strong></strong><span></span></div>':'';
-  return '<div class="chart-wrap"><svg class="chart" viewBox="0 0 '+W+' '+height+'" role="group" aria-label="Historique '+e(unit)+'">'+grid+datesSvg+paths+'</svg>'+tooltip+'<div class="legend">'+valid.map(l=>'<span><i class="dot" style="color:'+l.color+'"></i>'+e(l.label)+'</span>').join('')+'</div></div>';
+  return '<div class="chart-wrap"><svg class="chart'+(seasonal?' chart-seasonal':'')+'" viewBox="0 0 '+W+' '+height+'" role="group" aria-label="'+e(label)+'">'+grid+datesSvg+paths+'</svg>'+tooltip+'<div class="legend">'+valid.map(l=>'<span><i class="dot" style="color:'+l.color+'"></i>'+e(l.label)+'</span>').join('')+'</div></div>';
 }
 function bindChartTooltip(tooltip){
   const wrap=tooltip.parentElement;
@@ -169,7 +181,7 @@ function shell(body){
     const change=pct(s.values[last],s.values[prev]);const direction=change>0?'positive':change<0?'negative':'muted';
     return '<div class="tick" title="'+e(last?displayPeriod(last,s.grain)+' · '+s.points[last].source+' · '+s.definition:'Série non disponible')+'"><span>'+e(s.name)+'</span><div><b class="num">'+num(s.values[last],2)+'</b><small class="'+direction+'">'+(change===null?e(last?s.unit:'Non dispo.'):e(percent(change)))+'</small></div></div>';
   }).join('');
-  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+filters()+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
+  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(state.page==='biofuels'?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
 }
 
 
@@ -218,7 +230,7 @@ function monthlyHistory(title,rows,names,sourceLinks,note){
   const sourceLine=sourceLinks.map(([name,url])=>link(url,name)).join(' · ');
   const exactRows=rows.slice().reverse().map(([date,...values])=>[e(displayPeriod(date,'month')),...values.map(value=>valueCell(value,'t',0))]);
   return section(title,period+' · '+rows.length+' mois · milliers de tonnes')+
-    panel(chart(lines,{unit:'kt',height:222,tooltips:true})+'<p class="analysis-text">'+e(note)+'</p>'+
+    panel(chart(lines,{unit:'kt',height:222,tooltips:p=>num(p.tonnes,0)+' t'})+'<p class="analysis-text">'+e(note)+'</p>'+
       '<p class="small">Sources · '+sourceLine+'</p>'+
       '<details><summary class="small">Voir les chiffres mensuels en tonnes</summary>'+
       table(['Mois',...names],exactRows)+'</details>');
@@ -228,6 +240,27 @@ function palmHistories(){
     mpobHistorySources,'Stocks totaux et exportations d’huile de palme, production d’huile brute. Septembre 2026 est provisoire dans le tableau MPOB.')+
     monthlyHistory('Inde · Importations SEA India',seaHistory,['Huile de palme','Huile de tournesol','Huile de soja'],
       seaHistorySources,'Le total palme inclut CPO, oléine brute et RBD, et huile de palmiste brute. Le soja et le tournesol incluent les volumes raffinés comptabilisés par SEA. La révision 2024/25 intègre les flux du Népal.');
+}
+const biofuelColors=['#8b85df','#399dcb','#d69338','#d2699a','#22a398'];
+const eiaFeedstocks='https://www.eia.gov/dnav/pet/pet_pnp_feedbiofuel_dcu_nus_m.htm';
+function biofuelHistory(title,years,sourceCode){
+  const latest=years.at(-1);
+  const lastMonth=yearMonths[latest.volumes.findLastIndex(Number.isFinite)];
+  const lines=years.map(({year,volumes},i)=>({
+    label:year,color:year===latest.year?'var(--accent)':biofuelColors[i%biofuelColors.length],width:year===latest.year?3.5:2,
+    points:volumes.map((value,m)=>({date:year+'-'+yearMonths[m],value})),
+  }));
+  const rows=yearMonths.map((month,m)=>[e(smallMonth('2000-'+month)),...years.map(({volumes})=>num(volumes[m],4))]);
+  const history='https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s='+sourceCode;
+  return section(title,'Dernière observation · '+displayPeriod(latest.year+'-'+lastMonth,'month')+' · millions de tonnes',link(history,'Historique EIA'))+
+    panel(chart(lines,{unit:'Mt',height:244,seasonal:true,label:title+' en millions de tonnes',tooltips:p=>num(p.value,4)+' Mt'})+
+      '<details><summary class="small">Voir les valeurs mensuelles en Mt</summary>'+table(['Mois',...years.map(y=>y.year)],rows)+'</details>');
+}
+function renderBiofuels(){
+  return head('Analyse','Biocarburants · États-Unis','Volumes d’huile consommés dans la production américaine de biocarburants. Chaque courbe représente une année, de janvier à décembre.')+
+    '<p class="small">'+link(eiaFeedstocks,'EIA · Feedstocks Consumed for Production of Biofuels')+' · Publication du '+e(formatDate(biofuelReleaseDate))+'. Les mois masqués par l’EIA ou encore non publiés restent vides.</p>'+
+    biofuelHistory('Huile de soja · Total',biofuelSeries.soybean,'M_EPOOBDSO_YIFBP_NUS_MMLB')+
+    biofuelHistory('Huile de canola · Total',biofuelSeries.canola,'M_EPOOBDCO_YIFBP_NUS_MMLB');
 }
 function renderComplex(key){
   const group=groups[key];
@@ -513,7 +546,7 @@ function renderSources(){
 const pageRender={
   overview:renderOverview,soy:()=>renderComplex('soy'),sun:()=>renderComplex('sun'),palm:()=>renderComplex('palm'),
   rape:()=>renderComplex('rape'),macro:()=>renderComplex('macro'),drivers:()=>renderFeed(false),news:()=>renderFeed(true),
-  balances:renderBalances,cross:renderCross,outlook:renderOutlook,calendar:renderCalendar,reports:renderReports,comex:renderComex,sources:renderSources,
+  balances:renderBalances,cross:renderCross,biofuels:renderBiofuels,outlook:renderOutlook,calendar:renderCalendar,reports:renderReports,comex:renderComex,sources:renderSources,
 };
 function render(){
   const active=document.activeElement;
