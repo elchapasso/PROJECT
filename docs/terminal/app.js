@@ -37,12 +37,12 @@ let data=emptyStore();
 let loadError='';
 try{const raw=localStorage.getItem(localKey);if(raw)data=parseStore(raw);}catch{loadError='Les données locales n’ont pas pu être chargées.';}
 const state={
-  page:'overview',filters:{...FILTERS},theme:'dark',mobile:false,eventWindow:'7',chart:'oils',
+  page:'overview',filters:{...FILTERS},theme:'light',mobile:false,eventWindow:'7',chart:'oils',
   originTab:{},query:'',category:'',importance:'',start:'',end:'',balanceProduct:'sbo',compare:'revision',metric:'production',
   crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',outProduct:'sbo',outHorizon:'short',
   shocks:Object.fromEntries(shockFields.map(([k])=>[k,0])),reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:AS_OF.slice(0,7),editType:'events',
 };
-try{if(localStorage.getItem('olea-theme')==='light')state.theme='light';}catch{}
+try{if(localStorage.getItem('olea-theme')==='dark')state.theme='dark';}catch{}
 const readPage=()=>{const p=location.hash.slice(1);return Object.hasOwn(nav,p)?p:'overview';};
 state.page=readPage();
 let memoryReport=null;
@@ -85,83 +85,129 @@ function series(id,filter=state.filters){
   return {...base,values:Object.fromEntries(points.map(([k,v])=>[k,v.value])),points:Object.fromEntries(points)};
 }
 const linesFrom=(ids)=>ids.map((id,i)=>{const s=series(id);return {label:s.name,color:colors[i%colors.length],points:Object.entries(s.values).map(([date,value])=>({date,value}))};});
-const colors=['#a8df78','#67c4d8','#e9b674','#d79cec','#e6888c'];
+const colors=['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)'];
 const yearMonths=Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0'));
-function chart(lines,{unit='',periodType='month',height=188,tooltips,seasonal=false,label='Historique '+unit}={}){
+const monthName=new Intl.DateTimeFormat('fr-FR',{month:'long',timeZone:'UTC'});
+const monthDate=month=>new Date('2000-'+month+'-01T12:00:00Z');
+function chartTicks(values){
+  const low=Math.min(...values),high=Math.max(...values);
+  const range=high-low||Math.abs(high)*.15||1;
+  const rawStep=range/4,power=10**Math.floor(Math.log10(rawStep));
+  const step=[1,2,2.5,5,10].find(n=>n>=rawStep/power)*power;
+  const bottom=Math.floor((low-range*.08)/step);
+  const first=low>=0?Math.max(0,bottom):bottom;
+  const last=Math.ceil((high+range*.08)/step);
+  return Array.from({length:last-first+1},(_,i)=>(i+first)*step);
+}
+function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=false,label='Historique '+unit}={}){
   const valid=lines.filter(l=>l.points.some(p=>Number.isFinite(p.value)));
   if(!valid.length)return empty('Série non disponible pour la sélection.');
   const dates=seasonal?yearMonths:[...new Set(valid.flatMap(l=>l.points.map(p=>p.date)))].sort();
-  const numbers=valid.flatMap(l=>l.points.map(p=>p.value)).filter(Number.isFinite);
-  const lo=Math.min(...numbers),hi=Math.max(...numbers),pad=(hi-lo||Math.abs(hi)*.07||1)*.13;
-  const min=lo-pad,max=hi+pad,W=670,L=49,R=19,T=12,B=height-28;
-  const x=d=>dates.length===1?(L+W-R)/2:L+dates.indexOf(d)*(W-R-L)/(dates.length-1);
-  const pointX=p=>x(seasonal?p.date.slice(5):p.date);
-  const y=v=>B-(v-min)*(B-T)/(max-min);
-  const ticks=Array.from({length:5},(_,i)=>min+(max-min)*i/4);
+  const values=valid.flatMap(l=>l.points.map(p=>p.value)).filter(Number.isFinite);
+  const ticks=chartTicks(values);
+  const min=ticks[0],max=ticks.at(-1);
+  const tickDigits=Math.max(0,Math.ceil(-Math.log10(ticks[1]-min))+1);
+  const x=i=>dates.length===1?50:100*i/(dates.length-1);
+  const y=v=>100*(max-v)/(max-min);
+  const column=p=>dates.indexOf(seasonal?p.date.slice(5):p.date);
   const tickCount=Math.min(7,dates.length);
-  const xlabels=seasonal||tickCount===1?dates:Array.from({length:tickCount},(_,i)=>dates[Math.round(i*(dates.length-1)/(tickCount-1))]);
+  const axisColumns=seasonal||tickCount===1?dates.map((_,i)=>i):Array.from({length:tickCount},(_,i)=>Math.round(i*(dates.length-1)/(tickCount-1)));
   const multiYear=dates[0].slice(0,4)!==dates.at(-1).slice(0,4);
-  const grid=ticks.map(v=>'<line class="grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'"/><text x="'+(L-7)+'" y="'+(y(v)+3)+'" text-anchor="end">'+num(v,Math.abs(max)<2?2:Math.abs(max)<10?1:0)+'</text>').join('');
-  const axisLabel=d=>seasonal?smallMonth('2000-'+d):periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):d;
-  const datesSvg=xlabels.map(d=>'<text x="'+x(d)+'" y="'+(B+18)+'" text-anchor="middle">'+e(axisLabel(d))+'</text>').join('');
-  const paths=valid.map(l=>{
+  const axisLabel=d=>seasonal?smallMonth('2000-'+d):periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):periodType==='day'||periodType==='week'?d.slice(8)+' '+smallMonth(d):d;
+  const yLabels=ticks.map(v=>'<span style="--y:'+y(v)+'%">'+e(num(v,tickDigits))+'</span>').join('');
+  const xLabels=axisColumns.map(i=>'<span style="--x:'+x(i)+'%">'+e(axisLabel(dates[i]))+'</span>').join('');
+  const grid=ticks.map(v=>'<line class="grid'+(v===0?' zero':'')+'" x1="0" x2="100" y1="'+y(v)+'" y2="'+y(v)+'"/>').join('');
+  const paths=[],points=[];
+  for(const l of valid){
     const path=l.points.map((p,i)=>{
       if(!Number.isFinite(p.value))return '';
       const command=Number.isFinite(l.points[i-1]?.value)?'L':'M';
-      return command+pointX(p)+','+y(p.value);
+      return command+x(column(p))+','+y(p.value);
     }).join(' ');
-    const dots=l.points.filter(p=>Number.isFinite(p.value)).map(p=>{
+    paths.push('<path class="chart-line" d="'+path+'" stroke="'+l.color+'" stroke-width="'+(l.width??2.25)+'"/>');
+    for(const p of l.points){
+      if(!Number.isFinite(p.value))continue;
+      const index=column(p);
       const period=displayPeriod(p.date,periodType);
-      const reading=tooltips?tooltips(p):num(p.value)+' '+unit;
-      const detail=seasonal?reading:l.label+' · '+reading;
-      const attributes=tooltips?' data-period="'+e(period)+'" data-reading="'+e(detail)+'"':'';
-      const title=tooltips?'':'<title>'+e(l.label+' · '+period+' · '+reading)+'</title>';
-      return '<circle tabindex="0" aria-label="'+e(tooltips?period+' · '+detail:l.label+' '+period+' '+reading)+'" cx="'+pointX(p)+'" cy="'+y(p.value)+'" r="4" fill="'+l.color+'"'+attributes+'>'+title+'</circle>';
-    }).join('');
-    return '<path d="'+path+'" fill="none" stroke="'+l.color+'" stroke-width="'+(l.width??2.5)+'" stroke-linecap="round" stroke-linejoin="round"/>'+dots;
-  }).join('');
-  const tooltip=tooltips?'<div class="chart-tooltip" aria-hidden="true" hidden><strong></strong><span></span></div>':'';
-  return '<div class="chart-wrap"><svg class="chart'+(seasonal?' chart-seasonal':'')+'" viewBox="0 0 '+W+' '+height+'" role="group" aria-label="'+e(label)+'">'+grid+datesSvg+paths+'</svg>'+tooltip+'<div class="legend">'+valid.map(l=>'<span><i class="dot" style="color:'+l.color+'"></i>'+e(l.label)+'</span>').join('')+'</div></div>';
+      const reading=tooltips?tooltips(p):num(p.value)+(unit?' '+unit:'');
+      const heading=seasonal?monthName.format(monthDate(dates[index])):period;
+      const pointLabel=seasonal?period+' · '+reading:period+' · '+l.label+' · '+reading;
+      points.push('<button type="button" class="chart-point" tabindex="'+(points.length?'-1':'0')+'" aria-label="'+e(pointLabel)+'" data-column="'+index+'" data-heading="'+e(heading)+'" data-series="'+e(l.label)+'" data-reading="'+e(reading)+'" style="--x:'+x(index)+'%;--y:'+y(p.value)+'%;--series:'+l.color+'"></button>');
+    }
+  }
+  const legend=valid.map(l=>'<span><i style="--series:'+l.color+'"></i>'+e(l.label)+'</span>').join('');
+  return '<figure class="chart-wrap" aria-label="'+e(label)+'" style="--plot-height:'+height+'px" data-columns="'+dates.length+'">'+
+    '<figcaption class="chart-key"><div class="legend">'+legend+'</div>'+(unit?'<span class="chart-unit">'+e(unit)+'</span>':'')+'</figcaption>'+
+    '<div class="chart-frame"><div class="chart-axis-y" aria-hidden="true">'+yLabels+'</div><div class="chart-plot">'+
+    '<svg class="chart" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'+grid+paths.join('')+'</svg>'+
+    '<div class="chart-guide" hidden></div>'+points.join('')+'</div><div class="chart-axis-x" aria-hidden="true">'+xLabels+'</div></div>'+
+    '<div class="chart-tooltip" aria-hidden="true" hidden></div></figure>';
 }
 function bindChartTooltip(tooltip){
-  const wrap=tooltip.parentElement;
-  const svg=wrap.querySelector('svg');
-  const points=[...svg.querySelectorAll('[data-reading]')].map(circle=>({
-    circle, position:new DOMPoint(circle.cx.baseVal.value,circle.cy.baseVal.value),
-  }));
-  let active=null;
-  function show(circle){
-    if(active===circle)return;
-    active?.removeAttribute('data-active');
-    active=circle;
-    tooltip.hidden=!circle;
-    if(!circle)return;
-    circle.setAttribute('data-active','');
-    tooltip.firstElementChild.textContent=circle.dataset.period;
-    tooltip.lastElementChild.textContent=circle.dataset.reading;
-    const point=circle.getBoundingClientRect();
-    const chart=wrap.getBoundingClientRect();
-    const width=tooltip.offsetWidth,height=tooltip.offsetHeight;
-    const center=(point.left+point.right)/2-chart.left;
-    const above=point.top-chart.top-height-6;
-    tooltip.style.left=Math.max(0,Math.min(center-width/2,chart.width-width))+'px';
-    tooltip.style.top=(above>=0?above:point.bottom-chart.top+6)+'px';
+  const wrap=tooltip.parentElement,plot=wrap.querySelector('.chart-plot'),guide=plot.querySelector('.chart-guide');
+  const columns=new Map();
+  for(const point of plot.querySelectorAll('.chart-point')){
+    const index=Number(point.dataset.column);
+    if(!columns.has(index))columns.set(index,[]);
+    columns.get(index).push(point);
   }
-  svg.addEventListener('pointermove',event=>{
-    const matrix=svg.getScreenCTM();
-    if(!matrix)return;
-    let nearest=null,distance=12;
-    for(const {circle,position} of points){
-      const {x,y}=position.matrixTransform(matrix);
-      const gap=Math.hypot(x-event.clientX,y-event.clientY);
-      if(gap<distance){nearest=circle;distance=gap;}
-    }
-    show(nearest);
+  const indexes=[...columns.keys()].sort((a,b)=>a-b);
+  const slots=Number(wrap.dataset.columns);
+  let active=null;
+  function show(point){
+    if(active===point)return;
+    active?.removeAttribute('data-active');
+    active=point;
+    tooltip.hidden=guide.hidden=!point;
+    if(!point)return;
+    point.setAttribute('data-active','');
+    guide.style.left=point.style.getPropertyValue('--x');
+    const rows=columns.get(Number(point.dataset.column)).map(row=>
+      '<div class="chart-reading'+(row===point?' selected':'')+'"><i style="--series:'+row.style.getPropertyValue('--series')+'"></i><span>'+e(row.dataset.series)+'</span><b>'+e(row.dataset.reading)+'</b></div>').join('');
+    tooltip.innerHTML='<strong>'+e(point.dataset.heading)+'</strong>'+rows;
+    const bounds=wrap.getBoundingClientRect(),dot=point.getBoundingClientRect(),plotBounds=plot.getBoundingClientRect();
+    const center=(dot.left+dot.right)/2-bounds.left;
+    const width=tooltip.offsetWidth;
+    const left=center+14+width<=bounds.width?center+14:center-14-width;
+    tooltip.style.left=Math.max(0,Math.min(left,bounds.width-width))+'px';
+    tooltip.style.top=(plotBounds.top-bounds.top+9)+'px';
+  }
+  function fromPointer(event){
+    const bounds=plot.getBoundingClientRect();
+    const index=Math.max(0,Math.min(slots-1,Math.round((event.clientX-bounds.left)/bounds.width*(slots-1))));
+    const group=columns.get(index);
+    if(!group){show(null);return;}
+    const relativeY=(event.clientY-bounds.top)/bounds.height*100;
+    const gap=p=>Math.abs(parseFloat(p.style.getPropertyValue('--y'))-relativeY);
+    show(group.reduce((nearest,p)=>gap(p)<gap(nearest)?p:nearest));
+  }
+  plot.addEventListener('pointermove',event=>{if(event.pointerType!=='touch')fromPointer(event);});
+  plot.addEventListener('pointerleave',event=>{if(event.pointerType!=='touch')show(null);});
+  plot.addEventListener('click',event=>{
+    if(event.detail===0&&event.target.matches('.chart-point'))show(event.target);
+    else fromPointer(event);
   });
-  svg.addEventListener('pointerleave',()=>show(null));
-  svg.addEventListener('focusin',event=>{if(event.target.hasAttribute('data-reading'))show(event.target);});
-  svg.addEventListener('focusout',()=>show(null));
-  svg.addEventListener('keydown',event=>{if(event.key==='Escape')show(null);});
+  plot.addEventListener('focusin',event=>{if(event.target.matches('.chart-point'))show(event.target);});
+  plot.addEventListener('focusout',event=>{if(!plot.contains(event.relatedTarget))show(null);});
+  plot.addEventListener('keydown',event=>{
+    if(event.key==='Escape'){show(null);return;}
+    const point=event.target;
+    if(!point.matches('.chart-point'))return;
+    const index=Number(point.dataset.column),group=columns.get(index);
+    const columnIndex=indexes.indexOf(index),rowIndex=group.indexOf(point);
+    let next;
+    if(event.key==='ArrowLeft')next=columns.get(indexes[columnIndex-1])?.[0];
+    if(event.key==='ArrowRight')next=columns.get(indexes[columnIndex+1])?.[0];
+    if(event.key==='ArrowUp')next=group[rowIndex-1];
+    if(event.key==='ArrowDown')next=group[rowIndex+1];
+    if(!event.key.startsWith('Arrow'))return;
+    event.preventDefault();
+    if(next){
+      plot.querySelector('[tabindex="0"]').tabIndex=-1;
+      next.tabIndex=0;
+      next.focus({preventScroll:true});
+    }
+  });
 }
 function filters(){
   return '<div class="filterbar"><label class="filter-title">'+icon('filter')+' Filtres</label>'+
@@ -220,7 +266,8 @@ function renderOverview(){
   const list=(rows,blank)=>rows.length?'<ul class="brief-list">'+rows.slice(0,3).map(r=>'<li>'+eventBtn(r)+'<small>'+e(r.number+' · '+r.variation)+'</small></li>').join('')+'</ul>':empty(blank);
   const near=selected.filter(r=>r.status==='consensus'||r.status==='estimate'||r.status==='pending'||['geo','logistics','weather'].includes(r.category));
   const pers=panel('<h2>Perspectives</h2><p class="analysis-text"><strong>Court terme</strong> · '+e((ranked(scoped,'negative','short')[0]||ranked(scoped,'positive','short')[0])?.caveat||'Les prochains bilans et cotations aideront à préciser la tendance.')+'</p><p class="analysis-text"><strong>Moyen terme</strong> · '+e((ranked(scoped,'negative','medium')[0]||ranked(scoped,'positive','medium')[0])?.caveat||'À confirmer avec les révisions des bilans.')+'</p><a href="#outlook">Comparer les scénarios '+icon('arrow',14)+'</a>');
-  return hero+section('Marchés clés','Orientation issue des événements disponibles sur 90 jours','<a href="#balances">Bilans '+icon('arrow',14)+'</a>')+(marketCards.length?'<div class="market-grid">'+marketCards.join('')+'</div>':empty())+'<div class="dashboard-grid">'+pricePanel+agenda+'</div>'+
+  return hero+'<div class="dashboard-grid">'+pricePanel+agenda+'</div>'+
+    section('Marchés clés','Orientation issue des événements disponibles sur 90 jours','<a href="#balances">Bilans '+icon('arrow',14)+'</a>')+(marketCards.length?'<div class="market-grid">'+marketCards.join('')+'</div>':empty())+
     section('Ce qui a changé','Fenêtre relative au point de veille affiché en haut de page',btnSeg('eventWindow',{1:'24 h',7:'7 j',30:'30 j'},state.eventWindow))+panel(eventRows(selected.slice(0,7)))+
     section('Lecture des facteurs','Les signaux sont classés par intensité et par date')+'<div class="grid3">'+panel('<h3 class="positive">Soutiens de prix</h3>'+list(ranked(selected,'positive'),'Aucun soutien documenté.'))+panel('<h3 class="negative">Pressions baissières</h3>'+list(ranked(selected,'negative'),'Aucune pression documentée.'))+panel('<h3 class="mixed">Risques et anticipations</h3>'+list(near,'Aucun risque nouveau documenté.'))+'</div><div style="margin-top:12px">'+pers+'</div>';
 }
@@ -230,7 +277,7 @@ function monthlyHistory(title,rows,names,sourceLinks,note){
   const sourceLine=sourceLinks.map(([name,url])=>link(url,name)).join(' · ');
   const exactRows=rows.slice().reverse().map(([date,...values])=>[e(displayPeriod(date,'month')),...values.map(value=>valueCell(value,'t',0))]);
   return section(title,period+' · '+rows.length+' mois · milliers de tonnes')+
-    panel(chart(lines,{unit:'kt',height:222,tooltips:p=>num(p.tonnes,0)+' t'})+'<p class="analysis-text">'+e(note)+'</p>'+
+    panel(chart(lines,{unit:'kt',height:222,label:title+' en milliers de tonnes',tooltips:p=>num(p.tonnes,0)+' t'})+'<p class="analysis-text">'+e(note)+'</p>'+
       '<p class="small">Sources · '+sourceLine+'</p>'+
       '<details><summary class="small">Voir les chiffres mensuels en tonnes</summary>'+
       table(['Mois',...names],exactRows)+'</details>');
@@ -241,13 +288,13 @@ function palmHistories(){
     monthlyHistory('Inde · Importations SEA India',seaHistory,['Huile de palme','Huile de tournesol','Huile de soja'],
       seaHistorySources,'Le total palme inclut CPO, oléine brute et RBD, et huile de palmiste brute. Le soja et le tournesol incluent les volumes raffinés comptabilisés par SEA. La révision 2024/25 intègre les flux du Népal.');
 }
-const biofuelColors=['#8b85df','#399dcb','#d69338','#d2699a','#22a398'];
+const biofuelColors=colors.slice(1);
 const eiaFeedstocks='https://www.eia.gov/dnav/pet/pet_pnp_feedbiofuel_dcu_nus_m.htm';
 function biofuelHistory(title,years,sourceCode){
   const latest=years.at(-1);
   const lastMonth=yearMonths[latest.volumes.findLastIndex(Number.isFinite)];
   const lines=years.map(({year,volumes},i)=>({
-    label:year,color:year===latest.year?'var(--accent)':biofuelColors[i%biofuelColors.length],width:year===latest.year?3.5:2,
+    label:year,color:year===latest.year?colors[0]:biofuelColors[i%biofuelColors.length],width:year===latest.year?3.5:2,
     points:volumes.map((value,m)=>({date:year+'-'+yearMonths[m],value})),
   }));
   const rows=yearMonths.map((month,m)=>[e(smallMonth('2000-'+month)),...years.map(({volumes})=>num(volumes[m],4))]);
