@@ -85,7 +85,7 @@ function series(id,filter=state.filters){
 }
 const linesFrom=(ids)=>ids.map((id,i)=>{const s=series(id);return {label:s.name,color:colors[i%colors.length],points:Object.entries(s.values).map(([date,value])=>({date,value}))};});
 const colors=['#a8df78','#67c4d8','#e9b674','#d79cec','#e6888c'];
-function chart(lines,{unit='',periodType='month',height=188}={}){
+function chart(lines,{unit='',periodType='month',height=188,tooltips=false}={}){
   const valid=lines.filter(l=>l.points.length);
   if(!valid.length)return empty('Série non disponible pour la sélection.');
   const dates=[...new Set(valid.flatMap(l=>l.points.map(p=>p.date)))].sort();
@@ -100,8 +100,56 @@ function chart(lines,{unit='',periodType='month',height=188}={}){
   const multiYear=dates[0].slice(0,4)!==dates.at(-1).slice(0,4);
   const grid=ticks.map(v=>'<line class="grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'"/><text x="'+(L-7)+'" y="'+(y(v)+3)+'" text-anchor="end">'+num(v,Math.abs(max)<2?2:Math.abs(max)<10?1:0)+'</text>').join('');
   const datesSvg=xlabels.map(d=>'<text x="'+x(d)+'" y="'+(B+18)+'" text-anchor="middle">'+e(periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):d)+'</text>').join('');
-  const paths=valid.map(l=>'<polyline points="'+l.points.map(p=>x(p.date)+','+y(p.value)).join(' ')+'" fill="none" stroke="'+l.color+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+l.points.map(p=>'<circle tabindex="0" aria-label="'+e(l.label+' '+displayPeriod(p.date,periodType)+' '+num(p.value)+' '+unit)+'" cx="'+x(p.date)+'" cy="'+y(p.value)+'" r="4" fill="'+l.color+'"><title>'+e(l.label+' · '+displayPeriod(p.date,periodType)+' · '+num(p.value)+' '+unit)+'</title></circle>').join('')).join('');
-  return '<div class="chart-wrap"><svg class="chart" viewBox="0 0 '+W+' '+height+'" role="group" aria-label="Historique '+e(unit)+'">'+grid+datesSvg+paths+'</svg><div class="legend">'+valid.map(l=>'<span><i class="dot" style="color:'+l.color+'"></i>'+e(l.label)+'</span>').join('')+'</div></div>';
+  const paths=valid.map(l=>'<polyline points="'+l.points.map(p=>x(p.date)+','+y(p.value)).join(' ')+'" fill="none" stroke="'+l.color+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+l.points.map(p=>{
+    const period=displayPeriod(p.date,periodType);
+    const reading=tooltips?num(p.tonnes,0)+' t':num(p.value)+' '+unit;
+    const detail=l.label+' · '+reading;
+    const attributes=tooltips?' data-period="'+e(period)+'" data-reading="'+e(detail)+'"':'';
+    const title=tooltips?'':'<title>'+e(l.label+' · '+period+' · '+reading)+'</title>';
+    return '<circle tabindex="0" aria-label="'+e(tooltips?period+' · '+detail:l.label+' '+period+' '+reading)+'" cx="'+x(p.date)+'" cy="'+y(p.value)+'" r="4" fill="'+l.color+'"'+attributes+'>'+title+'</circle>';
+  }).join('')).join('');
+  const tooltip=tooltips?'<div class="chart-tooltip" aria-hidden="true" hidden><strong></strong><span></span></div>':'';
+  return '<div class="chart-wrap"><svg class="chart" viewBox="0 0 '+W+' '+height+'" role="group" aria-label="Historique '+e(unit)+'">'+grid+datesSvg+paths+'</svg>'+tooltip+'<div class="legend">'+valid.map(l=>'<span><i class="dot" style="color:'+l.color+'"></i>'+e(l.label)+'</span>').join('')+'</div></div>';
+}
+function bindChartTooltip(tooltip){
+  const wrap=tooltip.parentElement;
+  const svg=wrap.querySelector('svg');
+  const points=[...svg.querySelectorAll('[data-reading]')].map(circle=>({
+    circle, position:new DOMPoint(circle.cx.baseVal.value,circle.cy.baseVal.value),
+  }));
+  let active=null;
+  function show(circle){
+    if(active===circle)return;
+    active?.removeAttribute('data-active');
+    active=circle;
+    tooltip.hidden=!circle;
+    if(!circle)return;
+    circle.setAttribute('data-active','');
+    tooltip.firstElementChild.textContent=circle.dataset.period;
+    tooltip.lastElementChild.textContent=circle.dataset.reading;
+    const point=circle.getBoundingClientRect();
+    const chart=wrap.getBoundingClientRect();
+    const width=tooltip.offsetWidth,height=tooltip.offsetHeight;
+    const center=(point.left+point.right)/2-chart.left;
+    const above=point.top-chart.top-height-6;
+    tooltip.style.left=Math.max(0,Math.min(center-width/2,chart.width-width))+'px';
+    tooltip.style.top=(above>=0?above:point.bottom-chart.top+6)+'px';
+  }
+  svg.addEventListener('pointermove',event=>{
+    const matrix=svg.getScreenCTM();
+    if(!matrix)return;
+    let nearest=null,distance=12;
+    for(const {circle,position} of points){
+      const {x,y}=position.matrixTransform(matrix);
+      const gap=Math.hypot(x-event.clientX,y-event.clientY);
+      if(gap<distance){nearest=circle;distance=gap;}
+    }
+    show(nearest);
+  });
+  svg.addEventListener('pointerleave',()=>show(null));
+  svg.addEventListener('focusin',event=>{if(event.target.hasAttribute('data-reading'))show(event.target);});
+  svg.addEventListener('focusout',()=>show(null));
+  svg.addEventListener('keydown',event=>{if(event.key==='Escape')show(null);});
 }
 function filters(){
   return '<div class="filterbar"><label class="filter-title">'+icon('filter')+' Filtres</label>'+
@@ -166,11 +214,11 @@ function renderOverview(){
 }
 function monthlyHistory(title,rows,names,sourceLinks,note){
   const period=displayPeriod(rows[0][0],'month')+' – '+displayPeriod(rows.at(-1)[0],'month');
-  const lines=names.map((label,i)=>({label,color:colors[i],points:rows.map(([date,...values])=>({date,value:values[i]/1000}))}));
+  const lines=names.map((label,i)=>({label,color:colors[i],points:rows.map(([date,...values])=>({date,value:values[i]/1000,tonnes:values[i]}))}));
   const sourceLine=sourceLinks.map(([name,url])=>link(url,name)).join(' · ');
   const exactRows=rows.slice().reverse().map(([date,...values])=>[e(displayPeriod(date,'month')),...values.map(value=>valueCell(value,'t',0))]);
   return section(title,period+' · '+rows.length+' mois · milliers de tonnes')+
-    panel(chart(lines,{unit:'kt',height:222})+'<p class="analysis-text">'+e(note)+'</p>'+
+    panel(chart(lines,{unit:'kt',height:222,tooltips:true})+'<p class="analysis-text">'+e(note)+'</p>'+
       '<p class="small">Sources · '+sourceLine+'</p>'+
       '<details><summary class="small">Voir les chiffres mensuels en tonnes</summary>'+
       table(['Mois',...names],exactRows)+'</details>');
@@ -473,6 +521,7 @@ function render(){
   const focusControl=active?.getAttribute('data-control');
   document.documentElement.dataset.theme=state.theme;
   root.innerHTML=shell(pageRender[state.page]());
+  root.querySelectorAll('.chart-tooltip').forEach(bindChartTooltip);
   if(focusFilter)root.querySelector('[data-filter="'+CSS.escape(focusFilter)+'"]')?.focus({preventScroll:true});
   if(focusControl)root.querySelector('[data-control="'+CSS.escape(focusControl)+'"]')?.focus({preventScroll:true});
 }
