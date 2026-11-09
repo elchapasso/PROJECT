@@ -4,6 +4,7 @@ import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthS
 import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js';
 import {biofuelReleaseDate,biofuelSeries} from './biofuels.js';
 import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js';
+import {indiaOrigins} from './india-origins.js';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -39,6 +40,7 @@ let loadError='';
 try{const raw=localStorage.getItem(localKey);if(raw)data=parseStore(raw);}catch{loadError='Les données locales n’ont pas pu être chargées.';}
 const state={
   page:'overview',filters:{...FILTERS},theme:'light',mobile:false,eventWindow:'7',chart:'oils',
+  indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
   originTab:{},query:'',category:'',importance:'',start:'',end:'',balanceProduct:'sbo',compare:'revision',metric:'production',
   crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',outProduct:'sbo',outHorizon:'short',
   shocks:Object.fromEntries(shockFields.map(([k])=>[k,0])),reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:AS_OF.slice(0,7),editType:'events',
@@ -376,11 +378,45 @@ function renderBiofuels(){
     seasonalHistory('Huile de soja · Total',biofuelSeries.soybean,eiaHistory('M_EPOOBDSO_YIFBP_NUS_MMLB'))+
     seasonalHistory('Huile de canola · Total',biofuelSeries.canola,eiaHistory('M_EPOOBDCO_YIFBP_NUS_MMLB'));
 }
+function indiaOriginChart(title,rows,column,share){
+  const ranked=rows.filter(row=>row[column]>0).sort((a,b)=>b[column]-a[column]);
+  const total=ranked.reduce((sum,row)=>sum+row[column],0);
+  const axisMax=share?100:Math.ceil(ranked[0][column]/500000)*500000;
+  const label=(value)=>share?num(value,1)+' %':num(value/1000000,2)+' Mt';
+  const bars=ranked.map(row=>{
+    const tonnes=row[column],part=tonnes/total*100;
+    const value=share?part:tonnes;
+    return '<li class="origin-row" title="'+e(num(tonnes,0)+' t · '+num(part,1)+' %')+'"><span>'+e(row[0])+'</span><span class="num">'+e(label(value))+'</span>'+
+      '<div class="origin-track" aria-hidden="true"><div style="--origin-width:'+(value/axisMax*100)+'%"></div></div></li>';
+  }).join('');
+  const tableRows=ranked.map(row=>[e(row[0]),valueCell(row[column],'t',0),valueCell(row[column]/total*100,'%',1)]);
+  return panel('<h3>'+e(title)+'</h3><p class="small">Total importé · '+e(num(total/1000000,3))+' Mt</p>'+
+    '<figure class="origin-figure" aria-label="'+e(title+' par pays fournisseur')+'"><div class="origin-axis" aria-hidden="true"><span>'+label(0)+'</span><span>'+label(axisMax)+'</span></div>'+
+    '<ol class="origin-bars">'+bars+'</ol></figure>'+
+    '<details><summary class="small">Voir les volumes en tonnes et les parts</summary>'+
+    table(['Origine','Volume','Part du total'],tableRows)+'</details>','origin-card');
+}
+function renderIndiaOrigins(){
+  const period=state.indiaOriginPeriod;
+  const {label,duration,rows}=indiaOrigins[period];
+  const share=state.indiaOriginMode==='share';
+  const periodOptions=Object.fromEntries(Object.entries(indiaOrigins).map(([year,p])=>[year,p.label+' ('+p.duration+')']));
+  const source=seaHistorySources[Object.keys(indiaOrigins).indexOf(period)];
+  return section('Inde · Importations par pays fournisseur',label+' · '+duration+' · Données SEA India',link(source[1],source[0]))+
+    '<div class="toolbar"><label>Campagne</label>'+select('indiaOriginPeriod',periodOptions,period)+
+    '<label>Affichage</label>'+select('indiaOriginMode',{volume:'Volume (Mt)',share:'Part des importations (%)'},state.indiaOriginMode)+'</div>'+
+    '<div class="grid3 origin-grid">'+
+    indiaOriginChart('Huile de palme',rows,1,share)+
+    indiaOriginChart('Huile de tournesol',rows,2,share)+
+    indiaOriginChart('Huile de soja',rows,3,share)+'</div>'+
+    '<p class="analysis-text">Palme : huile brute, oléine RBD et huile brute de palmiste. Soja et tournesol : brut et raffiné lorsque ventilés par SEA. Le bulletin 2023/24 ventile le soja et le tournesol bruts. « Autres origines » reprend le regroupement publié par SEA.</p>';
+}
 function renderDemand(){
   const chinaSources=chinaSoybeanSources.map(([name,url])=>link(url,name)).join(' · ');
   return head('Analyse','Demande','Suivez les importations indiennes d’huiles végétales et comparez la saisonnalité des importations chinoises de graines de soja.')+
     monthlyHistory('Inde · Importations SEA India',seaHistory,['Huile de palme','Huile de tournesol','Huile de soja'],
       seaHistorySources,'Le total palme inclut CPO, oléine brute et RBD, et huile de palmiste brute. Le soja et le tournesol incluent les volumes raffinés comptabilisés par SEA. La révision 2024/25 intègre les flux du Népal.')+
+    renderIndiaOrigins()+
     seasonalHistory('Chine · Importations de graines de soja',chinaSoybeanImports,'',
       '<p class="analysis-text">Douanes chinoises (GACC), toutes origines. Une courbe par année civile depuis 2020. Les mois non publiés restent vides.</p><p class="small">Sources · '+chinaSources+'</p>',3);
 }
