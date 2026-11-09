@@ -23,3 +23,5 @@ GitHub Pages publie le dossier `/docs` de la branche `main`. Une modification fu
 ## Données
 
 Les observations initiales sont datées. Conserver la période de référence, l’unité, la date de publication, le statut et le lien de provenance pour chaque ajout au jeu initial. Les données saisies dans le terminal et les rapports archivés sont propres au navigateur. La sauvegarde et l’import JSON se trouvent dans **Sources & données**.
+
+La trituration américaine du soja et les stocks américains d’huile de soja utilisent les chiffres mensuels des membres de [NOPA](https://www.nopa.org/resources/nopa-monthly-crush-report/). Les tableaux indiquent la publication qui relaie chaque observation disponible.
