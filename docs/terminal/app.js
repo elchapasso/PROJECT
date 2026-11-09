@@ -5,6 +5,7 @@ import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './pal
 import {biofuelReleaseDate,biofuelSeries} from './biofuels.js';
 import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js';
 import {indiaOrigins} from './india-origins.js';
+import {usSoyHistory} from './us-soy-history.js?v=20261109-soja';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -41,7 +42,7 @@ try{const raw=localStorage.getItem(localKey);if(raw)data=parseStore(raw);}catch{
 const state={
   page:'overview',filters:{...FILTERS},theme:'light',mobile:false,eventWindow:'7',chart:'oils',
   indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
-  originTab:{},query:'',category:'',importance:'',start:'',end:'',balanceProduct:'sbo',compare:'revision',metric:'production',
+  soyFamily:'soy',soyOrigin:'us',originTab:{},query:'',category:'',importance:'',start:'',end:'',balanceProduct:'sbo',compare:'revision',metric:'production',
   crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',outProduct:'sbo',outHorizon:'short',
   shocks:Object.fromEntries(shockFields.map(([k])=>[k,0])),reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:AS_OF.slice(0,7),editType:'events',
 };
@@ -70,7 +71,7 @@ const empty=(text='Aucune observation pour ces filtres.')=>'<div class="empty">'
 const notice=text=>'<p class="notice">'+e(text)+'</p>';
 const head=(section,title,description)=>'<header class="pagehead"><span class="eyebrow">'+e(section)+'</span><h1>'+e(title)+'</h1><p>'+e(description)+'</p></header>';
 const section=(title,detail='',more='')=>'<div class="section-head"><div><h2>'+e(title)+'</h2><p>'+e(detail)+'</p></div>'+more+'</div>';
-const btnSeg=(key,values,value)=>'<div class="seg" role="group" aria-label="'+e(key)+'">'+Object.entries(values).map(([k,v])=>'<button type="button" data-action="seg" data-key="'+e(key)+'" data-value="'+e(k)+'" class="'+(String(k)===String(value)?'active':'')+'" aria-pressed="'+(String(k)===String(value))+'">'+e(v)+'</button>').join('')+'</div>';
+const btnSeg=(key,values,value,label=key)=>'<div class="seg" role="group" aria-label="'+e(label)+'">'+Object.entries(values).map(([k,v])=>'<button type="button" data-action="seg" data-key="'+e(key)+'" data-value="'+e(k)+'" class="'+(String(k)===String(value)?'active':'')+'" aria-pressed="'+(String(k)===String(value))+'">'+e(v)+'</button>').join('')+'</div>';
 const table=(headings,rows)=>rows.length?'<div class="scroll"><table class="table"><thead><tr>'+headings.map(h=>'<th scope="col">'+e(h)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>':empty();
 const panel=(content,klass='')=>'<section class="panel '+klass+'">'+content+'</section>';
 const valueCell=(value,unit,d)=>'<span class="num">'+num(value,d)+'</span>'+(Number.isFinite(value)&&unit?' '+e(unit):'');
@@ -282,8 +283,8 @@ function bindChartTooltip(tooltip){
 }
 function filters(){
   return '<div class="filterbar"><label class="filter-title">'+icon('filter')+' Filtres</label>'+
-  select('product',products,state.filters.product,'Tous les produits','data-filter')+
-  select('origin',origins,state.filters.origin,'Toutes les origines','data-filter')+
+  (state.page==='soy'?'':select('product',products,state.filters.product,'Tous les produits','data-filter')+
+  select('origin',origins,state.filters.origin,'Toutes les origines','data-filter'))+
   select('period',periodLabel,state.filters.period,'Toute période','data-filter')+
   select('horizon',labels.horizon,state.filters.horizon,'Tous les horizons','data-filter')+
   select('impact',labels.impact,state.filters.impact,'Tous les impacts','data-filter')+
@@ -420,20 +421,64 @@ function renderDemand(){
     seasonalHistory('Chine · Importations de graines de soja',chinaSoybeanImports,'',
       '<p class="analysis-text">Douanes chinoises (GACC), toutes origines. Une courbe par année civile depuis 2020. Les mois non publiés restent vides.</p><p class="small">Sources · '+chinaSources+'</p>',3);
 }
+const soyFamilies={soy:'Graines de soja · Soybeans',sbo:'Huile de soja · Soyoil'};
+const soyOrigins={us:origins.us,arg:origins.arg,bra:origins.bra};
+const soyHistoryLabels={
+  soy:['Importations','Exportations','Trituration (crush)'],
+  sbo:['Importations','Exportations','Consommation intérieure','Stocks de fin de mois'],
+};
+const usSoyYearbook='https://www.ers.usda.gov/data-products/oil-crops-yearbook';
+const usSoyNass='https://esmis.nal.usda.gov/publication/fats-and-oils-oilseed-crushings-production-consumption-and-stocks';
+const usSoyTrade='https://www.census.gov/foreign-trade/data/dataproducts.html';
+function usSoyHistoryPanels(family){
+  const rows=usSoyHistory[family];
+  const names=soyHistoryLabels[family];
+  const charts=names.map((name,i)=>{
+    const points=rows.map(([date,...values])=>({date,value:values[i]}));
+    const first=points.find(p=>Number.isFinite(p.value));
+    const latest=points.findLast(p=>Number.isFinite(p.value));
+    const label=products[family]+' · '+name;
+    return panel('<h3>'+e(name)+'</h3><p class="small">'+
+      e(displayPeriod(first.date,'month')+' – '+displayPeriod(latest.date,'month')+' · Dernière valeur '+num(latest.value,4)+' Mt')+'</p>'+
+      chart([{label:name,color:colors[i%colors.length],points:points.slice(0,points.indexOf(latest)+1)}],
+        {unit:'Mt',label,tooltips:p=>num(p.value,6)+' Mt'}));
+  });
+  const headers=['Mois',...names.map(name=>name+' (Mt)')];
+  const tableRows=rows.toReversed().map(([date,...values])=>[e(displayPeriod(date,'month')),...values.map(v=>valueCell(v,'',6))]);
+  const notes=family==='soy'?'La trituration correspond au volume de graines transformées aux États-Unis.':
+    'La consommation intérieure apparente inclut l’alimentaire, l’alimentation animale, les usages industriels et les biocarburants. Elle correspond au stock d’ouverture, augmenté de la production et des importations, moins les exportations et le stock de clôture. Les stocks de fin de mois couvrent l’huile brute et l’huile raffinée une première fois.';
+  const sourceCutoff=family==='soy'?'août 2025':'septembre 2025';
+  const tradeCode=family==='soy'?'1201':'1507';
+  const provenance='USDA ERS jusqu’en '+sourceCutoff+'. Pour les mois suivants, USDA NASS et U.S. Census (SH '+tradeCode+', importations pour consommation et exportations totales).';
+  return section(products[family]+' · États-Unis','Historique mensuel depuis janvier 2020 · millions de tonnes métriques')+
+    '<div class="grid2 flow">'+charts.join('')+'</div>'+
+    section('Données mensuelles','Valeurs en millions de tonnes métriques',
+      action('export-soy-us',icon('download')+' Télécharger le CSV','ghost'))+
+    panel('<p class="analysis-text">'+e(notes)+'</p>'+
+      '<p class="small">'+e(provenance)+'</p>'+
+      '<p class="small">Sources · '+link(usSoyYearbook,'USDA ERS · Oil Crops Yearbook')+' · '+
+      link(usSoyNass,'USDA NASS · Fats and Oils')+' · '+link(usSoyTrade,'U.S. Census · Merchandise Trade')+'</p>'+
+      '<details><summary class="small">Voir le tableau mensuel</summary>'+table(headers,tableRows)+'</details>');
+}
 function renderComplex(key){
   const group=groups[key];
-  const origin=state.filters.origin||state.originTab[key]||'';
-  const filter={...state.filters,origin};
+  const isSoy=key==='soy';
+  const origin=isSoy?state.soyOrigin:state.filters.origin||state.originTab[key]||'';
+  const product=isSoy?state.soyFamily:state.filters.product;
+  const filter={...state.filters,origin,product};
   const matches=rows=>rows.filter(r=>group.products.includes(r.product));
   const events=matches(eventsFor(filter));
   const rows=matches(balancesFor(filter));
   const last=unique(rows.sort((a,b)=>a.date.localeCompare(b.date)),r=>[r.origin,r.product,r.metric,r.periodType,r.variant].join('|')).sort(byDate);
   const marketSeries=Object.keys(seedPrices).filter(id=>{
-    const s=seedPrices[id];return group.products.includes(s.product)&&(!origin||s.origin===origin)&&(!state.filters.product||s.product===state.filters.product);
+    const s=seedPrices[id];return group.products.includes(s.product)&&(!origin||s.origin===origin)&&(!product||s.product===product);
   });
   const selectedOrigin=origin?origins[origin]:'Toutes les origines';
   return head(key==='macro'?'Marchés transversaux':'Complexes de marché',group.name,'Analyse de l’offre, de la demande, des stocks et des flux. Les fiches distinguent les chiffres publiés, les projections et les effets attendus.')+
-    '<div class="toolbar"><label>Origine analysée</label>'+select('originTab',Object.fromEntries(group.origins.map(k=>[k,origins[k]])),origin,'Toutes les origines')+' <span class="small">'+e(selectedOrigin)+'</span></div>'+
+    (isSoy?'<div class="toolbar">'+btnSeg('soyFamily',soyFamilies,product,'Sous-famille du soja')+'</div>'+
+      '<div class="toolbar">'+btnSeg('soyOrigin',soyOrigins,origin,'Origine du soja')+'</div>'+
+      (origin==='us'?usSoyHistoryPanels(product):notice('La première couverture des séries mensuelles porte sur les États-Unis.')) :
+      '<div class="toolbar"><label>Origine analysée</label>'+select('originTab',Object.fromEntries(group.origins.map(k=>[k,origins[k]])),origin,'Toutes les origines')+' <span class="small">'+e(selectedOrigin)+'</span></div>')+
     '<div class="grid4">'+group.channels.map(([title,desc])=>panel('<span class="eyebrow">'+e(title)+'</span><p class="analysis-text">'+e(desc)+'</p>')).join('')+'</div>'+
     (key==='palm'?mpobHistoryPanel():'')+
     section('Lecture pour les prix','Données liées au périmètre sélectionné')+panel(events.length?'<p class="analysis-text">'+e(events[0].transmission)+'</p><p class="small">'+e(events[0].caveat)+'</p>':empty('Impact à confirmer. Aucun événement sourcé dans cette sélection.'))+
@@ -875,6 +920,12 @@ const controlActions={
     if(key==='reportKind')state.reportEnd=value==='monthly'?addDays(asOf().slice(0,7)+'-01',-1):asOf();
     render();
   },
+  'export-soy-us':()=>{
+    const family=state.soyFamily;
+    const names=soyHistoryLabels[family].map(name=>name+' (Mt)');
+    const rows=usSoyHistory[family].map(([date,...values])=>[date,...values.map(v=>v===null?'':String(v).replace('.',','))]);
+    csv('olea_'+(family==='soy'?'graines_soja':'huile_soja')+'_us.csv',[['Mois',...names],...rows]);
+  },
   'export-feed':exportFeed,
   'export-balance':exportBalances,
   'export-cross':exportCross,
@@ -895,7 +946,10 @@ root.addEventListener('click',event=>{
   const market=event.target.closest('[data-market]');
   if(market){
     const c=cards.find(item=>item.key===market.dataset.market);
-    if(c)state.originTab[c.group]=c.origins[0];
+    if(c?.group==='soy'){
+      state.soyFamily=c.product;
+      state.soyOrigin=c.origins[0];
+    }else if(c)state.originTab[c.group]=c.origins[0];
   }
   const anchor=event.target.closest('a[href^="#"]');
   if(anchor&&anchor.hash===location.hash&&state.mobile){state.mobile=false;render();}
