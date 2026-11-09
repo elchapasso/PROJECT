@@ -7,6 +7,7 @@ import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js';
 import {indiaOrigins} from './india-origins.js';
 import {usSoyHistory} from './us-soy-history.js?v=20261109-soja';
 import {nopaHistory,nopaReport} from './nopa-history.js?v=20261109-nopa';
+import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argentina';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -476,6 +477,46 @@ function usSoyHistoryPanels(family){
       '<p class="small">Le commerce récent repose sur les importations pour consommation et les exportations totales.</p>'+
       '<details><summary class="small">Voir le tableau mensuel</summary>'+table(headers,tableRows)+'</details>');
 }
+const arSoyTrade=['INDEC · COMEX Argentina','https://comex.indec.gob.ar/'];
+const arSoyMilling=['SAGyP · Trituration et production','https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/areas/granos/_archivos/000058_Estad%C3%ADsticas/000032_Evolucion%20de%20la%20Molienda%20(Cereales%20y%20Oleaginosas)/000002_Evoluci%C3%B3n%20de%20la%20Molienda%20Mensual%20-%20Oleaginosas/000002_Evoluci%C3%B3n%20de%20la%20Molienda%20Mensual%20-%20Oleaginosas.php'];
+const arSoyStocks=['SAGyP · Stocks industriels par province','https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/areas/granos/_archivos/000058_Estad%C3%ADsticas/000031_Existencias%20de%20Granos%20de%20Aceites%20y%20Subproductos%20por%20Provincia/000001_Existencias%20de%20Aceites%20y%20Subproductos%20por%20Provincia.php'];
+const arSoyMetrics={
+  soy:[['Importations',[arSoyTrade]],['Exportations',[arSoyTrade]],['Trituration',[arSoyMilling]]],
+  sbo:[['Importations publiées',[arSoyTrade]],['Exportations publiées',[arSoyTrade]],['Production',[arSoyMilling]],['Consommation intérieure apparente',[arSoyTrade,arSoyMilling,arSoyStocks]],['Stocks industriels de fin de mois',[arSoyStocks]]],
+};
+function argentinaOilNote(row){
+  const notes=[];
+  if(row.oilImportsPartial)notes.push('Importations partielles');
+  if(row.oilExportsPartial)notes.push('Exportations partielles');
+  if(row.useExcluded)notes.push('Solde négatif écarté');
+  return notes.join(' · ');
+}
+function argentinaSoyPanels(family){
+  const oil=family==='sbo';
+  const charts=arSoyMetrics[family].map(([name,sourceLinks],i)=>{
+    const points=argentinaSoyHistory.map(row=>({date:row.date,value:row[family][i],
+      partial:oil&&(i===0&&row.oilImportsPartial||i===1&&row.oilExportsPartial)}));
+    const last=points.findLast(p=>Number.isFinite(p.value));
+    return panel('<h3>'+e(name)+'</h3><p class="small">'+
+      e(displayPeriod(last.date,'month')+' · '+num(last.value,6)+' Mt'+(last.partial?' · Volume publié partiel':''))+'</p>'+
+      chart([{label:name,color:colors[i%colors.length],points}],{unit:'Mt',label:products[family]+' · Argentine · '+name,
+        tooltips:p=>num(p.value,6)+' Mt'+(p.partial?' · Volume publié partiel':''),sourceLinks}));
+  });
+  const headers=['Mois',...arSoyMetrics[family].map(([name])=>name+' (Mt)'),...(oil?['Qualité des données']:[])];
+  const rows=argentinaSoyHistory.toReversed().map(row=>[e(displayPeriod(row.date,'month')),
+    ...row[family].map(v=>valueCell(v,'',6)),...(oil?[e(argentinaOilNote(row)||'—')]:[])]);
+  const notes=oil?'Le commerce couvre l’huile brute et les autres catégories de la position NCM 1507. Un volume partiel exclut les lignes confidentielles. Les stocks industriels du premier jour du mois suivant sont affectés à la clôture du mois. L’usage intérieur apparent est le solde stocks d’ouverture + production + importations − exportations − stocks de clôture. Les mois avec un flux confidentiel ou un solde négatif restent vides.':
+    'Le commerce couvre les graines hors semences (NCM 12019000). Les volumes douaniers sont exprimés en poids net. La trituration reprend les volumes effectivement traités selon la SAGyP.';
+  const fob=oil?'1 170,15 à 1 207,41 USD/t':'468,45 à 476,35 USD/t';
+  const bcr=oil?'3,88 Mt d’huile embarquées':'5,31 Mt de graines embarquées';
+  return section(products[family]+' · Argentine','Janvier 2020 – septembre 2026 · millions de tonnes métriques')+
+    '<div class="grid2 flow">'+charts.join('')+'</div>'+
+    section('Données mensuelles','Volumes en millions de tonnes métriques',action('export-soy-arg',icon('download')+' Télécharger le CSV','ghost'))+
+    panel('<p class="analysis-text">'+e(notes)+'</p><details><summary class="small">Voir le tableau mensuel</summary>'+table(headers,rows)+'</details>')+
+    section('Repères de marché','Cotations FOB et embarquements de campagne')+
+    '<div class="grid2 flow">'+panel('<h3>Fourchette FOB · Novembre 2026</h3><p>'+e(fob)+'</p><p class="small">Cotations du 5 novembre 2026 · '+link('https://www.bolsadecereales.com/fob','Bolsa de Cereales de Buenos Aires')+'</p>')+
+    panel('<h3>Embarquements · Avril à octobre 2026</h3><p>'+e(bcr)+'</p><p class="small">Octobre provisoire, INDEC et NABSA · '+link('https://www.bcr.com.ar/es/mercados/investigacion-y-desarrollo/informativo-semanal/noticias-informativo-semanal/buenas-8','Bolsa de Comercio de Rosario · 6 novembre 2026')+'</p>')+'</div>';
+}
 function renderComplex(key){
   const group=groups[key];
   const isSoy=key==='soy';
@@ -493,7 +534,7 @@ function renderComplex(key){
   return head(key==='macro'?'Marchés transversaux':'Complexes de marché',group.name,'Analyse de l’offre, de la demande, des stocks et des flux. Les fiches distinguent les chiffres publiés, les projections et les effets attendus.')+
     (isSoy?'<div class="toolbar">'+btnSeg('soyFamily',soyFamilies,product,'Sous-famille du soja')+'</div>'+
       '<div class="toolbar">'+btnSeg('soyOrigin',soyOrigins,origin,'Origine du soja')+'</div>'+
-      (origin==='us'?usSoyHistoryPanels(product):notice('La première couverture des séries mensuelles porte sur les États-Unis.')) :
+      (origin==='us'?usSoyHistoryPanels(product):origin==='arg'?argentinaSoyPanels(product):notice('Les séries mensuelles couvrent les États-Unis et l’Argentine.')) :
       '<div class="toolbar"><label>Origine analysée</label>'+select('originTab',Object.fromEntries(group.origins.map(k=>[k,origins[k]])),origin,'Toutes les origines')+' <span class="small">'+e(selectedOrigin)+'</span></div>')+
     '<div class="grid4">'+group.channels.map(([title,desc])=>panel('<span class="eyebrow">'+e(title)+'</span><p class="analysis-text">'+e(desc)+'</p>')).join('')+'</div>'+
     (key==='palm'?mpobHistoryPanel():'')+
@@ -941,6 +982,12 @@ const controlActions={
     const names=soyHistoryLabels[family].map(name=>name+' (Mt)');
     const rows=usSoyDisplayRows(family).map(([date,...values])=>[date,...values.map(v=>v===null?'':String(Number(v.toFixed(8))).replace('.',',')),nopaHistory.get(date)?.source[1]??'']);
     csv('olea_'+(family==='soy'?'graines_soja':'huile_soja')+'_us.csv',[['Mois',...names,'Publication relayant NOPA'],...rows]);
+  },
+  'export-soy-arg':()=>{
+    const family=state.soyFamily, oil=family==='sbo';
+    const names=arSoyMetrics[family].map(([name])=>name+' (Mt)');
+    const rows=argentinaSoyHistory.map(row=>[row.date,...row[family].map(v=>v===null?'':String(Number(v.toFixed(9))).replace('.',',')),...(oil?[argentinaOilNote(row)]:[])]);
+    csv('olea_'+(oil?'huile_soja':'graines_soja')+'_arg.csv',[['Mois',...names,...(oil?['Qualité des données']:[])],...rows]);
   },
   'export-feed':exportFeed,
   'export-balance':exportBalances,
