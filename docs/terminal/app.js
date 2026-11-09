@@ -63,6 +63,8 @@ const periodLabel={1:'24 dernières heures',7:'7 derniers jours',30:'30 derniers
 const options=(dict,value='',placeholder)=>((placeholder?'<option value="">'+e(placeholder)+'</option>':'')+Object.entries(dict).map(([k,v])=>'<option value="'+e(k)+'"'+(String(k)===String(value)?' selected':'')+'>'+e(v)+'</option>').join(''));
 const select=(key,dict,value,placeholder,attr='data-control')=>'<select aria-label="'+e(placeholder||key)+'" '+attr+'="'+e(key)+'">'+options(dict,value,placeholder)+'</select>';
 const link=(url,label)=>safeURL(url)?'<a href="'+e(safeURL(url))+'" target="_blank" rel="noopener noreferrer">'+e(label)+'</a>':e(label);
+const chartSources=refs=>refs.length?'<p class="small chart-sources">Source'+(refs.length>1?'s':'')+' · '+refs.map(([name,url])=>link(url,name)).join(' · ')+'</p>':'';
+const refsFor=rows=>unique(rows.filter(r=>r?.source),r=>JSON.stringify([r.source,r.url])).map(r=>[r.source,r.url]);
 const route=(page,label,kind='',attr='')=>'<a class="button '+kind+'" href="#'+e(page)+'" '+attr+'>'+label+'</a>';
 const action=(name,label,kind='',attrs='')=>'<button type="button" class="button '+kind+'" data-action="'+e(name)+'" '+attrs+'>'+label+'</button>';
 const badge=(value,label='')=>'<span class="badge '+(value==='pending'?'muted':e(value))+'"><span class="dot"></span>'+e(label||labels.impact[value]||labels.status[value]||'Non disponible')+'</span>';
@@ -88,7 +90,7 @@ function series(id,filter=state.filters){
   }).sort(([a],[b])=>a.localeCompare(b)):[];
   return {...base,values:Object.fromEntries(points.map(([k,v])=>[k,v.value])),points:Object.fromEntries(points)};
 }
-const linesFrom=(ids)=>ids.map((id,i)=>{const s=series(id);return {label:s.name,color:colors[i%colors.length],points:Object.entries(s.values).map(([date,value])=>({date,value}))};});
+const linesFrom=(ids)=>ids.map((id,i)=>{const s=series(id);return {label:s.name,color:colors[i%colors.length],points:Object.entries(s.points).map(([date,point])=>({...point,date}))};});
 const colors=['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)','var(--series-7)'];
 const yearMonths=Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0'));
 const monthName=new Intl.DateTimeFormat('fr-FR',{month:'long',timeZone:'UTC'});
@@ -111,7 +113,7 @@ function chartTicks(values,scale){
 }
 const chartModels=[];
 const chartDefaults=last=>({height:'standard',scale:'auto',start:0,end:last,hidden:new Set()});
-function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=false,label='Historique '+unit}={}){
+function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=false,label='Historique '+unit,sourceLinks}={}){
   const valid=lines.filter(l=>l.points.some(p=>Number.isFinite(p.value)));
   if(!valid.length)return empty('Série non disponible pour la sélection.');
   const dates=seasonal?yearMonths:[...new Set(valid.flatMap(l=>l.points.map(p=>p.date)))].sort();
@@ -129,7 +131,8 @@ function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=fa
     selectSetting('scale','Échelle verticale',{auto:'Automatique',tight:'Resserrée',zero:'Inclure zéro'})+
     selectSetting('start','Du',periods)+selectSetting('end','Au',periods)+
     '<button type="button" class="button" data-chart-reset>Réinitialiser</button></div></details>'+
-    '<div class="chart-content">'+chartFrame(model)+'</div></figure>';
+    '<div class="chart-content">'+chartFrame(model)+'</div>'+
+    chartSources(sourceLinks??refsFor(valid.flatMap(l=>l.points).filter(p=>Number.isFinite(p.value))))+'</figure>';
 }
 function bindChart(wrap,model){
   const content=wrap.querySelector('.chart-content');
@@ -331,7 +334,7 @@ function renderOverview(){
     return '<a href="#'+c.group+'" data-market="'+c.key+'" class="market-card"><span class="market-code">'+e(c.code)+'</span><h3>'+e(c.title)+'</h3>'+badge(s.orientation)+'<p class="small" style="margin-top:7px">'+e(top[0]?.number?top[0].number+' · '+top[0].variation:c.summary)+'</p><ul>'+drivers.map(d=>'<li title="'+e(d)+'">'+e(d)+'</li>').join('')+'</ul><footer>'+e(confidence)+' · '+(rows[0]?e(formatDate(rows[0].date)):'À confirmer')+'</footer></a>';
   });
   const chartIds=state.chart==='oils'?['wb-sbo','wb-palm']:state.chart==='grains'?['wb-soy','wb-sm']:['brent','wti'];
-  const pricePanel=panel('<div class="spread-between"><div><h2>Historique des prix</h2><p class="small">Moyennes mensuelles · Banque mondiale</p></div>'+btnSeg('chart',{oils:'Huiles',grains:'Graines et tourteaux',energy:'Pétrole'},state.chart)+'</div>'+chart(linesFrom(chartIds),{unit:state.chart==='energy'?'USD/b':'USD/t'}));
+  const pricePanel=panel('<div class="spread-between"><div><h2>Historique des prix</h2><p class="small">Moyennes mensuelles</p></div>'+btnSeg('chart',{oils:'Huiles',grains:'Graines et tourteaux',energy:'Pétrole'},state.chart)+'</div>'+chart(linesFrom(chartIds),{unit:state.chart==='energy'?'USD/b':'USD/t'}));
   const next=calendarFilter().filter(r=>r.date&&r.date>=now).slice(0,4);
   const agenda=panel('<div class="spread-between"><h2>À surveiller</h2><a class="small" href="#calendar">Calendrier '+icon('arrow',14)+'</a></div>'+(next.length?next.map(calMini).join(''):empty('Aucune publication datée dans la sélection.')));
   const selected=scoped.filter(r=>r.date>=stamp(now,state.eventWindow)&&r.date<=now);
@@ -346,11 +349,9 @@ function renderOverview(){
 function monthlyHistory(title,rows,names,sourceLinks,note){
   const period=displayPeriod(rows[0][0],'month')+' – '+displayPeriod(rows.at(-1)[0],'month');
   const lines=names.map((label,i)=>({label,color:colors[i],points:rows.map(([date,...values])=>({date,value:values[i]/1000,tonnes:values[i]}))}));
-  const sourceLine=sourceLinks.map(([name,url])=>link(url,name)).join(' · ');
   const exactRows=rows.slice().reverse().map(([date,...values])=>[e(displayPeriod(date,'month')),...values.map(value=>valueCell(value,'t',0))]);
   return section(title,period+' · '+rows.length+' mois · milliers de tonnes')+
-    panel(chart(lines,{unit:'kt',height:222,label:title+' en milliers de tonnes',tooltips:p=>num(p.tonnes,0)+' t'})+'<p class="analysis-text">'+e(note)+'</p>'+
-      '<p class="small">Sources · '+sourceLine+'</p>'+
+    panel(chart(lines,{unit:'kt',height:222,label:title+' en milliers de tonnes',tooltips:p=>num(p.tonnes,0)+' t',sourceLinks})+'<p class="analysis-text">'+e(note)+'</p>'+
       '<details><summary class="small">Voir les chiffres mensuels en tonnes</summary>'+
       table(['Mois',...names],exactRows)+'</details>');
 }
@@ -359,7 +360,7 @@ function mpobHistoryPanel(){
     mpobHistorySources,'Stocks totaux et exportations d’huile de palme, production d’huile brute. Septembre 2026 est provisoire dans le tableau MPOB.');
 }
 const seasonalColors=colors.slice(1);
-function seasonalHistory(title,years,source='',note='',digits=4){
+function seasonalHistory(title,years,sourceLinks,note='',digits=4){
   const latest=years.at(-1);
   const lastMonth=yearMonths[latest.volumes.findLastIndex(Number.isFinite)];
   const lines=years.map(({year,volumes},i)=>({
@@ -367,19 +368,19 @@ function seasonalHistory(title,years,source='',note='',digits=4){
     points:volumes.map((value,m)=>({date:year+'-'+yearMonths[m],value})),
   }));
   const rows=yearMonths.map((month,m)=>[e(smallMonth('2000-'+month)),...years.map(({volumes})=>num(volumes[m],digits))]);
-  return section(title,'Dernière observation · '+displayPeriod(latest.year+'-'+lastMonth,'month')+' · millions de tonnes',source)+
-    panel(chart(lines,{unit:'Mt',height:244,seasonal:true,label:title+' en millions de tonnes',tooltips:p=>num(p.value,digits)+' Mt'})+note+
+  return section(title,'Dernière observation · '+displayPeriod(latest.year+'-'+lastMonth,'month')+' · millions de tonnes')+
+    panel(chart(lines,{unit:'Mt',height:244,seasonal:true,label:title+' en millions de tonnes',tooltips:p=>num(p.value,digits)+' Mt',sourceLinks})+note+
       '<details><summary class="small">Voir les valeurs mensuelles en Mt</summary>'+table(['Mois',...years.map(y=>y.year)],rows)+'</details>');
 }
 const eiaFeedstocks='https://www.eia.gov/dnav/pet/pet_pnp_feedbiofuel_dcu_nus_m.htm';
-const eiaHistory=code=>link('https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s='+code,'Historique EIA');
+const eiaHistory=code=>[['EIA · Historique mensuel','https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s='+code]];
 function renderBiofuels(){
   return head('Analyse','Biocarburants · États-Unis','Volumes d’huile consommés dans la production américaine de biocarburants. Chaque courbe représente une année, de janvier à décembre.')+
     '<p class="small">'+link(eiaFeedstocks,'EIA · Feedstocks Consumed for Production of Biofuels')+' · Publication du '+e(formatDate(biofuelReleaseDate))+'. Les mois masqués par l’EIA ou encore non publiés restent vides.</p>'+
     seasonalHistory('Huile de soja · Total',biofuelSeries.soybean,eiaHistory('M_EPOOBDSO_YIFBP_NUS_MMLB'))+
     seasonalHistory('Huile de canola · Total',biofuelSeries.canola,eiaHistory('M_EPOOBDCO_YIFBP_NUS_MMLB'));
 }
-function indiaOriginChart(title,rows,column,share){
+function indiaOriginChart(title,rows,column,share,source){
   const ranked=rows.filter(row=>row[column]>0).sort((a,b)=>b[column]-a[column]);
   const total=ranked.reduce((sum,row)=>sum+row[column],0);
   const axisMax=share?100:Math.ceil(ranked[0][column]/500000)*500000;
@@ -393,7 +394,7 @@ function indiaOriginChart(title,rows,column,share){
   const tableRows=ranked.map(row=>[e(row[0]),valueCell(row[column],'t',0),valueCell(row[column]/total*100,'%',1)]);
   return panel('<h3>'+e(title)+'</h3><p class="small">Total importé · '+e(num(total/1000000,3))+' Mt</p>'+
     '<figure class="origin-figure" aria-label="'+e(title+' par pays fournisseur')+'"><div class="origin-axis" aria-hidden="true"><span>'+label(0)+'</span><span>'+label(axisMax)+'</span></div>'+
-    '<ol class="origin-bars">'+bars+'</ol></figure>'+
+    '<ol class="origin-bars">'+bars+'</ol>'+chartSources([source])+'</figure>'+
     '<details><summary class="small">Voir les volumes en tonnes et les parts</summary>'+
     table(['Origine','Volume','Part du total'],tableRows)+'</details>','origin-card');
 }
@@ -403,23 +404,22 @@ function renderIndiaOrigins(){
   const share=state.indiaOriginMode==='share';
   const periodOptions=Object.fromEntries(Object.entries(indiaOrigins).map(([year,p])=>[year,p.label+' ('+p.duration+')']));
   const source=seaHistorySources[Object.keys(indiaOrigins).indexOf(period)];
-  return section('Inde · Importations par pays fournisseur',label+' · '+duration+' · Données SEA India',link(source[1],source[0]))+
+  return section('Inde · Importations par pays fournisseur',label+' · '+duration)+
     '<div class="toolbar"><label>Campagne</label>'+select('indiaOriginPeriod',periodOptions,period)+
     '<label>Affichage</label>'+select('indiaOriginMode',{volume:'Volume (Mt)',share:'Part des importations (%)'},state.indiaOriginMode)+'</div>'+
     '<div class="grid3 origin-grid">'+
-    indiaOriginChart('Huile de palme',rows,1,share)+
-    indiaOriginChart('Huile de tournesol',rows,2,share)+
-    indiaOriginChart('Huile de soja',rows,3,share)+'</div>'+
+    indiaOriginChart('Huile de palme',rows,1,share,source)+
+    indiaOriginChart('Huile de tournesol',rows,2,share,source)+
+    indiaOriginChart('Huile de soja',rows,3,share,source)+'</div>'+
     '<p class="analysis-text">Palme : huile brute, oléine RBD et huile brute de palmiste. Soja et tournesol : brut et raffiné lorsque ventilés par SEA. Le bulletin 2023/24 ventile le soja et le tournesol bruts. « Autres origines » reprend le regroupement publié par SEA.</p>';
 }
 function renderDemand(){
-  const chinaSources=chinaSoybeanSources.map(([name,url])=>link(url,name)).join(' · ');
   return head('Analyse','Demande','Suivez les importations indiennes d’huiles végétales et comparez la saisonnalité des importations chinoises de graines de soja.')+
     monthlyHistory('Inde · Importations SEA India',seaHistory,['Huile de palme','Huile de tournesol','Huile de soja'],
       seaHistorySources,'Le total palme inclut CPO, oléine brute et RBD, et huile de palmiste brute. Le soja et le tournesol incluent les volumes raffinés comptabilisés par SEA. La révision 2024/25 intègre les flux du Népal.')+
     renderIndiaOrigins()+
-    seasonalHistory('Chine · Importations de graines de soja',chinaSoybeanImports,'',
-      '<p class="analysis-text">Douanes chinoises (GACC), toutes origines. Une courbe par année civile depuis 2020. Les mois non publiés restent vides.</p><p class="small">Sources · '+chinaSources+'</p>',3);
+    seasonalHistory('Chine · Importations de graines de soja',chinaSoybeanImports,chinaSoybeanSources,
+      '<p class="analysis-text">Douanes chinoises (GACC), toutes origines. Une courbe par année civile depuis 2020. Les mois non publiés restent vides.</p>',3);
 }
 const soyFamilies={soy:'Graines de soja · Soybeans',sbo:'Huile de soja · Soyoil'};
 const soyOrigins={us:origins.us,arg:origins.arg,bra:origins.bra};
@@ -433,7 +433,15 @@ const usSoyTrade='https://www.census.gov/foreign-trade/data/dataproducts.html';
 function usSoyHistoryPanels(family){
   const rows=usSoyHistory[family];
   const names=soyHistoryLabels[family];
+  const beans=family==='soy';
+  const before=beans?'août 2025':'sept. 2025';
+  const after=beans?'sept. 2025':'oct. 2025';
+  const yearbook=['USDA ERS · Tableau '+(beans?6:8)+' (jusqu’en '+before+')',usSoyYearbook];
+  const nass=['USDA NASS · Fats and Oils',usSoyNass];
+  const trade=['U.S. Census · Commerce SH '+(beans?'1201':'1507'),usSoyTrade];
   const charts=names.map((name,i)=>{
+    const recent=i<2?[trade]:!beans&&i===2?[nass,trade]:[nass];
+    const sourceLinks=[yearbook,...recent.map(([label,url])=>[label+' (depuis '+after+')',url])];
     const points=rows.map(([date,...values])=>({date,value:values[i]}));
     const first=points.find(p=>Number.isFinite(p.value));
     const latest=points.findLast(p=>Number.isFinite(p.value));
@@ -441,23 +449,18 @@ function usSoyHistoryPanels(family){
     return panel('<h3>'+e(name)+'</h3><p class="small">'+
       e(displayPeriod(first.date,'month')+' – '+displayPeriod(latest.date,'month')+' · Dernière valeur '+num(latest.value,4)+' Mt')+'</p>'+
       chart([{label:name,color:colors[i%colors.length],points:points.slice(0,points.indexOf(latest)+1)}],
-        {unit:'Mt',label,tooltips:p=>num(p.value,6)+' Mt'}));
+        {unit:'Mt',label,tooltips:p=>num(p.value,6)+' Mt',sourceLinks}));
   });
   const headers=['Mois',...names.map(name=>name+' (Mt)')];
   const tableRows=rows.toReversed().map(([date,...values])=>[e(displayPeriod(date,'month')),...values.map(v=>valueCell(v,'',6))]);
   const notes=family==='soy'?'La trituration correspond au volume de graines transformées aux États-Unis.':
     'La consommation intérieure apparente inclut l’alimentaire, l’alimentation animale, les usages industriels et les biocarburants. Elle correspond au stock d’ouverture, augmenté de la production et des importations, moins les exportations et le stock de clôture. Les stocks de fin de mois couvrent l’huile brute et l’huile raffinée une première fois.';
-  const sourceCutoff=family==='soy'?'août 2025':'septembre 2025';
-  const tradeCode=family==='soy'?'1201':'1507';
-  const provenance='USDA ERS jusqu’en '+sourceCutoff+'. Pour les mois suivants, USDA NASS et U.S. Census (SH '+tradeCode+', importations pour consommation et exportations totales).';
   return section(products[family]+' · États-Unis','Historique mensuel depuis janvier 2020 · millions de tonnes métriques')+
     '<div class="grid2 flow">'+charts.join('')+'</div>'+
     section('Données mensuelles','Valeurs en millions de tonnes métriques',
       action('export-soy-us',icon('download')+' Télécharger le CSV','ghost'))+
     panel('<p class="analysis-text">'+e(notes)+'</p>'+
-      '<p class="small">'+e(provenance)+'</p>'+
-      '<p class="small">Sources · '+link(usSoyYearbook,'USDA ERS · Oil Crops Yearbook')+' · '+
-      link(usSoyNass,'USDA NASS · Fats and Oils')+' · '+link(usSoyTrade,'U.S. Census · Merchandise Trade')+'</p>'+
+      '<p class="small">Le commerce récent repose sur les importations pour consommation et les exportations totales.</p>'+
       '<details><summary class="small">Voir le tableau mensuel</summary>'+table(headers,tableRows)+'</details>');
 }
 function renderComplex(key){
@@ -534,7 +537,7 @@ function renderBalances(){
   const chosenUnit=units[0]||'';
   const kept=selected.filter(r=>r.unit===chosenUnit);
   const originsList=[...new Set(kept.map(r=>r.origin))];
-  const lines=originsList.map((origin,i)=>({label:origins[origin],color:colors[i%colors.length],points:unique(kept.filter(r=>r.origin===origin).sort((a,b)=>a.date.localeCompare(b.date)),r=>r.period).sort((a,b)=>a.period.localeCompare(b.period)).map(r=>({date:r.period,value:r.value}))}));
+  const lines=originsList.map((origin,i)=>({label:origins[origin],color:colors[i%colors.length],points:unique(kept.filter(r=>r.origin===origin).sort((a,b)=>a.date.localeCompare(b.date)),r=>r.period).sort((a,b)=>a.period.localeCompare(b.period)).map(r=>({date:r.period,value:r.value,source:r.source,url:r.url}))}));
   const summaries=[
     ['Indicateurs',rows.length,'Dans le périmètre sélectionné'],
     ['Paires comparables',changes,'Même unité et même définition'],
@@ -581,7 +584,7 @@ function renderCross(){
     panel('<span class="eyebrow">Corrélation</span><b class="num">'+num(corr.r)+'</b><span class="muted">Pearson sur '+corr.n+' variations</span>','metric')+
     panel('<span class="eyebrow">Observations communes</span><b class="num">'+rows.length+'</b><span class="muted">'+e(periodTypes[a.grain]||'Jour')+'</span>','metric')+'</div>'+
     section('Évolution historique',sameGrain?'Mêmes périodes de référence':'Les fréquences de publication diffèrent',btnSeg('crossMode',common?{index:'Base 100',spread:'Spread'}:{index:'Base 100'},mode))+
-    panel(chart(changes,{unit:mode==='spread'?a.unit:'base 100',periodType:a.grain})+(!sameGrain?notice('Ajoutez des observations sur la même fréquence pour comparer ces séries.'):''))+
+    panel(chart(changes,{unit:mode==='spread'?a.unit:'base 100',periodType:a.grain,sourceLinks:refsFor(rows.flatMap(r=>[a.points[r.date],b.points[r.date]]))})+(!sameGrain?notice('Ajoutez des observations sur la même fréquence pour comparer ces séries.'):''))+
     section('Lecture économique','Compétitivité et transmission entre marchés')+
     panel('<p class="analysis-text">'+e(note||'Vérifier le grade, la devise, le fret et la base géographique avant d’interpréter un écart.')+'</p><p class="small">'+e(a.definition+' '+b.definition)+'</p><p class="small" style="margin-top:7px">Une corrélation décrit un mouvement conjoint. Une analyse du mécanisme économique est nécessaire pour attribuer une causalité.</p>')+
     section('Observations et provenance','Valeurs brutes avant indexation')+
