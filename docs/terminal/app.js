@@ -6,6 +6,7 @@ import {biofuelReleaseDate,biofuelSeries} from './biofuels.js';
 import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js';
 import {indiaOrigins} from './india-origins.js';
 import {usSoyHistory} from './us-soy-history.js?v=20261109-soja';
+import {nopaHistory,nopaReport} from './nopa-history.js?v=20261109-nopa';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -424,14 +425,20 @@ function renderDemand(){
 const soyFamilies={soy:'Graines de soja · Soybeans',sbo:'Huile de soja · Soyoil'};
 const soyOrigins={us:origins.us,arg:origins.arg,bra:origins.bra};
 const soyHistoryLabels={
-  soy:['Importations','Exportations','Trituration (crush)'],
-  sbo:['Importations','Exportations','Consommation intérieure','Stocks de fin de mois'],
+  soy:['Importations','Exportations','Trituration (NOPA)'],
+  sbo:['Importations','Exportations','Consommation intérieure','Stocks de fin de mois (NOPA)'],
 };
 const usSoyYearbook='https://www.ers.usda.gov/data-products/oil-crops-yearbook';
 const usSoyNass='https://esmis.nal.usda.gov/publication/fats-and-oils-oilseed-crushings-production-consumption-and-stocks';
 const usSoyTrade='https://www.census.gov/foreign-trade/data/dataproducts.html';
+function usSoyDisplayRows(family){
+  return usSoyHistory[family].map(([date,imports,exports,domestic])=>{
+    const nopa=nopaHistory.get(date);
+    return family==='soy'?[date,imports,exports,nopa?.crush??null]:[date,imports,exports,domestic,nopa?.stocks??null];
+  });
+}
 function usSoyHistoryPanels(family){
-  const rows=usSoyHistory[family];
+  const rows=usSoyDisplayRows(family);
   const names=soyHistoryLabels[family];
   const beans=family==='soy';
   const before=beans?'août 2025':'sept. 2025';
@@ -440,21 +447,27 @@ function usSoyHistoryPanels(family){
   const nass=['USDA NASS · Fats and Oils',usSoyNass];
   const trade=['U.S. Census · Commerce SH '+(beans?'1201':'1507'),usSoyTrade];
   const charts=names.map((name,i)=>{
-    const recent=i<2?[trade]:!beans&&i===2?[nass,trade]:[nass];
-    const sourceLinks=[yearbook,...recent.map(([label,url])=>[label+' (depuis '+after+')',url])];
+    const isNopa=i===names.length-1;
+    const recent=i<2?[trade]:[nass,trade];
+    const sourceLinks=isNopa?[['NOPA · Monthly Crush Report',nopaReport]]:
+      [yearbook,...recent.map(([label,url])=>[label+' (depuis '+after+')',url])];
     const points=rows.map(([date,...values])=>({date,value:values[i]}));
     const first=points.find(p=>Number.isFinite(p.value));
     const latest=points.findLast(p=>Number.isFinite(p.value));
     const label=products[family]+' · '+name;
     return panel('<h3>'+e(name)+'</h3><p class="small">'+
       e(displayPeriod(first.date,'month')+' – '+displayPeriod(latest.date,'month')+' · Dernière valeur '+num(latest.value,4)+' Mt')+'</p>'+
-      chart([{label:name,color:colors[i%colors.length],points:points.slice(0,points.indexOf(latest)+1)}],
-        {unit:'Mt',label,tooltips:p=>num(p.value,6)+' Mt',sourceLinks}));
+      chart([{label:name,color:colors[i%colors.length],points:points.slice(points.indexOf(first),points.indexOf(latest)+1)}],
+        {unit:'Mt',label,tooltips:p=>num(p.value,6)+' Mt',sourceLinks})+
+      (isNopa?'<p class="small">Chiffres NOPA relayés publiquement. Voir les références par mois dans le tableau.</p>':''));
   });
-  const headers=['Mois',...names.map(name=>name+' (Mt)')];
-  const tableRows=rows.toReversed().map(([date,...values])=>[e(displayPeriod(date,'month')),...values.map(v=>valueCell(v,'',6))]);
-  const notes=family==='soy'?'La trituration correspond au volume de graines transformées aux États-Unis.':
-    'La consommation intérieure apparente inclut l’alimentaire, l’alimentation animale, les usages industriels et les biocarburants. Elle correspond au stock d’ouverture, augmenté de la production et des importations, moins les exportations et le stock de clôture. Les stocks de fin de mois couvrent l’huile brute et l’huile raffinée une première fois.';
+  const headers=['Mois',...names.map(name=>name+' (Mt)'),'Publication relayant NOPA'];
+  const tableRows=rows.toReversed().map(([date,...values])=>{
+    const ref=nopaHistory.get(date)?.source;
+    return [e(displayPeriod(date,'month')),...values.map(v=>valueCell(v,'',6)),ref?link(ref[1],ref[0]):'—'];
+  });
+  const notes=family==='soy'?'La trituration couvre les volumes déclarés par les membres de NOPA. Les mois sans chiffre NOPA vérifié restent vides.':
+    'La consommation intérieure apparente inclut l’alimentaire, l’alimentation animale, les usages industriels et les biocarburants. Elle correspond au stock d’ouverture, augmenté de la production et des importations, moins les exportations et le stock de clôture. Le calcul de consommation utilise les stocks nationaux de l’USDA. Le graphique des stocks couvre les stocks de fin de mois déclarés par les membres de NOPA. Les mois sans chiffre NOPA vérifié restent vides.';
   return section(products[family]+' · États-Unis','Historique mensuel depuis janvier 2020 · millions de tonnes métriques')+
     '<div class="grid2 flow">'+charts.join('')+'</div>'+
     section('Données mensuelles','Valeurs en millions de tonnes métriques',
@@ -926,8 +939,8 @@ const controlActions={
   'export-soy-us':()=>{
     const family=state.soyFamily;
     const names=soyHistoryLabels[family].map(name=>name+' (Mt)');
-    const rows=usSoyHistory[family].map(([date,...values])=>[date,...values.map(v=>v===null?'':String(v).replace('.',','))]);
-    csv('olea_'+(family==='soy'?'graines_soja':'huile_soja')+'_us.csv',[['Mois',...names],...rows]);
+    const rows=usSoyDisplayRows(family).map(([date,...values])=>[date,...values.map(v=>v===null?'':String(v).replace('.',',')),nopaHistory.get(date)?.source[1]??'']);
+    csv('olea_'+(family==='soy'?'graines_soja':'huile_soja')+'_us.csv',[['Mois',...names,'Publication relayant NOPA'],...rows]);
   },
   'export-feed':exportFeed,
   'export-balance':exportBalances,
