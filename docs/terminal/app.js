@@ -90,9 +90,15 @@ const colors=['var(--series-1)','var(--series-2)','var(--series-3)','var(--serie
 const yearMonths=Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0'));
 const monthName=new Intl.DateTimeFormat('fr-FR',{month:'long',timeZone:'UTC'});
 const monthDate=month=>new Date('2000-'+month+'-01T12:00:00Z');
-function chartTicks(values){
+function chartTicks(values,scale){
+  if(scale==='zero')values=[...values,0];
   const low=Math.min(...values),high=Math.max(...values);
-  const range=high-low||Math.abs(high)*.15||1;
+  const range=high-low||Math.abs(high)*(scale==='tight'?.02:.15)||1;
+  if(scale==='tight'){
+    const margin=range*(high===low?.5:.03);
+    const start=low>=0?Math.max(0,low-margin):low-margin;
+    return Array.from({length:5},(_,i)=>start+(high+margin-start)*i/4);
+  }
   const rawStep=range/4,power=10**Math.floor(Math.log10(rawStep));
   const step=[1,2,2.5,5,10].find(n=>n>=rawStep/power)*power;
   const bottom=Math.floor((low-range*.08)/step);
@@ -100,17 +106,80 @@ function chartTicks(values){
   const last=Math.ceil((high+range*.08)/step);
   return Array.from({length:last-first+1},(_,i)=>(i+first)*step);
 }
+const chartModels=[];
+const chartDefaults=last=>({height:'standard',scale:'auto',start:0,end:last,hidden:new Set()});
 function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=false,label='Historique '+unit}={}){
   const valid=lines.filter(l=>l.points.some(p=>Number.isFinite(p.value)));
   if(!valid.length)return empty('Série non disponible pour la sélection.');
   const dates=seasonal?yearMonths:[...new Set(valid.flatMap(l=>l.points.map(p=>p.date)))].sort();
-  const values=valid.flatMap(l=>l.points.map(p=>p.value)).filter(Number.isFinite);
-  const ticks=chartTicks(values);
+  const periodLabel=date=>seasonal?monthName.format(monthDate(date)):displayPeriod(date,periodType);
+  const periods=Object.fromEntries(dates.map((date,i)=>[i,periodLabel(date)]));
+  const settings=chartDefaults(dates.length-1);
+  const model={valid,dates,unit,periodType,height,tooltips,seasonal,settings};
+  const index=chartModels.push(model)-1;
+  const selectSetting=(key,title,choices)=>'<label>'+e(title)+'<select aria-label="'+e(title)+'" data-chart-setting="'+key+'">'+options(choices,settings[key])+'</select></label>';
+  const legend=valid.map((l,i)=>'<button type="button" data-chart-series="'+i+'" aria-pressed="true" title="Afficher ou masquer cette série"><i style="--series:'+l.color+'"></i>'+e(l.label)+'</button>').join('');
+  return '<figure class="chart-wrap" aria-label="'+e(label)+'" data-chart="'+index+'">'+
+    '<figcaption class="chart-key"><div class="legend" role="group" aria-label="Séries affichées">'+legend+'</div>'+(unit?'<span class="chart-unit">'+e(unit)+'</span>':'')+'</figcaption>'+
+    '<details class="chart-settings"><summary>Réglages du graphique</summary><div class="chart-controls">'+
+    selectSetting('height','Hauteur',{compact:'Compacte',standard:'Standard',large:'Agrandie'})+
+    selectSetting('scale','Échelle verticale',{auto:'Automatique',tight:'Resserrée',zero:'Inclure zéro'})+
+    selectSetting('start','Du',periods)+selectSetting('end','Au',periods)+
+    '<button type="button" class="button" data-chart-reset>Réinitialiser</button></div></details>'+
+    '<div class="chart-content">'+chartFrame(model)+'</div></figure>';
+}
+function bindChart(wrap,model){
+  const content=wrap.querySelector('.chart-content');
+  const refresh=()=>{
+    const {settings}=model;
+    for(const select of wrap.querySelectorAll('[data-chart-setting]'))select.value=settings[select.dataset.chartSetting];
+    const legend=wrap.querySelectorAll('[data-chart-series]');
+    for(const button of legend){
+      const visible=!settings.hidden.has(Number(button.dataset.chartSeries));
+      button.setAttribute('aria-pressed',visible);
+      button.disabled=visible&&settings.hidden.size===legend.length-1;
+    }
+    content.innerHTML=chartFrame(model);
+    const tooltip=content.querySelector('.chart-tooltip');
+    if(tooltip)bindChartTooltip(tooltip);
+  };
+  wrap.addEventListener('change',event=>{
+    const key=event.target.dataset.chartSetting;
+    if(!key)return;
+    const {settings}=model;
+    settings[key]=key==='start'||key==='end'?Number(event.target.value):event.target.value;
+    if(key==='start'&&settings.start>settings.end)settings.end=settings.start;
+    if(key==='end'&&settings.end<settings.start)settings.start=settings.end;
+    refresh();
+  });
+  wrap.addEventListener('click',event=>{
+    const button=event.target.closest('[data-chart-series],[data-chart-reset]');
+    if(!button)return;
+    if(button.hasAttribute('data-chart-reset'))model.settings=chartDefaults(model.dates.length-1);
+    else{
+      const index=Number(button.dataset.chartSeries),hidden=model.settings.hidden;
+      if(hidden.has(index))hidden.delete(index);
+      else hidden.add(index);
+    }
+    refresh();
+  });
+  if(model.valid.length===1)wrap.querySelector('[data-chart-series]').disabled=true;
+  const tooltip=content.querySelector('.chart-tooltip');
+  if(tooltip)bindChartTooltip(tooltip);
+}
+function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,seasonal,settings}){
+  const dates=allDates.slice(settings.start,settings.end+1);
+  const dateSet=new Set(dates);
+  const key=p=>seasonal?p.date.slice(5):p.date;
+  const lines=valid.filter((_,i)=>!settings.hidden.has(i)).map(line=>({...line,points:line.points.filter(p=>dateSet.has(key(p)))}));
+  const values=lines.flatMap(l=>l.points.map(p=>p.value)).filter(Number.isFinite);
+  if(!values.length)return empty('Aucune observation pour les séries et la période sélectionnées.');
+  const ticks=chartTicks(values,settings.scale);
   const min=ticks[0],max=ticks.at(-1);
   const tickDigits=Math.max(0,Math.ceil(-Math.log10(ticks[1]-min))+1);
   const x=i=>dates.length===1?50:100*i/(dates.length-1);
   const y=v=>100*(max-v)/(max-min);
-  const column=p=>dates.indexOf(seasonal?p.date.slice(5):p.date);
+  const column=p=>dates.indexOf(key(p));
   const tickCount=Math.min(7,dates.length);
   const axisColumns=seasonal||tickCount===1?dates.map((_,i)=>i):Array.from({length:tickCount},(_,i)=>Math.round(i*(dates.length-1)/(tickCount-1)));
   const multiYear=dates[0].slice(0,4)!==dates.at(-1).slice(0,4);
@@ -119,7 +188,7 @@ function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=fa
   const xLabels=axisColumns.map(i=>'<span style="--x:'+x(i)+'%">'+e(axisLabel(dates[i]))+'</span>').join('');
   const grid=ticks.map(v=>'<line class="grid'+(v===0?' zero':'')+'" x1="0" x2="100" y1="'+y(v)+'" y2="'+y(v)+'"/>').join('');
   const paths=[],points=[];
-  for(const l of valid){
+  for(const l of lines){
     const path=l.points.map((p,i)=>{
       if(!Number.isFinite(p.value))return '';
       const command=Number.isFinite(l.points[i-1]?.value)?'L':'M';
@@ -136,13 +205,12 @@ function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=fa
       points.push('<button type="button" class="chart-point" tabindex="'+(points.length?'-1':'0')+'" aria-label="'+e(pointLabel)+'" data-column="'+index+'" data-heading="'+e(heading)+'" data-series="'+e(l.label)+'" data-reading="'+e(reading)+'" style="--x:'+x(index)+'%;--y:'+y(p.value)+'%;--series:'+l.color+'"></button>');
     }
   }
-  const legend=valid.map(l=>'<span><i style="--series:'+l.color+'"></i>'+e(l.label)+'</span>').join('');
-  return '<figure class="chart-wrap" aria-label="'+e(label)+'" style="--plot-height:'+height+'px" data-columns="'+dates.length+'">'+
-    '<figcaption class="chart-key"><div class="legend">'+legend+'</div>'+(unit?'<span class="chart-unit">'+e(unit)+'</span>':'')+'</figcaption>'+
+  const plotHeight={compact:185,standard:height+75,large:height+220}[settings.height];
+  return '<div class="chart-view" style="--plot-height:'+plotHeight+'px" data-columns="'+dates.length+'">'+
     '<div class="chart-frame"><div class="chart-axis-y" aria-hidden="true">'+yLabels+'</div><div class="chart-plot">'+
     '<svg class="chart" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'+grid+paths.join('')+'</svg>'+
     '<div class="chart-guide" hidden></div>'+points.join('')+'</div><div class="chart-axis-x" aria-hidden="true">'+xLabels+'</div></div>'+
-    '<div class="chart-tooltip" aria-hidden="true" hidden></div></figure>';
+    '<div class="chart-tooltip" aria-hidden="true" hidden></div></div>';
 }
 function bindChartTooltip(tooltip){
   const wrap=tooltip.parentElement,plot=wrap.querySelector('.chart-plot'),guide=plot.querySelector('.chart-guide');
@@ -607,8 +675,9 @@ function render(){
   const focusFilter=active?.getAttribute('data-filter');
   const focusControl=active?.getAttribute('data-control');
   document.documentElement.dataset.theme=state.theme;
+  chartModels.length=0;
   root.innerHTML=shell(pageRender[state.page]());
-  root.querySelectorAll('.chart-tooltip').forEach(bindChartTooltip);
+  root.querySelectorAll('[data-chart]').forEach(wrap=>bindChart(wrap,chartModels[Number(wrap.dataset.chart)]));
   if(focusFilter)root.querySelector('[data-filter="'+CSS.escape(focusFilter)+'"]')?.focus({preventScroll:true});
   if(focusControl)root.querySelector('[data-control="'+CSS.escape(focusControl)+'"]')?.focus({preventScroll:true});
 }
