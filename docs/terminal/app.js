@@ -1,7 +1,7 @@
 
-import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scenarios,shockFields,horizonNotes,scoreWeights} from './data.js';
+import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scenarios,shockFields,horizonNotes,scoreWeights} from './data.js?v=20261110-mpob';
 import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js';
-import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js';
+import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js?v=20261110-mpob';
 import {biofuelReleaseDate,biofuelSeries} from './biofuels.js';
 import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js';
 import {indiaOrigins} from './india-origins.js';
@@ -358,8 +358,13 @@ function monthlyHistory(title,rows,names,sourceLinks,note){
       table(['Mois',...names],exactRows)+'</details>');
 }
 function mpobHistoryPanel(){
-  return monthlyHistory('Malaisie · Historique MPOB',mpobHistory,['Stocks fin de mois','Production de CPO','Exportations d’huile de palme'],
-    mpobHistorySources,'Stocks totaux et exportations d’huile de palme, production d’huile brute. Septembre 2026 est provisoire dans le tableau MPOB.');
+  const latest=mpobHistory.at(-1).slice(1);
+  const previous=mpobHistory.at(-2).slice(1);
+  const names=['Stocks fin de mois','Production de CPO','Exportations d’huile de palme'];
+  return section('Malaisie · Bilan MPOB d’octobre','Publié le 10 novembre 2026 · données provisoires')+
+    '<div class="grid3">'+names.map((name,i)=>panel('<h3>'+e(name)+'</h3><p>'+num(latest[i]/1e6,3)+' Mt</p><p class="small">'+e(sign(pct(latest[i],previous[i]),2)+' % m/m')+'</p>')).join('')+'</div>'+
+    monthlyHistory('Malaisie · Historique MPOB',mpobHistory,names,
+    mpobHistorySources,'Stocks totaux et exportations d’huile de palme, production d’huile brute. Octobre 2026 est provisoire. Septembre est révisé dans cette publication.');
 }
 const seasonalColors=colors.slice(1);
 function seasonalHistory(title,years,sourceLinks,note='',digits=4){
