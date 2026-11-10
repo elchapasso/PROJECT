@@ -1,0 +1,42 @@
+name: Actualiser le calendrier
+
+on:
+  schedule:
+    - cron: '23 6,12,19 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-calendar.yml'
+      - 'scripts/update-calendar.py'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: calendar-live
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Récupérer les calendriers publics
+        id: refresh
+        continue-on-error: true
+        run: |
+          git fetch --no-tags origin refs/heads/calendar-live
+          git worktree add --detach "$RUNNER_TEMP/calendar-live" FETCH_HEAD
+          python3 scripts/update-calendar.py "$RUNNER_TEMP/calendar-live/docs/terminal/calendar-feed.json"
+      - name: Publier les données actualisées
+        run: |
+          cd "$RUNNER_TEMP/calendar-live"
+          git add docs/terminal/calendar-feed.json
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh NASS and Forex Factory calendar'
+          git push origin HEAD:refs/heads/calendar-live
+      - name: Signaler une source indisponible
+        if: steps.refresh.outcome == 'failure'
+        run: exit 1
