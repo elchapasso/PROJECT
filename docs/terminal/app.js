@@ -1,5 +1,5 @@
 
-import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scenarios,shockFields,horizonNotes,scoreWeights} from './data.js?v=20261110-mpob';
+import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scenarios,shockFields,horizonNotes,scoreWeights} from './data.js?v=20261110-calendar';
 import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js';
 import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js?v=20261110-mpob';
 import {biofuelReleaseDate,biofuelSeries} from './biofuels.js';
@@ -39,6 +39,7 @@ const menu=[
 ];
 const nav=Object.fromEntries(menu.flatMap(([,items])=>items.map(([id,title])=>[id,title])).concat([['sources','Sources & données']]));
 const FILTERS={product:'',origin:'',period:'',horizon:'',impact:'',source:'',status:''};
+const calendarToday=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Africa/Casablanca'}).format(new Date());
 const localKey='olea-terminal-v1';
 let data=emptyStore();
 let loadError='';
@@ -48,7 +49,7 @@ const state={
   indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
   soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',originTab:{},query:'',category:'',importance:'',start:'',end:'',balanceProduct:'sbo',compare:'revision',metric:'production',
   crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',outProduct:'sbo',outHorizon:'short',
-  shocks:Object.fromEntries(shockFields.map(([k])=>[k,0])),reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:AS_OF.slice(0,7),editType:'events',
+  shocks:Object.fromEntries(shockFields.map(([k])=>[k,0])),reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:calendarToday().slice(0,7),editType:'events',
 };
 try{if(localStorage.getItem('olea-theme')==='dark')state.theme='dark';}catch{}
 const readPage=()=>{const p=location.hash.slice(1);return Object.hasOwn(nav,p)?p:'overview';};
@@ -57,7 +58,10 @@ let memoryReport=null;
 let toastTimer;
 const fullEvents=()=>unique([...seedEvents,...data.events],eventKey).sort(byDate);
 const fullBalances=()=>balancesWithRatios(unique([...seedBalances,...data.balances],balanceKey));
-const fullCalendar=()=>unique([...seedCalendar,...data.calendar],r=>r.id).sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999'));
+let calendarFeed=null;
+let calendarFeedLoaded=false;
+const fullCalendar=()=>unique([...seedCalendar,...calendarEntries(calendarFeed),...data.calendar],r=>r.id)
+  .sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')||a.time.localeCompare(b.time));
 const asOf=()=>referenceDate(fullEvents());
 const eventCaps={status:true,impact:true,horizon:true,period:true};
 const allSources=()=>Object.fromEntries([...new Set([...Object.keys(sources),...data.events.map(r=>r.source),...data.balances.map(r=>r.source),...data.quotes.map(r=>r.source),...data.calendar.map(r=>r.source)])].sort((a,b)=>a.localeCompare(b,'fr')).map(s=>[s,s]));
@@ -744,8 +748,49 @@ function scenarioTable(h){
 }
 
 
+const forexCalendarUrl='https://www.forexfactory.com/calendar';
+const liveCalendarFeed='https://raw.githubusercontent.com/elchapasso/PROJECT/calendar-live/docs/terminal/calendar-feed.json';
+function calendarEntries(feed){
+  if(!feed)return [];
+  const common={zone:'New York (ET)',importance:3};
+  const nass=feed.nass.map(({date,url})=>({...common,id:'nass-crop-progress-'+date.slice(0,10),
+    date:date.slice(0,10),time:date.slice(11,16),title:'USDA NASS · Crop Progress',short:'NASS · Crop Progress',
+    source:'USDA NASS',url,product:'soy',origin:'us',expected:'Avancement des semis et récoltes, stade et état des cultures selon la saison.',
+    previous:'Voir les rapports Crop Progress',consensus:'Non disponible',
+    impact:'Une surprise sur l’avancement ou l’état des cultures peut modifier les attentes d’offre américaine.'}));
+  const forex=feed.forex.map(({date,country,title,forecast,previous})=>({...common,id:'ff-'+country+'-'+date+'-'+title,
+    date:date.slice(0,10),time:date.slice(11,16),title:country+' · '+title,source:'Forex Factory',url:forexCalendarUrl,
+    product:'fx',origin:country==='USD'?'us':'eu',expected:'Annonce à fort impact · '+country,
+    consensus:forecast||'Non disponible',previous:previous||'Non disponible',
+    impact:'Un écart au consensus peut affecter le '+(country==='USD'?'dollar américain':'cours de l’euro')+'.'}));
+  return [...nass,...forex];
+}
+async function refreshCalendar(){
+  for(const url of [liveCalendarFeed,'./terminal/calendar-feed.json?v=20261110']){
+    try{
+      const response=await fetch(url,{cache:'no-cache',signal:AbortSignal.timeout(7000)});
+      if(!response.ok)continue;
+      const feed=await response.json();
+      if(!Array.isArray(feed.nass)||!Array.isArray(feed.forex))continue;
+      calendarFeed=feed;
+      break;
+    }catch{}
+  }
+  calendarFeedLoaded=true;
+  if((state.page==='calendar'||state.page==='overview')&&!root.querySelector('dialog[open]'))render();
+}
+function calendarCoverage(){
+  const nass=link(sources['USDA NASS'].url,'USDA NASS');
+  const forex=link(forexCalendarUrl,'Forex Factory');
+  const week=calendarFeed?.forexWeekStart?
+    formatDate(calendarFeed.forexWeekStart)+' – '+formatDate(calendarFeed.forexWeekEnd):calendarFeedLoaded?'calendrier indisponible':'chargement du calendrier';
+  const outdated=calendarFeed?.forexWeekEnd&&calendarFeed.forexWeekEnd<calendarToday();
+  return '<p class="small">'+nass+' · Crop Progress à 16 h ET, le premier jour ouvré d’avril à novembre. '+
+    forex+' · USD et EUR à fort impact · '+e(week)+(outdated?' · Dernière semaine disponible':'')+'.</p>';
+}
 function renderCalendar(){
   const rows=calendarFilter();
+  const today=calendarToday();
   const [y,m]=state.month.split('-').map(Number);
   const dayCount=new Date(Date.UTC(y,m,0)).getUTCDate();
   const offset=(new Date(Date.UTC(y,m-1,1)).getUTCDay()+6)%7;
@@ -758,7 +803,8 @@ function renderCalendar(){
   const renderRows=arr=>arr.length?arr.map(calMini).join(''):empty('Aucune publication dans cette sélection.');
   return head('Veille','Calendrier des publications','Retrouvez les prochaines publications officielles, les précédents chiffres et les scénarios de réaction.')+
     panel('<div class="spread-between"><h2>'+e(displayPeriod(state.month,'month'))+'</h2><div class="actions">'+action('month',icon('left'),'icon','data-value="-1" aria-label="Mois précédent"')+action('month',icon('right'),'icon','data-value="1" aria-label="Mois suivant"')+'</div></div><div class="month" aria-label="Calendrier mensuel">'+['Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.','Dim.'].map(d=>'<span class="small">'+d+'</span>').join('')+tiles.join('')+'</div>')+
-    section('Publications programmées','Heures indiquées dans le fuseau de la source')+panel(renderRows(rows.filter(r=>r.date&&r.date>=asOf())))+
+    calendarCoverage()+
+    section('Publications programmées','Heures indiquées dans le fuseau de la source')+panel(renderRows(rows.filter(r=>r.date?.startsWith(state.month)&&r.date>=today)))+
     section('Dates à confirmer','Les annonces sans date restent dans la liste de veille')+panel(renderRows(rows.filter(r=>!r.date)));
 }
 const reportScope=(end=state.reportEnd,kind=state.reportKind)=>{
@@ -1130,5 +1176,6 @@ root.addEventListener('input',event=>{
 });
 window.addEventListener('hashchange',()=>{state.page=readPage();state.mobile=false;render();window.scrollTo(0,0);});
 render();
+refreshCalendar();
 if(loadError)toast(loadError);
 
