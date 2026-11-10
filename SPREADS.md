@@ -21,6 +21,8 @@ La vue [Comparaisons & spreads](https://elchapasso.github.io/PROJECT/#cross) pr�
 
 Les tickers identifient les contrats. La documentation du [MCP TradingView](https://www.tradingview.com/mcp/docs) décrit des barres OHLCV. Pour alimenter Oléa, il faut une source qui confirme le règlement officiel, la règle de roulement du continu et le droit de publier les valeurs, les calculs et les CSV. Les [conditions TradingView, section 27](https://www.tradingview.com/policies/) réservent le MCP à l’usage personnel non commercial et encadrent la republication. EUR/USD est déjà intégré via la BCE et entre dans les deux taux croisés.
 
+Les fiches incomplètes peuvent afficher des repères datés distincts des séries continues. Pour les quatre calculs sur futures, Oléa réutilise ses cours à échéance fixe et les clôtures FCPO de janvier 2027 rapportées par Bernama. Les cours à terme doivent partager la même date et le BOPO utilise le fixing BCE. Pour le Brésil, la cotation ponctuelle du 24 mars 2026 publiée par le [CEPEA](https://cepea.org.br/br/diarias-de-mercado/soja-cepea-oleo-segue-em-valorizacao-no-br.aspx?pagina=1024) est rapprochée du prix B100 ANP de la même semaine. Les repères datés restent hors des CSV des historiques. Les liens Investing.com, TradingView et bourses permettent de consulter les historiques de futures chez leurs fournisseurs.
+
 | Carte | Séries manquantes | Séries déjà intégrées |
 | --- | --- | --- |
 | BOPO | Huile de soja `CBOT:ZL1!`, palme `MYX:FCPO1!` | USD/MYR via BCE |

@@ -12,8 +12,9 @@ import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argenti
 import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHistory} from './brazil-soy-history.js?v=20261110-abiove';
 
 import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261110-spreads';
-import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261110-methodes';
+import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261110-reperes';
 import {spreadPrices} from './spread-prices.mjs';
+import {datedReportPrices} from './spread-reference-prices.mjs?v=20261110-reperes';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -700,6 +701,13 @@ const spreadLegName=id=>spreadLegs[id].fx?spreadLegs[id].unit:spreadLegs[id].des
 const spreadObservationUrl=(id,obs)=>obs.url||spreadLegs[id].observationUrl?.(obs.date)||spreadLegs[id].url;
 const spreadLegGrain={hip:'month',d4:'week',b100:'week'};
 const spreadGapDays={day:7,week:14,month:45};
+const datedFutures={zl:'bo',zs:'zs',zm:'sm',fcpo:'fcpo-jan27',ho:'ho',euSeed:'rape-eu-fut'};
+const datedSeries={...Object.fromEntries(Object.entries(datedFutures).map(([id,key])=>[id,seedPrices[key]])),
+  cepea:{name:'Huile brute dégommée · São Paulo, ICMS 12 %',...spreadLegs.cepea},
+};
+const datedPrices=Object.fromEntries(Object.entries(datedSeries).map(([id,series])=>[id,
+  datedReportPrices[id]??Object.entries(series.values).map(([date,value])=>[date,value,series.pointSources?.[date]||series.url]),
+]));
 const spreadLegHistory=metric=>{
   const today=new Date().toISOString().slice(0,10);
   return metric.legs.map(id=>({id,points:spreadLegPoints(id,spreadPrices).filter(({date,value})=>
@@ -718,6 +726,44 @@ function spreadPriceCharts(history){
 }
 const spreadPriceRecords=history=>history.flatMap(({id,points})=>points.map(point=>({id,...point})))
   .sort((a,b)=>b.date.localeCompare(a.date));
+function spreadDatedReference(metric,parameters){
+  const legs=metric.legs.filter(id=>datedSeries[id]);
+  if(!legs.length)return '';
+  const raw=metric.id==='brBio'?{cepea:datedPrices.cepea,b100:spreadPrices.b100}:
+    {...datedPrices,eurUsd:spreadPrices.eurUsd,eurMyr:spreadPrices.eurMyr};
+  const rows=spreadRows(metric,raw,parameters);
+  const latest=rows.at(-1);
+  const references=legs.map(id=>datedSeries[id]);
+  const result=latest?'<p class="spread-reference-value"><b class="num">'+num(latest.value,metric.unit==='%'?1:2)+' '+e(metric.unit)+'</b> · '+e(formatDate(latest.date))+'</p>'+
+    chart([{label:'Calcul sur les références indiquées',color:colors[0],points:rows}],{
+      unit:metric.unit,periodType:'day',height:140,label:'Calcul daté · '+metric.title,zeroLine:metric.id!=='oilShare',startDate:rows[0].date,maxGapDays:7,
+      sourceLinks:refsFor([...references,...(metric.legs.includes('usdm')?[spreadLegs.usdm,{source:'BCE · EUR/USD',url:eurUsdSource}]:[]),
+        ...(metric.id==='brBio'?[spreadLegs.b100]:[])]),
+    }):legs.length===1?chart([{label:references[0].name,color:colors[0],points:datedPrices[legs[0]].map(([date,value])=>({date,value}))}],{
+      unit:references[0].unit,periodType:'day',height:140,label:'Cours datés · '+references[0].name,sourceLinks:refsFor(references),
+      startDate:datedPrices[legs[0]][0][0],maxGapDays:7,
+    }):'';
+  const quotes=legs.flatMap(id=>datedPrices[id].map(([date,value,url])=>({series:datedSeries[id],date,value,url})));
+  if(latest)for(const id of metric.legs.filter(id=>!legs.includes(id))){
+    const {date,value,url}=latest.observations[id];
+    quotes.push({series:{...spreadLegs[id],name:id==='b100'?'B100 · moyenne hebdomadaire':spreadLegs[id].unit+' · fixing BCE'},date,value,url:url||spreadLegs[id].url});
+  }
+  const details=quotes.sort((a,b)=>b.date.localeCompare(a.date)).map(({series,date,value,url})=>[
+      e(formatDate(date)),e(series.name),valueCell(value,series.unit,4),link(url,series.source),
+    ]);
+  return '<div class="spread-price-charts spread-reference"><h4>'+ (latest?'Calcul ponctuel sur les cours datés':'Cours datés de référence')+'</h4>'+
+    '<p class="small">'+(metric.id==='brBio'?'Cotations CEPEA publiées ponctuellement et prix ANP de la même semaine.':
+      'Repères de marché sur les contrats indiqués, distincts de la série continue et des prix physiques.')+'</p>'+
+    result+table(['Date','Référence','Cours','Source'],details)+'</div>';
+}
+function spreadExternalSources(missing){
+  const futures=missing.map(id=>spreadLegs[id]).filter(leg=>leg.history);
+  if(!futures.length)return '';
+  return '<details class="spread-details spread-market-links"><summary>Consulter les historiques de futures à la source</summary>'+
+    '<p class="small">Vérifiez l’échéance et le type de prix. Ces historiques externes sont consultables sur les sites des fournisseurs.</p><ul>'+
+    futures.map(leg=>'<li>'+e(leg.symbol)+' · '+link(leg.url,'Graphique TradingView')+' · '+link(leg.history,'Historique Investing.com')+
+      ' · '+link(leg.official,'Source officielle')+'</li>').join('')+'</ul></details>';
+}
 function spreadInputForm(metric,parameters){
   if(!metric.inputs)return '';
   return '<form class="spread-inputs" data-spread-form="'+e(metric.id)+'">'+metric.inputs.map(([key,label])=>
@@ -731,8 +777,8 @@ function spreadCard(metric){
   const last=rows.at(-1),previous=rows.at(-2);
   const legHistory=spreadLegHistory(metric);
   const available=legHistory.filter(({points})=>points.length);
-  const missingNames=legHistory.filter(({points})=>!points.length).map(({id})=>
-    spreadLegName(id)+(spreadLegs[id].symbol?' ('+spreadLegs[id].symbol+')':''));
+  const missing=legHistory.filter(({points})=>!points.length).map(({id})=>id);
+  const missingNames=missing.map(id=>spreadLegName(id)+(spreadLegs[id].symbol?' ('+spreadLegs[id].symbol+')':''));
   const sourceList=legHistory.map(({id,points})=>{
     const {source,url,unit,description,missing,fx}=spreadLegs[id];
     const observation=points.at(-1);
@@ -759,9 +805,10 @@ function spreadCard(metric){
     unit:metric.unit,periodType:metric.grain==='month'?'day':metric.grain,label:metric.title,
     sourceLinks,zeroLine:metric.id!=='oilShare',startDate:START_DATE,maxGapDays:spreadGapDays[metric.grain],
     tooltips:p=>num(p.value,4)+' '+metric.unit,
-  }):'<div class="spread-coverage"><b class="spread-value">Non disponible</b>'+
+  }):'<div class="spread-coverage"><p class="small">Historique du calcul</p><b class="spread-value">Non disponible</b>'+
     (missingNames.length?'<h4>Séries manquantes</h4><p>'+e(missingNames.join(' · '))+'</p>':'<p>Aucune date commune exploitable.</p>')+
-    '</div>'+(available.length?'<div class="spread-price-charts"><h4>Prix et taux disponibles</h4>'+spreadPriceCharts(available)+'</div>':'');
+    '</div>'+spreadDatedReference(metric,parameters)+
+    (available.length?'<div class="spread-price-charts"><h4>Prix et taux disponibles</h4>'+spreadPriceCharts(available)+'</div>':'');
   const values=last?table(['Date de référence',valueHeader,...legHeaders],observations):
     available.length?table(['Date de référence','Série','Valeur','Source'],spreadPriceRecords(available).map(({id,date,value,url})=>[
       e(spreadDate(date,spreadLegGrain[id])),e(spreadLegName(id)),valueCell(value,spreadLegs[id].unit,6),
@@ -778,6 +825,9 @@ function spreadCard(metric){
         '<p class="small">Les changements d’échéance des contrats continus peuvent provoquer des sauts.</p>':'')+
       spreadInputForm(metric,parameters)+'</div></div>'+
     '<details class="spread-details"><summary>Sources et dernières observations</summary><ul>'+sourceList+'</ul></details>'+
+    spreadExternalSources(missing)+
+    (metric.id==='blackSeaSun'?'<p class="small spread-market-note">'+link('https://ukragroconsult.com/en/oil-prices/','Cotations de marché · UkrAgroConsult')+
+      ' · Consultez les prix par produit et par base commerciale. Les cotations de cette page ne sont pas utilisées dans le calcul.</p>':'')+
     (last?'<details class="spread-details spread-price-charts"><summary>Voir les graphiques des prix sources</summary>'+spreadPriceCharts(available)+'</details>':'')+
     '<details class="spread-details"><summary>Voir les valeurs</summary>'+
     values+'</details>'+

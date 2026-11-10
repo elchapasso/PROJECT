@@ -12,9 +12,12 @@ export const eurUsdSource=ecb+'USD.EUR.SP00.A';
 const ar='https://www.argentina.gob.ar/economia/agricultura/datos-abiertos';
 const arAPI='https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/ws/ssma/precios_fob.php?Fecha=';
 const commission='https://agridata.ec.europa.eu/extensions/DashboardCereals/OilseedPrices.html';
-const future=(source,symbol,unit,description)=>({
+const cmeHistory='https://www.cmegroup.com/market-data/cme-group-continuous-price-series.html';
+const investing='https://www.investing.com/commodities/';
+const future=(source,symbol,unit,description,history,official=cmeHistory)=>({
   source,url:tv+encodeURIComponent(symbol.replace(':','-'))+'/',unit,symbol,
   description:description+' · '+symbol+' · règlement quotidien, première échéance continue',
+  history:investing+history+'-historical-data',official,
   missing:'Droits de publication des règlements historiques à confirmer. Le MCP TradingView est réservé à un usage personnel et exclut la republication de ses séries.',
 });
 const arg=(description)=>({source:'Secretaría de Agricultura · MAGyP',url:ar,unit:'USD/t',description,observationUrl:date=>arAPI+encodeURIComponent(date.split('-').reverse().join('/'))});
@@ -23,12 +26,13 @@ const rapeseed=description=>({source:'Commission européenne · Agri-food Data P
 const blackSea=description=>({source:'Prix FOB mer Noire · source à confirmer',unit:'USD/t',description,
   missing:'Historique public comparable et redistribuable non vérifié.'});
 export const spreadLegs={
-  zl:future('CBOT · CME Group','CBOT:ZL1!','¢ US/lb','Huile de soja'),
-  zm:future('CBOT · CME Group','CBOT:ZM1!','USD/short ton','Tourteau de soja'),
-  zs:future('CBOT · CME Group','CBOT:ZS1!','¢ US/bu','Graines de soja'),
-  fcpo:future('Bursa Malaysia Derivatives','MYX:FCPO1!','MYR/t','Huile de palme brute'),
-  gasoil:future('ICE Futures Europe','ICEEUR:ULS1!','USD/t','Low Sulphur Gasoil'),
-  ho:future('NYMEX · CME Group','NYMEX:HO1!','USD/gal','NY Harbor ULSD'),
+  zl:future('CBOT · CME Group','CBOT:ZL1!','¢ US/lb','Huile de soja','us-soybean-oil'),
+  zm:future('CBOT · CME Group','CBOT:ZM1!','USD/short ton','Tourteau de soja','us-soybean-meal'),
+  zs:future('CBOT · CME Group','CBOT:ZS1!','¢ US/bu','Graines de soja','us-soybeans'),
+  fcpo:future('Bursa Malaysia Derivatives','MYX:FCPO1!','MYR/t','Huile de palme brute','palm-oil',
+    'https://www.bursamalaysia.com/market/products-services/information-products/historical-data-packages/'),
+  gasoil:future('ICE Futures Europe','ICEEUR:ULS1!','USD/t','Low Sulphur Gasoil','london-gas-oil','https://www.ice.com/report/10'),
+  ho:future('NYMEX · CME Group','NYMEX:HO1!','USD/gal','NY Harbor ULSD','heating-oil'),
   usdm:{source:'BCE · EXR',url:ecb+'MYR.EUR.SP00.A',unit:'MYR/USD',description:'EUR/MYR ÷ EUR/USD, fixings BCE du même jour. Dernier fixing commun si absent ce jour.',fx:['eurMyr','eurUsd']},
   usdi:{source:'BCE · EXR',url:ecb+'IDR.EUR.SP00.A',unit:'IDR/USD',description:'EUR/IDR ÷ EUR/USD, fixings BCE du même jour. Dernier fixing commun si absent ce jour.',fx:['eurIdr','eurUsd']},
   arSoyOil:arg('Huile de soja brute en vrac · position 15071000100Q'),
@@ -44,7 +48,7 @@ export const spreadLegs={
     description:'HIP BBN biodiesel en vigueur le mois indiqué · prix officiel de base hors fret.'},
   b100:{source:'ANP · Brésil',url:'https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/precos-de-produtores-e-importadores-de-derivados-de-petroleo-e-biodiesel',
     unit:'R$/l',description:'B100 · prix producteur moyen national pondéré par semaine, hors ICMS.'},
-  cepea:{source:'CEPEA / ESALQ',url:'https://www.cepea.org.br/',unit:'R$/t',
+  cepea:{source:'CEPEA / ESALQ',url:'https://cepea.org.br/br/diarias-de-mercado/soja-cepea-oleo-segue-em-valorizacao-no-br.aspx?pagina=1024',unit:'R$/t',
     description:'Huile de soja brute dégommée (CEPEA) · São Paulo, 12 % d’ICMS inclus.',
     missing:'Historique de la cotation exacte et droit de redistribution non vérifiés.'},
   euOil:rapeseed('Huile de colza · prix physique sur la même base géographique que les graines et le tourteau.'),
