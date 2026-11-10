@@ -364,7 +364,7 @@ function mpobHistoryPanel(){
   return section('Malaisie · Bilan MPOB d’octobre','Publié le 10 novembre 2026 · données provisoires')+
     '<div class="grid3">'+names.map((name,i)=>panel('<h3>'+e(name)+'</h3><p>'+num(latest[i]/1e6,3)+' Mt</p><p class="small">'+e(sign(pct(latest[i],previous[i]),2)+' % m/m')+'</p>')).join('')+'</div>'+
     monthlyHistory('Malaisie · Historique MPOB',mpobHistory,names,
-    mpobHistorySources,'Stocks totaux et exportations d’huile de palme, production d’huile brute. Octobre 2026 est provisoire. Septembre est révisé dans cette publication.');
+    mpobHistorySources);
 }
 const seasonalColors=colors.slice(1);
 function seasonalHistory(title,years,sourceLinks,note='',digits=4){
