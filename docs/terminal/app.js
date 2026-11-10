@@ -11,7 +11,7 @@ import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argenti
 
 import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHistory} from './brazil-soy-history.js?v=20261110-abiove';
 
-import {START_DATE,spreadRows} from './spread-model.mjs';
+import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261110-spreads';
 import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261110-methodes';
 import {spreadPrices} from './spread-prices.mjs';
 
@@ -696,13 +696,28 @@ function renderBalances(){
 const spreadParameters=Object.fromEntries(spreadMetrics.filter(m=>m.defaults).map(m=>[m.id,{...m.defaults}]));
 const spreadDate=(date,grain)=>grain==='month'?displayPeriod(date.slice(0,7),'month'):formatDate(date);
 const grainNames={day:'Quotidien',week:'Hebdomadaire',month:'Mensuel'};
-const spreadSourceDate=id=>{
-  const leg=spreadLegs[id];
-  if(!leg.fx)return spreadPrices[id]?.at(-1)?.[0];
-  const [foreign,usd]=leg.fx.map(key=>spreadPrices[key]||[]);
-  const usdDates=new Set(usd.map(([date])=>date));
-  return foreign.findLast(([date])=>usdDates.has(date))?.[0];
+const spreadLegName=id=>spreadLegs[id].fx?spreadLegs[id].unit:spreadLegs[id].description.split(' · ')[0];
+const spreadObservationUrl=(id,obs)=>obs.url||spreadLegs[id].observationUrl?.(obs.date)||spreadLegs[id].url;
+const spreadLegGrain={hip:'month',d4:'week',b100:'week'};
+const spreadGapDays={day:7,week:14,month:45};
+const spreadLegHistory=metric=>{
+  const today=new Date().toISOString().slice(0,10);
+  return metric.legs.map(id=>({id,points:spreadLegPoints(id,spreadPrices).filter(({date,value})=>
+    date>=START_DATE&&date<=today&&Number.isFinite(value))}));
 };
+function spreadPriceCharts(history){
+  const groups=Object.groupBy(history,({id})=>spreadLegs[id].unit);
+  return Object.entries(groups).map(([unit,legs])=>{
+    const sourceLinks=refsFor(legs.flatMap(({id})=>[spreadLegs[id],...(spreadLegs[id].fx?[{source:'BCE · EUR/USD',url:eurUsdSource}]:[])]));
+    const grain=spreadLegGrain[legs[0].id]||'day';
+    return chart(legs.map(({id,points},i)=>({label:spreadLegName(id),color:colors[i],points})),{
+      unit,periodType:grain==='month'?'day':grain,height:155,label:legs.map(({id})=>spreadLegName(id)).join(' / '),
+      sourceLinks,startDate:START_DATE,maxGapDays:spreadGapDays[grain],tooltips:p=>num(p.value,4)+' '+unit,
+    });
+  }).join('');
+}
+const spreadPriceRecords=history=>history.flatMap(({id,points})=>points.map(point=>({id,...point})))
+  .sort((a,b)=>b.date.localeCompare(a.date));
 function spreadInputForm(metric,parameters){
   if(!metric.inputs)return '';
   return '<form class="spread-inputs" data-spread-form="'+e(metric.id)+'">'+metric.inputs.map(([key,label])=>
@@ -714,28 +729,25 @@ function spreadCard(metric){
   const parameters=spreadParameters[metric.id];
   const rows=spreadRows(metric,spreadPrices,parameters);
   const last=rows.at(-1),previous=rows.at(-2);
-  const unavailable=metric.legs.filter(id=>!spreadSourceDate(id));
-  const name=id=>spreadLegs[id].description.split(' · ')[0];
-  const missingNames=unavailable.map(id=>spreadLegs[id].symbol?name(id)+' ('+spreadLegs[id].symbol+')':name(id));
-  const availableNames=metric.legs.filter(id=>!unavailable.includes(id)).map(id=>{
-    const leg=spreadLegs[id];
-    return (leg.fx?leg.unit:name(id))+' ('+formatDate(spreadSourceDate(id))+')';
-  });
-  const sourceList=metric.legs.map(id=>{
+  const legHistory=spreadLegHistory(metric);
+  const available=legHistory.filter(({points})=>points.length);
+  const missingNames=legHistory.filter(({points})=>!points.length).map(({id})=>
+    spreadLegName(id)+(spreadLegs[id].symbol?' ('+spreadLegs[id].symbol+')':''));
+  const sourceList=legHistory.map(({id,points})=>{
     const {source,url,unit,description,missing,fx}=spreadLegs[id];
-    const date=spreadSourceDate(id);
-    const reference=date&&(spreadPrices[id]?.at(-1)?.[2]||spreadLegs[id].observationUrl?.(date));
+    const observation=points.at(-1);
     return '<li>'+link(url,source)+' · '+e(description+' ('+unit+')')+
-      '<small>'+(date?'Dernière observation · '+link(reference,formatDate(date)):'Non disponible · '+e(missing||'Aucune observation publiée dans le jeu de données.'))+'</small>'+
+      '<small>'+(observation?'Dernière observation · '+link(spreadObservationUrl(id,observation),spreadDate(observation.date,spreadLegGrain[id])):
+        'Non disponible · '+e(missing||'Aucune observation publiée dans le jeu de données.'))+'</small>'+
       (fx?'<small>'+link(eurUsdSource,'Fixing EUR/USD · BCE')+'</small>':'')+'</li>';
   }).join('');
   const sourceLinks=refsFor(metric.legs.map(id=>spreadLegs[id]));
   const valueHeader='Valeur ('+metric.unit+')';
-  const legHeaders=metric.legs.map(id=>name(id)+' ('+spreadLegs[id].unit+')');
+  const legHeaders=metric.legs.map(id=>spreadLegName(id)+' ('+spreadLegs[id].unit+')');
   const observations=rows.toReversed().map(row=>[e(spreadDate(row.date,metric.grain)),valueCell(row.value,'',6),
     ...metric.legs.map(id=>{
       const obs=row.observations[id];
-      return valueCell(obs.value,'',8)+'<small>'+link(obs.url||spreadLegs[id].observationUrl?.(obs.date)||spreadLegs[id].url,formatDate(obs.date))+'</small>';
+      return valueCell(obs.value,'',8)+'<small>'+link(spreadObservationUrl(id,obs),formatDate(obs.date))+'</small>';
     })]);
   const changeUnit=metric.unit==='%'?'pts':metric.unit;
   const lastReading=last?'<b class="spread-value num">'+num(last.value,metric.unit==='%'?1:2)+' '+e(metric.unit)+'</b>'+
@@ -745,15 +757,20 @@ function spreadCard(metric){
     '';
   const history=last?chart([{label:metric.title,color:colors[0],points:rows}],{
     unit:metric.unit,periodType:metric.grain==='month'?'day':metric.grain,label:metric.title,
-    sourceLinks,zeroLine:metric.id!=='oilShare',startDate:START_DATE,maxGapDays:{day:7,week:14,month:45}[metric.grain],
+    sourceLinks,zeroLine:metric.id!=='oilShare',startDate:START_DATE,maxGapDays:spreadGapDays[metric.grain],
     tooltips:p=>num(p.value,4)+' '+metric.unit,
   }):'<div class="spread-coverage"><b class="spread-value">Non disponible</b>'+
     (missingNames.length?'<h4>Séries manquantes</h4><p>'+e(missingNames.join(' · '))+'</p>':'<p>Aucune date commune exploitable.</p>')+
-    (availableNames.length?'<h4>Séries déjà intégrées</h4><p>'+e(availableNames.join(' · '))+'</p>':'')+
-    '</div>'+chartSources(sourceLinks);
+    '</div>'+(available.length?'<div class="spread-price-charts"><h4>Prix et taux disponibles</h4>'+spreadPriceCharts(available)+'</div>':'');
+  const values=last?table(['Date de référence',valueHeader,...legHeaders],observations):
+    available.length?table(['Date de référence','Série','Valeur','Source'],spreadPriceRecords(available).map(({id,date,value,url})=>[
+      e(spreadDate(date,spreadLegGrain[id])),e(spreadLegName(id)),valueCell(value,spreadLegs[id].unit,6),
+      link(spreadObservationUrl(id,{date,url}),spreadLegs[id].source),
+    ])):empty('Non disponible');
+  const csvLabel=last?'Télécharger le CSV du calcul':'Télécharger le CSV des séries disponibles';
   return panel('<div class="spread-heading"><div><span class="eyebrow">'+grainNames[metric.grain]+'</span>'+
-    '<h3>'+e(metric.title)+'</h3></div>'+action('export-spread',icon('download')+' CSV','ghost',
-      'data-id="'+e(metric.id)+'"'+(last?'':' disabled')+' aria-label="Télécharger le CSV · '+e(metric.title)+'"')+'</div>'+
+    '<h3>'+e(metric.title)+'</h3></div>'+action('export-spread',icon('download')+(last||!available.length?' CSV':' CSV des séries'),'ghost',
+      'data-id="'+e(metric.id)+'"'+(last||available.length?'':' disabled')+' aria-label="'+e(csvLabel+' · '+metric.title)+'"')+'</div>'+
     '<div class="spread-body"><div class="spread-chart">'+history+'</div><div class="spread-summary">'+lastReading+
       '<h4>Formule</h4><p>'+e(metric.formula(parameters))+'</p><h4>Comment lire le résultat</h4><p>'+e(metric.reading)+'</p>'+
       (metric.note?'<p class="small">'+e(metric.note)+'</p>':'')+
@@ -761,8 +778,9 @@ function spreadCard(metric){
         '<p class="small">Les changements d’échéance des contrats continus peuvent provoquer des sauts.</p>':'')+
       spreadInputForm(metric,parameters)+'</div></div>'+
     '<details class="spread-details"><summary>Sources et dernières observations</summary><ul>'+sourceList+'</ul></details>'+
+    (last?'<details class="spread-details spread-price-charts"><summary>Voir les graphiques des prix sources</summary>'+spreadPriceCharts(available)+'</details>':'')+
     '<details class="spread-details"><summary>Voir les valeurs</summary>'+
-    (last?table(['Date de référence',valueHeader,...legHeaders],observations):empty('Non disponible'))+'</details>'+
+    values+'</details>'+
     (metric.id==='idBio'?'<details class="spread-details"><summary>Voir les prix HIP et leurs avis officiels</summary>'+
       table(['Mois','HIP hors fret (Rp/l)','Avis officiel'],(spreadPrices.hip||[]).toReversed().map(([date,value,url])=>[
         e(spreadDate(date,'month')),valueCell(value,'',0),link(url,'ESDM · Ditjen EBTKE'),
@@ -778,16 +796,25 @@ function exportSpread(button){
   if(!metric)return;
   const parameters=spreadParameters[metric.id];
   const rows=spreadRows(metric,spreadPrices,parameters);
-  if(!rows.length)return;
+  const number=value=>String(value).replace('.',',');
+  if(!rows.length){
+    const records=spreadPriceRecords(spreadLegHistory(metric));
+    if(records.length)csv('olea_prix_sources_'+metric.id+'.csv',[
+      ['Date de référence','Série','Valeur','Unité','Source','Lien'],
+      ...records.map(({id,date,value,url})=>[
+        date,spreadLegName(id),number(value),spreadLegs[id].unit,spreadLegs[id].source,spreadObservationUrl(id,{date,url})||'',
+      ]),
+    ]);
+    return;
+  }
   const headers=['Date de référence',metric.title+' ('+metric.unit+')',...metric.legs.flatMap(id=>{
     const leg=spreadLegs[id];
     return [id+' ('+leg.unit+')','Date '+id,'Source '+id,'Lien '+id];
   }),...(metric.inputs||[]).map(([,label])=>label)];
-  const number=value=>String(value).replace('.',',');
   csv('olea_spread_'+metric.id+'.csv',[headers,...rows.map(row=>[
     row.date,number(row.value),...metric.legs.flatMap(id=>{
       const {date,value,url}=row.observations[id];
-      return [number(value),date,spreadLegs[id].source,url||spreadLegs[id].observationUrl?.(date)||spreadLegs[id].url||''];
+      return [number(value),date,spreadLegs[id].source,spreadObservationUrl(id,{date,url})||''];
     }),...(metric.inputs||[]).map(([key])=>number(parameters[key])),
   ])]);
 }

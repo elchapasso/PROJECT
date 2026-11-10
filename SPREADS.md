@@ -1,6 +1,6 @@
 # Spreads et marges d’Oléa Terminal
 
-La branche `feature/daily-spreads` étend la vue `#cross`. Pour la vérifier en local, lancer `python -m http.server 8000 --directory docs` puis ouvrir [Comparaisons & spreads](http://localhost:8000/#cross). Les hypothèses saisies s’appliquent à la courbe, au tableau et à l’export jusqu’au rechargement de la page.
+La vue [Comparaisons & spreads](https://elchapasso.github.io/PROJECT/#cross) présente les marges calculables et leurs prix sources. Si une composante manque, la marge affiche « Non disponible » et les séries vérifiées restent consultables sous « Prix et taux disponibles », avec leur propre tableau et CSV. Pour vérifier le site en local, lancer `python -m http.server 8000 --directory docs` puis ouvrir [Comparaisons & spreads](http://localhost:8000/#cross). Les hypothèses saisies s’appliquent à la courbe, au tableau et à l’export de la marge jusqu’au rechargement de la page.
 
 ## Sources et couverture
 

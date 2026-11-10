@@ -51,18 +51,19 @@ function weekKey(date){
   const weekday=new Date(ms).getUTCDay();
   return iso(ms-((weekday+6)%7)*dayMs);
 }
-function pairedFixings(usd,currency){
-  const cross=new Map(currency||[]);
-  return (usd||[]).flatMap(([date,value])=>{
+export function spreadLegPoints(id,raw){
+  if(!Object.hasOwn(usdCross,id))return (raw[id]||[]).map(([date,value,url])=>({date,value,url}));
+  const cross=new Map(raw[usdCross[id]]||[]);
+  return (raw.eurUsd||[]).flatMap(([date,value])=>{
     const foreign=cross.get(date);
-    return value>0&&foreign>0?[[date,{date,value:foreign/value}]]:[];
+    return value>0&&foreign>0?[{date,value:foreign/value}]:[];
   });
 }
 
 export function spreadRows(metric,raw,parameters,today=new Date().toISOString().slice(0,10)){
   const legs=metric.legs.filter(id=>!Object.hasOwn(usdCross,id));
-  const byLeg=Object.fromEntries(legs.map(id=>[id,new Map((raw[id]||[]).flatMap(([date,value,url])=>
-    date>=START_DATE&&date<=today&&Number.isFinite(value)?[[date,{date,value,url}]]:[]))]));
+  const byLeg=Object.fromEntries(legs.map(id=>[id,new Map(spreadLegPoints(id,raw).filter(({date,value})=>
+    date>=START_DATE&&date<=today&&Number.isFinite(value)).map(point=>[point.date,point]))]));
   if(legs.some(id=>!byLeg[id].size))return [];
   const periodKey=metric.grain==='week'?weekKey:date=>date.slice(0,7);
   const dailyLegs=legs.filter(id=>id!==metric.periodLeg);
@@ -71,12 +72,12 @@ export function spreadRows(metric,raw,parameters,today=new Date().toISOString().
   const lastByPeriod=new Map(commonDates.map(date=>[periodKey(date),date]));
   const publishedDates=metric.periodLeg?[...byLeg[metric.periodLeg].keys()].sort():commonDates;
   const fx=Object.fromEntries(metric.legs.filter(id=>Object.hasOwn(usdCross,id)).map(id=>
-    [id,pairedFixings(raw.eurUsd,raw[usdCross[id]])]));
+    [id,spreadLegPoints(id,raw)]));
   return publishedDates.flatMap(periodDate=>{
     const quoteDate=metric.periodLeg?lastByPeriod.get(periodKey(periodDate)):periodDate;
     if(!quoteDate)return [];
     const observations=Object.fromEntries(metric.legs.map(id=>{
-      if(fx[id])return [id,fx[id].findLast(([date])=>date<=quoteDate)?.[1]];
+      if(fx[id])return [id,fx[id].findLast(({date})=>date<=quoteDate)];
       const date=id===metric.periodLeg?periodDate:quoteDate;
       return [id,byLeg[id].get(date)];
     }));
