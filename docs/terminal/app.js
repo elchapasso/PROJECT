@@ -61,7 +61,7 @@ const fullBalances=()=>balancesWithRatios(unique([...seedBalances,...data.balanc
 let calendarFeed=null;
 let calendarFeedLoaded=false;
 const fullCalendar=()=>unique([...seedCalendar,...calendarEntries(calendarFeed),...data.calendar],r=>r.id)
-  .sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')||a.time.localeCompare(b.time));
+  .sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')||(a.time??'').localeCompare(b.time??''));
 const asOf=()=>referenceDate(fullEvents());
 const eventCaps={status:true,impact:true,horizon:true,period:true};
 const allSources=()=>Object.fromEntries([...new Set([...Object.keys(sources),...data.events.map(r=>r.source),...data.balances.map(r=>r.source),...data.quotes.map(r=>r.source),...data.calendar.map(r=>r.source)])].sort((a,b)=>a.localeCompare(b,'fr')).map(s=>[s,s]));
