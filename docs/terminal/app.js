@@ -353,7 +353,7 @@ function monthlyHistory(title,rows,names,sourceLinks,note){
   const lines=names.map((label,i)=>({label,color:colors[i],points:rows.map(([date,...values])=>({date,value:values[i]/1000,tonnes:values[i]}))}));
   const exactRows=rows.slice().reverse().map(([date,...values])=>[e(displayPeriod(date,'month')),...values.map(value=>valueCell(value,'t',0))]);
   return section(title,period+' · '+rows.length+' mois · milliers de tonnes')+
-    panel(chart(lines,{unit:'kt',height:222,label:title+' en milliers de tonnes',tooltips:p=>num(p.tonnes,0)+' t',sourceLinks})+'<p class="analysis-text">'+e(note)+'</p>'+
+    panel(chart(lines,{unit:'kt',height:222,label:title+' en milliers de tonnes',tooltips:p=>num(p.tonnes,0)+' t',sourceLinks})+(note?'<p class="analysis-text">'+e(note)+'</p>':'')+
       '<details><summary class="small">Voir les chiffres mensuels en tonnes</summary>'+
       table(['Mois',...names],exactRows)+'</details>');
 }
