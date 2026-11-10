@@ -16,6 +16,14 @@ test('reference values for the five futures metrics',()=>{
   assert.equal(round(formulas.pogo(palm),0),-200);
 });
 
+test('physical BOPO compares FOB prices in USD/t on the same day',()=>{
+  const rows=spreadRows(metric('bopoPhysical'),{
+    arSoyOil:[['2026-11-04',1185],['2026-11-06',1185]],
+    idPalmFob:[['2026-11-04',1150],['2026-11-05',1130],['2026-11-06',1110],['2026-11-10',1090]],
+  },undefined,'2026-11-10');
+  assert.deepEqual(rows.map(({date,value})=>[date,value]),[['2026-11-04',35],['2026-11-06',75]]);
+});
+
 test('gross physical crush and editable yields',()=>{
   assert.equal(formulas.arSoy({arSoyOil:1000,arSoyMeal:300,arSoySeed:400}),24);
   assert.equal(formulas.arSoy({arSoyOil:1000,arSoyMeal:300,arSoySeed:400},{oilYield:.2,mealYield:.75}),25);

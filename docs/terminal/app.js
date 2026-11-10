@@ -11,9 +11,9 @@ import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argenti
 
 import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHistory} from './brazil-soy-history.js?v=20261110-abiove';
 
-import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261110-spreads';
-import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261110-reperes';
-import {spreadPrices} from './spread-prices.mjs';
+import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261110-bopo-fob';
+import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261110-bopo-fob';
+import {spreadPrices} from './spread-prices.mjs?v=20261110-bopo-fob';
 import {datedReportPrices} from './spread-reference-prices.mjs?v=20261110-reperes';
 
 const root=document.querySelector('#terminal');
@@ -803,7 +803,7 @@ function spreadCard(metric){
     '';
   const history=last?chart([{label:metric.title,color:colors[0],points:rows}],{
     unit:metric.unit,periodType:metric.grain==='month'?'day':metric.grain,label:metric.title,
-    sourceLinks,zeroLine:metric.id!=='oilShare',startDate:START_DATE,maxGapDays:spreadGapDays[metric.grain],
+    sourceLinks,zeroLine:metric.id!=='oilShare',startDate:metric.chartFromFirst?rows[0].date:START_DATE,maxGapDays:spreadGapDays[metric.grain],
     tooltips:p=>num(p.value,4)+' '+metric.unit,
   }):'<div class="spread-coverage"><p class="small">Historique du calcul</p><b class="spread-value">Non disponible</b>'+
     (missingNames.length?'<h4>Séries manquantes</h4><p>'+e(missingNames.join(' · '))+'</p>':'<p>Aucune date commune exploitable.</p>')+

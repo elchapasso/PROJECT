@@ -29,6 +29,7 @@ export const defaultCredits={credit45z:0,lcfs:0,operating:0};
 const crush=(oil,meal,seed,{oilYield,mealYield})=>oil*oilYield+meal*mealYield-seed;
 export const formulas={
   bopo:({zl,fcpo,usdm})=>zl*ZL_USD_PER_TONNE-fcpo/usdm,
+  bopoPhysical:({arSoyOil,idPalmFob})=>arSoyOil-idPalmFob,
   pogo:({fcpo,usdm,gasoil})=>fcpo/usdm-gasoil,
   boho:({zl,ho})=>zl*OIL_LB_PER_GALLON/CENTS_PER_DOLLAR-ho,
   boardCrush:({zm,zl,zs})=>zm*MEAL_SHORT_TON_PER_BUSHEL+zl*OIL_DOLLARS_PER_BUSHEL-zs/CENTS_PER_DOLLAR,

@@ -3,7 +3,7 @@ import {
   BEAN_LB_PER_BUSHEL,PERCENT_SCALE,LITRES_PER_CUBIC_METRE,MEAL_LB_PER_BUSHEL,OIL_LB_PER_BUSHEL,LB_PER_SHORT_TON,MEAL_SHORT_TON_PER_BUSHEL,OIL_DOLLARS_PER_BUSHEL,
   MEAL_CENTS_PER_BUSHEL,D4_PER_GALLON,GASOIL_KG_PER_LITRE,SOYOIL_KG_PER_LITRE,KG_PER_TONNE,
   HIP_CONVERSION_USD_PER_TONNE,HIP_BIODIESEL_KG_PER_CUBIC_METRE,
-} from './spread-model.mjs';
+} from './spread-model.mjs?v=20261110-bopo-fob';
 
 const decimal=n=>String(n).replace('.',',');
 const tv='https://www.tradingview.com/symbols/';
@@ -36,6 +36,8 @@ export const spreadLegs={
   usdm:{source:'BCE · EXR',url:ecb+'MYR.EUR.SP00.A',unit:'MYR/USD',description:'EUR/MYR ÷ EUR/USD, fixings BCE du même jour. Dernier fixing commun si absent ce jour.',fx:['eurMyr','eurUsd']},
   usdi:{source:'BCE · EXR',url:ecb+'IDR.EUR.SP00.A',unit:'IDR/USD',description:'EUR/IDR ÷ EUR/USD, fixings BCE du même jour. Dernier fixing commun si absent ce jour.',fx:['eurIdr','eurUsd']},
   arSoyOil:arg('Huile de soja brute en vrac · position 15071000100Q'),
+  idPalmFob:{source:'IPOSS Data',url:'https://data.iposs.co.id/en/data/fob-price-cpo-cpko',unit:'USD/t',
+    description:'Huile de palme brute FOB Belawan, Indonésie · cotations du tableau public IPOSS.'},
   arSoyMeal:arg('Pellets et farine d’extraction de soja · position 23040010100B'),
   arSoySeed:arg('Graines de soja en vrac · position 12019000190C'),
   arSunOil:arg('Huile de tournesol brute en vrac · position 15121110310E'),
@@ -67,6 +69,10 @@ export const spreadMetrics=[
   {id:'bopo',title:'BOPO · Soja contre palme',unit:'USD/t',legs:['zl','fcpo','usdm'],
     formula:()=>`ZL (¢ US/lb) × ${decimal(ZL_USD_PER_TONNE)} USD/t par ¢ US/lb − FCPO (MYR/t) ÷ USD/MYR (MYR/USD).`,
     reading:'Mesure la prime de l’huile de soja américaine sur l’huile de palme brute malaisienne. Au-dessus de zéro, le soja est plus cher par tonne. Plus l’écart augmente, plus la palme gagne en compétitivité relative sur ces références, avant fret, taxes et différences de qualité.'},
+  {id:'bopoPhysical',title:'BOPO physique · Argentine / Indonésie',unit:'USD/t',legs:['arSoyOil','idPalmFob'],chartFromFirst:true,
+    formula:()=> 'Huile de soja brute FOB Argentine (USD/t) − huile de palme brute FOB Belawan, Indonésie (USD/t).',
+    reading:'Un écart positif indique une prime FOB pour l’huile de soja argentine. Le fret et l’assurance sont à ajouter pour comparer les deux huiles rendues à destination.',
+    note:'Le calcul associe les cotations du même jour. La couverture dépend des prix FOB Belawan visibles dans le tableau public IPOSS.'},
   {id:'pogo',title:'POGO · Palme contre gazole',unit:'USD/t',legs:['fcpo','usdm','gasoil'],
     formula:()=> 'FCPO (MYR/t) ÷ USD/MYR (MYR/USD) − ICE Gasoil (USD/t).',
     reading:'Compare le coût de l’huile de palme brute au prix du gazole fossile. Au-dessus de zéro, la palme coûte plus cher par tonne que le gazole. Une hausse de l’écart pèse sur l’économie du biodiesel, à aides constantes.'},

@@ -1,6 +1,12 @@
 // Raw observations, in source units. See SPREADS.md for provenance.
 // Dates are quote dates (or source reference periods for weekly and monthly legs).
 export const spreadPrices={
+  "idPalmFob": [
+    ["2026-11-04",1150],
+    ["2026-11-05",1130],
+    ["2026-11-06",1110],
+    ["2026-11-10",1090],
+  ],
   "arSoyMeal": [
     ["2025-01-02",348],
     ["2025-01-03",337],
