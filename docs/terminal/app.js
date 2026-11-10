@@ -9,6 +9,8 @@ import {usSoyHistory} from './us-soy-history.js?v=20261109-soja';
 import {nopaHistory,nopaReport} from './nopa-history.js?v=20261109-nopa';
 import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argentina';
 
+import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHistory} from './brazil-soy-history.js?v=20261110-abiove';
+
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
 const monthFormat=new Intl.DateTimeFormat('fr-FR',{month:'long',year:'numeric',timeZone:'UTC'});
@@ -44,7 +46,7 @@ try{const raw=localStorage.getItem(localKey);if(raw)data=parseStore(raw);}catch{
 const state={
   page:'overview',filters:{...FILTERS},theme:'light',mobile:false,eventWindow:'7',chart:'oils',
   indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
-  soyFamily:'soy',soyOrigin:'us',originTab:{},query:'',category:'',importance:'',start:'',end:'',balanceProduct:'sbo',compare:'revision',metric:'production',
+  soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',originTab:{},query:'',category:'',importance:'',start:'',end:'',balanceProduct:'sbo',compare:'revision',metric:'production',
   crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',outProduct:'sbo',outHorizon:'short',
   shocks:Object.fromEntries(shockFields.map(([k])=>[k,0])),reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:AS_OF.slice(0,7),editType:'events',
 };
@@ -522,6 +524,67 @@ function argentinaSoyPanels(family){
     '<div class="grid2 flow">'+panel('<h3>Fourchette FOB · Novembre 2026</h3><p>'+e(fob)+'</p><p class="small">Cotations du 5 novembre 2026 · '+link('https://www.bolsadecereales.com/fob','Bolsa de Cereales de Buenos Aires')+'</p>')+
     panel('<h3>Embarquements · Avril à octobre 2026</h3><p>'+e(bcr)+'</p><p class="small">Octobre provisoire, INDEC et NABSA · '+link('https://www.bcr.com.ar/es/mercados/investigacion-y-desarrollo/informativo-semanal/noticias-informativo-semanal/buenas-8','Bolsa de Comercio de Rosario · 6 novembre 2026')+'</p>')+'</div>';
 }
+
+const abioveDashboard='https://abiove.org.br/estatisticas-cadeia-da-soja-mensal/';
+const brazilSoyViews={monthly:'Mensuel',national:'Annuel · Brésil',industry:'Annuel · Industrie'};
+const brazilTradeMetrics=['Importations totales','Exportations totales'];
+const brazilIndustryMetrics={
+  soy:['Stocks industriels d’ouverture','Achats de graines par l’industrie','Trituration','Exportations de l’industrie','Consommation intérieure du bilan industriel','Stocks industriels de clôture'],
+  sbo:['Stocks industriels d’ouverture','Production industrielle','Importations du bilan industriel','Exportations du bilan industriel','Consommation intérieure apparente','Stocks industriels de clôture'],
+};
+const brazilNationalMetrics={
+  soy:['Stocks nationaux d’ouverture','Production de graines','Importations','Semences et autres usages','Exportations','Trituration','Stocks nationaux de clôture'],
+  sbo:['Stocks d’ouverture','Production','Importations','Exportations','Consommation intérieure','Stocks de clôture'],
+};
+function brazilSoySelection(family,view){
+  const names=view==='national'?brazilNationalMetrics[family]:brazilIndustryMetrics[family];
+  return {names:view==='monthly'?[...brazilTradeMetrics,...names]:names,rows:brazilSoyHistory[family][view]};
+}
+function brazilSoyStatus(date,view){
+  if(view==='monthly')return date>=abioveSampleStart?'Échantillon ABIOVE':'Historique industriel';
+  if(view==='national'&&date>=abioveProjectionStart)return 'Projection ABIOVE';
+  return 'Historique ABIOVE';
+}
+function brazilSoyScope(date,values,view){
+  if(view==='monthly'&&values.slice(2).every(v=>v===null))return 'Commerce national uniquement';
+  return brazilSoyStatus(date,view);
+}
+function brazilSoyPanels(family){
+  const view=state.brazilSoyView;
+  const monthly=view==='monthly';
+  const grain=monthly?'month':'year';
+  const {names,rows}=brazilSoySelection(family,view);
+  const charts=names.map((name,i)=>{
+    const trade=monthly&&i<brazilTradeMetrics.length;
+    const source=trade?'ABIOVE · MDIC/Secex':view==='national'?'ABIOVE · Anual':'ABIOVE · Mensal';
+    const points=rows.map(([date,...values])=>({date,value:values[i]===null?null:values[i]/1000}));
+    const first=points.findIndex(p=>Number.isFinite(p.value));
+    const end=points.findLastIndex(p=>Number.isFinite(p.value));
+    const last=points[end];
+    const status=date=>trade?'Commerce national':brazilSoyStatus(date,view);
+    const lines=Object.entries(Object.groupBy(points.slice(first,end+1),p=>status(p.date)))
+      .map(([label,points],j)=>({label,color:colors[(i+j)%colors.length],points}));
+    return panel('<h3>'+e(name)+'</h3><p class="small">'+
+      e(displayPeriod(last.date,grain)+' · '+num(last.value,6)+' Mt · '+status(last.date))+'</p>'+
+      chart(lines,{unit:'Mt',periodType:grain,label:products[family]+' · Brésil · '+name,
+        tooltips:p=>num(p.value,6)+' Mt · '+status(p.date),sourceLinks:[[source,abioveDashboard]]}));
+  });
+  const detail=monthly?'Commerce national jusqu’en septembre 2026 · Bilan industriel jusqu’en août 2026':
+    view==='national'?'Bilan national 1999–2027 · Mise à jour ABIOVE du '+formatDate(abioveAnnualUpdate):
+      'Bilan annuel de l’industrie de transformation · 1999–2025';
+  const note=monthly?'Le commerce national provient du MDIC/Secex via ABIOVE. Depuis janvier 2026, le bilan industriel reprend l’échantillon déclaré à ABIOVE, qui représente selon l’association 90,83 % de la trituration brésilienne. Les achats de graines incluent les importations.':
+    view==='national'?'Les années 2026 et 2027 sont des projections du bilan national ABIOVE.':
+      'Les séries reprennent le bilan annuel du secteur de transformation publié dans l’onglet Mensal d’ABIOVE.';
+  const headers=[monthly?'Mois':'Année',...names.map(name=>name+' (Mt)'),'Périmètre du bilan'];
+  const tableRows=rows.toReversed().map(([date,...values])=>[e(displayPeriod(date,grain)),
+    ...values.map(v=>valueCell(v===null?null:v/1000,'',6)),e(brazilSoyScope(date,values,view))]);
+  return section(products[family]+' · Brésil','ABIOVE · Volumes en millions de tonnes métriques')+
+    '<div class="toolbar">'+btnSeg('brazilSoyView',brazilSoyViews,view,'Période et périmètre ABIOVE')+'</div>'+
+    section(brazilSoyViews[view],detail,action('export-soy-bra',icon('download')+' Télécharger le CSV','ghost'))+
+    panel('<p class="analysis-text">'+e(note)+'</p><details><summary class="small">Voir le tableau de données</summary>'+
+      table(headers,tableRows)+'</details>')+
+    '<div class="grid2 flow">'+charts.join('')+'</div>';
+}
 function renderComplex(key){
   const group=groups[key];
   const isSoy=key==='soy';
@@ -539,7 +602,7 @@ function renderComplex(key){
   return head(key==='macro'?'Marchés transversaux':'Complexes de marché',group.name,'Analyse de l’offre, de la demande, des stocks et des flux. Les fiches distinguent les chiffres publiés, les projections et les effets attendus.')+
     (isSoy?'<div class="toolbar">'+btnSeg('soyFamily',soyFamilies,product,'Sous-famille du soja')+'</div>'+
       '<div class="toolbar">'+btnSeg('soyOrigin',soyOrigins,origin,'Origine du soja')+'</div>'+
-      (origin==='us'?usSoyHistoryPanels(product):origin==='arg'?argentinaSoyPanels(product):notice('Les séries mensuelles couvrent les États-Unis et l’Argentine.')) :
+      (origin==='us'?usSoyHistoryPanels(product):origin==='arg'?argentinaSoyPanels(product):brazilSoyPanels(product)) :
       '<div class="toolbar"><label>Origine analysée</label>'+select('originTab',Object.fromEntries(group.origins.map(k=>[k,origins[k]])),origin,'Toutes les origines')+' <span class="small">'+e(selectedOrigin)+'</span></div>')+
     '<div class="grid4">'+group.channels.map(([title,desc])=>panel('<span class="eyebrow">'+e(title)+'</span><p class="analysis-text">'+e(desc)+'</p>')).join('')+'</div>'+
     (key==='palm'?mpobHistoryPanel():'')+
@@ -993,6 +1056,16 @@ const controlActions={
     const names=arSoyMetrics[family].map(([name])=>name+' (Mt)');
     const rows=argentinaSoyHistory.map(row=>[row.date,...row[family].map(v=>v===null?'':String(Number(v.toFixed(9))).replace('.',',')),...(oil?[argentinaOilNote(row)]:[])]);
     csv('olea_'+(oil?'huile_soja':'graines_soja')+'_arg.csv',[['Mois',...names,...(oil?['Qualité des données']:[])],...rows]);
+  },
+  'export-soy-bra':()=>{
+    const family=state.soyFamily, view=state.brazilSoyView;
+    const {names,rows}=brazilSoySelection(family,view);
+    const monthly=view==='monthly';
+    const values=rows.map(([date,...values])=>[date,
+      ...values.map(v=>v===null?'':String(Number((v/1000).toFixed(9))).replace('.',',')),
+      brazilSoyScope(date,values,view)]);
+    csv('olea_'+(family==='soy'?'graines_soja':'huile_soja')+'_bresil_'+view+'.csv',
+      [[monthly?'Mois':'Année',...names.map(name=>name+' (Mt)'),'Périmètre du bilan'],...values]);
   },
   'export-feed':exportFeed,
   'export-balance':exportBalances,
