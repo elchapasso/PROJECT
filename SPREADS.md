@@ -17,6 +17,23 @@ La branche `feature/daily-spreads` étend la vue `#cross`. Pour la vérifier en 
 | [Commission européenne · Oilseeds](https://agridata.ec.europa.eu/extensions/DashboardCereals/OilseedPrices.html) et [API](https://agridata.ec.europa.eu/extensions/API_Documentation/oilseeds.html) | Le portail documente des prix hebdomadaires. Aucun triplet quotidien de colza physique à base géographique et commerciale commune n’a été vérifié. | [Politique générale de réutilisation](https://commission.europa.eu/legal-notice_en), sous réserve des droits de tiers. Aucun historique intégré. |
 | Mer Noire | Aucun triplet gratuit, vérifiable et comparable pour l’huile, les pellets et les graines. | Redistribution publique non vérifiée. |
 
+## Données à compléter
+
+Les tickers identifient les contrats. La documentation du [MCP TradingView](https://www.tradingview.com/mcp/docs) décrit des barres OHLCV. Pour alimenter Oléa, il faut une source qui confirme le règlement officiel, la règle de roulement du continu et le droit de publier les valeurs, les calculs et les CSV. Les [conditions TradingView, section 27](https://www.tradingview.com/policies/) réservent le MCP à l’usage personnel non commercial et encadrent la republication. EUR/USD est déjà intégré via la BCE et entre dans les deux taux croisés.
+
+| Carte | Séries manquantes | Séries déjà intégrées |
+| --- | --- | --- |
+| BOPO | Huile de soja `CBOT:ZL1!`, palme `MYX:FCPO1!` | USD/MYR via BCE |
+| POGO | Palme `MYX:FCPO1!`, gazole `ICEEUR:ULS1!` | USD/MYR via BCE |
+| BOHO | Huile de soja `CBOT:ZL1!`, ULSD `NYMEX:HO1!` | — |
+| Board crush | Tourteau `CBOT:ZM1!`, huile `CBOT:ZL1!`, graines `CBOT:ZS1!` | — |
+| Part de l’huile | Huile `CBOT:ZL1!`, tourteau `CBOT:ZM1!` | — |
+| Biodiesel États-Unis | ULSD `NYMEX:HO1!`, huile `CBOT:ZL1!` | D4 EPA |
+| Biodiesel Indonésie | Gazole `ICEEUR:ULS1!` | HIP ESDM, USD/IDR via BCE |
+| Biodiesel Brésil | Huile brute dégommée CEPEA, São Paulo, ICMS 12 % inclus | B100 ANP |
+| Colza UE | Huile, tourteau et graines physiques sur une base commune | `EURONEXT:ECO1!` identifié comme futur de référence |
+| Tournesol mer Noire | Huile, pellets et graines FOB d’une même origine | — |
+
 ## Calcul et actualisation
 
 - Les positions FOB sélectionnées figurent dans `scripts/update-spreads.py` et dans les cartes. Chaque position doit couvrir le mois de la cotation. Aucun prix d’une autre date ou position ne remplace un bulletin manquant.

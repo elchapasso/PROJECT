@@ -106,3 +106,6 @@
 .spread-inputs label{display:grid;gap:3px;min-width:0;font-size:.85rem}
 .spread-inputs input{width:min(10rem,100%)}
 @media(max-width:850px){.spread-body{grid-template-columns:minmax(0,1fr);gap:12px}}
+.spread-coverage{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:12px}
+.spread-coverage h4{margin:9px 0 2px}
+.spread-coverage p{margin:0;overflow-wrap:anywhere}

@@ -12,7 +12,7 @@ import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argenti
 import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHistory} from './brazil-soy-history.js?v=20261110-abiove';
 
 import {START_DATE,spreadRows} from './spread-model.mjs';
-import {spreadLegs,spreadMetrics} from './spread-definitions.mjs';
+import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261110-methodes';
 import {spreadPrices} from './spread-prices.mjs';
 
 const root=document.querySelector('#terminal');
@@ -715,16 +715,23 @@ function spreadCard(metric){
   const rows=spreadRows(metric,spreadPrices,parameters);
   const last=rows.at(-1),previous=rows.at(-2);
   const unavailable=metric.legs.filter(id=>!spreadSourceDate(id));
+  const name=id=>spreadLegs[id].description.split(' · ')[0];
+  const missingNames=unavailable.map(id=>spreadLegs[id].symbol?name(id)+' ('+spreadLegs[id].symbol+')':name(id));
+  const availableNames=metric.legs.filter(id=>!unavailable.includes(id)).map(id=>{
+    const leg=spreadLegs[id];
+    return (leg.fx?leg.unit:name(id))+' ('+formatDate(spreadSourceDate(id))+')';
+  });
   const sourceList=metric.legs.map(id=>{
-    const {source,url,unit,description,missing}=spreadLegs[id];
+    const {source,url,unit,description,missing,fx}=spreadLegs[id];
     const date=spreadSourceDate(id);
-    const reference=spreadPrices[id]?.at(-1)?.[2]||spreadLegs[id].observationUrl?.(date);
+    const reference=date&&(spreadPrices[id]?.at(-1)?.[2]||spreadLegs[id].observationUrl?.(date));
     return '<li>'+link(url,source)+' · '+e(description+' ('+unit+')')+
-      '<small>'+(date?'Dernière observation · '+link(reference,formatDate(date)):'Non disponible · '+e(missing||'Aucune observation publiée dans le jeu de données.'))+'</small></li>';
+      '<small>'+(date?'Dernière observation · '+link(reference,formatDate(date)):'Non disponible · '+e(missing||'Aucune observation publiée dans le jeu de données.'))+'</small>'+
+      (fx?'<small>'+link(eurUsdSource,'Fixing EUR/USD · BCE')+'</small>':'')+'</li>';
   }).join('');
   const sourceLinks=refsFor(metric.legs.map(id=>spreadLegs[id]));
   const valueHeader='Valeur ('+metric.unit+')';
-  const legHeaders=metric.legs.map(id=>spreadLegs[id].description.split(' · ')[0]+' ('+spreadLegs[id].unit+')');
+  const legHeaders=metric.legs.map(id=>name(id)+' ('+spreadLegs[id].unit+')');
   const observations=rows.toReversed().map(row=>[e(spreadDate(row.date,metric.grain)),valueCell(row.value,'',6),
     ...metric.legs.map(id=>{
       const obs=row.observations[id];
@@ -735,17 +742,20 @@ function spreadCard(metric){
     '<span class="small">'+e(spreadDate(last.date,metric.grain))+'</span>'+
     '<span class="small">'+(previous?e(sign(last.value-previous.value,2)+' '+changeUnit+' vs '+spreadDate(previous.date,metric.grain)):
       'Variation non disponible')+'</span>':
-    '<b class="spread-value">Non disponible</b><span class="small">'+(unavailable.length?'Une ou plusieurs séries sont indisponibles.':'Aucune date commune exploitable.')+'</span>';
+    '';
   const history=last?chart([{label:metric.title,color:colors[0],points:rows}],{
     unit:metric.unit,periodType:metric.grain==='month'?'day':metric.grain,label:metric.title,
     sourceLinks,zeroLine:metric.id!=='oilShare',startDate:START_DATE,maxGapDays:{day:7,week:14,month:45}[metric.grain],
     tooltips:p=>num(p.value,4)+' '+metric.unit,
-  }):empty('Non disponible')+chartSources(sourceLinks);
+  }):'<div class="spread-coverage"><b class="spread-value">Non disponible</b>'+
+    (missingNames.length?'<h4>Séries manquantes</h4><p>'+e(missingNames.join(' · '))+'</p>':'<p>Aucune date commune exploitable.</p>')+
+    (availableNames.length?'<h4>Séries déjà intégrées</h4><p>'+e(availableNames.join(' · '))+'</p>':'')+
+    '</div>'+chartSources(sourceLinks);
   return panel('<div class="spread-heading"><div><span class="eyebrow">'+grainNames[metric.grain]+'</span>'+
     '<h3>'+e(metric.title)+'</h3></div>'+action('export-spread',icon('download')+' CSV','ghost',
       'data-id="'+e(metric.id)+'"'+(last?'':' disabled')+' aria-label="Télécharger le CSV · '+e(metric.title)+'"')+'</div>'+
     '<div class="spread-body"><div class="spread-chart">'+history+'</div><div class="spread-summary">'+lastReading+
-      '<h4>Formule</h4><p>'+e(metric.formula(parameters))+'</p><h4>Lecture</h4><p>'+e(metric.reading)+'</p>'+
+      '<h4>Formule</h4><p>'+e(metric.formula(parameters))+'</p><h4>Comment lire le résultat</h4><p>'+e(metric.reading)+'</p>'+
       (metric.note?'<p class="small">'+e(metric.note)+'</p>':'')+
       (metric.legs.some(id=>spreadLegs[id].description.includes('première échéance continue'))?
         '<p class="small">Les changements d’échéance des contrats continus peuvent provoquer des sauts.</p>':'')+
@@ -812,8 +822,12 @@ function renderCross(){
     panel('<span class="eyebrow">Observations communes</span><b class="num">'+rows.length+'</b><span class="muted">'+e(periodTypes[a.grain]||'Jour')+'</span>','metric')+'</div>'+
     section('Évolution historique',sameGrain?'Mêmes périodes de référence':'Les fréquences de publication diffèrent',btnSeg('crossMode',common?{index:'Base 100',spread:'Spread'}:{index:'Base 100'},mode))+
     panel(chart(changes,{unit:mode==='spread'?a.unit:'base 100',periodType:a.grain,sourceLinks:refsFor(rows.flatMap(r=>[a.points[r.date],b.points[r.date]]))})+(!sameGrain?notice('Ajoutez des observations sur la même fréquence pour comparer ces séries.'):''))+
-    section('Lecture économique','Compétitivité et transmission entre marchés')+
-    panel('<p class="analysis-text">'+e(note||'Vérifier le grade, la devise, le fret et la base géographique avant d’interpréter un écart.')+'</p><p class="small">'+e(a.definition+' '+b.definition)+'</p><p class="small" style="margin-top:7px">Une corrélation décrit un mouvement conjoint. Une analyse du mécanisme économique est nécessaire pour attribuer une causalité.</p>')+
+    section('Formules et lecture','Comparaison sur les dates communes de la fenêtre sélectionnée')+
+    panel('<p><strong>Base 100</strong> · 100 × valeur à la date t ÷ première valeur commune de la série. Un indice de 110 indique une hausse de 10 % depuis le début de la fenêtre.</p>'+
+      '<p><strong>Spread</strong> · valeur A − valeur B, à unité et fréquence identiques. Un résultat positif indique que A est supérieur à B.</p>'+
+      '<p><strong>Corrélation</strong> · coefficient de Pearson des variations en pourcentage entre observations communes successives. Proche de +1, les séries évoluent ensemble. Proche de −1, elles évoluent en sens opposé. Le calcul exige au moins trois paires de variations et des séries dont les variations ne sont pas constantes.</p>'+
+      '<p class="analysis-text">'+e(note||'Vérifier le grade, la devise, le fret et la base géographique avant d’interpréter un écart.')+'</p>'+
+      '<p class="small">'+e(a.definition+' '+b.definition)+'</p>')+
     section('Observations et provenance','Valeurs brutes avant indexation')+
     panel(table(['Période',a.name,b.name,'Spread','Sources'],rows.slice().reverse().map(r=>[e(displayPeriod(r.date,a.grain)),valueCell(r.a,a.unit),valueCell(r.b,b.unit),common?valueCell(r.a-r.b,a.unit):'—',link(a.points[r.date]?.url,a.points[r.date]?.source||a.source)+' · '+link(b.points[r.date]?.url,b.points[r.date]?.source||b.source)])));
 }
