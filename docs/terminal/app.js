@@ -11,6 +11,10 @@ import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argenti
 
 import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHistory} from './brazil-soy-history.js?v=20261110-abiove';
 
+import {START_DATE,spreadRows} from './spread-model.mjs';
+import {spreadLegs,spreadMetrics} from './spread-definitions.mjs';
+import {spreadPrices} from './spread-prices.mjs';
+
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
 const monthFormat=new Intl.DateTimeFormat('fr-FR',{month:'long',year:'numeric',timeZone:'UTC'});
@@ -103,8 +107,8 @@ const colors=['var(--series-1)','var(--series-2)','var(--series-3)','var(--serie
 const yearMonths=Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0'));
 const monthName=new Intl.DateTimeFormat('fr-FR',{month:'long',timeZone:'UTC'});
 const monthDate=month=>new Date('2000-'+month+'-01T12:00:00Z');
-function chartTicks(values,scale){
-  if(scale==='zero')values=[...values,0];
+function chartTicks(values,scale,zeroLine){
+  if(scale==='zero'||zeroLine)values=[...values,0];
   const low=Math.min(...values),high=Math.max(...values);
   const range=high-low||Math.abs(high)*(scale==='tight'?.02:.15)||1;
   if(scale==='tight'){
@@ -121,14 +125,14 @@ function chartTicks(values,scale){
 }
 const chartModels=[];
 const chartDefaults=last=>({height:'standard',scale:'auto',start:0,end:last,hidden:new Set()});
-function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=false,label='Historique '+unit,sourceLinks}={}){
+function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=false,label='Historique '+unit,sourceLinks,zeroLine=false,startDate,maxGapDays}={}){
   const valid=lines.filter(l=>l.points.some(p=>Number.isFinite(p.value)));
   if(!valid.length)return empty('Série non disponible pour la sélection.');
-  const dates=seasonal?yearMonths:[...new Set(valid.flatMap(l=>l.points.map(p=>p.date)))].sort();
+  const dates=seasonal?yearMonths:[...new Set([...(startDate?[startDate]:[]),...valid.flatMap(l=>l.points.map(p=>p.date))])].sort();
   const periodLabel=date=>seasonal?monthName.format(monthDate(date)):displayPeriod(date,periodType);
   const periods=Object.fromEntries(dates.map((date,i)=>[i,periodLabel(date)]));
   const settings=chartDefaults(dates.length-1);
-  const model={valid,dates,unit,periodType,height,tooltips,seasonal,settings};
+  const model={valid,dates,unit,periodType,height,tooltips,seasonal,settings,zeroLine,startDate,maxGapDays};
   const index=chartModels.push(model)-1;
   const selectSetting=(key,title,choices)=>'<label>'+e(title)+'<select aria-label="'+e(title)+'" data-chart-setting="'+key+'">'+options(choices,settings[key])+'</select></label>';
   const legend=valid.map((l,i)=>'<button type="button" data-chart-series="'+i+'" aria-pressed="true" title="Afficher ou masquer cette série"><i style="--series:'+l.color+'"></i>'+e(l.label)+'</button>').join('');
@@ -181,31 +185,36 @@ function bindChart(wrap,model){
   const tooltip=content.querySelector('.chart-tooltip');
   if(tooltip)bindChartTooltip(tooltip);
 }
-function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,seasonal,settings}){
+function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,seasonal,settings,zeroLine,startDate,maxGapDays}){
   const dates=allDates.slice(settings.start,settings.end+1);
   const dateSet=new Set(dates);
   const key=p=>seasonal?p.date.slice(5):p.date;
   const lines=valid.filter((_,i)=>!settings.hidden.has(i)).map(line=>({...line,points:line.points.filter(p=>dateSet.has(key(p)))}));
   const values=lines.flatMap(l=>l.points.map(p=>p.value)).filter(Number.isFinite);
   if(!values.length)return empty('Aucune observation pour les séries et la période sélectionnées.');
-  const ticks=chartTicks(values,settings.scale);
+  const ticks=chartTicks(values,settings.scale,zeroLine);
   const min=ticks[0],max=ticks.at(-1);
   const tickDigits=Math.max(0,Math.ceil(-Math.log10(ticks[1]-min))+1);
-  const x=i=>dates.length===1?50:100*i/(dates.length-1);
+  const dateValues=startDate?dates.map(date=>Date.parse(date)):[];
+  const x=i=>dates.length===1?50:startDate?
+    100*(dateValues[i]-dateValues[0])/(dateValues.at(-1)-dateValues[0]):100*i/(dates.length-1);
   const y=v=>100*(max-v)/(max-min);
   const column=p=>dates.indexOf(key(p));
   const tickCount=Math.min(7,dates.length);
   const axisColumns=seasonal||tickCount===1?dates.map((_,i)=>i):Array.from({length:tickCount},(_,i)=>Math.round(i*(dates.length-1)/(tickCount-1)));
   const multiYear=dates[0].slice(0,4)!==dates.at(-1).slice(0,4);
-  const axisLabel=d=>seasonal?smallMonth('2000-'+d):periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):periodType==='day'||periodType==='week'?d.slice(8)+' '+smallMonth(d):d;
+  const axisLabel=d=>seasonal?smallMonth('2000-'+d):periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):periodType==='day'||periodType==='week'?d.slice(8)+' '+smallMonth(d)+(startDate&&multiYear?' '+d.slice(2,4):''):d;
   const yLabels=ticks.map(v=>'<span style="--y:'+y(v)+'%">'+e(num(v,tickDigits))+'</span>').join('');
   const xLabels=axisColumns.map(i=>'<span style="--x:'+x(i)+'%">'+e(axisLabel(dates[i]))+'</span>').join('');
-  const grid=ticks.map(v=>'<line class="grid'+(v===0?' zero':'')+'" x1="0" x2="100" y1="'+y(v)+'" y2="'+y(v)+'"/>').join('');
+  const gridValues=zeroLine&&!ticks.includes(0)?[...ticks,0]:ticks;
+  const grid=gridValues.map(v=>'<line class="grid'+(v===0?' zero':'')+'" x1="0" x2="100" y1="'+y(v)+'" y2="'+y(v)+'"/>').join('');
   const paths=[],points=[];
   for(const l of lines){
     const path=l.points.map((p,i)=>{
       if(!Number.isFinite(p.value))return '';
-      const command=Number.isFinite(l.points[i-1]?.value)?'L':'M';
+      const previous=l.points[i-1];
+      const gap=maxGapDays&&(Date.parse(p.date)-Date.parse(previous?.date))/86400000>maxGapDays;
+      const command=Number.isFinite(previous?.value)&&!gap?'L':'M';
       return command+x(column(p))+','+y(p.value);
     }).join(' ');
     paths.push('<path class="chart-line" d="'+path+'" stroke="'+l.color+'" stroke-width="'+(l.width??2.25)+'"/>');
@@ -220,7 +229,7 @@ function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,season
     }
   }
   const plotHeight={compact:185,standard:height+75,large:height+220}[settings.height];
-  return '<div class="chart-view" style="--plot-height:'+plotHeight+'px" data-columns="'+dates.length+'">'+
+  return '<div class="chart-view" style="--plot-height:'+plotHeight+'px" data-columns="'+dates.length+'"'+(startDate?' data-calendar-axis':'')+'>'+
     '<div class="chart-frame"><div class="chart-axis-y" aria-hidden="true">'+yLabels+'</div><div class="chart-plot">'+
     '<svg class="chart" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'+grid+paths.join('')+'</svg>'+
     '<div class="chart-guide" hidden></div>'+points.join('')+'</div><div class="chart-axis-x" aria-hidden="true">'+xLabels+'</div></div>'+
@@ -258,7 +267,10 @@ function bindChartTooltip(tooltip){
   function fromPointer(event){
     const bounds=plot.getBoundingClientRect();
     const index=Math.max(0,Math.min(slots-1,Math.round((event.clientX-bounds.left)/bounds.width*(slots-1))));
-    const group=columns.get(index);
+    const relativeX=(event.clientX-bounds.left)/bounds.width*100;
+    const gapX=i=>Math.abs(parseFloat(columns.get(i)[0].style.getPropertyValue('--x'))-relativeX);
+    const group=columns.get(wrap.hasAttribute('data-calendar-axis')?
+      indexes.reduce((nearest,i)=>gapX(i)<gapX(nearest)?i:nearest):index);
     if(!group){show(null);return;}
     const relativeY=(event.clientY-bounds.top)/bounds.height*100;
     const gap=p=>Math.abs(parseFloat(p.style.getPropertyValue('--y'))-relativeY);
@@ -681,6 +693,94 @@ function renderBalances(){
     section('Historique fondamental','Dernière version disponible par période et origine')+panel('<div class="toolbar"><label>Indicateur</label>'+select('metric',metrics,state.metric)+'<span class="small">'+e(chosenUnit)+'</span></div>'+chart(lines,{unit:chosenUnit,periodType:grain})+(units.length>1?notice('Le graphique affiche '+chosenUnit+'. Les autres unités restent visibles dans le tableau.'):'')+'<p class="small" style="margin-top:10px">Le ratio stocks / utilisation divise les stocks finaux par la consommation intérieure et les exportations. Le total mondial utilise la seule consommation mondiale pour éviter de compter deux fois le commerce.</p>')+
     section('Historique des publications et révisions','Les nouvelles éditions s’ajoutent aux observations existantes')+panel(table(['Publication','Origine','Indicateur','Référence','Valeur','Source / statut'],history.sort(byDate).slice(0,35).map(r=>[e(formatDate(r.date)),e(origins[r.origin]),e(metrics[r.metric]),e(displayPeriod(r.period,r.periodType))+'<small>'+e(periodTypes[r.periodType])+'</small>',valueCell(r.value,r.unit,3),link(r.url,r.source)+'<small>'+e(labels.status[r.status])+'</small>'])));
 }
+const spreadParameters=Object.fromEntries(spreadMetrics.filter(m=>m.defaults).map(m=>[m.id,{...m.defaults}]));
+const spreadDate=(date,grain)=>grain==='month'?displayPeriod(date.slice(0,7),'month'):formatDate(date);
+const grainNames={day:'Quotidien',week:'Hebdomadaire',month:'Mensuel'};
+const spreadSourceDate=id=>{
+  const leg=spreadLegs[id];
+  if(!leg.fx)return spreadPrices[id]?.at(-1)?.[0];
+  const [foreign,usd]=leg.fx.map(key=>spreadPrices[key]||[]);
+  const usdDates=new Set(usd.map(([date])=>date));
+  return foreign.findLast(([date])=>usdDates.has(date))?.[0];
+};
+function spreadInputForm(metric,parameters){
+  if(!metric.inputs)return '';
+  return '<form class="spread-inputs" data-spread-form="'+e(metric.id)+'">'+metric.inputs.map(([key,label])=>
+    '<label>'+e(label)+'<input name="'+e(key)+'" type="number" min="0" '+(key.endsWith('Yield')?'max="1" ':'')+
+    'step="any" value="'+e(parameters[key])+'" required></label>').join('')+
+    '<button type="submit" class="button">Recalculer</button></form>';
+}
+function spreadCard(metric){
+  const parameters=spreadParameters[metric.id];
+  const rows=spreadRows(metric,spreadPrices,parameters);
+  const last=rows.at(-1),previous=rows.at(-2);
+  const unavailable=metric.legs.filter(id=>!spreadSourceDate(id));
+  const sourceList=metric.legs.map(id=>{
+    const {source,url,unit,description,missing}=spreadLegs[id];
+    const date=spreadSourceDate(id);
+    const reference=spreadPrices[id]?.at(-1)?.[2]||spreadLegs[id].observationUrl?.(date);
+    return '<li>'+link(url,source)+' · '+e(description+' ('+unit+')')+
+      '<small>'+(date?'Dernière observation · '+link(reference,formatDate(date)):'Non disponible · '+e(missing||'Aucune observation publiée dans le jeu de données.'))+'</small></li>';
+  }).join('');
+  const sourceLinks=refsFor(metric.legs.map(id=>spreadLegs[id]));
+  const valueHeader='Valeur ('+metric.unit+')';
+  const legHeaders=metric.legs.map(id=>spreadLegs[id].description.split(' · ')[0]+' ('+spreadLegs[id].unit+')');
+  const observations=rows.toReversed().map(row=>[e(spreadDate(row.date,metric.grain)),valueCell(row.value,'',6),
+    ...metric.legs.map(id=>{
+      const obs=row.observations[id];
+      return valueCell(obs.value,'',8)+'<small>'+link(obs.url||spreadLegs[id].observationUrl?.(obs.date)||spreadLegs[id].url,formatDate(obs.date))+'</small>';
+    })]);
+  const changeUnit=metric.unit==='%'?'pts':metric.unit;
+  const lastReading=last?'<b class="spread-value num">'+num(last.value,metric.unit==='%'?1:2)+' '+e(metric.unit)+'</b>'+
+    '<span class="small">'+e(spreadDate(last.date,metric.grain))+'</span>'+
+    '<span class="small">'+(previous?e(sign(last.value-previous.value,2)+' '+changeUnit+' vs '+spreadDate(previous.date,metric.grain)):
+      'Variation non disponible')+'</span>':
+    '<b class="spread-value">Non disponible</b><span class="small">'+(unavailable.length?'Une ou plusieurs séries sont indisponibles.':'Aucune date commune exploitable.')+'</span>';
+  const history=last?chart([{label:metric.title,color:colors[0],points:rows}],{
+    unit:metric.unit,periodType:metric.grain==='month'?'day':metric.grain,label:metric.title,
+    sourceLinks,zeroLine:metric.id!=='oilShare',startDate:START_DATE,maxGapDays:{day:7,week:14,month:45}[metric.grain],
+    tooltips:p=>num(p.value,4)+' '+metric.unit,
+  }):empty('Non disponible')+chartSources(sourceLinks);
+  return panel('<div class="spread-heading"><div><span class="eyebrow">'+grainNames[metric.grain]+'</span>'+
+    '<h3>'+e(metric.title)+'</h3></div>'+action('export-spread',icon('download')+' CSV','ghost',
+      'data-id="'+e(metric.id)+'"'+(last?'':' disabled')+' aria-label="Télécharger le CSV · '+e(metric.title)+'"')+'</div>'+
+    '<div class="spread-body"><div class="spread-chart">'+history+'</div><div class="spread-summary">'+lastReading+
+      '<h4>Formule</h4><p>'+e(metric.formula(parameters))+'</p><h4>Lecture</h4><p>'+e(metric.reading)+'</p>'+
+      (metric.note?'<p class="small">'+e(metric.note)+'</p>':'')+
+      (metric.legs.some(id=>spreadLegs[id].description.includes('première échéance continue'))?
+        '<p class="small">Les changements d’échéance des contrats continus peuvent provoquer des sauts.</p>':'')+
+      spreadInputForm(metric,parameters)+'</div></div>'+
+    '<details class="spread-details"><summary>Sources et dernières observations</summary><ul>'+sourceList+'</ul></details>'+
+    '<details class="spread-details"><summary>Voir les valeurs</summary>'+
+    (last?table(['Date de référence',valueHeader,...legHeaders],observations):empty('Non disponible'))+'</details>'+
+    (metric.id==='idBio'?'<details class="spread-details"><summary>Voir les prix HIP et leurs avis officiels</summary>'+
+      table(['Mois','HIP hors fret (Rp/l)','Avis officiel'],(spreadPrices.hip||[]).toReversed().map(([date,value,url])=>[
+        e(spreadDate(date,'month')),valueCell(value,'',0),link(url,'ESDM · Ditjen EBTKE'),
+      ]))+'</details>':''),'spread-card');
+}
+function renderSpreads(){
+  return section('Spreads & marges','Historique depuis le 1ᵉʳ janvier 2025 · calcul sur les dates communes · fréquences selon la source',
+    action('jump-pairs','Comparaison de séries','ghost'))+
+    '<div class="spread-list">'+spreadMetrics.map(spreadCard).join('')+'</div>';
+}
+function exportSpread(button){
+  const metric=spreadMetrics.find(m=>m.id===button.dataset.id);
+  if(!metric)return;
+  const parameters=spreadParameters[metric.id];
+  const rows=spreadRows(metric,spreadPrices,parameters);
+  if(!rows.length)return;
+  const headers=['Date de référence',metric.title+' ('+metric.unit+')',...metric.legs.flatMap(id=>{
+    const leg=spreadLegs[id];
+    return [id+' ('+leg.unit+')','Date '+id,'Source '+id,'Lien '+id];
+  }),...(metric.inputs||[]).map(([,label])=>label)];
+  const number=value=>String(value).replace('.',',');
+  csv('olea_spread_'+metric.id+'.csv',[headers,...rows.map(row=>[
+    row.date,number(row.value),...metric.legs.flatMap(id=>{
+      const {date,value,url}=row.observations[id];
+      return [number(value),date,spreadLegs[id].source,url||spreadLegs[id].observationUrl?.(date)||spreadLegs[id].url||''];
+    }),...(metric.inputs||[]).map(([key])=>number(parameters[key])),
+  ])]);
+}
 const pairLabel=([a,b])=>seedPrices[a].name+' / '+seedPrices[b].name;
 function crossData(){
   const preset=pairs[Number(state.crossPair)], a=series(preset?.[0]||state.crossA), b=series(preset?.[1]||state.crossB);
@@ -702,7 +802,8 @@ function renderCross(){
     {label:a.name,color:colors[0],points:rows.map(r=>({date:r.date,value:100*r.a/first.a}))},
     {label:b.name,color:colors[1],points:rows.map(r=>({date:r.date,value:100*r.b/first.b}))},
   ];
-  return head('Analyse intermarchés','Comparaisons & spreads','Comparez les séries sur leurs observations communes et examinez les conditions de substitution entre huiles.')+
+  return head('Analyse intermarchés','Comparaisons & spreads','Comparez les séries sur leurs observations communes et examinez les conditions de substitution entre huiles.')+renderSpreads()+
+    '<div id="cross-pairs" tabindex="-1">'+section('Comparaison de séries','Paires prédéfinies et personnalisées')+'</div>'+
     '<div class="toolbar"><label>Paire</label>'+select('crossPair',seriesOptions,state.crossPair)+
     (state.crossPair==='custom'?select('crossA',priceDict,state.crossA)+select('crossB',priceDict,state.crossB):'')+
     '<label>Fenêtre</label>'+select('crossRange',{4:'4 observations',6:'6 observations',8:'8 observations',24:'24 observations',120:'120 observations'},state.crossRange)+action('export-cross',icon('download')+' CSV','ghost')+'</div>'+
@@ -1116,6 +1217,8 @@ const controlActions={
   'export-feed':exportFeed,
   'export-balance':exportBalances,
   'export-cross':exportCross,
+  'export-spread':exportSpread,
+  'jump-pairs':()=>document.getElementById('cross-pairs')?.focus(),
   'export-report':()=>download('olea_rapport_'+memoryReport.end+'.txt',memoryReport.text,'text/plain;charset=utf-8'),
   'save-report':()=>{
     const {start,end,kind,title,text}=memoryReport;
@@ -1142,6 +1245,19 @@ root.addEventListener('click',event=>{
   if(anchor&&anchor.hash===location.hash&&state.mobile){state.mobile=false;render();}
 });
 root.addEventListener('submit',event=>{
+  if(event.target.matches('form[data-spread-form]')){
+    event.preventDefault();
+    const metric=spreadMetrics.find(m=>m.id===event.target.dataset.spreadForm);
+    const fields=new FormData(event.target);
+    const values=Object.fromEntries(metric.inputs.map(([key])=>[key,Number(fields.get(key))]));
+    if(metric.defaults.oilYield!==undefined&&values.oilYield+values.mealYield>1){
+      toast('La somme des rendements doit être inférieure ou égale à 1 t/t.');
+      return;
+    }
+    spreadParameters[metric.id]=values;
+    render();
+    root.querySelector('[data-spread-form="'+metric.id+'"] button')?.focus({preventScroll:true});
+  }
   if(event.target.id==='entry-form'){event.preventDefault();addRecord(event.target);}
   if(event.target.id==='feed-search'){event.preventDefault();state.query=new FormData(event.target).get('search');render();}
 });
