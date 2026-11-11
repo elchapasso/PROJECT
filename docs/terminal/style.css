@@ -116,3 +116,63 @@
 .spread-reference-value b{font-size:1.2rem}
 .spread-market-links ul{margin-top:8px}
 .spread-market-note{margin-top:8px}
+
+.balance-view{display:grid;gap:14px}
+.balance-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.balance-tabs button{display:grid;gap:4px;padding:13px 16px;text-align:left;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
+.balance-tabs button:hover{background:var(--surface2)}
+.balance-tabs button[aria-pressed="true"]{background:var(--surface2);border-color:var(--accent);box-shadow:inset 0 -3px var(--accent)}
+.balance-tabs strong{font-size:15px;letter-spacing:-.02em}
+.balance-tabs span,.balance-control-label{font-size:11px;color:var(--muted)}
+.balance-selection{display:flex;gap:12px 32px;flex-wrap:wrap;padding-block:12px}
+.balance-selection>div{display:flex;gap:7px 12px;flex-wrap:wrap;align-items:center}
+.balance-control-label{font-weight:700}
+.balance-controls button{min-height:32px;padding-inline:12px}
+.balance-section-head{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}
+.balance-campaign-actions,.balance-actions,.balance-add-form{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.balance-campaign-actions label,.balance-add-form label{font-size:12px;color:var(--muted);font-weight:650}
+.balance-campaign-actions select{max-width:100%}
+.balance-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:0 0 15px}
+.balance-kpi{display:grid;align-content:start;gap:4px;padding:12px 14px;min-width:0;border:1px solid var(--line);border-radius:9px;background:var(--surface2)}
+.balance-kpi span,.balance-kpi small{font-size:11px;color:var(--muted)}
+.balance-kpi strong{font-size:clamp(19px,2.4vw,29px);overflow-wrap:anywhere;line-height:1.25}
+.balance-kpi-main{background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-color:color-mix(in srgb,var(--accent) 50%,var(--line))}
+.balance-kpi-main strong{color:var(--accent)}
+.balance-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.balance-fields{display:grid;gap:8px;min-width:0;margin:0;padding:8px 12px 12px;border:1px solid var(--line);border-radius:9px}
+.balance-fields legend{padding:0 5px;color:var(--text);font-size:12px;font-weight:700}
+.balance-fields label{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:var(--text)}
+.balance-field-value{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:10px}
+.balance-field-value input{width:clamp(70px,11vw,116px);text-align:right;font-size:14px;font-variant-numeric:tabular-nums}
+.balance-field-value input[aria-invalid="true"]{border-color:var(--red)}
+.balance-status{margin-top:8px}
+.balance-status:empty,.balance-add-form[hidden],.balance-add-form p:empty{display:none}
+.balance-actions,.balance-add-form{margin-top:12px}
+.balance-add-form{padding:10px;background:var(--surface2);border:1px solid var(--line);border-radius:8px}
+.balance-add-form input{width:112px}
+.balance-add-form p{flex-basis:100%;color:var(--red)}
+.balance-method summary{font-size:12px}
+.balance-method dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:5px 12px;font-size:12px}
+.balance-method dt{font-weight:700}
+.balance-method dd{margin:0;color:var(--muted)}
+.balance-scroll{border:1px solid var(--line);border-radius:8px}
+.balance-table{min-width:690px}
+.balance-table thead th:not(:first-child),.balance-table td{text-align:right;white-space:nowrap}
+.balance-table tbody th{background:var(--surface);text-align:left;color:var(--text);font-size:12px;font-weight:600}
+.balance-table thead button{padding:0;border:0;background:transparent;color:var(--accent);font:inherit;text-decoration:underline;text-underline-offset:3px}
+.balance-table .balance-latest{background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+.balance-table .balance-total{font-weight:700}
+.balance-table .balance-stock th,.balance-table .balance-stock td{background:var(--surface2);color:var(--accent)}
+.balance-source{margin-top:9px}
+.balance-empty p{margin:4px 0;color:var(--muted)}
+@media(max-width:800px){.balance-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){
+  .balance-tabs{gap:5px}
+  .balance-tabs button{padding:9px 6px}
+  .balance-tabs strong{font-size:13px}
+  .balance-tabs span{font-size:9px}
+  .balance-field-grid{grid-template-columns:1fr}
+  .balance-field-value input{width:96px}
+  .balance-method dl{grid-template-columns:1fr;gap:3px}
+  .balance-method dd{margin-bottom:4px}
+}

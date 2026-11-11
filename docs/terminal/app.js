@@ -16,6 +16,8 @@ import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=
 import {spreadPrices} from './spread-prices.mjs?v=20261110-bopo-fob';
 import {datedReportPrices} from './spread-reference-prices.mjs?v=20261110-reperes';
 
+import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261111';
+
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
 const monthFormat=new Intl.DateTimeFormat('fr-FR',{month:'long',year:'numeric',timeZone:'UTC'});
@@ -52,7 +54,7 @@ try{const raw=localStorage.getItem(localKey);if(raw)data=parseStore(raw);}catch{
 const state={
   page:'overview',filters:{...FILTERS},theme:'light',mobile:false,eventWindow:'7',chart:'oils',
   indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
-  soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',originTab:{},query:'',category:'',importance:'',start:'',end:'',balanceProduct:'sbo',compare:'revision',metric:'production',
+  soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',originTab:{},query:'',category:'',importance:'',start:'',end:'',
   crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',outProduct:'sbo',outHorizon:'short',
   shocks:Object.fromEntries(shockFields.map(([k])=>[k,0])),reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:calendarToday().slice(0,7),editType:'events',
 };
@@ -323,7 +325,7 @@ function shell(body){
     const change=pct(s.values[last],s.values[prev]);const direction=change>0?'positive':change<0?'negative':'muted';
     return '<div class="tick" title="'+e(last?displayPeriod(last,s.grain)+' · '+s.points[last].source+' · '+s.definition:'Série non disponible')+'"><span>'+e(s.name)+'</span><div><b class="num">'+num(s.values[last],2)+'</b><small class="'+direction+'">'+(change===null?e(last?s.unit:'Non dispo.'):e(percent(change)))+'</small></div></div>';
   }).join('');
-  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['biofuels','demand'].includes(state.page)?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
+  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['biofuels','demand','balances'].includes(state.page)?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
 }
 
 
@@ -644,56 +646,10 @@ function renderFeed(isNews){
 }
 
 
-const compareTypes={revision:'Dernier WASDE / précédent',campaign:'Campagne / précédente',month:'Mois / précédent',yoy:'Mois / même mois N−1',year:'Année civile / précédente',consensus:'Publication / consensus'};
-function comparisonRows(){
-  const mode=state.compare, product=state.filters.product||state.balanceProduct;
-  const grain=mode==='month'||mode==='yoy'||mode==='consensus'?'month':mode==='year'?'year':'campaign';
-  const candidates=balancesFor().filter(r=>r.product===product&&r.periodType===grain&&(mode!=='revision'||r.source==='USDA WASDE')).sort((a,b)=>byDate(a,b)||b.period.localeCompare(a.period));
-  const identity=r=>[r.origin,r.metric,r.unit,mode==='consensus'?'':r.source].join('|');
-  const families=[...new Set(candidates.map(identity))];
-  return families.map(key=>{
-    const rows=candidates.filter(r=>identity(r)===key), official=rows.filter(r=>r.variant==='official'), consensus=rows.filter(r=>r.variant==='consensus');
-    const latest=arr=>[...arr].sort((a,b)=>b.period.localeCompare(a.period)||byDate(a,b))[0];
-    if(mode==='consensus'){
-      const ref=latest(consensus)||latest(official);
-      return {ref,a:official.find(r=>r.period===ref.period),b:consensus.find(r=>r.period===ref.period)};
-    }
-    const a=latest(official)||latest(rows);
-    const refPeriod=mode==='revision'?a.period:previousPeriod(a.period,a.periodType,mode==='yoy'?12:1);
-    const b=rows.find(r=>r.variant===a.variant&&r.period===refPeriod&&(mode!=='revision'||r.date<a.date));
-    return {ref:a,a,b};
-  }).sort((a,b)=>origins[a.ref.origin].localeCompare(origins[b.ref.origin],'fr')||Object.keys(metrics).indexOf(a.ref.metric)-Object.keys(metrics).indexOf(b.ref.metric));
-}
-function delta(a,b){return a&&b?a.value-b.value:null;}
 function renderBalances(){
-  const product=state.filters.product||state.balanceProduct;
-  const rows=comparisonRows();
-  const changes=rows.filter(x=>x.a&&x.b).length;
-  const history=balancesFor().filter(r=>r.product===product&&r.metric===state.metric&&r.variant==='official');
-  const grain=state.compare==='month'||state.compare==='yoy'||state.compare==='consensus'?'month':state.compare==='year'?'year':'campaign';
-  const selected=history.filter(r=>r.periodType===grain);
-  const units=[...new Set(selected.map(r=>r.unit))];
-  const chosenUnit=units[0]||'';
-  const kept=selected.filter(r=>r.unit===chosenUnit);
-  const originsList=[...new Set(kept.map(r=>r.origin))];
-  const lines=originsList.map((origin,i)=>({label:origins[origin],color:colors[i%colors.length],points:unique(kept.filter(r=>r.origin===origin).sort((a,b)=>a.date.localeCompare(b.date)),r=>r.period).sort((a,b)=>a.period.localeCompare(b.period)).map(r=>({date:r.period,value:r.value,source:r.source,url:r.url}))}));
-  const summaries=[
-    ['Indicateurs',rows.length,'Dans le périmètre sélectionné'],
-    ['Paires comparables',changes,'Même unité et même définition'],
-    ['Périodicité',periodTypes[grain],state.compare==='revision'?'Éditions WASDE successives':'Périodes de référence explicites'],
-  ];
-  return head('Analyse fondamentale','Bilans offre / demande','Comparez les révisions et les périodes par produit et origine. Les unités, le millésime et le statut de chaque valeur sont conservés.')+
-    '<div class="toolbar"><label>Produit</label>'+select('balanceProduct',products,product,undefined)+'<label>Comparaison</label>'+select('compare',compareTypes,state.compare)+action('export-balance',icon('download')+' CSV','ghost')+'</div>'+
-    '<div class="grid3">'+summaries.map(([label,v,s])=>panel('<span class="eyebrow">'+e(label)+'</span><b class="'+(typeof v==='number'?'num':'')+'">'+e(v)+'</b><span class="muted">'+e(s)+'</span>','metric')).join('')+'</div>'+
-    section('Tableau de comparaison','Les écarts en % utilisent la référence comme dénominateur. Les ratios en % varient en points.')+
-    panel(table(['Origine / indicateur','Période','Valeur / publication','Référence','Écart absolu','Écart %','Source'],rows.map(({ref,a,b})=>{
-      const change=delta(a,b), p=a&&b?pct(a.value,b.value):null;
-      const show=r=>r?valueCell(r.value,r.unit,3)+'<small>'+e(formatDate(r.date)+' · '+labels.status[r.status])+'</small>':'Non disponible';
-      return [e(origins[ref.origin])+'<small>'+e(metrics[ref.metric])+'</small>',e(displayPeriod(ref.period,ref.periodType))+(b&&a&&a.period!==b.period?'<small>vs '+e(displayPeriod(b.period,b.periodType))+'</small>':''),show(a),show(b),Number.isFinite(change)?'<span class="num">'+e(sign(change,3))+'</span> '+e(ref.unit==='%'?'pts':ref.unit):'—',ref.unit==='%'?'—':e(percent(p))+(Number.isFinite(p)&&Math.abs(p)>=10?'<small>Variation ≥ 10 %</small>':''),link(ref.url,ref.source)+(b&&b.url!==ref.url?'<small>'+link(b.url,'Source de référence')+'</small>':'')];
-    })))+
-    section('Historique fondamental','Dernière version disponible par période et origine')+panel('<div class="toolbar"><label>Indicateur</label>'+select('metric',metrics,state.metric)+'<span class="small">'+e(chosenUnit)+'</span></div>'+chart(lines,{unit:chosenUnit,periodType:grain})+(units.length>1?notice('Le graphique affiche '+chosenUnit+'. Les autres unités restent visibles dans le tableau.'):'')+'<p class="small" style="margin-top:10px">Le ratio stocks / utilisation divise les stocks finaux par la consommation intérieure et les exportations. Le total mondial utilise la seule consommation mondiale pour éviter de compter deux fois le commerce.</p>')+
-    section('Historique des publications et révisions','Les nouvelles éditions s’ajoutent aux observations existantes')+panel(table(['Publication','Origine','Indicateur','Référence','Valeur','Source / statut'],history.sort(byDate).slice(0,35).map(r=>[e(formatDate(r.date)),e(origins[r.origin]),e(metrics[r.metric]),e(displayPeriod(r.period,r.periodType))+'<small>'+e(periodTypes[r.periodType])+'</small>',valueCell(r.value,r.unit,3),link(r.url,r.source)+'<small>'+e(labels.status[r.status])+'</small>'])));
+  return head('Analyse fondamentale','Bilans offre / demande','Consultez les bilans par campagne et mesurez l’effet de vos hypothèses sur les stocks finaux.')+renderBalanceView();
 }
+
 const spreadParameters=Object.fromEntries(spreadMetrics.filter(m=>m.defaults).map(m=>[m.id,{...m.defaults}]));
 const spreadDate=(date,grain)=>grain==='month'?displayPeriod(date.slice(0,7),'month'):formatDate(date);
 const grainNames={day:'Quotidien',week:'Hebdomadaire',month:'Mensuel'};
@@ -1121,6 +1077,7 @@ function render(){
   document.documentElement.dataset.theme=state.theme;
   chartModels.length=0;
   root.innerHTML=shell(pageRender[state.page]());
+  bindBalanceView(root,csv);
   root.querySelectorAll('[data-chart]').forEach(wrap=>bindChart(wrap,chartModels[Number(wrap.dataset.chart)]));
   if(focusFilter)root.querySelector('[data-filter="'+CSS.escape(focusFilter)+'"]')?.focus({preventScroll:true});
   if(focusControl)root.querySelector('[data-control="'+CSS.escape(focusControl)+'"]')?.focus({preventScroll:true});
@@ -1199,16 +1156,14 @@ function download(name,content,mime){
   a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 const csvCell=val=>{
-  const v=String(val??'');return '"'+(/^[=+@-]/.test(v)&&typeof val!=='number'?"'":'')+v.replaceAll('"','""')+'"';
+  const v=String(val??'');
+  const formulaLike=/^[=+@-]/.test(v)&&typeof val!=='number'&&!/^-\d+(?:[.,]\d+)?%?$/.test(v);
+  return '"'+(formulaLike?"'":'')+v.replaceAll('"','""')+'"';
 };
 function csv(name,rows){download(name,'\ufeff'+rows.map(r=>r.map(csvCell).join(';')).join('\r\n'),'text/csv;charset=utf-8');}
 function exportFeed(){
   csv('olea_facteurs.csv',[['Date','Heure','Produit','Origine','Période','Catégorie','Titre','Fait','Chiffre','Variation','Impact','Intensité','Horizon','Statut','Transmission','Conditions','Source','Lien'],
     ...filteredFeed().map(r=>[r.date,r.time,products[r.product],origins[r.origin],r.period,labels.category[r.category],r.title,r.summary,r.number,r.variation,labels.impact[r.impact],labels.intensity[r.intensity],labels.horizon[r.horizon],labels.status[r.status],r.transmission,r.caveat,r.source,r.url])]);
-}
-function exportBalances(){
-  csv('olea_bilans.csv',[['Produit','Origine','Indicateur','Type de période','Période','Période de référence','Valeur','Référence','Unité','Écart absolu','Écart %','Source valeur','Source référence','Publication','Publication de référence','Statut','Statut de référence'],
-    ...comparisonRows().map(({ref,a,b})=>[products[ref.product],origins[ref.origin],metrics[ref.metric],periodTypes[ref.periodType],ref.period,b?.period,a?.value,b?.value,ref.unit,delta(a,b),a&&b&&ref.unit!=='%'?pct(a.value,b.value):null,a?.url,b?.url,a?.date,b?.date,a&&labels.status[a.status],b&&labels.status[b.status]])]);
 }
 function exportCross(){
   const {a,b,rows,common}=crossData();
@@ -1306,7 +1261,6 @@ const controlActions={
       [[monthly?'Mois':'Année',...names.map(name=>name+' (Mt)'),'Périmètre du bilan'],...values]);
   },
   'export-feed':exportFeed,
-  'export-balance':exportBalances,
   'export-cross':exportCross,
   'export-spread':exportSpread,
   'jump-pairs':()=>document.getElementById('cross-pairs')?.focus(),
@@ -1363,7 +1317,7 @@ root.addEventListener('change',event=>{
     state.originTab[state.page]=target.value;
     if(state.filters.origin)state.filters.origin=target.value;
   }else{
-    if(key==='balanceProduct'||key==='outProduct'){if(state.filters.product)state.filters.product=target.value;}
+    if(key==='outProduct'){if(state.filters.product)state.filters.product=target.value;}
     if(key==='outHorizon'&&state.filters.horizon)state.filters.horizon=target.value;
     if(key==='reportEnd'&&!target.value){target.value=state.reportEnd;return;}
     if(target.form?.id==='feed-search')state.query=new FormData(target.form).get('search');
