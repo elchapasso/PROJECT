@@ -16,7 +16,7 @@ import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=
 import {spreadPrices} from './spread-prices.mjs?v=20261110-bopo-fob';
 import {datedReportPrices} from './spread-reference-prices.mjs?v=20261110-reperes';
 
-import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261111';
+import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261111-visualisations';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -128,14 +128,14 @@ function chartTicks(values,scale,zeroLine){
 }
 const chartModels=[];
 const chartDefaults=last=>({height:'standard',scale:'auto',start:0,end:last,hidden:new Set()});
-function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=false,label='Historique '+unit,sourceLinks,zeroLine=false,startDate,maxGapDays}={}){
+function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=false,label='Historique '+unit,sourceLinks,zeroLine=false,startDate,maxGapDays,periodLabels}={}){
   const valid=lines.filter(l=>l.points.some(p=>Number.isFinite(p.value)));
   if(!valid.length)return empty('Série non disponible pour la sélection.');
   const dates=seasonal?yearMonths:[...new Set([...(startDate?[startDate]:[]),...valid.flatMap(l=>l.points.map(p=>p.date))])].sort();
-  const periodLabel=date=>seasonal?monthName.format(monthDate(date)):displayPeriod(date,periodType);
+  const periodLabel=date=>periodLabels?.[date]??(seasonal?monthName.format(monthDate(date)):displayPeriod(date,periodType));
   const periods=Object.fromEntries(dates.map((date,i)=>[i,periodLabel(date)]));
   const settings=chartDefaults(dates.length-1);
-  const model={valid,dates,unit,periodType,height,tooltips,seasonal,settings,zeroLine,startDate,maxGapDays};
+  const model={valid,dates,unit,periodType,height,tooltips,seasonal,settings,zeroLine,startDate,maxGapDays,periodLabels};
   const index=chartModels.push(model)-1;
   const selectSetting=(key,title,choices)=>'<label>'+e(title)+'<select aria-label="'+e(title)+'" data-chart-setting="'+key+'">'+options(choices,settings[key])+'</select></label>';
   const legend=valid.map((l,i)=>'<button type="button" data-chart-series="'+i+'" aria-pressed="true" title="Afficher ou masquer cette série"><i style="--series:'+l.color+'"></i>'+e(l.label)+'</button>').join('');
@@ -188,7 +188,7 @@ function bindChart(wrap,model){
   const tooltip=content.querySelector('.chart-tooltip');
   if(tooltip)bindChartTooltip(tooltip);
 }
-function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,seasonal,settings,zeroLine,startDate,maxGapDays}){
+function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,seasonal,settings,zeroLine,startDate,maxGapDays,periodLabels}){
   const dates=allDates.slice(settings.start,settings.end+1);
   const dateSet=new Set(dates);
   const key=p=>seasonal?p.date.slice(5):p.date;
@@ -206,7 +206,7 @@ function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,season
   const tickCount=Math.min(7,dates.length);
   const axisColumns=seasonal||tickCount===1?dates.map((_,i)=>i):Array.from({length:tickCount},(_,i)=>Math.round(i*(dates.length-1)/(tickCount-1)));
   const multiYear=dates[0].slice(0,4)!==dates.at(-1).slice(0,4);
-  const axisLabel=d=>seasonal?smallMonth('2000-'+d):periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):periodType==='day'||periodType==='week'?d.slice(8)+' '+smallMonth(d)+(startDate&&multiYear?' '+d.slice(2,4):''):d;
+  const axisLabel=d=>periodLabels?.[d]??(seasonal?smallMonth('2000-'+d):periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):periodType==='day'||periodType==='week'?d.slice(8)+' '+smallMonth(d)+(startDate&&multiYear?' '+d.slice(2,4):''):d);
   const yLabels=ticks.map(v=>'<span style="--y:'+y(v)+'%">'+e(num(v,tickDigits))+'</span>').join('');
   const xLabels=axisColumns.map(i=>'<span style="--x:'+x(i)+'%">'+e(axisLabel(dates[i]))+'</span>').join('');
   const gridValues=zeroLine&&!ticks.includes(0)?[...ticks,0]:ticks;
@@ -224,7 +224,7 @@ function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,season
     for(const p of l.points){
       if(!Number.isFinite(p.value))continue;
       const index=column(p);
-      const period=displayPeriod(p.date,periodType);
+      const period=periodLabels?.[p.date]??displayPeriod(p.date,periodType);
       const reading=tooltips?tooltips(p):num(p.value)+(unit?' '+unit:'');
       const heading=seasonal?monthName.format(monthDate(dates[index])):period;
       const pointLabel=seasonal?period+' · '+reading:period+' · '+l.label+' · '+reading;
@@ -646,8 +646,18 @@ function renderFeed(isNews){
 }
 
 
+function renderBalanceCharts(balance,metric){
+  chartModels.length=0;
+  const opts={periodType:'campaign',periodLabels:Object.fromEntries(balance.periods),height:128};
+  const series=(key,label,color)=>({label,color,points:balance.periods.map(([date],index)=>({date,value:parseFloat(balance.rows[key][index])}))});
+  const volumes=chart([series('supply','Offre totale',colors[0]),series('use','Utilisation totale',colors[1])],{...opts,unit:'MT',label:'Offre et utilisation par campagne'});
+  const isRatio=metric==='ratio';
+  const title=isRatio?'Stocks / utilisation':'Stocks finaux';
+  const stock=chart([series(metric,title,colors[2])],{...opts,unit:isRatio?'%':'MT',label:title+' par campagne'});
+  return '<div class="balance-history-charts"><div class="balance-history-card"><h3>Offre et utilisation</h3>'+volumes+'</div><div class="balance-history-card"><h3>'+title+'</h3>'+stock+'</div></div>';
+}
 function renderBalances(){
-  return head('Analyse fondamentale','Bilans offre / demande','Consultez les bilans par campagne et mesurez l’effet de vos hypothèses sur les stocks finaux.')+renderBalanceView();
+  return head('Analyse fondamentale','Bilans offre / demande','Consultez les bilans par campagne et mesurez l’effet de vos hypothèses sur les stocks finaux.')+renderBalanceView(renderBalanceCharts);
 }
 
 const spreadParameters=Object.fromEntries(spreadMetrics.filter(m=>m.defaults).map(m=>[m.id,{...m.defaults}]));
@@ -1070,6 +1080,9 @@ const pageRender={
   rape:()=>renderComplex('rape'),macro:()=>renderComplex('macro'),drivers:()=>renderFeed(false),news:()=>renderFeed(true),
   balances:renderBalances,demand:renderDemand,cross:renderCross,biofuels:renderBiofuels,outlook:renderOutlook,calendar:renderCalendar,reports:renderReports,comex:renderComex,sources:renderSources,
 };
+function bindPageCharts(scope){
+  scope.querySelectorAll('[data-chart]').forEach(wrap=>bindChart(wrap,chartModels[Number(wrap.dataset.chart)]));
+}
 function render(){
   const active=document.activeElement;
   const focusFilter=active?.getAttribute('data-filter');
@@ -1077,8 +1090,8 @@ function render(){
   document.documentElement.dataset.theme=state.theme;
   chartModels.length=0;
   root.innerHTML=shell(pageRender[state.page]());
-  bindBalanceView(root,csv);
-  root.querySelectorAll('[data-chart]').forEach(wrap=>bindChart(wrap,chartModels[Number(wrap.dataset.chart)]));
+  bindBalanceView(root,{csv,renderCharts:renderBalanceCharts,bindCharts:bindPageCharts});
+  bindPageCharts(root);
   if(focusFilter)root.querySelector('[data-filter="'+CSS.escape(focusFilter)+'"]')?.focus({preventScroll:true});
   if(focusControl)root.querySelector('[data-control="'+CSS.escape(focusControl)+'"]')?.focus({preventScroll:true});
 }

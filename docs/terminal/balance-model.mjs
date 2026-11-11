@@ -2,10 +2,11 @@ import {soyBalances,supplyFields,useFields} from './balance-data.mjs?v=20261111'
 
 export const balanceInputFields=product=>[...supplyFields,...useFields[product]];
 const isVolume=value=>Number.isFinite(value)&&value>=0&&value<=1e9;
+const decimal=value=>value.trim().replace(/[\s\u202f]+/g,'').replace(',','.').replace(/^−/,'-');
 
 export function parseBalanceVolume(value){
-  const decimal=value.trim().replace(/\s+/g,'').replace(',','.');
-  const number=/^(?:\d+(?:\.\d*)?|\.\d+)$/.test(decimal)?Number(decimal):NaN;
+  const normalized=decimal(value);
+  const number=/^(?:\d+(?:\.\d*)?|\.\d+)$/.test(normalized)?Number(normalized):NaN;
   return isVolume(number)?number:null;
 }
 
@@ -17,6 +18,21 @@ export function calculateBalance(product,inputs){
   const ending=Math.abs(stockDifference)<1e-9?0:stockDifference;
   return {supply,use,ending,ratio:use>0?ending/use*100:null};
 }
+
+export function applyBalanceShock(product,inputs,field,raw,unit){
+  if(!balanceInputFields(product).includes(field)||!calculateBalance(product,inputs))return null;
+  const normalized=decimal(raw);
+  if(!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(normalized)||!['MT','%'].includes(unit))return null;
+  const change=Number(normalized);
+  const value=inputs[field]+(unit==='%'?inputs[field]*change/100:change);
+  return isVolume(value)?{...inputs,[field]:Number(value.toFixed(8))}:null;
+}
+
+export function balanceContributions(product,inputs,reference){
+  return balanceInputFields(product).map(field=>({field,value:(inputs[field]-reference[field])*(supplyFields.includes(field)?1:-1)}));
+}
+
+export const scenarioName=value=>typeof value==='string'?value.trim().replace(/\s+/g,' ').slice(0,60):'';
 
 const campaignPattern=/^20\d{2}\/\d{2}$/;
 export function normalizeCampaignLabel(raw){
@@ -42,7 +58,15 @@ export function readBalanceScenarios(raw){
       const inputs=Object.fromEntries(keys.map(field=>[field,scenario.inputs[field]]));
       const savedReference=keys.every(field=>isVolume(scenario.reference?.[field]))?
         Object.fromEntries(keys.map(field=>[field,scenario.reference[field]])):inputs;
-      return [[key,{label:base?.label||key,inputs,reference:base?.inputs||savedReference}]];
+      const names=new Set();
+      const variants=Array.isArray(scenario.variants)?scenario.variants.flatMap(variant=>{
+        const name=scenarioName(variant?.name);
+        const normalized=name.toLocaleLowerCase('fr');
+        if(!name||names.has(normalized)||!keys.every(field=>isVolume(variant.inputs?.[field])))return [];
+        names.add(normalized);
+        return [{name,inputs:Object.fromEntries(keys.map(field=>[field,variant.inputs[field]]))}];
+      }):[];
+      return [[key,{label:base?.label||key,inputs,reference:base?.inputs||savedReference,...(variants.length?{variants}:{})}]];
     }));
   }
   return scenarios;

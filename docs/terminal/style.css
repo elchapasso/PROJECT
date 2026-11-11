@@ -135,6 +135,8 @@
 .balance-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:0 0 15px}
 .balance-kpi{display:grid;align-content:start;gap:4px;padding:12px 14px;min-width:0;border:1px solid var(--line);border-radius:9px;background:var(--surface2)}
 .balance-kpi span,.balance-kpi small{font-size:11px;color:var(--muted)}
+.balance-compare-label{margin-bottom:7px;font-weight:650}
+.balance-delta{font-weight:700;font-variant-numeric:tabular-nums}
 .balance-kpi strong{font-size:clamp(19px,2.4vw,29px);overflow-wrap:anywhere;line-height:1.25}
 .balance-kpi-main{background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-color:color-mix(in srgb,var(--accent) 50%,var(--line))}
 .balance-kpi-main strong{color:var(--accent)}
@@ -165,13 +167,35 @@
 .balance-table .balance-stock th,.balance-table .balance-stock td{background:var(--surface2);color:var(--accent)}
 .balance-source{margin-top:9px}
 .balance-empty p{margin:4px 0;color:var(--muted)}
+.balance-tools,.balance-history-charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.balance-tools{margin-top:14px;align-items:start}
+.balance-tools .balance-tool{margin:0;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--surface2)}
+.balance-tool summary{font-size:12px}
+.balance-tool-form{display:flex;align-items:end;gap:8px;flex-wrap:wrap;margin:10px 0}
+.balance-tool-form label{display:grid;gap:4px;min-width:0;max-width:100%;font-size:11px;font-weight:650;color:var(--muted)}
+.balance-tool-form select,.balance-tool-form input{max-width:100%;min-height:36px}
+.balance-tool-form input[name="change"]{width:76px}
+.balance-tool-form input[name="scenario"],.balance-tool-form [data-balance-compare]{width:min(210px,100%)}
+.balance-tool-form button[hidden],.balance-tool-form p:empty{display:none}
+.balance-tool-form [data-balance-error]{flex-basis:100%;color:var(--red)}
+.balance-impact{margin-top:14px;padding:12px 14px;border:1px solid var(--line);border-radius:9px}
+.balance-impact-list{display:grid;gap:8px;list-style:none;padding:0;margin:8px 0 0}
+.balance-impact-list li{display:grid;grid-template-columns:minmax(84px,1fr) minmax(70px,2fr) minmax(65px,auto);gap:10px;align-items:center;font-size:12px}
+.balance-impact-list strong{text-align:right;white-space:nowrap}
+.balance-impact-track{position:relative;height:10px;border-radius:3px;background:linear-gradient(to right,var(--surface2) calc(50% - 1px),var(--grid-strong) 50%,var(--surface2) calc(50% + 1px))}
+.balance-impact-track i{position:absolute;inset-block:0;left:var(--bar-start);width:var(--bar-width);background:currentColor;border-radius:3px}
+.balance-history-picker{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.balance-history-card{min-width:0;border:1px solid var(--line);border-radius:9px;padding:12px 14px 6px}
+.balance-history-card .chart-wrap{margin-top:8px}
+.balance-history-card .chart-axis-x{font-size:10px}
 @media(max-width:800px){.balance-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:940px){.balance-history-charts{grid-template-columns:1fr}}
 @media(max-width:560px){
   .balance-tabs{gap:5px}
   .balance-tabs button{padding:9px 6px}
   .balance-tabs strong{font-size:13px}
   .balance-tabs span{font-size:9px}
-  .balance-field-grid{grid-template-columns:1fr}
+  .balance-field-grid,.balance-tools{grid-template-columns:1fr}
   .balance-field-value input{width:96px}
   .balance-method dl{grid-template-columns:1fr;gap:3px}
   .balance-method dd{margin-bottom:4px}

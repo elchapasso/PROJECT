@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {soyBalances} from '../docs/terminal/balance-data.mjs';
-import {calculateBalance,normalizeCampaignLabel,parseBalanceVolume,readBalanceScenarios} from '../docs/terminal/balance-model.mjs';
+import {applyBalanceShock,balanceContributions,calculateBalance,normalizeCampaignLabel,parseBalanceVolume,readBalanceScenarios} from '../docs/terminal/balance-model.mjs';
 
 test('each reference balance includes every campaign and the supplied comparisons',()=>{
   assert.equal(Object.keys(soyBalances).length,6);
@@ -36,4 +36,25 @@ test('input validation and storage preserve an independent personal baseline',()
   const inputs={...reference,production:130};
   const saved={'soy-us':{'2028/29':{label:'2028/29',inputs,reference},'corrompu':{label:3,inputs}}};
   assert.deepEqual(readBalanceScenarios(JSON.stringify(saved)),{'soy-us':{'2028/29':{label:'2028/29',inputs,reference}}});
+});
+
+test('shocks apply in volume or percent and contributions reconcile to closing stocks',()=>{
+  const base=soyBalances['sbo-us'].campaigns['2026/27-11'].inputs;
+  const moreImports=applyBalanceShock('sbo',base,'imports','+0,50','MT');
+  const scenario=applyBalanceShock('sbo',moreImports,'bio','10','%');
+  assert.equal(moreImports.imports,.82);
+  assert.equal(scenario.bio,8.877);
+  assert.equal(applyBalanceShock('sbo',base,'imports','−0,50','MT'),null);
+  assert.equal(applyBalanceShock('sbo',base,'crush','1','MT'),null);
+  const effects=balanceContributions('sbo',scenario,base);
+  assert.ok(effects.find(({field})=>field==='bio').value<0);
+  assert.ok(Math.abs(effects.reduce((sum,{value})=>sum+value,0)-(calculateBalance('sbo',scenario).ending-calculateBalance('sbo',base).ending))<1e-9);
+});
+
+test('multiple named scenarios are restored without replacing the original baseline',()=>{
+  const reference=soyBalances['soy-us'].campaigns['2026/27-11'].inputs;
+  const inputs={...reference,exports:50};
+  const variants=[{name:'Exportations élevées',inputs},{name:'Moins de trituration',inputs:{...reference,crush:70}}];
+  const original={'soy-us':{'2026/27-11':{label:'26/27 · Nov.',inputs,reference,variants}}};
+  assert.deepEqual(readBalanceScenarios(JSON.stringify(original)),original);
 });
