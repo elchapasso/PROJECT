@@ -12,8 +12,8 @@ const soybeanImports={
   // Sitonia Consulting (2024 et janvier–juin 2025), CBPA (juillet–décembre 2025).
   2024:[7.92,5.12,5.541,8.57,10.222,11.11,9.853,12.14,11.37,8.09,7.15,7.941],
   2025:[7.78,5.83,3.503,6.08,13.92,12.26,11.666,12.279,12.869,9.482,8.107,8.044],
-  // MOFCOM et CBPA, avec les données détaillées de juillet (CLAL, Fastmarkets).
-  2026:[6.571,5.976,4.019,8.478,11.791,13.547,11.77,12.141,11.88,null,null,null],
+  // MOFCOM, CBPA et Fastmarkets ; octobre : douanes chinoises via Reuters.
+  2026:[6.571,5.976,4.019,8.478,11.791,13.547,11.77,12.141,11.88,7.35,null,null],
 };
 
 export const chinaSoybeanImports=Object.entries(soybeanImports).map(([year,volumes])=>({year,volumes}));
@@ -28,4 +28,5 @@ export const chinaSoybeanSources=[
   ['CBPA · 2025–26','https://www.cbpanet.com/dzp_news.aspx?bigid=3&smallid=40'],
   ['MOFCOM · Fév. 2026','https://fdi.mofcom.gov.cn/come-datatongji-con.html?id=16735'],
   ['Fastmarkets · Juil. 2026','https://www.fastmarkets.com/insights/china-july-agricultural-imports-soybean-arrivals-ease-sorghum-stays-strong-and-corn-rebounds/'],
+  ['Douanes chinoises via Reuters · Oct. 2026','https://www.brecorder.com/news/40448240'],
 ];

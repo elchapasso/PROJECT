@@ -1,5 +1,5 @@
 
-export const AS_OF = '2026-11-10';
+export const AS_OF = '2026-11-11';
 export const labels = {
   impact: {positive:'Haussier',negative:'Baissier',mixed:'Mixte',neutral:'Neutre'},
   horizon: {short:'Court terme',medium:'Moyen terme',long:'Long terme'},
@@ -260,3 +260,201 @@ const heatingRef='https://www.commoditypriceapi.com/tools/ho-fut-dec26/prices';
 sources.CommodityPriceAPI={url:heatingRef,scope:'Règlements de futures publiés avec délai'};
 Object.assign(seedPrices.ho,{name:'Heating Oil déc. 2026',source:'CommodityPriceAPI',url:heatingRef,definition:'Règlement du contrat décembre 2026, repris avec délai.',values:{'2026-11-06':4.33}});
 
+
+/* Relevé de marché du 11 novembre 2026. Les échéances ci-dessous sont des repères datés. */
+const marketNov11={
+  "wasde": "https://www.usda.gov/oce/commodity/wasde/wasde1126.pdf",
+  "nass": "https://esmis.nal.usda.gov/sites/default/release-files/796141/prog4526.pdf",
+  "fcpo10": "https://bernamabiz.com/news.php?id=2632532",
+  "fcpo11": "https://web26.bernama.com/en/news.php?id=2632996",
+  "palm": "https://www.brecorder.com/news/amp/40448427",
+  "china": "https://www.brecorder.com/news/40448240",
+  "india": "https://economictimes.indiatimes.com/articleshow/135522525.cms",
+  "anec": "https://www.cnnbrasil.com.br/agro/anec-eleva-previsao-de-4/",
+  "ukr": "https://open4business.com.ua/en/in-ukraine-sunflower-harvest-increased-by-22-8-to-10-71-million-metric-tons/",
+  "zl": "https://kqlx-radio.websol.barchart.com/?0=news&1_selected=futureQuote&module=futureDetail&popup=1&region=&symbol=ZLZ26",
+  "zm": "https://tateandlyle.websol.barchart.com/?1_selected=futureQuote&module=futureDetail&region=&symbol=ZMZ26",
+  "zs": "https://www.agriculture.com/grains-recover-from-early-losses-as-wheat-and-soybeans-close-higher-or-wednesday-nov-11-2026-12249371",
+  "oil": "https://www.reuters.com/business/energy/oil-rises-two-month-low-hormuz-shipping-attacks-offset-iran-truce-hopes-2026-11-11/",
+  "oil10": "https://wealthinsights.metrobank.com.ph/news/update-8-oil-prices-ease-to-two-month-lows-as-us-downplays-further-iran-strikes",
+  "euronext": "https://www.graindecision.com/fr/analyses/cours-colza",
+  "fx": "https://data-api.ecb.europa.eu/service/data/EXR/D.USD+BRL+CNY+MYR+IDR.EUR.SP00.A?startPeriod=2026-11-09&endPeriod=2026-11-11&format=csvdata",
+  "mad": "https://www.lebrief.ma/services/convertisseur-devises/",
+  "arg": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/ws/ssma/precios_fob.php?Fecha=10%2F11%2F2026"
+};
+const NOV=marketNov11.wasde;
+const novWASDE='2026-11-10';
+const novSession='2026-11-11';
+
+Object.assign(sources,{
+  'Barchart':{url:marketNov11.zl,scope:'Cours datés des échéances CBOT'},
+  'Successful Farming':{url:marketNov11.zs,scope:'Clôture des graines de soja CBOT'},
+  'Douanes chinoises via Reuters':{url:marketNov11.china,scope:'Importations chinoises mensuelles de soja'},
+  'ANEC via Reuters':{url:marketNov11.anec,scope:'Estimations d’embarquement de soja et de tourteaux'},
+  'Ministère ukrainien via Open4Business':{url:marketNov11.ukr,scope:'Avancement de la récolte du tournesol'},
+  'GrainDecision':{url:marketNov11.euronext,scope:'Cours datés du colza Euronext'},
+  'Bank Al-Maghrib via LeBrief':{url:marketNov11.mad,scope:'Cours de référence du dirham repris par LeBrief'},
+  'Secretaría de Agricultura':{url:marketNov11.arg,scope:'Références FOB officielles argentines'},
+});
+
+const addMarketQuotes=(id,points)=>{
+  const series=seedPrices[id];
+  const urls=series.pointSources??={};
+  const names=series.pointSourceNames??={};
+  for(const [date,value,source,url] of points){
+    series.values[date]=value;
+    urls[date]=url;
+    names[date]=source;
+  }
+};
+
+Object.assign(seedPrices['fcpo-jan27'],{grain:'day',definition:'Clôtures datées du contrat janvier 2027, reprises par Bernama.'});
+addMarketQuotes('fcpo-jan27',[
+  ['2026-10-30',4681,'Bernama','https://web26.bernama.com/en/market/news.php?id=2628072'],
+  ['2026-11-05',4377,'Bernama','https://web26.bernama.com/en/market/news.php?id=2630655'],
+  ['2026-11-06',4258,'Bernama','https://bernama.com/en/market/news.php?id=2631133'],
+  ['2026-11-10',4256,'Bernama',marketNov11.fcpo10],
+  ['2026-11-11',4410,'Bernama',marketNov11.fcpo11],
+]);
+seedPrices['cpo-south-cash']=watchPrice('CPO physique · Sud Malaisie','palm','mys','MYR/t','Bernama','Prix physique CPO pour novembre, référence Sud de la Malaisie.');
+addMarketQuotes('cpo-south-cash',[
+  ['2026-11-10',4080,'Bernama',marketNov11.fcpo10],
+  ['2026-11-11',4170,'Bernama',marketNov11.fcpo11],
+]);
+for(const [id,previous,current,source,url] of [
+  ['bo',62.77,63.88,'Barchart',marketNov11.zl],
+  ['zs',1228,1230.75,'Successful Farming',marketNov11.zs],
+  ['sm',326.5,327.5,'Barchart',marketNov11.zm],
+]){
+  seedPrices[id].definition='Clôtures datées du contrat indiqué. La source est précisée pour chaque observation.';
+  addMarketQuotes(id,[['2026-11-10',previous,source,url],['2026-11-11',current,source,url]]);
+}
+
+for(const [id,name,previous,current] of [
+  ['brent-daily','Brent · règlement',91.49,92.76],
+  ['wti-daily','WTI · règlement',86.04,86.53],
+]){
+  seedPrices[id]=watchPrice(name,'energy','world','USD/b','Reuters','Règlement quotidien du future de référence relayé par Reuters.');
+  addMarketQuotes(id,[['2026-11-10',previous,'Reuters',marketNov11.oil10],['2026-11-11',current,'Reuters',marketNov11.oil]]);
+}
+seedPrices['rape-feb27']=watchPrice('Euronext · Colza fév. 2027','rape','eu','EUR/t','GrainDecision','Clôtures datées du contrat Euronext février 2027 (XRG27).');
+addMarketQuotes('rape-feb27',[
+  ['2026-11-10',527.50,'GrainDecision',marketNov11.euronext],
+  ['2026-11-11',531.25,'GrainDecision',marketNov11.euronext],
+]);
+
+seedPrices['fx-eur'].definition='Fixing indicatif publié par la BCE.';
+for(const [date,usd,brl,cny] of [
+  ['2026-11-09',1.1193,6.1748,7.4689],
+  ['2026-11-10',1.1214,6.2257,7.4801],
+  ['2026-11-11',1.1127,6.1827,7.4225],
+]){
+  addMarketQuotes('fx-eur',[[date,usd,'BCE',marketNov11.fx]]);
+  addMarketQuotes('fx-brl',[[date,brl/usd,'BCE',marketNov11.fx]]);
+  addMarketQuotes('fx-cny',[[date,cny/usd,'BCE',marketNov11.fx]]);
+}
+seedPrices['fx-mad'].definition='Fixing indicatif de Bank Al-Maghrib repris par LeBrief.';
+addMarketQuotes('fx-mad',[[novSession,9.7961,'Bank Al-Maghrib via LeBrief',marketNov11.mad]]);
+
+seedPrices['sbo-arg-official']=watchPrice('Huile de soja Argentine · FOB officiel','sbo','arg','USD/t','Secretaría de Agricultura','Huile de soja brute en vrac. Position 15071000100Q, livraison couvrant le mois de cotation.');
+addMarketQuotes('sbo-arg-official',[
+  ['2026-11-06',1185,'Secretaría de Agricultura',marketNov11.arg.replace('10%2F11','06%2F11')],
+  ['2026-11-10',1188,'Secretaría de Agricultura',marketNov11.arg],
+]);
+
+const novOilBalances={
+  us:[.66,14.94,.32,14.97,.18,.77],
+  arg:[.25,8.68,.14,1.99,6.75,.33],
+  bra:[.20,13.27,.10,11.40,1.90,.26],
+  ind:[1.67,1.82,5,6.80,.02,1.67],
+  chn:[.80,21.56,.15,20.70,1,.81],
+  eu:[.57,2.82,.65,2.63,.80,.61],
+  world:[6.24,75.29,13.71,73.60,15.10,6.53],
+};
+for(const [origin,values] of Object.entries(novOilBalances)){
+  seedBalances.push(...balance(origin,'sbo','2026/27',novWASDE,Object.fromEntries(oilKeys.map((key,index)=>[key,values[index]])),'Mt','campaign','projection','USDA WASDE',NOV));
+}
+seedBalances.push(
+  ...balance('us','soy','2026/27',novWASDE,{opening:315,production:4574,imports:25,domestic:2894,crush:2780,exports:1720,ending:300},'M bu','campaign','projection','USDA WASDE',NOV),
+  ...balance('us','sbo','2026/27',novWASDE,{biofuel:17800},'M lb','campaign','projection','USDA WASDE',NOV),
+  ...balance('us','sbo','2025/26',novWASDE,{opening:.79,production:13.87,imports:.24,domestic:13.79,exports:.45,ending:.66},'Mt','campaign','estimate','USDA WASDE',NOV),
+  ...balance('us','sbo','2025/26',novWASDE,{biofuel:14900},'M lb','campaign','estimate','USDA WASDE',NOV),
+  ...balance('arg','soy','2026/27',novWASDE,{opening:23.64,production:50,imports:6.50,domestic:49.65,crush:43.50,exports:6.75,ending:23.74},'Mt','campaign','projection','USDA WASDE',NOV),
+  ...balance('bra','soy','2026/27',novWASDE,{opening:37.88,production:186,imports:1,domestic:69.60,crush:65,exports:118,ending:37.28},'Mt','campaign','projection','USDA WASDE',NOV),
+  ...balance('chn','soy','2026/27',novWASDE,{opening:44.36,production:21,imports:115,domestic:136,crush:111,exports:.10,ending:44.26},'Mt','campaign','projection','USDA WASDE',NOV),
+  ...balance('world','soy','2026/27',novWASDE,{opening:124.98,production:442.50,imports:191.38,domestic:442.80,crush:386.24,exports:192.55,ending:123.50},'Mt','campaign','projection','USDA WASDE',NOV),
+  ...balance('chn','soy','2026-10',novWASDE,{imports:7.35},'Mt','month','confirmed','Douanes chinoises via Reuters',marketNov11.china),
+  ...balance('rus','sfo','2026/27',novWASDE,{exports:4.85},'Mt','campaign','projection','USDA FAS',FAS),
+  ...balance('eu','rape','2026/27',novWASDE,{imports:7.05},'Mt','campaign','projection','USDA FAS',FAS),
+  ...balance('aus','rape','2026/27',novWASDE,{exports:6.50},'Mt','campaign','projection','USDA FAS',FAS),
+);
+
+seedEvents.push(
+  marketPrice('market-1111-cbot-bo','Huile de soja CBOT décembre à 63,88 ¢/lb','sbo','us','trade',novSession,'Clôture du 11 novembre','Barchart',marketNov11.zl,
+    'Le contrat décembre gagne 1,11 ¢/lb. Le soja janvier termine à 1 230,75 ¢/bu et le tourteau décembre à 327,50 USD/short ton.','63,88 ¢/lb','+1,77 % sur la séance','positive',2,'short','confirmed',
+    'Le rebond du CBOT renchérit la composante futures des achats d’huile de soja indexés.','Le basis FOB et le fret peuvent évoluer indépendamment du CBOT.'),
+  marketPrice('market-1111-fcpo','FCPO janvier à 4 410 MYR/t après le rebond de Bursa','palm','mys','trade',novSession,'Clôture du 11 novembre','Bernama',marketNov11.fcpo11,
+    'Bernama relève une hausse de 154 MYR/t sur janvier 2027. Le CPO physique de novembre (Sud) remonte à 4 170 MYR/t, contre 4 080 la veille. Bernama cite le rebond de l’huile de soja et du pétrole ainsi qu’une production plus faible début novembre.','4 410 MYR/t','+3,62 % sur la séance','positive',3,'short','confirmed',
+    'Le rebond du FCPO peut relever les offres de palme et modifier l’arbitrage avec l’huile de soja.','Les stocks d’octobre restent élevés. Les indications de production début novembre sont partielles.'),
+  marketPrice('market-1111-exports-mys','Expéditions malaisiennes de palme en léger repli début novembre','palm','mys','trade',novSession,'1–10 novembre 2026','Reuters',marketNov11.palm,
+    'Selon les estimations des inspecteurs reprises par Reuters, les exportations de produits de palme reculent de 1,9 % à 2,3 % sur les dix premiers jours du mois.','−1,9 % à −2,3 %','vs 1–10 octobre','negative',1,'short','estimate',
+    'Un ralentissement des expéditions réduit le déstockage si la production se maintient.','Le point de dix jours ne couvre qu’une partie du mois.'),
+  marketPrice('market-1111-energy','Brent et WTI rebondissent après les plus bas de deux mois','energy','world','energy',novSession,'Règlements du 11 novembre','Reuters',marketNov11.oil,
+    'Le Brent clôture à 92,76 USD/b et le WTI à 86,53 USD/b. Reuters relie le rebond à la réduction des attentes de désescalade entre les États-Unis et l’Iran.','Brent 92,76 USD/b · WTI 86,53 USD/b','Brent +1,39 % · WTI +0,57 %','positive',2,'short','confirmed',
+    'La remontée du pétrole peut soutenir la valeur relative des huiles destinées aux biocarburants.','Les marges dépendent aussi des distillats, des crédits et du coût des huiles.'),
+  marketPrice('market-1111-ecb','EUR/USD revient à 1,1127 au fixing BCE','fx','eu','fx',novSession,'Fixing du 11 novembre','BCE',marketNov11.fx,
+    'Le fixing EUR/USD recule de 1,1214 à 1,1127. Les taux croisés USD/BRL et USD/CNY sont recalculés à partir du même fixing.','1,1127 USD/EUR','−0,78 % vs 10 novembre','mixed',1,'short','confirmed',
+    'Une variation du dollar modifie le prix converti des achats et la compétitivité des origines.','Ces fixings sont indicatifs. Le coût au Maroc dépend du taux USD/MAD et de la couverture.'),
+  marketPrice('market-1111-colza','Colza Euronext février à 531,25 EUR/t','rape','eu','trade',novSession,'Clôture du 11 novembre','GrainDecision',marketNov11.euronext,
+    'Le contrat février 2027 progresse de 3,75 EUR/t par rapport à la clôture du 10 novembre.','531,25 EUR/t','+0,71 % sur la séance','positive',1,'short','confirmed',
+    'La hausse du prix de la graine peut renchérir la matière première des triturateurs européens.','Le prix de l’huile dépend aussi de la valorisation du tourteau et des disponibilités physiques.'),
+  marketPrice('market-1111-ukraine','Récolte ukrainienne de tournesol à 10,71 Mt','sun','ukr','supply',novSession,'Avancement au 10 novembre','Ministère ukrainien via Open4Business',marketNov11.ukr,
+    'La récolte atteint 10,71 Mt sur 4,80 millions d’hectares, soit 91,6 % des surfaces prévues, d’après le ministère ukrainien.','10,71 Mt','+22,8 % a/a à date comparable','negative',2,'short','confirmed',
+    'Une récolte plus avancée augmente les volumes de graines mobilisables pour la trituration.','Les volumes d’huile exportables dépendent du fonctionnement des usines et des ports.'),
+  marketPrice('market-1111-anec','ANEC relève les embarquements de soja brésilien de novembre','soy','bra','trade',novWASDE,'Novembre 2026','ANEC via Reuters',marketNov11.anec,
+    'La prévision de soja passe de 3,33 à 4,37 Mt. Celle du tourteau est relevée de 2,23 à 2,57 Mt.','4,37 Mt de soja','+1,04 Mt vs estimation précédente','mixed',2,'short','estimate',
+    'La programmation indique davantage de graines brésiliennes disponibles à l’export que prévu la semaine précédente.','Il s’agit d’estimations de chargements portuaires.'),
+  marketPrice('market-1110-china','La Chine importe 7,35 Mt de soja en octobre','soy','chn','demand',novWASDE,'Octobre 2026','Douanes chinoises via Reuters',marketNov11.china,
+    'Les arrivages reculent de 38 % sur un mois et de 22,5 % sur un an. Le cumul janvier–octobre atteint 93,48 Mt, en baisse de 2,3 %.','7,35 Mt','−38 % m/m · −22,5 % a/a','negative',3,'short','confirmed',
+    'La baisse des arrivages coïncide avec des stocks de graines élevés et des marges de trituration faibles, selon les analystes cités.','Les importations enregistrées à l’arrivée et les achats à terme reflètent des périodes différentes.'),
+  marketPrice('market-1110-wasde-us-soy','WASDE novembre · Stocks finaux de soja US ramenés à 300 M bu','soy','us','stocks',novWASDE,'Campagne 2026/27','USDA WASDE',NOV,
+    'L’USDA relève la production à 4 574 M bu et les exportations à 1 720 M bu. Le crush reste à 2 780 M bu. Les stocks finaux passent de 315 à 300 M bu.','300 M bu · 8,16 Mt converties','−15 M bu vs octobre','positive',3,'medium','projection',
+    'La hausse des exportations et des autres usages absorbe plus que le supplément de production, ce qui réduit le coussin de stocks.','Les stocks finaux et le commerce restent des projections de campagne.','12:00 New York'),
+  marketPrice('market-1110-wasde-us-oil','WASDE novembre · Stocks finaux d’huile US ramenés à 1 698 M lb','sbo','us','stocks',novWASDE,'Campagne 2026/27','USDA WASDE',NOV,
+    'Les stocks finaux passent de 1 797 à 1 698 M lb. L’usage biocarburants reste à 17 800 M lb. Les stocks initiaux sont ramenés de 1 657 à 1 458 M lb.','1 698 M lb · 0,770 Mt','−99 M lb vs octobre','positive',3,'medium','projection',
+    'Le recul des stocks réduit la marge de sécurité si la demande d’huile se renforce.','L’usage biocarburants est inchangé dans cette édition.','12:00 New York'),
+  marketPrice('market-1110-wasde-arg','USDA relève les exports de graines de soja argentines à 6,75 Mt','soy','arg','trade',novWASDE,'Campagne 2026/27','USDA WASDE',NOV,
+    'Les exportations de graines passent de 6,45 à 6,75 Mt. Pour l’huile de soja, les exports restent à 6,75 Mt et les stocks finaux sont abaissés à 0,33 Mt.','6,75 Mt de graines','+0,30 Mt vs octobre','mixed',2,'medium','projection',
+    'Une hausse des sorties de graines peut modifier la disponibilité locale pour le crush.','Les révisions du USDA et le bilan de campagne saisi dans le simulateur ont chacun leur source.'),
+  marketPrice('market-1110-wasde-brazil-oil','USDA relève les exports d’huile de soja brésilienne à 1,90 Mt','sbo','bra','trade',novWASDE,'Campagne 2026/27','USDA WASDE',NOV,
+    'Les exports passent de 1,70 à 1,90 Mt et les stocks finaux reculent de 0,46 à 0,26 Mt.','1,90 Mt','+0,20 Mt vs octobre','mixed',2,'medium','projection',
+    'Une offre exportable plus élevée peut renforcer la concurrence entre origines, tandis que les stocks projetés se resserrent.','La demande brésilienne de biodiesel et la cadence du crush restent déterminantes.'),
+  marketPrice('market-1110-fas-sun','USDA réduit les exportations d’huile de tournesol russe','sfo','rus','trade',novWASDE,'Campagne 2026/27','USDA FAS',FAS,
+    'Le FAS ramène la projection russe de 5,10 à 4,85 Mt, en raison d’une récolte de graines revue en baisse.','4,85 Mt','−0,25 Mt vs octobre','positive',2,'medium','projection',
+    'Des disponibilités russes plus faibles peuvent soutenir les primes de la mer Noire.','La production effective, le fret et les délais portuaires influencent les livraisons.'),
+  marketPrice('market-1110-fas-rape','USDA relève les importations de colza de l’UE à 7,05 Mt','rape','eu','trade',novWASDE,'Campagne 2026/27','USDA FAS',FAS,
+    'Le FAS relève les importations de l’UE de 6,55 à 7,05 Mt et les exportations australiennes de 6,00 à 6,50 Mt.','7,05 Mt','+0,50 Mt vs octobre','mixed',2,'medium','projection',
+    'Une offre australienne accrue peut compenser une partie du besoin européen en graines.','Les échéances de récolte, le fret et les spécifications déterminent l’accès effectif à cette offre.'),
+  marketPrice('market-1110-arg-fob','Huile de soja brute argentine à 1 188 USD/t FOB','sbo','arg','trade',novWASDE,'Livraison novembre 2026','Secretaría de Agricultura',marketNov11.arg,
+    'Le bulletin officiel du 10 novembre cote l’huile brute en vrac à 1 188 USD/t pour novembre.','1 188 USD/t','+3 USD/t vs 6 novembre','neutral',1,'short','confirmed',
+    'La référence sert à comparer l’origine argentine et à suivre le prix de l’huile brute.','La base de prix est FOB et la référence officielle peut différer d’une offre négociable.'),
+  marketPrice('market-1109-nass','Récolte américaine de soja à 92 % au 8 novembre','soy','us','supply','2026-11-09','Semaine au 8 novembre','USDA NASS',marketNov11.nass,
+    'Le Crop Progress situe la récolte à 92 %, après 88 % la semaine précédente et contre 91 % en moyenne sur cinq ans.','92 %','+4 pts s/s · +1 pt vs moyenne 5 ans','negative',1,'short','confirmed',
+    'La progression de la récolte augmente les volumes accessibles aux triturateurs et exportateurs.','La vitesse de commercialisation peut différer de l’avancement au champ.','16:00 New York'),
+);
+for(const [product,title,volume,variation] of [
+  ['palm','Inde · Importations de palme estimées à 866 kt',866,'+6 % m/m'],
+  ['sbo','Inde · Importations d’huile de soja estimées à 653 kt',653,'+6 % m/m'],
+  ['sfo','Inde · Importations de tournesol estimées à 223 kt',223,'Environ deux fois septembre'],
+]){
+  seedEvents.push(marketPrice('market-1104-ind-'+product,title,product,'ind','demand','2026-11-04','Octobre 2026','Reuters',marketNov11.india,
+    'Estimation moyenne des négociants interrogés par Reuters. Les achats d’huiles alimentaires auraient atteint 1,74 Mt au total.',volume+' kt',variation,'positive',2,'short','estimate',
+    'La reprise des achats indiens peut soutenir les débouchés des origines exportatrices.','À rapprocher des chiffres définitifs du bulletin SEA d’octobre.'));
+}
+
+const novemberCalendar=seedCalendar.find(item=>item.id==='cal-wasde');
+Object.assign(novemberCalendar,{
+  title:'USDA WASDE · Novembre publié',url:NOV,
+  expected:'Soja US 300 M bu de stocks finaux · Huile de soja US 1 698 M lb · Usage biocarburants 17 800 M lb',
+});
+seedCalendar.find(item=>item.id==='cal-wasde-dec').previous='WASDE novembre · stocks finaux US : soja 300 M bu, huile 1 698 M lb';

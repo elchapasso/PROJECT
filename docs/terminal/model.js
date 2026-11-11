@@ -1,5 +1,5 @@
 
-import {AS_OF,scoreWeights,scoreCategories,labels,products,origins,metrics,periodTypes,seedPrices} from './data.js';
+import {AS_OF,scoreWeights,scoreCategories,labels,products,origins,metrics,periodTypes,seedPrices} from './data.js?v=20261111-market-close';
 
 export const emptyStore=()=>({events:[],balances:[],quotes:[],calendar:[],reports:[]});
 export const byDate=(a,b)=>b.date.localeCompare(a.date);

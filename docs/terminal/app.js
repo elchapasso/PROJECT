@@ -1,9 +1,9 @@
 
-import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scenarios,shockFields,horizonNotes,scoreWeights} from './data.js?v=20261110-calendar';
-import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js';
+import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scenarios,shockFields,horizonNotes,scoreWeights} from './data.js?v=20261111-market-close';
+import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js?v=20261111-market-close';
 import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js?v=20261110-mpob';
 import {biofuelReleaseDate,biofuelSeries} from './biofuels.js';
-import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js';
+import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js?v=20261111-market-close';
 import {indiaOrigins} from './india-origins.js';
 import {usSoyHistory} from './us-soy-history.js?v=20261109-soja';
 import {nopaHistory,nopaReport} from './nopa-history.js?v=20261109-nopa';
@@ -13,8 +13,8 @@ import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHist
 
 import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261110-bopo-fob';
 import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261110-bopo-fob';
-import {spreadPrices} from './spread-prices.mjs?v=20261110-bopo-fob';
-import {datedReportPrices} from './spread-reference-prices.mjs?v=20261110-reperes';
+import {spreadPrices} from './spread-prices.mjs?v=20261111-market-close';
+import {datedReportPrices} from './spread-reference-prices.mjs?v=20261111-market-close';
 
 import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261111-visualisations';
 
@@ -95,7 +95,7 @@ const valueCell=(value,unit,d)=>'<span class="num">'+num(value,d)+'</span>'+(Num
 function series(id,filter=state.filters){
   const base=seedPrices[id];
   const edits=data.quotes.filter(q=>q.series===id);
-  const all=new Map(Object.entries(base.values).map(([period,value])=>[period,{value,source:base.source,url:base.pointSources?.[period]||base.url,note:''}]));
+  const all=new Map(Object.entries(base.values).map(([period,value])=>[period,{value,source:base.pointSourceNames?.[period]||base.source,url:base.pointSources?.[period]||base.url,note:''}]));
   for(const q of edits)all.set(q.period,q);
   const eligible=(!filter.product||base.product===filter.product)&&(!filter.origin||base.origin===filter.origin)&&(!filter.status||filter.status==='confirmed');
   const since=stamp(asOf(),filter.period);
@@ -319,7 +319,7 @@ function filters(){
   (Object.values(state.filters).some(Boolean)?action('reset','Réinitialiser','ghost'):'')+'</div>';
 }
 function shell(body){
-  const priceIds=['bo','zs','sm','fcpo-jan27','wb-sbo','wb-palm','brent','wti','dce','go','ho','fx-mad'];
+  const priceIds=['bo','zs','sm','fcpo-jan27','cpo-south-cash','brent-daily','wti-daily','fx-eur','fx-mad','rape-feb27','sbo-arg-official','wb-sbo','wb-palm','dce','go','ho'];
   const ticks=priceIds.map(id=>{
     const s=series(id,{}), dates=Object.keys(s.values),last=dates.at(-1),prev=dates.at(-2);
     const change=pct(s.values[last],s.values[prev]);const direction=change>0?'positive':change<0?'negative':'muted';
@@ -442,9 +442,11 @@ function renderIndiaOrigins(){
     '<p class="analysis-text">Palme : huile brute, oléine RBD et huile brute de palmiste. Soja et tournesol : brut et raffiné lorsque ventilés par SEA. Le bulletin 2023/24 ventile le soja et le tournesol bruts. « Autres origines » reprend le regroupement publié par SEA.</p>';
 }
 function renderDemand(){
+  const indiaEstimates=seedEvents.filter(event=>event.id.startsWith('market-1104-ind-'));
   return head('Analyse','Demande','Suivez les importations indiennes d’huiles végétales et comparez la saisonnalité des importations chinoises de graines de soja.')+
     monthlyHistory('Inde · Importations SEA India',seaHistory,['Huile de palme','Huile de tournesol','Huile de soja'],
       seaHistorySources,'Le total palme inclut CPO, oléine brute et RBD, et huile de palmiste brute. Le soja et le tournesol incluent les volumes raffinés comptabilisés par SEA. La révision 2024/25 intègre les flux du Népal.')+
+    section('Inde · Estimations d’octobre','Négociants interrogés par Reuters · le tableau SEA suit les publications officielles')+panel(eventRows(indiaEstimates))+
     renderIndiaOrigins()+
     seasonalHistory('Chine · Importations de graines de soja',chinaSoybeanImports,chinaSoybeanSources,
       '<p class="analysis-text">Douanes chinoises (GACC), toutes origines. Une courbe par année civile depuis 2020. Les mois non publiés restent vides.</p>',3);
@@ -533,14 +535,16 @@ function argentinaSoyPanels(family){
     ...row[family].map(v=>valueCell(v,'',6)),...(oil?[e(argentinaOilNote(row)||'—')]:[])]);
   const notes=oil?'Le commerce couvre l’huile brute et les autres catégories de la position NCM 1507. Un volume partiel exclut les lignes confidentielles. Les stocks industriels du premier jour du mois suivant sont affectés à la clôture du mois. L’usage intérieur apparent est le solde stocks d’ouverture + production + importations − exportations − stocks de clôture. Les mois avec un flux confidentiel ou un solde négatif restent vides.':
     'Le commerce couvre les graines hors semences (NCM 12019000). Les volumes douaniers sont exprimés en poids net. La trituration reprend les volumes effectivement traités selon la SAGyP.';
-  const fob=oil?'1 170,15 à 1 207,41 USD/t':'468,45 à 476,35 USD/t';
+  const fob=series('sbo-arg-official',{}),lastFob=Object.keys(fob.values).at(-1);
+  const fobPanel=oil?panel('<h3>FOB officiel · Huile de soja brute</h3><p>'+valueCell(fob.values[lastFob],fob.unit,2)+'</p><p class="small">'+e(formatDate(lastFob))+' · '+link(fob.points[lastFob].url,fob.points[lastFob].source)+'</p>'):
+    panel('<h3>Fourchette FOB · Novembre 2026</h3><p>468,45 à 476,35 USD/t</p><p class="small">Cotations du 5 novembre 2026 · '+link('https://www.bolsadecereales.com/fob','Bolsa de Cereales de Buenos Aires')+'</p>');
   const bcr=oil?'3,88 Mt d’huile embarquées':'5,31 Mt de graines embarquées';
   return section(products[family]+' · Argentine','Janvier 2020 – septembre 2026 · millions de tonnes métriques')+
     '<div class="grid2 flow">'+charts.join('')+'</div>'+
     section('Données mensuelles','Volumes en millions de tonnes métriques',action('export-soy-arg',icon('download')+' Télécharger le CSV','ghost'))+
     panel('<p class="analysis-text">'+e(notes)+'</p><details><summary class="small">Voir le tableau mensuel</summary>'+table(headers,rows)+'</details>')+
     section('Repères de marché','Cotations FOB et embarquements de campagne')+
-    '<div class="grid2 flow">'+panel('<h3>Fourchette FOB · Novembre 2026</h3><p>'+e(fob)+'</p><p class="small">Cotations du 5 novembre 2026 · '+link('https://www.bolsadecereales.com/fob','Bolsa de Cereales de Buenos Aires')+'</p>')+
+    '<div class="grid2 flow">'+fobPanel+
     panel('<h3>Embarquements · Avril à octobre 2026</h3><p>'+e(bcr)+'</p><p class="small">Octobre provisoire, INDEC et NABSA · '+link('https://www.bcr.com.ar/es/mercados/investigacion-y-desarrollo/informativo-semanal/noticias-informativo-semanal/buenas-8','Bolsa de Comercio de Rosario · 6 novembre 2026')+'</p>')+'</div>';
 }
 
@@ -613,7 +617,7 @@ function renderComplex(key){
   const matches=rows=>rows.filter(r=>group.products.includes(r.product));
   const events=matches(eventsFor(filter));
   const rows=matches(balancesFor(filter));
-  const last=unique(rows.sort((a,b)=>a.date.localeCompare(b.date)),r=>[r.origin,r.product,r.metric,r.periodType,r.variant].join('|')).sort(byDate);
+  const last=unique(rows.sort((a,b)=>a.date.localeCompare(b.date)||a.period.localeCompare(b.period)),r=>[r.origin,r.product,r.metric,r.periodType,r.variant].join('|')).sort(byDate);
   const marketSeries=Object.keys(seedPrices).filter(id=>{
     const s=seedPrices[id];return group.products.includes(s.product)&&(!origin||s.origin===origin)&&(!product||s.product===product);
   });
@@ -973,7 +977,7 @@ function getReport(end=state.reportEnd,kind=state.reportKind){
   const scope=reportScope(end,kind);
   const weekly=kind==='weekly';
   const rows=eventsFor().filter(r=>r.date>=scope.start&&r.date<=end&&checkedStatus(r));
-  const seriesIds=weekly?['fcpo-jan27','bo','zs','sm','fx-eur']:['wb-sbo','wb-palm','wb-sm','wb-soy','brent','wti'];
+  const seriesIds=weekly?['fcpo-jan27','bo','zs','sm','brent-daily','wti-daily','fx-eur','fx-mad','rape-feb27','sbo-arg-official']:['wb-sbo','wb-palm','wb-sm','wb-soy','brent','wti'];
   const pricePeriod=end.slice(0,7);
   const prices=seriesIds.flatMap(id=>{
     const s=series(id),dates=Object.keys(s.values).filter(k=>weekly?k>=scope.start&&k<=end:k===pricePeriod).sort();
