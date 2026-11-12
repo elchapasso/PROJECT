@@ -14,6 +14,10 @@ const arAPI='https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/ws/s
 const commission='https://agridata.ec.europa.eu/extensions/DashboardCereals/OilseedPrices.html';
 const cmeHistory='https://www.cmegroup.com/market-data/cme-group-continuous-price-series.html';
 const investing='https://www.investing.com/commodities/';
+const fred='https://fred.stlouisfed.org/series/';
+const mpob='https://bepi.mpob.gov.my/admin2/price_local_daily_view_cpo_msia.php?more=Y&jenis=1Y';
+const eia=(code,description)=>({source:'EIA (via FRED)',url:fred+code,unit:'USD/gal',description});
+const imf=(code,description)=>({source:'FMI (via FRED)',url:fred+code,unit:'USD/t',description});
 const future=(source,symbol,unit,description,history,official=cmeHistory)=>({
   source,url:tv+encodeURIComponent(symbol.replace(':','-'))+'/',unit,symbol,
   description:description+' · '+symbol+' · règlement quotidien, première échéance continue',
@@ -38,6 +42,12 @@ export const spreadLegs={
   arSoyOil:arg('Huile de soja brute en vrac · position 15071000100Q'),
   idPalmFob:{source:'IPOSS Data',url:'https://data.iposs.co.id/en/data/fob-price-cpo-cpko',unit:'USD/t',
     description:'Huile de palme brute FOB Belawan, Indonésie · cotations du tableau public IPOSS.'},
+  mpobCpo:{source:'MPOB · Malaysian Palm Oil Board',url:mpob,unit:'MYR/t',observationUrl:date=>mpob+'&tahun='+date.slice(0,4),
+    description:'Huile de palme brute, Malaisie · prix livré localement, moyenne quotidienne pondérée.'},
+  ulsdNy:eia('DDFUELNYH','Gazole ULSD n° 2 · prix spot quotidien à New York Harbor.'),
+  ulsdNyMonth:eia('MDFUELNYH','Gazole ULSD n° 2 · moyenne mensuelle du prix spot à New York Harbor.'),
+  imfSoyOil:imf('PSOILUSDM','Huile de soja · prix de référence mondial du FMI (PSOIL), moyenne mensuelle.'),
+  imfPalmOil:imf('PPOILUSDM','Huile de palme · prix de référence mondial du FMI (PPOIL), moyenne mensuelle.'),
   arSoyMeal:arg('Pellets et farine d’extraction de soja · position 23040010100B'),
   arSoySeed:arg('Graines de soja en vrac · position 12019000190C'),
   arSunOil:arg('Huile de tournesol brute en vrac · position 15121110310E'),

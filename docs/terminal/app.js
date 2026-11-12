@@ -13,8 +13,9 @@ import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHist
 import {sunflowerHistory,sunflowerSources} from './sunflower-history.js?v=20261112-uga';
 
 import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261110-bopo-fob';
-import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261110-bopo-fob';
-import {spreadPrices} from './spread-prices.mjs?v=20261111-market-close';
+import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261112-spreads';
+import {spreadPrices} from './spread-prices.mjs?v=20261112-spreads';
+import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,checkFocusParams} from './spread-focus.mjs?v=20261112-spreads';
 import {datedReportPrices} from './spread-reference-prices.mjs?v=20261111-market-close';
 
 import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261112-tournesol';
@@ -59,7 +60,7 @@ const state={
   indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
   soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',sunFamily:'sun',sunOrigin:'ukr',sunView:'',seasonYears:{},
   originTab:{},query:'',category:'',importance:'',start:'',end:'',
-  crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',outProduct:'sbo',outHorizon:'short',
+  crossView:'spreads',crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',outProduct:'sbo',outHorizon:'short',
   shocks:Object.fromEntries(shockFields.map(([k])=>[k,0])),reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:calendarToday().slice(0,7),editType:'events',
 };
 try{if(localStorage.getItem('olea-theme')==='dark')state.theme='dark';}catch{}
@@ -212,7 +213,9 @@ function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,season
   const multiYear=dates[0].slice(0,4)!==dates.at(-1).slice(0,4);
   const axisLabel=d=>periodLabels?.[d]??(seasonal?smallMonth('2000-'+d):periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):periodType==='day'||periodType==='week'?d.slice(8)+' '+smallMonth(d)+(startDate&&multiYear?' '+d.slice(2,4):''):d);
   const yLabels=ticks.map(v=>'<span style="--y:'+y(v)+'%">'+e(num(v,tickDigits))+'</span>').join('');
-  const xLabels=axisColumns.map(i=>'<span style="--x:'+x(i)+'%">'+e(axisLabel(dates[i]))+'</span>').join('');
+  const lastTick=x(axisColumns.at(-1));
+  const axisTicks=startDate?axisColumns.filter((column,i)=>i===axisColumns.length-1||lastTick-x(column)>=9):axisColumns;
+  const xLabels=axisTicks.map(i=>'<span style="--x:'+x(i)+'%">'+e(axisLabel(dates[i]))+'</span>').join('');
   const gridValues=zeroLine&&!ticks.includes(0)?[...ticks,0]:ticks;
   const grid=gridValues.map(v=>'<line class="grid'+(v===0?' zero':'')+'" x1="0" x2="100" y1="'+y(v)+'" y2="'+y(v)+'"/>').join('');
   const paths=[],points=[];
@@ -329,7 +332,7 @@ function shell(body){
     const change=pct(s.values[last],s.values[prev]);const direction=change>0?'positive':change<0?'negative':'muted';
     return '<div class="tick" title="'+e(last?displayPeriod(last,s.grain)+' · '+s.points[last].source+' · '+s.definition:'Série non disponible')+'"><span>'+e(s.name)+'</span><div><b class="num">'+num(s.values[last],2)+'</b><small class="'+direction+'">'+(change===null?e(last?s.unit:'Non dispo.'):e(percent(change)))+'</small></div></div>';
   }).join('');
-  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['biofuels','demand','balances','cbot-arg'].includes(state.page)?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
+  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['biofuels','demand','balances','cbot-arg'].includes(state.page)||state.page==='cross'&&state.crossView!=='pairs'?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
 }
 
 
@@ -775,7 +778,7 @@ const spreadDate=(date,grain)=>grain==='month'?displayPeriod(date.slice(0,7),'mo
 const grainNames={day:'Quotidien',week:'Hebdomadaire',month:'Mensuel'};
 const spreadLegName=id=>spreadLegs[id].fx?spreadLegs[id].unit:spreadLegs[id].description.split(' · ')[0];
 const spreadObservationUrl=(id,obs)=>obs.url||spreadLegs[id].observationUrl?.(obs.date)||spreadLegs[id].url;
-const spreadLegGrain={hip:'month',d4:'week',b100:'week'};
+const spreadLegGrain={hip:'month',d4:'week',b100:'week',ulsdNyMonth:'month',imfSoyOil:'month',imfPalmOil:'month'};
 const spreadGapDays={day:7,week:14,month:45};
 const datedFutures={zl:'bo',zs:'zs',zm:'sm',fcpo:'fcpo-jan27',ho:'ho',euSeed:'rape-eu-fut'};
 const datedSeries={...Object.fromEntries(Object.entries(datedFutures).map(([id,key])=>[id,seedPrices[key]])),
@@ -912,10 +915,108 @@ function spreadCard(metric){
         e(spreadDate(date,'month')),valueCell(value,'',0),link(url,'ESDM · Ditjen EBTKE'),
       ]))+'</details>':''),'spread-card');
 }
+const focusLegacy=new Set(['bopoPhysical',...focusSpreads.map(spread=>spread.legacy)]);
 function renderSpreads(){
-  return section('Spreads & marges','Historique depuis le 1ᵉʳ janvier 2025 · calcul sur les dates communes · fréquences selon la source',
-    action('jump-pairs','Comparaison de séries','ghost'))+
-    '<div class="spread-list">'+spreadMetrics.map(spreadCard).join('')+'</div>';
+  return section('Marges de trituration et de biodiesel','Historique depuis le 1ᵉʳ janvier 2025 · calcul sur les dates communes · fréquences selon la source')+
+    '<div class="spread-list">'+spreadMetrics.filter(metric=>!focusLegacy.has(metric.id)).map(spreadCard).join('')+'</div>';
+}
+const focusRanges={day:{3:'3 mois',6:'6 mois',12:'1 an',all:'Tout'},month:{24:'2 ans',60:'5 ans',all:'Depuis 2015'}};
+const focusAverages={day:{0:'Aucune',20:'20 séances',60:'60 séances'},month:{0:'Aucune',3:'3 mois',12:'12 mois'}};
+const focusDefaults={day:{range:'all',average:'20'},month:{range:'60',average:'12'}};
+const focusState=Object.fromEntries(focusSpreads.map(spread=>[spread.id,{variant:spread.variants[0].id,range:{},average:{},params:{...spread.defaults}}]));
+const focusVariant=spread=>spread.variants.find(variant=>variant.id===focusState[spread.id].variant);
+const focusSetting=(spread,key)=>{
+  const {grain}=focusVariant(spread);
+  return focusState[spread.id][key][grain]??focusDefaults[grain][key];
+};
+function focusData(spread){
+  const {params}=focusState[spread.id],variant=focusVariant(spread);
+  const all=focusRows(variant,spreadPrices,params);
+  const range=focusSetting(spread,'range'),months=range==='all'?null:Number(range);
+  const rows=focusWindow(all,months);
+  const context=spread.variants.find(other=>other.id===variant.context);
+  const contextRows=context&&all.length?focusWindow(focusRows(context,spreadPrices,params),months,all.at(-1).date):[];
+  const size=Number(focusSetting(spread,'average'));
+  const average=size&&rows.length?focusAverage(all,size).filter(point=>point.date>=rows[0].date):[];
+  return {params,variant,grain:variant.grain,all,rows,context,contextRows,size,average,unit:spread.unit(params),digits:spread.digits(params)};
+}
+function focusCard(spread){
+  const {params,variant,grain,all,rows,context,contextRows,size,average,unit,digits}=focusData(spread);
+  const stats=focusStats(rows),monthly=grain==='month';
+  const period=date=>monthly?date.slice(0,7):date;
+  const dateLabel=date=>spreadDate(date,grain);
+  const signed=value=>e(sign(value,digits));
+  const seg=(key,choices,value,label)=>'<div class="focus-control"><span>'+e(label)+'</span><div class="seg" role="group" aria-label="'+e(label+' · '+spread.code)+'">'+
+    Object.entries(choices).map(([id,name])=>'<button type="button" data-action="focus-set" data-id="'+spread.id+'" data-key="'+key+'" data-value="'+e(id)+'" class="'+
+      (id===String(value)?'active':'')+'" aria-pressed="'+(id===String(value))+'">'+e(name)+'</button>').join('')+'</div></div>';
+  const controls='<div class="focus-controls">'+seg('variant',Object.fromEntries(spread.variants.map(option=>[option.id,option.label])),variant.id,'Référence')+
+    seg('range',focusRanges[grain],focusSetting(spread,'range'),'Période')+seg('average',focusAverages[grain],size,'Moyenne mobile')+
+    (spread.units?seg('unit',spread.units,params.unit,'Unité'):'')+'</div>';
+  const unitTag=' <small>'+e(unit)+'</small>';
+  const kpi=(label,value,detail,klass='')=>'<div class="sim-kpi '+klass+'"><span>'+e(label)+'</span><strong class="num">'+value+'</strong><small>'+e(detail)+'</small></div>';
+  const kpis=stats?'<div class="sim-kpis focus-kpis">'+
+    kpi('Dernier spread',signed(stats.last.value)+unitTag,dateLabel(stats.last.date),'sim-kpi-main')+
+    kpi('Variation',stats.previous?signed(stats.change)+unitTag:'—',stats.previous?'vs '+dateLabel(stats.previous.date):'Une seule observation')+
+    kpi('Moyenne de la période',signed(stats.mean)+unitTag,stats.count+' observation'+(stats.count>1?'s':''))+
+    kpi('Plus bas · plus haut',signed(stats.low.value)+' · '+signed(stats.high.value),dateLabel(stats.low.date)+' · '+dateLabel(stats.high.date))+
+    kpi('Position dans la période',num(stats.percentile,0)+'<small>e centile</small>','Part des observations au niveau actuel ou en dessous')+'</div>':'';
+  const point=value=>row=>({date:period(row.date),value:value(row)});
+  const axis=first=>monthly?{periodType:'month'}:{periodType:'day',startDate:first,maxGapDays:10};
+  const refs=refsFor([...variant.legs,...(context?.legs??[])].flatMap(id=>[spreadLegs[id],...(spreadLegs[id].fx?[{source:'BCE · EUR/USD',url:eurUsdSource}]:[])]));
+  const tooltips=p=>num(p.value,digits)+' '+unit;
+  const spreadTooltips=p=>sign(p.value,digits)+' '+unit;
+  const lines=[{label:spread.code+' · '+variant.label,color:colors[0],width:context?3:2.25,points:rows.map(point(row=>row.value))}];
+  if(contextRows.length)lines.push({label:'Repère · '+context.label,color:colors[5],width:1.75,points:contextRows.map(point(row=>row.value))});
+  if(average.length)lines.push({label:'Moyenne mobile · '+focusAverages[grain][size],color:colors[2],width:1.75,points:average.map(point(row=>row.value))});
+  const first=[rows[0]?.date,contextRows[0]?.date].filter(Boolean).sort()[0];
+  const history=rows.length?chart(lines,{unit,height:230,label:spread.title+' · '+variant.label,zeroLine:true,sourceLinks:refs,tooltips:spreadTooltips,...axis(first)}):
+    empty('Aucune date commune entre les deux prix.');
+  const sides=rows.length?chart(variant.sides.map(([label],i)=>({label,color:colors[i],points:rows.map(point(row=>i?row.b:row.a))})),
+    {unit,height:170,label:'Prix comparés · '+spread.code,sourceLinks:refs,tooltips,...axis(rows[0].date)}):'';
+  const form='<form class="spread-inputs" data-focus-form="'+spread.id+'">'+spread.inputs.map(([key,label,min,max])=>
+    '<label>'+e(label)+'<input name="'+key+'" type="number" min="'+min+'" max="'+max+'" step="any" value="'+e(params[key])+'" required></label>').join('')+
+    '<button type="submit" class="button">Recalculer</button>'+action('focus-reset','Valeurs par défaut','ghost','data-id="'+spread.id+'"')+'</form>';
+  const sourceList=variant.legs.map(id=>{
+    const {source,url,unit:legUnit,description,fx}=spreadLegs[id],last=all.at(-1)?.observations[id];
+    return '<li>'+link(url,source)+' · '+e(description+' ('+legUnit+')')+
+      (last?'<small>Dernière observation utilisée · '+link(spreadObservationUrl(id,last),spreadDate(last.date,spreadLegGrain[id]||'day'))+'</small>':'')+
+      (fx?'<small>'+link(eurUsdSource,'Fixing EUR/USD · BCE')+'</small>':'')+'</li>';
+  }).join('');
+  const values=table(['Date',spread.code+' ('+unit+')',...variant.sides.map(([label])=>label+' ('+unit+')'),...variant.legs.map(id=>spreadLegName(id)+' ('+spreadLegs[id].unit+')')],
+    all.toReversed().map(row=>[e(dateLabel(row.date)),'<span class="num">'+e(sign(row.value,digits+1))+'</span>',valueCell(row.a,'',digits+1),valueCell(row.b,'',digits+1),
+      ...variant.legs.map(id=>{
+        const observation=row.observations[id];
+        return valueCell(observation.value,'',4)+(observation.date===row.date?'':'<small>'+e(formatDate(observation.date))+'</small>');
+      })]));
+  const legacy=spreadMetrics.find(metric=>metric.id===spread.legacy);
+  const futures=spreadDatedReference(legacy,spreadParameters[legacy.id])+spreadExternalSources(legacy.legs);
+  return panel('<div class="spread-heading"><div><span class="eyebrow">'+grainNames[grain]+(stats?' · '+(monthly?'':'au ')+e(dateLabel(stats.last.date)):'')+'</span>'+
+    '<h3>'+e(spread.title)+'</h3><p class="small">'+e(spread.summary)+'</p></div>'+
+    action('export-focus',icon('download')+' CSV','ghost','data-id="'+spread.id+'"'+(all.length?'':' disabled')+' aria-label="'+e('Télécharger le CSV · '+spread.code)+'"')+'</div>'+
+    controls+kpis+'<div class="spread-body"><div class="spread-chart">'+history+'</div><div class="spread-summary">'+
+      '<h4>Formule</h4><p>'+e(variant.formula(params))+'</p><h4>Comment lire le résultat</h4><p>'+e(spread.reading)+'</p>'+
+      '<h4>Données</h4><p class="small">'+e(variant.note)+'</p><h4>Paramètres</h4>'+form+'</div></div>'+
+    (sides?'<details class="spread-details spread-price-charts"><summary>Voir les deux prix comparés</summary>'+sides+'</details>':'')+
+    '<details class="spread-details"><summary>Sources et dernières observations</summary><ul>'+sourceList+'</ul></details>'+
+    '<details class="spread-details"><summary>Voir les valeurs</summary>'+values+'</details>'+
+    (futures?'<details class="spread-details"><summary>Contrats à terme · repères datés et historiques externes</summary>'+futures+'</details>':''),'spread-card focus-card');
+}
+function renderFocusSpreads(){
+  return section('Spreads de référence','BOPO, BOHO et POGO · calcul sur les dates communes des deux prix · références, période et paramètres modifiables')+
+    '<div class="spread-list">'+focusSpreads.map(focusCard).join('')+'</div>';
+}
+function exportFocus(button){
+  const spread=focusSpreads.find(item=>item.id===button.dataset.id);
+  if(!spread)return;
+  const {params,variant,all,unit}=focusData(spread);
+  const number=value=>String(Number(value.toFixed(6))).replace('.',',');
+  csv('olea_'+spread.id+'_'+variant.id+'.csv',[
+    ['Date',spread.code+' ('+unit+')',...variant.sides.map(([label])=>label+' ('+unit+')'),
+      ...variant.legs.flatMap(id=>[spreadLegName(id)+' ('+spreadLegs[id].unit+')','Date '+id,'Source '+id]),...spread.inputs.map(([,label])=>label)],
+    ...all.map(row=>[row.date,number(row.value),number(row.a),number(row.b),
+      ...variant.legs.flatMap(id=>[number(row.observations[id].value),row.observations[id].date,spreadLegs[id].source]),
+      ...spread.inputs.map(([key])=>number(params[key]))]),
+  ]);
 }
 function exportSpread(button){
   const metric=spreadMetrics.find(m=>m.id===button.dataset.id);
@@ -952,7 +1053,7 @@ function crossData(){
   const rows=aligned.slice(-limit);
   return {a,b,rows,common:a.unit===b.unit&&a.grain===b.grain,sameGrain:a.grain===b.grain,note:preset?.[2]};
 }
-function renderCross(){
+function renderPairs(){
   const {a,b,rows,common,sameGrain,note}=crossData();
   const first=rows[0],last=rows.at(-1),prior=rows.at(-2);
   const corr=corrReturns(rows), spread=last&&common?last.a-last.b:null;
@@ -965,8 +1066,7 @@ function renderCross(){
     {label:a.name,color:colors[0],points:rows.map(r=>({date:r.date,value:100*r.a/first.a}))},
     {label:b.name,color:colors[1],points:rows.map(r=>({date:r.date,value:100*r.b/first.b}))},
   ];
-  return head('Analyse intermarchés','Comparaisons & spreads','Comparez les séries sur leurs observations communes et examinez les conditions de substitution entre huiles.')+renderSpreads()+
-    '<div id="cross-pairs" tabindex="-1">'+section('Comparaison de séries','Paires prédéfinies et personnalisées')+'</div>'+
+  return section('Comparaison de séries','Paires prédéfinies et personnalisées')+
     '<div class="toolbar"><label>Paire</label>'+select('crossPair',seriesOptions,state.crossPair)+
     (state.crossPair==='custom'?select('crossA',priceDict,state.crossA)+select('crossB',priceDict,state.crossB):'')+
     '<label>Fenêtre</label>'+select('crossRange',{4:'4 observations',6:'6 observations',8:'8 observations',24:'24 observations',120:'120 observations'},state.crossRange)+action('export-cross',icon('download')+' CSV','ghost')+'</div>'+
@@ -983,6 +1083,14 @@ function renderCross(){
       '<p class="small">'+e(a.definition+' '+b.definition)+'</p>')+
     section('Observations et provenance','Valeurs brutes avant indexation')+
     panel(table(['Période',a.name,b.name,'Spread','Sources'],rows.slice().reverse().map(r=>[e(displayPeriod(r.date,a.grain)),valueCell(r.a,a.unit),valueCell(r.b,b.unit),common?valueCell(r.a-r.b,a.unit):'—',link(a.points[r.date]?.url,a.points[r.date]?.source||a.source)+' · '+link(b.points[r.date]?.url,b.points[r.date]?.source||b.source)])));
+}
+const crossViews={spreads:['Spreads','BOPO · BOHO · POGO',renderFocusSpreads],margins:['Marges','Trituration et biodiesel',renderSpreads],pairs:['Comparaison de séries','Base 100, écart et corrélation',renderPairs]};
+function renderCross(){
+  const view=Object.hasOwn(crossViews,state.crossView)?state.crossView:'spreads';
+  const tabs='<div class="balance-tabs cross-tabs" role="group" aria-label="Vues de la rubrique">'+Object.entries(crossViews).map(([id,[title,detail]])=>
+    '<button type="button" data-action="seg" data-key="crossView" data-value="'+id+'" aria-pressed="'+(id===view)+'"><strong>'+e(title)+'</strong><span>'+e(detail)+'</span></button>').join('')+'</div>';
+  return head('Analyse intermarchés','Comparaisons & spreads','Suivez les spreads BOPO, BOHO et POGO, les marges de transformation et la comparaison de séries sur leurs observations communes.')+
+    tabs+crossViews[view][2]();
 }
 const horizonMultipliers={short:[.7,1.3,.9,1.1,1.2,1.15],medium:[1,1,1,1,1,1],long:[1.35,.75,1.25,.85,.8,.75]};
 const presets={up:[-5,-10,8,7,10,0],base:[0,0,0,0,0,0],down:[5,10,-8,-7,-10,0]};
@@ -1404,7 +1512,25 @@ const controlActions={
   'export-feed':exportFeed,
   'export-cross':exportCross,
   'export-spread':exportSpread,
-  'jump-pairs':()=>document.getElementById('cross-pairs')?.focus(),
+  'export-focus':exportFocus,
+  'focus-set':el=>{
+    const {id,key,value}=el.dataset,spread=focusSpreads.find(item=>item.id===id);
+    if(!spread)return;
+    const current=focusState[id],{grain}=focusVariant(spread);
+    if(key==='variant'&&spread.variants.some(variant=>variant.id===value))current.variant=value;
+    else if(key==='unit'&&Object.hasOwn(spread.units??{},value))current.params.unit=value;
+    else if(key==='range'&&Object.hasOwn(focusRanges[grain],value)||key==='average'&&Object.hasOwn(focusAverages[grain],value))current[key][grain]=value;
+    else return;
+    render();
+    root.querySelector('[data-action="focus-set"][data-id="'+id+'"][data-key="'+key+'"][data-value="'+CSS.escape(value)+'"]')?.focus({preventScroll:true});
+  },
+  'focus-reset':el=>{
+    const spread=focusSpreads.find(item=>item.id===el.dataset.id);
+    if(!spread)return;
+    focusState[spread.id].params={...spread.defaults,...(spread.units?{unit:focusState[spread.id].params.unit}:{})};
+    render();
+    root.querySelector('[data-focus-form="'+spread.id+'"] button')?.focus({preventScroll:true});
+  },
   'export-report':()=>download('olea_rapport_'+memoryReport.end+'.txt',memoryReport.text,'text/plain;charset=utf-8'),
   'save-report':()=>{
     const {start,end,kind,title,text}=memoryReport;
@@ -1443,6 +1569,19 @@ root.addEventListener('submit',event=>{
     spreadParameters[metric.id]=values;
     render();
     root.querySelector('[data-spread-form="'+metric.id+'"] button')?.focus({preventScroll:true});
+  }
+  if(event.target.matches('form[data-focus-form]')){
+    event.preventDefault();
+    const spread=focusSpreads.find(item=>item.id===event.target.dataset.focusForm);
+    const fields=new FormData(event.target);
+    const {params,error}=checkFocusParams(spread,{...focusState[spread.id].params,...Object.fromEntries(spread.inputs.map(([key])=>[key,Number(fields.get(key))]))});
+    if(error){
+      toast(error.label+' · saisissez une valeur de '+num(error.min,3)+' à '+num(error.max,3)+'.');
+      return;
+    }
+    focusState[spread.id].params=params;
+    render();
+    root.querySelector('[data-focus-form="'+spread.id+'"] button')?.focus({preventScroll:true});
   }
   if(event.target.id==='entry-form'){event.preventDefault();addRecord(event.target);}
   if(event.target.id==='feed-search'){event.preventDefault();state.query=new FormData(event.target).get('search');render();}
