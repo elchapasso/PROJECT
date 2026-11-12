@@ -469,6 +469,7 @@ export const spreadPrices={
     ["2026-11-02",1198],
     ["2026-11-03",1208],
     ["2026-11-04",1185],
+    ["2026-11-05",1175,"https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/ws/ssma/precios_fob.php?Fecha=05%2F11%2F2026"],
     ["2026-11-06",1185],
     ["2026-11-10",1188,"https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/ws/ssma/precios_fob.php?Fecha=10%2F11%2F2026"],
     ["2026-11-11",1195,"https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/ws/ssma/precios_fob.php?Fecha=11%2F11%2F2026"]
