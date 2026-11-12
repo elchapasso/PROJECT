@@ -4,7 +4,7 @@
 // Un fichier n’est réécrit que si les données ont changé, pour éviter des commits vides.
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import path from 'node:path';
-import {cotDatasets,socrataUrl,buildDataset,validateDataset,serializeDataset,sameData} from '../docs/terminal/cot-model.mjs';
+import {cotDatasets,socrataUrl,buildDataset,validateDataset,serializeDataset,sameData,addDaysISO} from '../docs/terminal/cot-model.mjs';
 
 const outDir=process.argv[2]||'docs/terminal/cot';
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -47,6 +47,18 @@ if(failed){
   console.error('Données rejetées : aucun fichier n’a été modifié.');
   process.exit(1);
 }
+
+// Contrôle du complément direct utilisé par le navigateur : requête incrémentale et accès depuis le site (CORS).
+try{
+  const probe=built[0];
+  const after=addDaysISO(probe.latest,-14);
+  const response=await fetch(socrataUrl(probe.dataset,{after}),{headers:{Accept:'application/json',Origin:'https://elchapasso.github.io'},signal:AbortSignal.timeout(30000)});
+  const rows=response.ok?await response.json():[];
+  const dates=[...new Set(rows.map(r=>String(r.report_date_as_yyyy_mm_dd).slice(0,10)))].sort();
+  const cors=response.headers.get('access-control-allow-origin');
+  const ok=response.ok&&dates.length>0&&dates[0]>after&&(cors==='*'||cors==='https://elchapasso.github.io');
+  console[ok?'log':'warn']('Complément navigateur · HTTP '+response.status+' · '+rows.length+' lignes après le '+after+' ('+dates.join(', ')+') · CORS '+(cors??'absent')+(ok?' · OK':' · À VÉRIFIER'));
+}catch(error){console.warn('Complément navigateur · contrôle impossible : '+error.message);}
 
 await mkdir(outDir,{recursive:true});
 let changed=0;

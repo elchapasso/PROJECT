@@ -11,8 +11,8 @@ export const RELEASE_TIME='15:30';
 export const RELEASE_ZONE='America/New_York';
 
 export const cotMarkets={
-  'soybean-oil':{code:'007601',name:'Huile de soja',ticker:'ZL',contract:'CBOT · contrat de 60 000 lb',exchange:'SOYBEAN OIL - CHICAGO BOARD OF TRADE'},
-  soybeans:{code:'005602',name:'Graines de soja',ticker:'ZS',contract:'CBOT · contrat de 5 000 bu',exchange:'SOYBEANS - CHICAGO BOARD OF TRADE'},
+  'soybean-oil':{code:'007601',name:'Huile de soja',ticker:'ZL',article:'l’huile de soja',contract:'CBOT · contrat de 60 000 lb',exchange:'SOYBEAN OIL - CHICAGO BOARD OF TRADE'},
+  soybeans:{code:'005602',name:'Graines de soja',ticker:'ZS',article:'les graines de soja',contract:'CBOT · contrat de 5 000 bu',exchange:'SOYBEANS - CHICAGO BOARD OF TRADE'},
 };
 
 export const cotDatasets={
@@ -157,6 +157,8 @@ export function validateDataset(dataset,{now=new Date()}={}){
   const expected=cotFields[def.report].map(([k])=>k);
   if(JSON.stringify(dataset.fields)!==JSON.stringify(expected))errors.push('Colonnes inattendues.');
   const required=requiredFields[def.report].map(f=>dataset.fields.indexOf(f)+1);
+  // Les options converties en équivalent futures (delta) sont arrondies : écart de quelques contrats toléré.
+  const tolerance=def.scope==='combined'?5:1;
   for(const key of Object.keys(cotMarkets)){
     const market=dataset.markets?.[key];
     if(!market?.rows?.length){errors.push(key+' : aucun rapport.');continue;}
@@ -167,11 +169,11 @@ export function validateDataset(dataset,{now=new Date()}={}){
       previous=row[0];
       if(row.length!==expected.length+1)errors.push(key+' : ligne incomplète ('+row[0]+').');
       if(required.some(i=>!Number.isFinite(row[i]))){missing++;continue;}
-      if(identityGap(dataset,row)>1)broken++;
+      if(identityGap(dataset,row)>tolerance)broken++;
     }
     const last=rows.at(-1);
     if(required.some(i=>!Number.isFinite(last[i])))errors.push(key+' : positions manquantes dans le dernier rapport ('+last[0]+').');
-    else if(identityGap(dataset,last)>1)errors.push(key+' : le dernier rapport ne respecte pas l’identité long/short = intérêt ouvert ('+last[0]+').');
+    else if(identityGap(dataset,last)>tolerance)errors.push(key+' : le dernier rapport ne respecte pas l’identité long/short = intérêt ouvert ('+last[0]+').');
     if(missing)warnings.push(key+' : '+missing+' rapport(s) sans positions complètes.');
     if(broken)warnings.push(key+' : '+broken+' rapport(s) hors identité comptable.');
     if(rows.length<200)errors.push(key+' : historique trop court ('+rows.length+' rapports).');

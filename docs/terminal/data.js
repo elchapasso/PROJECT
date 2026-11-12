@@ -75,6 +75,7 @@ export const sources = {
   'Bank Al-Maghrib':{url:'https://www.bkam.ma/Marches/Principaux-indicateurs/Marche-des-changes/Cours-de-reference',scope:'Change USD/MAD'},
   EIA:{url:'https://www.eia.gov/petroleum/',scope:'Pétrole, diesel et stocks américains'},
   CME:{url:'https://www.cmegroup.com/markets/agriculture/oilseeds.html',scope:'CBOT BO, ZS, SM et NYMEX HO'},
+  CFTC:{url:'https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm',scope:'Rapport COT · positions des opérateurs sur l’huile de soja et les graines de soja CBOT'},
   Bursa:{url:'https://www.bursamalaysia.com/trade/our_products_services/derivatives/commodity_derivatives/crude_palm_oil_futures',scope:'Futures FCPO'},
   ICE:{url:'https://www.ice.com/products/219/Low-Sulphur-Gasoil-Futures',scope:'Futures ICE Gasoil'},
   Dalian:{url:'http://www.dce.com.cn/',scope:'Futures chinois soja, huile et tourteau'},
