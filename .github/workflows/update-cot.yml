@@ -1,0 +1,49 @@
+name: Actualiser le rapport COT
+
+# La CFTC publie le rapport COT le vendredi à 15 h 30 ET (19 h 30 UTC en été, 20 h 30 UTC en hiver).
+# Un jour férié reporte la publication au lundi : les passages du lundi et du mardi la rattrapent,
+# ceux du samedi et du mardi matin reprennent les éventuelles révisions de la CFTC.
+on:
+  schedule:
+    - cron: '41 19,20,21,23 * * 5'
+    - cron: '47 20,21,23 * * 1'
+    - cron: '13 12 * * 2,6'
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/update-cot.yml'
+      - 'scripts/update-cot.mjs'
+      - 'docs/terminal/cot-model.mjs'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cot-live
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Préparer la branche cot-live
+        run: |
+          if git fetch --no-tags --depth=1 origin refs/heads/cot-live; then
+            git worktree add --detach "$RUNNER_TEMP/cot-live" FETCH_HEAD
+          else
+            git worktree add --detach "$RUNNER_TEMP/cot-live" HEAD
+          fi
+      - name: Télécharger les rapports COT de la CFTC
+        run: node scripts/update-cot.mjs "$RUNNER_TEMP/cot-live/docs/terminal/cot"
+      - name: Publier les données actualisées
+        run: |
+          cd "$RUNNER_TEMP/cot-live"
+          git add docs/terminal/cot
+          if git diff --cached --quiet; then echo "Aucun nouveau rapport."; exit 0; fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh CFTC Commitments of Traders data'
+          git push origin HEAD:refs/heads/cot-live
