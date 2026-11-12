@@ -54,7 +54,7 @@ try{const raw=localStorage.getItem(localKey);if(raw)data=parseStore(raw);}catch{
 const state={
   page:'overview',filters:{...FILTERS},theme:'light',mobile:false,eventWindow:'7',chart:'oils',
   indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
-  soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',originTab:{},query:'',category:'',importance:'',start:'',end:'',
+  soyFamily:'soy',soyOrigin:'us',soyYears:{},brazilSoyView:'monthly',originTab:{},query:'',category:'',importance:'',start:'',end:'',
   crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',outProduct:'sbo',outHorizon:'short',
   shocks:Object.fromEntries(shockFields.map(([k])=>[k,0])),reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:calendarToday().slice(0,7),editType:'events',
 };
@@ -453,6 +453,35 @@ function renderDemand(){
 }
 const soyFamilies={soy:'Graines de soja · Soybeans',sbo:'Huile de soja · Soyoil'};
 const soyOrigins={us:origins.us,arg:origins.arg,bra:origins.bra};
+function soyYearSelection(dates){
+  const available=[...new Set(dates.map(date=>date.slice(0,4)))].sort().reverse();
+  const saved=state.soyYears[state.soyOrigin];
+  const selected=available.filter(year=>saved?.includes(year));
+  return {available,selected:selected.length?selected:available.slice(0,4)};
+}
+function soyYearPicker({available,selected}){
+  const buttons=available.map(year=>{
+    const active=selected.includes(year);
+    return '<button type="button" data-action="soy-year" data-value="'+e(year)+'" aria-pressed="'+active+'"'+
+      (active?' class="active"':'')+(active&&selected.length===1?' disabled':'')+'>'+e(year)+'</button>';
+  }).join('');
+  return '<fieldset class="panel soy-year-picker"><legend>Années à comparer</legend>'+
+    '<p class="small">Chaque courbe représente une année civile. La sélection s’applique à tous les graphiques mensuels de cette origine.</p>'+
+    '<div class="seg">'+buttons+'</div></fieldset>';
+}
+function soySeasonalPanel(name,points,years,{label,sourceLinks,tooltips=p=>num(p.value,6)+' Mt',note=''}){
+  const selectedPoints=points.filter(p=>years.includes(p.date.slice(0,4)));
+  const last=selectedPoints.findLast(p=>Number.isFinite(p.value));
+  const byDate=new Map(selectedPoints.map(point=>[point.date,point]));
+  const lines=years.map((year,i)=>({label:year,color:colors[i%colors.length],points:yearMonths.map(month=>{
+    const date=year+'-'+month;
+    return byDate.get(date)??{date,value:null};
+  })}));
+  const graph=last?chart(lines,{unit:'Mt',seasonal:true,label,tooltips,sourceLinks}):
+    empty('Aucune observation pour les années sélectionnées.')+chartSources(sourceLinks);
+  return panel('<h3>'+e(name)+'</h3>'+(last?'<p class="small">'+e(displayPeriod(last.date,'month')+' · '+tooltips(last))+'</p>':'')+
+    graph+(note?'<p class="small">'+e(note)+'</p>':''));
+}
 const soyHistoryLabels={
   soy:['Importations','Exportations','Trituration (NOPA)'],
   sbo:['Importations','Exportations','Consommation intérieure','Stocks de fin de mois (NOPA)'],
@@ -468,6 +497,7 @@ function usSoyDisplayRows(family){
 }
 function usSoyHistoryPanels(family){
   const rows=usSoyDisplayRows(family);
+  const years=soyYearSelection(rows.map(([date])=>date));
   const names=soyHistoryLabels[family];
   const beans=family==='soy';
   const before=beans?'août 2025':'sept. 2025';
@@ -481,14 +511,8 @@ function usSoyHistoryPanels(family){
     const sourceLinks=isNopa?[['NOPA · Monthly Crush Report',nopaReport]]:
       [yearbook,...recent.map(([label,url])=>[label+' (depuis '+after+')',url])];
     const points=rows.map(([date,...values])=>({date,value:values[i]}));
-    const first=points.find(p=>Number.isFinite(p.value));
-    const latest=points.findLast(p=>Number.isFinite(p.value));
-    const label=products[family]+' · '+name;
-    return panel('<h3>'+e(name)+'</h3><p class="small">'+
-      e(displayPeriod(first.date,'month')+' – '+displayPeriod(latest.date,'month')+' · Dernière valeur '+num(latest.value,4)+' Mt')+'</p>'+
-      chart([{label:name,color:colors[i%colors.length],points:points.slice(points.indexOf(first),points.indexOf(latest)+1)}],
-        {unit:'Mt',label,tooltips:p=>num(p.value,6)+' Mt',sourceLinks})+
-      (isNopa?'<p class="small">Chiffres NOPA relayés publiquement. Voir les références par mois dans le tableau.</p>':''));
+    return soySeasonalPanel(name,points,years.selected,{label:products[family]+' · '+name,sourceLinks,
+      note:isNopa?'Chiffres NOPA relayés publiquement. Voir les références par mois dans le tableau.':''});
   });
   const headers=['Mois',...names.map(name=>name+' (Mt)'),'Publication relayant NOPA'];
   const tableRows=rows.toReversed().map(([date,...values])=>{
@@ -498,7 +522,7 @@ function usSoyHistoryPanels(family){
   const notes=family==='soy'?'La trituration couvre les volumes déclarés par les membres de NOPA. Les mois sans chiffre NOPA vérifié restent vides.':
     'La consommation intérieure apparente inclut l’alimentaire, l’alimentation animale, les usages industriels et les biocarburants. Elle correspond au stock d’ouverture, augmenté de la production et des importations, moins les exportations et le stock de clôture. Le calcul de consommation utilise les stocks nationaux de l’USDA. Le graphique des stocks couvre les stocks de fin de mois déclarés par les membres de NOPA. Les mois sans chiffre NOPA vérifié restent vides.';
   return section(products[family]+' · États-Unis','Historique mensuel depuis janvier 2020 · millions de tonnes métriques')+
-    '<div class="grid2 flow">'+charts.join('')+'</div>'+
+    soyYearPicker(years)+'<div class="grid2 flow">'+charts.join('')+'</div>'+
     section('Données mensuelles','Valeurs en millions de tonnes métriques',
       action('export-soy-us',icon('download')+' Télécharger le CSV','ghost'))+
     panel('<p class="analysis-text">'+e(notes)+'</p>'+
@@ -521,14 +545,12 @@ function argentinaOilNote(row){
 }
 function argentinaSoyPanels(family){
   const oil=family==='sbo';
+  const years=soyYearSelection(argentinaSoyHistory.map(row=>row.date));
   const charts=arSoyMetrics[family].map(([name,sourceLinks],i)=>{
     const points=argentinaSoyHistory.map(row=>({date:row.date,value:row[family][i],
       partial:oil&&(i===0&&row.oilImportsPartial||i===1&&row.oilExportsPartial)}));
-    const last=points.findLast(p=>Number.isFinite(p.value));
-    return panel('<h3>'+e(name)+'</h3><p class="small">'+
-      e(displayPeriod(last.date,'month')+' · '+num(last.value,6)+' Mt'+(last.partial?' · Volume publié partiel':''))+'</p>'+
-      chart([{label:name,color:colors[i%colors.length],points}],{unit:'Mt',label:products[family]+' · Argentine · '+name,
-        tooltips:p=>num(p.value,6)+' Mt'+(p.partial?' · Volume publié partiel':''),sourceLinks}));
+    return soySeasonalPanel(name,points,years.selected,{label:products[family]+' · Argentine · '+name,
+      tooltips:p=>num(p.value,6)+' Mt'+(p.partial?' · Volume publié partiel':''),sourceLinks});
   });
   const headers=['Mois',...arSoyMetrics[family].map(([name])=>name+' (Mt)'),...(oil?['Qualité des données']:[])];
   const rows=argentinaSoyHistory.toReversed().map(row=>[e(displayPeriod(row.date,'month')),
@@ -540,7 +562,7 @@ function argentinaSoyPanels(family){
     panel('<h3>Fourchette FOB · Novembre 2026</h3><p>468,45 à 476,35 USD/t</p><p class="small">Cotations du 5 novembre 2026 · '+link('https://www.bolsadecereales.com/fob','Bolsa de Cereales de Buenos Aires')+'</p>');
   const bcr=oil?'3,88 Mt d’huile embarquées':'5,31 Mt de graines embarquées';
   return section(products[family]+' · Argentine','Janvier 2020 – septembre 2026 · millions de tonnes métriques')+
-    '<div class="grid2 flow">'+charts.join('')+'</div>'+
+    soyYearPicker(years)+'<div class="grid2 flow">'+charts.join('')+'</div>'+
     section('Données mensuelles','Volumes en millions de tonnes métriques',action('export-soy-arg',icon('download')+' Télécharger le CSV','ghost'))+
     panel('<p class="analysis-text">'+e(notes)+'</p><details><summary class="small">Voir le tableau mensuel</summary>'+table(headers,rows)+'</details>')+
     section('Repères de marché','Cotations FOB et embarquements de campagne')+
@@ -577,20 +599,23 @@ function brazilSoyPanels(family){
   const monthly=view==='monthly';
   const grain=monthly?'month':'year';
   const {names,rows}=brazilSoySelection(family,view);
+  const years=monthly?soyYearSelection(rows.map(([date])=>date)):null;
   const charts=names.map((name,i)=>{
     const trade=monthly&&i<brazilTradeMetrics.length;
     const source=trade?'ABIOVE · MDIC/Secex':view==='national'?'ABIOVE · Anual':'ABIOVE · Mensal';
     const points=rows.map(([date,...values])=>({date,value:values[i]===null?null:values[i]/1000}));
+    const status=date=>trade?'Commerce national':brazilSoyStatus(date,view);
+    const chartOptions={label:products[family]+' · Brésil · '+name,
+      tooltips:p=>num(p.value,6)+' Mt · '+status(p.date),sourceLinks:[[source,abioveDashboard]]};
+    if(monthly)return soySeasonalPanel(name,points,years.selected,chartOptions);
     const first=points.findIndex(p=>Number.isFinite(p.value));
     const end=points.findLastIndex(p=>Number.isFinite(p.value));
     const last=points[end];
-    const status=date=>trade?'Commerce national':brazilSoyStatus(date,view);
     const lines=Object.entries(Object.groupBy(points.slice(first,end+1),p=>status(p.date)))
       .map(([label,points],j)=>({label,color:colors[(i+j)%colors.length],points}));
     return panel('<h3>'+e(name)+'</h3><p class="small">'+
       e(displayPeriod(last.date,grain)+' · '+num(last.value,6)+' Mt · '+status(last.date))+'</p>'+
-      chart(lines,{unit:'Mt',periodType:grain,label:products[family]+' · Brésil · '+name,
-        tooltips:p=>num(p.value,6)+' Mt · '+status(p.date),sourceLinks:[[source,abioveDashboard]]}));
+      chart(lines,{...chartOptions,unit:'Mt',periodType:grain}));
   });
   const detail=monthly?'Commerce national jusqu’en septembre 2026 · Bilan industriel jusqu’en août 2026':
     view==='national'?'Bilan national 1999–2027 · Mise à jour ABIOVE du '+formatDate(abioveAnnualUpdate):
@@ -606,6 +631,7 @@ function brazilSoyPanels(family){
     section(brazilSoyViews[view],detail,action('export-soy-bra',icon('download')+' Télécharger le CSV','ghost'))+
     panel('<p class="analysis-text">'+e(note)+'</p><details><summary class="small">Voir le tableau de données</summary>'+
       table(headers,tableRows)+'</details>')+
+    (monthly?soyYearPicker(years):'')+
     '<div class="grid2 flow">'+charts.join('')+'</div>';
 }
 function renderComplex(key){
@@ -1263,6 +1289,13 @@ const controlActions={
     state[key]=value;
     if(key==='reportKind')state.reportEnd=value==='monthly'?addDays(asOf().slice(0,7)+'-01',-1):asOf();
     render();
+  },
+  'soy-year':el=>{
+    const year=el.dataset.value;
+    const selected=[...el.closest('fieldset').querySelectorAll('[aria-pressed="true"]')].map(button=>button.dataset.value);
+    state.soyYears[state.soyOrigin]=selected.includes(year)?selected.filter(value=>value!==year):[...selected,year];
+    render();
+    root.querySelector('[data-action="soy-year"][data-value="'+CSS.escape(year)+'"]')?.focus({preventScroll:true});
   },
   'export-soy-us':()=>{
     const family=state.soyFamily;
