@@ -10,7 +10,7 @@ import {nopaHistory,nopaReport} from './nopa-history.js?v=20261109-nopa';
 import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argentina';
 
 import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHistory} from './brazil-soy-history.js?v=20261110-abiove';
-import {sunflowerHistory,sunflowerSources} from './sunflower-history.js?v=20261112';
+import {sunflowerHistory,sunflowerSources} from './sunflower-history.js?v=20261112-bilans-nationaux';
 
 import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261110-bopo-fob';
 import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261110-bopo-fob';
@@ -57,7 +57,7 @@ try{const raw=localStorage.getItem(localKey);if(raw)data=parseStore(raw);}catch{
 const state={
   page:'overview',filters:{...FILTERS},theme:'light',mobile:false,eventWindow:'7',chart:'oils',
   indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
-  soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',sunFamily:'sun',sunOrigin:'ukr',sunView:'monthly',seasonYears:{},
+  soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',sunFamily:'sun',sunOrigin:'ukr',sunView:'',seasonYears:{},
   originTab:{},query:'',category:'',importance:'',start:'',end:'',
   crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',outProduct:'sbo',outHorizon:'short',
   shocks:Object.fromEntries(shockFields.map(([k])=>[k,0])),reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:calendarToday().slice(0,7),editType:'events',
@@ -640,44 +640,60 @@ function brazilSoyPanels(family){
 }
 const sunFamilies={sun:'Graines de tournesol · Sunseed',sfo:'Huile de tournesol · Sunoil'};
 const sunOrigins={ukr:origins.ukr,rus:origins.rus,eu:'UE-27',bgr:origins.bgr,rou:origins.rou};
-const sunViews={monthly:'Saisonnalité mensuelle',annual:'Données annuelles',campaign:'Bilans par campagne'};
+const sunViews={campaign:'Bilan national · USDA',monthly:'Données mensuelles',annual:'Données annuelles',cumulative:'Cumul des exportations',bilateral:'Commerce avec l’UE-27'};
+const sunCampaignKpis=new Set(['Imports','Exports','Crush','Domestic Consumption']);
 function sunSelection(){
   const available=sunflowerHistory[state.sunOrigin][state.sunFamily];
-  const view=Object.hasOwn(available,state.sunView)?state.sunView:'monthly';
+  const defaultView=available.bilateral?'campaign':'monthly';
+  const view=Object.hasOwn(available,state.sunView)?state.sunView:defaultView;
   return {available,view,...available[view]};
 }
+function sunCampaignSummary(series){
+  const metrics=series.filter(metric=>sunCampaignKpis.has(metric.key));
+  const campaign=metrics[0].data.at(-1)[0];
+  return '<div class="sun-campaign"><p class="small">Campagne '+e(campaign)+' · Prévision USDA FAS</p>'+
+    '<div class="grid4">'+metrics.map(({name,data,unit})=>{
+      const tonnes=data.find(([date])=>date===campaign)?.[1];
+      return panel('<span class="small">'+e(name)+'</span><strong class="num">'+valueCell(tonnes/1e6,unit,3)+'</strong>','sun-kpi');
+    }).join('')+'</div></div>';
+}
 function sunHistoryPanels(){
-  const {available,view,series,note}=sunSelection();
+  const {available,view,series,note,benchmark}=sunSelection();
   const title=products[state.sunFamily]+' · '+sunOrigins[state.sunOrigin];
-  const monthly=view==='monthly';
-  const years=monthly?seasonYearSelection(series.flatMap(metric=>metric.data.map(([date])=>date)),'sun-'+state.sunOrigin):null;
-  const charts=series.map(({name,source,data,note,forecast},i)=>{
+  const monthly=view==='monthly'||view==='bilateral';
+  const years=monthly?seasonYearSelection(series.flatMap(metric=>metric.data.map(([date])=>date)),'sun-'+state.sunOrigin+'-'+view):null;
+  const charts=series.map(({name,source,data,note,forecast,unit='Mt'},i)=>{
     const points=data.map(([date,tonnes])=>({date,value:tonnes===null?null:tonnes/1e6}));
     const sourceLinks=[sunflowerSources[source]];
     const latestUrl=data.findLast(([,tonnes,url])=>tonnes!==null&&url)?.[2];
     if(latestUrl)sourceLinks.push(['Dernière publication de la série',latestUrl]);
     const label=title+' · '+name;
-    const tooltips=p=>num(p.value,6)+' Mt'+(forecast&&p.date>=forecast?' · Prévision USDA':'');
+    const tooltips=p=>num(p.value,6)+' '+unit+(forecast&&p.date>=forecast?' · Prévision USDA':'');
     if(monthly)return seasonalMetricPanel(name,points,years.selected,{label,sourceLinks,tooltips,note});
     const last=points.findLast(p=>Number.isFinite(p.value));
     return panel('<h3>'+e(name)+'</h3><p class="small">'+e(last.date+' · '+tooltips(last))+'</p>'+
-      chart([{label:name,color:colors[i%colors.length],points}],{unit:'Mt',periodType:view==='campaign'?'campaign':'year',label,sourceLinks,tooltips})+
+      chart([{label:name,color:colors[i%colors.length],points}],{unit,periodType:view==='campaign'?'campaign':'year',label,sourceLinks,tooltips})+
       (note?'<p class="small">'+e(note)+'</p>':''));
   });
   const dates=[...new Set(series.flatMap(metric=>metric.data.map(([date])=>date)))].sort().reverse();
   const values=series.map(metric=>new Map(metric.data));
-  const headers=[monthly?'Mois':view==='campaign'?'Campagne':'Année',...series.map(metric=>metric.name+' (Mt)')];
+  const headers=[monthly?'Mois':view==='campaign'?'Campagne':'Année',...series.map(metric=>metric.name+' ('+(metric.unit??'Mt')+')')];
   const rows=dates.map(date=>[e(displayPeriod(date,monthly?'month':'year')),...values.map(metric=>{
     const tonnes=metric.get(date);
     return valueCell(Number.isFinite(tonnes)?tonnes/1e6:null,'',6);
   })]);
-  const views=Object.fromEntries(Object.keys(available).map(key=>[key,sunViews[key]]));
+  const campaignLabel=state.sunOrigin==='eu'?'Bilan UE-27 · USDA':sunViews.campaign;
+  const viewOrder=available.bilateral?Object.keys(sunViews):['monthly','annual','campaign'];
+  const views=Object.fromEntries(viewOrder.filter(key=>Object.hasOwn(available,key)).map(key=>[key,key==='campaign'?campaignLabel:sunViews[key]]));
+  const dataTitle=monthly?'Données mensuelles':view==='campaign'?'Données par campagne':view==='cumulative'?'Cumuls janvier à septembre':'Données annuelles';
   return section(title,'Volumes en millions de tonnes métriques')+
-    '<div class="toolbar">'+btnSeg('sunView',views,view,'Fréquence des données du tournesol')+'</div>'+
+    '<div class="toolbar">'+btnSeg('sunView',views,view,'Périmètre et fréquence des données du tournesol')+'</div>'+
     (note?'<p class="small">'+e(note)+'</p>':'')+
+    (view==='campaign'?sunCampaignSummary(series):'')+
+    (benchmark?'<p class="sun-benchmark small">'+e(benchmark.text)+' '+link(benchmark.source[1],benchmark.source[0])+'</p>':'')+
     (monthly?seasonYearPicker(years):'')+
-    '<div class="grid2 flow">'+charts.join('')+'</div>'+
-    section('Données '+(monthly?'mensuelles':view==='campaign'?'de campagne':'annuelles'),'Historique complet pour cette vue',
+    '<div class="grid2 flow sun-history-charts">'+charts.join('')+'</div>'+
+    section(dataTitle,'Historique complet pour cette vue',
       action('export-sun-history',icon('download')+' Télécharger le CSV','ghost'))+
     panel('<details><summary class="small">Voir le tableau de données</summary>'+table(headers,rows)+'</details>');
 }
@@ -1342,6 +1358,7 @@ const controlActions={
   preset:el=>{state.shocks=Object.fromEntries(shockFields.map(([k],i)=>[k,presets[el.dataset.value][i]]));render();},
   seg:el=>{
     const {key,value}=el.dataset;
+    if(key==='sunOrigin'&&value!==state.sunOrigin)state.sunView='';
     state[key]=value;
     if(key==='reportKind')state.reportEnd=value==='monthly'?addDays(asOf().slice(0,7)+'-01',-1):asOf();
     render();
@@ -1378,11 +1395,11 @@ const controlActions={
   },
   'export-sun-history':()=>{
     const {view,series}=sunSelection();
-    const rows=series.flatMap(({name,source,data,note,forecast})=>data.map(([date,tonnes,url])=>
-      [date,name,tonnes===null?'':String(tonnes/1e6).replace('.',','),sunflowerSources[source][0],url??sunflowerSources[source][1],
+    const rows=series.flatMap(({name,source,data,note,forecast,unit='Mt'})=>data.map(([date,tonnes,url])=>
+      [date,name,tonnes===null?'':String(tonnes/1e6).replace('.',','),unit,sunflowerSources[source][0],url??sunflowerSources[source][1],
         [forecast&&date>=forecast?'Prévision USDA':'',note].filter(Boolean).join(' · ')]));
     csv('olea_tournesol_'+state.sunFamily+'_'+state.sunOrigin+'_'+view+'.csv',
-      [['Période','Indicateur','Volume (Mt)','Source','URL','Périmètre / statut'],...rows]);
+      [['Période','Indicateur','Volume','Unité','Source','URL','Périmètre / statut'],...rows]);
   },
   'export-feed':exportFeed,
   'export-cross':exportCross,
