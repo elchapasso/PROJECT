@@ -14,6 +14,14 @@ START = date(2025, 1, 1)
 TARGET = Path(__file__).resolve().parents[1] / "docs/terminal/spread-prices.mjs"
 MAGYP = "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/ws/ssma/precios_fob.php"
 ECB = "https://data-api.ecb.europa.eu/service/data/EXR/D."
+FRED = "https://fred.stlouisfed.org/graph/fredgraph.csv"
+# key: (FRED series, first observation kept, decimals)
+FRED_SERIES = {
+    "ulsdNy": ("DDFUELNYH", START, 3),
+    "ulsdNyMonth": ("MDFUELNYH", date(2015, 1, 1), 3),
+    "imfSoyOil": ("PSOILUSDM", date(2015, 1, 1), 2),
+    "imfPalmOil": ("PPOILUSDM", date(2015, 1, 1), 2),
+}
 NCM = {
     "arSoyOil": "15071000100Q",
     "arSoyMeal": "23040010100B",
@@ -60,6 +68,20 @@ def ecb_rows(raw, start, end):
     return rows
 
 
+def fred_rows(raw, start, digits):
+    rows = []
+    for line in csv.reader(io.StringIO(raw)):
+        try:
+            observation, value = date.fromisoformat(line[0]), float(line[1])
+        except (IndexError, ValueError):
+            continue  # header line, or a day without a quotation
+        if observation >= start and math.isfinite(value) and value > 0:
+            rows.append([observation.isoformat(), round(value, digits)])
+    if not rows:
+        raise ValueError("No FRED observations in the requested interval")
+    return rows
+
+
 def load():
     return json.loads(TARGET.read_text().split("export const spreadPrices=", 1)[1].rstrip().removesuffix(";")) if TARGET.exists() else {}
 
@@ -76,7 +98,7 @@ def write(data):
     temporary.replace(TARGET)
 
 
-def refresh(start, end):
+def refresh(start, end, fred=False):
     data = load()
 
     def put(key, rows):
@@ -89,6 +111,10 @@ def refresh(start, end):
     for code in ("USD", "MYR", "IDR"):
         raw = get(f"{ECB}{code}.EUR.SP00.A?{params}")
         put("eur" + code.title(), ecb_rows(raw, fx_start, end))
+    if fred:
+        for key, (series, first, digits) in FRED_SERIES.items():
+            query = urlencode({"id": series, "cosd": first.isoformat(), "coed": end.isoformat()})
+            put(key, fred_rows(get(f"{FRED}?{query}"), first, digits))
     while start <= end:
         if start.weekday() < 5:
             query = urlencode({"Fecha": start.strftime("%d/%m/%Y")})
@@ -108,7 +134,8 @@ if __name__ == "__main__":
     parser = ArgumentParser(description=__doc__)
     parser.add_argument("--from", dest="start", required=True, type=date.fromisoformat)
     parser.add_argument("--through", type=date.fromisoformat, default=date.today())
+    parser.add_argument("--fred", action="store_true", help="also refresh the EIA and IMF series published on FRED")
     args = parser.parse_args()
     if args.start < START or args.start > args.through:
         parser.error("Use a valid interval starting on or after 2025-01-01")
-    refresh(args.start, args.through)
+    refresh(args.start, args.through, args.fred)
