@@ -13,6 +13,38 @@ export const balanceRows={
 export const supplyFields=['opening','production','imports'];
 export const useFields={soy:['seed','exports','crush'],sbo:['bio','hi','exports']};
 
+const palmRows=[
+  ['opening',balanceRows.opening,'14.62 14.59 13.08 14.43 14.86 0.43'],
+  ['production',balanceRows.production,'81.85 80.54 84.02 85.8 83.82 -1.98'],
+  ['production-id','Indonésie','48.67 46.31 49.72 49.91 48 -1.91','production'],
+  ['production-my','Malaisie','18.39 19.71 19.38 20.27 19.55 -0.72','production'],
+  ['production-other','Autres pays','14.79 14.52 14.92 15.62 16.27 0.65','production'],
+  ['imports',balanceRows.imports,'53.39 48.84 48.46 49.89 47.92 -1.97'],
+  ['imports-eu','UE-27','6.47 5.3 4.15 4 3.7 -0.3','imports'],
+  ['imports-cn','Chine','6.91 5.38 4.49 5.36 4.7 -0.66','imports'],
+  ['imports-in','Inde','10.26 9.08 8.01 8.28 8.17 -0.11','imports'],
+  ['exports',balanceRows.exports,'53.58 48.5 49.27 50.4 47.77 -2.63'],
+  ['exports-id','Indonésie','30.66 24.7 26.72 26.38 23.4 -2.98','exports'],
+  ['exports-my','Malaisie','15.38 16.58 15.62 16 16.3 0.3','exports'],
+  ['exports-other','Autres pays','7.54 7.21 6.92 8.02 8.07 0.05','exports'],
+  ['consumption','Consommation','81.69 82.4 81.87 84.86 85.91 1.05'],
+  ['consumption-eu','UE-27','6.29 5.26 4.09 3.9 3.62 -0.28','consumption'],
+  ['consumption-cn','Chine','6.46 5.71 4.61 5.07 4.95 -0.12','consumption'],
+  ['consumption-in','Inde','9.65 10.04 8.61 8.73 8.62 -0.11','consumption'],
+  ['consumption-id','Indonésie','20.03 21.38 22.54 23.64 25.28 1.64','consumption'],
+  ['ending',balanceRows.ending,'14.59 13.08 14.43 14.86 12.92 -1.94'],
+  ['ratio',balanceRows.ratio,'17.90% 15.90% 17.60% 17.50% 15.00% -2.50%'],
+];
+export const palmWorldBalance={
+  product:'palm',origin:'world',title:'Huile de palme · Monde',source:'Tableau fourni',
+  periods:[['2022/23','22/23'],['2023/24','23/24'],['2024/25','24/25'],['2025/26','25/26'],['2026/27','26/27 F']],
+  comparisons:['Δ 26/27 F / 25/26'],
+  fields:palmRows.map(([key])=>key),
+  labels:Object.fromEntries(palmRows.map(([key,label])=>[key,label])),
+  rows:Object.fromEntries(palmRows.map(([key,,values])=>[key,values.split(' ')])),
+  parents:Object.fromEntries(palmRows.filter(row=>row[3]).map(([key,,,parent])=>[key,parent])),
+};
+
 const american=[['2023/24','23/24'],['2024/25','24/25'],['2025/26','25/26'],['2026/27-10','26/27 · Oct.'],['2026/27-11','26/27 · Nov.']];
 const southAmerican=[...american.slice(0,3),['2026/27-lc','26/27 · LC'],['2027/28','27/28']];
 function balance(product,origin,source){
