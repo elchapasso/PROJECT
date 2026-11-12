@@ -10,7 +10,7 @@ import {nopaHistory,nopaReport} from './nopa-history.js?v=20261109-nopa';
 import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argentina';
 
 import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHistory} from './brazil-soy-history.js?v=20261110-abiove';
-import {sunflowerHistory,sunflowerSources} from './sunflower-history.js?v=20261112-bilans-nationaux';
+import {sunflowerHistory,sunflowerSources} from './sunflower-history.js?v=20261112-uga';
 
 import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261110-bopo-fob';
 import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261110-bopo-fob';
