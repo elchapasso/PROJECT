@@ -167,7 +167,6 @@
 .balance-table .balance-subrow th{padding-inline-start:27px;color:var(--muted);font-weight:500}
 .balance-table .balance-stock th,.balance-table .balance-stock td{background:var(--surface2);color:var(--accent)}
 .balance-source{margin-top:9px}
-.balance-empty p{margin:4px 0;color:var(--muted)}
 .balance-tools,.balance-history-charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .balance-tools{margin-top:14px;align-items:start}
 .balance-tools .balance-tool{margin:0;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--surface2)}
@@ -189,7 +188,7 @@
 .balance-history-card{min-width:0;border:1px solid var(--line);border-radius:9px;padding:12px 14px 6px}
 .balance-history-card .chart-wrap{margin-top:8px}
 .balance-history-card .chart-axis-x{font-size:10px}
-.balance-history-palm{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.balance-history-world{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
 @media(max-width:800px){.balance-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:940px){.balance-history-charts{grid-template-columns:1fr}}
 @media(max-width:560px){

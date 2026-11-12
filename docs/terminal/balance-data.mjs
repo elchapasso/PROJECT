@@ -35,14 +35,43 @@ const palmRows=[
   ['ending',balanceRows.ending,'14.59 13.08 14.43 14.86 12.92 -1.94'],
   ['ratio',balanceRows.ratio,'17.90% 15.90% 17.60% 17.50% 15.00% -2.50%'],
 ];
-export const palmWorldBalance={
-  product:'palm',origin:'world',title:'Huile de palme · Monde',source:'Tableau fourni',
-  periods:[['2022/23','22/23'],['2023/24','23/24'],['2024/25','24/25'],['2025/26','25/26'],['2026/27','26/27 F']],
-  comparisons:['Δ 26/27 F / 25/26'],
-  fields:palmRows.map(([key])=>key),
-  labels:Object.fromEntries(palmRows.map(([key,label])=>[key,label])),
-  rows:Object.fromEntries(palmRows.map(([key,,values])=>[key,values.split(' ')])),
-  parents:Object.fromEntries(palmRows.filter(row=>row[3]).map(([key,,,parent])=>[key,parent])),
+const sunRows=[
+  ['opening',balanceRows.opening,'3.47 4.57 4.21 3.17 3.41 0.24'],
+  ['production',balanceRows.production,'22.1 23.71 21.08 22.09 24.21 2.12'],
+  ['production-eu','UE-27','4 3.95 3.18 3.37 3.56 0.19','production'],
+  ['production-ru','Russie','6.83 7.96 7.26 7.49 8.11 0.62','production'],
+  ['production-ua','Ukraine','5.66 6.47 4.9 4.42 5.32 0.9','production'],
+  ['production-ar','Argentine','1.61 1.63 2.03 2.44 2.57 0.13','production'],
+  ['imports',balanceRows.imports,'14.17 15.88 14.06 14.29 16.05 1.76'],
+  ['imports-eu','UE-27','2.57 3.24 2.6 2.59 2.89 0.3','imports'],
+  ['imports-cn','Chine','1.55 1.21 0.53 0.58 0.66 0.08','imports'],
+  ['imports-in','Inde','2.99 3.52 2.91 3 3.5 0.5','imports'],
+  ['imports-tr','Turquie','1.26 1.11 1.02 1.08 1.2 0.12','imports'],
+  ['exports',balanceRows.exports,'13.92 16.05 14.03 14.31 16.23 1.92'],
+  ['exports-eu','UE-27','1.2 1 0.7 0.75 0.86 0.11','exports'],
+  ['exports-ru','Russie','4.28 5.36 4.89 4.87 5.43 0.56','exports'],
+  ['exports-ua','Ukraine','5.45 6.27 4.51 4.02 5 0.98','exports'],
+  ['exports-ar','Argentine','0.95 1.16 1.54 1.94 2.05 0.11','exports'],
+  ['exports-tr','Turquie','0.71 0.75 0.75 0.75 0.78 0.03','exports'],
+  ['consumption','Utilisation intérieure','21.26 23.91 22.15 21.83 23.49 1.66'],
+  ['ending',balanceRows.ending,'4.57 4.21 3.17 3.41 3.95 0.54'],
+];
+
+function worldBalance(product,oil,entries){
+  return {
+    product,origin:'world',title:'Huile de '+oil+' · Monde',heading:'Bilan mondial de l’huile de '+oil,source:'Tableau fourni',
+    periods:[['2022/23','22/23'],['2023/24','23/24'],['2024/25','24/25'],['2025/26','25/26'],['2026/27','26/27 F']],
+    comparisons:['Δ 26/27 F / 25/26'],
+    fields:entries.map(([key])=>key),
+    labels:Object.fromEntries(entries.map(([key,label])=>[key,label])),
+    rows:Object.fromEntries(entries.map(([key,,values])=>[key,values.split(' ')])),
+    parents:Object.fromEntries(entries.filter(row=>row[3]).map(([key,,,parent])=>[key,parent])),
+  };
+}
+
+export const worldBalances={
+  sun:worldBalance('sun','tournesol',sunRows),
+  palm:worldBalance('palm','palme',palmRows),
 };
 
 const american=[['2023/24','23/24'],['2024/25','24/25'],['2025/26','25/26'],['2026/27-10','26/27 · Oct.'],['2026/27-11','26/27 · Nov.']];

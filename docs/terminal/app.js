@@ -16,7 +16,7 @@ import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=
 import {spreadPrices} from './spread-prices.mjs?v=20261111-market-close';
 import {datedReportPrices} from './spread-reference-prices.mjs?v=20261111-market-close';
 
-import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261112-palme';
+import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261112-tournesol';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -659,13 +659,15 @@ function renderBalanceCharts(balance,metric){
   const title=isRatio?'Stocks / utilisation':'Stocks finaux';
   const card=(title,lines,unit='MT')=>'<div class="balance-history-card"><h3>'+title+'</h3>'+
     chart(lines,{...opts,unit,label:title+' par campagne'})+'</div>';
-  const palm=balance.product==='palm';
-  const volumes=palm?
-    card('Production et consommation',[series('production','Production',colors[0]),series('consumption','Consommation',colors[1])])+
+  const world=balance.origin==='world';
+  const volumes=world?
+    card('Production et '+balance.labels.consumption.toLocaleLowerCase('fr'),[series('production','Production',colors[0]),series('consumption',balance.labels.consumption,colors[1])])+
     card('Commerce mondial',[series('imports','Importations',colors[0]),series('exports','Exportations',colors[1])]):
     card('Offre et utilisation',[series('supply','Offre totale',colors[0]),series('use','Utilisation totale',colors[1])]);
-  return '<div class="balance-history-charts'+(palm?' balance-history-palm':'')+'">'+volumes+
-    card(title,[series(metric,title,colors[2])],isRatio?'%':'MT')+'</div>';
+  const stock=balance.rows.ratio?
+    card(title,[series(metric,title,colors[2])],isRatio?'%':'MT'):
+    card('Stocks initiaux et finaux',[series('opening','Stocks initiaux',colors[0]),series('ending','Stocks finaux',colors[2])]);
+  return '<div class="balance-history-charts'+(world?' balance-history-world':'')+'">'+volumes+stock+'</div>';
 }
 function renderBalances(){
   return head('Analyse fondamentale','Bilans offre / demande','Consultez les bilans par campagne et mesurez l’effet de vos hypothèses sur les stocks finaux.')+renderBalanceView(renderBalanceCharts);

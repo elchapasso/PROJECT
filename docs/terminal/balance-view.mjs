@@ -1,4 +1,4 @@
-import {balanceSections,balanceProducts,balanceOrigins,balanceRows,palmWorldBalance,soyBalances,supplyFields,useFields} from './balance-data.mjs?v=20261112-palme';
+import {balanceSections,balanceProducts,balanceOrigins,balanceRows,worldBalances,soyBalances,supplyFields,useFields} from './balance-data.mjs?v=20261112-tournesol';
 import {applyBalanceShock,balanceContributions,balanceInputFields,calculateBalance,normalizeCampaignLabel,parseBalanceVolume,readBalanceScenarios,scenarioName} from './balance-model.mjs?v=20261111-visualisations';
 
 const localKey='olea-balance-scenarios-v1';
@@ -12,7 +12,7 @@ const state={section:'soy',product:'soy',origin:'us',campaigns:{},scenarios:{},c
 try{state.scenarios=readBalanceScenarios(localStorage.getItem(localKey));}catch{}
 const balanceId=()=>state.product+'-'+state.origin;
 const currentBalance=()=>soyBalances[balanceId()];
-const displayedBalance=()=>state.section==='palm'?palmWorldBalance:currentBalance();
+const displayedBalance=()=>worldBalances[state.section]??currentBalance();
 const balanceTitle=balance=>balance.title??(balanceProducts[balance.product]+' · '+balanceOrigins[balance.origin]);
 const rowLabel=(balance,key)=>balance.labels?.[key]??balanceRows[key];
 const currentCampaign=()=>state.campaigns[balanceId()]||currentBalance().periods.at(-1)[0];
@@ -37,28 +37,28 @@ function group(label,items,value,key){
     '<button type="button" data-balance-'+key+'="'+id+'" aria-pressed="'+(value===id)+'" class="'+(value===id?'active':'')+'">'+escape(name)+'</button>').join('')+'</div>';
 }
 function referenceTable(balance){
-  const palm=balance.product==='palm';
+  const world=balance.origin==='world';
   const latest=balance.periods.length-1;
   const formatCell=value=>escape(value.replace('.',',').replace(/^-/,'−'));
   const campaignHeaders=balance.periods.map(([key,label],i)=>'<th scope="col" class="'+(i===latest?'balance-latest':'')+'">'+
-    (palm?escape(label):'<button type="button" data-balance-campaign="'+key+'" aria-label="Simuler la campagne '+escape(label)+'">'+escape(label)+'</button>')+'</th>').join('');
+    (world?escape(label):'<button type="button" data-balance-campaign="'+key+'" aria-label="Simuler la campagne '+escape(label)+'">'+escape(label)+'</button>')+'</th>').join('');
   const comparisonHeaders=balance.comparisons.map(label=>'<th scope="col">'+escape(label)+'</th>').join('');
   const rows=balance.fields.map(key=>{
     const parent=balance.parents?.[key];
-    const total=palm?!parent:Object.hasOwn(units,key);
+    const total=world?!parent:Object.hasOwn(units,key);
     return '<tr class="'+(total?'balance-total ':'')+(key==='ending'?'balance-stock':'')+(parent?'balance-subrow':'')+'"><th scope="row">'+
       (parent?'<span class="sr">'+escape(rowLabel(balance,parent))+' · </span>':'')+escape(rowLabel(balance,key))+'</th>'+
       balance.rows[key].map((value,i)=>{
         const isDelta=balance.comparisons[i-balance.periods.length]?.startsWith('Δ');
         const change=isDelta?parseFloat(value):null;
-        const cell=palm&&key==='ratio'&&isDelta?value.replace('%',' pts'):value;
+        const cell=world&&key==='ratio'&&isDelta?value.replace('%',' pts'):value;
         return '<td class="num'+(i===latest?' balance-latest':'')+(isDelta?' balance-delta '+deltaClass(change):'')+'">'+(change>0?'+':'')+formatCell(cell)+'</td>';
       }).join('')+'</tr>';
   }).join('');
-  const title=palm?'Bilan mondial de l’huile de palme':'Bilan de référence';
-  const subtitle=palm?'Millions de tonnes (MT), sauf stocks / utilisation. F = prévision.':balanceTitle(balance)+' · MT, sauf stocks / utilisation';
-  const source=palm?escape(balance.source)+'. Les valeurs et leurs arrondis sont repris du tableau.':'Tableaux fournis. Cliquez sur une campagne pour la simuler. Les écarts fournis sont reproduits avec leur précision d’origine.';
-  return '<section class="panel balance-reference" aria-labelledby="balance-reference-title"><div class="balance-section-head"><div><h2 id="balance-reference-title">'+title+'</h2><p class="small">'+escape(subtitle)+'</p></div>'+
+  const title=balance.heading??'Bilan de référence';
+  const subtitle=world?'Millions de tonnes (MT)'+(balance.rows.ratio?', sauf stocks / utilisation':'')+'. F = prévision.':balanceTitle(balance)+' · MT, sauf stocks / utilisation';
+  const source=world?escape(balance.source)+'. Les valeurs et leurs arrondis sont repris du tableau.':'Tableaux fournis. Cliquez sur une campagne pour la simuler. Les écarts fournis sont reproduits avec leur précision d’origine.';
+  return '<section class="panel balance-reference" aria-labelledby="balance-reference-title"><div class="balance-section-head"><div><h2 id="balance-reference-title">'+escape(title)+'</h2><p class="small">'+escape(subtitle)+'</p></div>'+
     '<button class="button ghost" type="button" data-balance-action="reference-csv">Exporter le bilan</button></div>'+
     '<div class="scroll balance-scroll" tabindex="0" role="region" aria-label="Tableau des campagnes et variations"><table class="table balance-table"><thead><tr><th scope="col">Indicateur</th>'+campaignHeaders+comparisonHeaders+'</tr></thead><tbody>'+rows+'</tbody></table></div>'+
     '<p class="small balance-source">Source · '+source+'</p></section>';
@@ -70,7 +70,7 @@ function exportReference(balance,csv){
       const parent=balance.parents?.[key];
       const label=(parent?rowLabel(balance,parent)+' · ':'')+rowLabel(balance,key);
       const values=balance.rows[key].map(value=>value.replace('.',','));
-      if(balance.product==='palm'&&key==='ratio')values[values.length-1]=values.at(-1).replace('%',' pts');
+      if(balance.origin==='world'&&key==='ratio')values[values.length-1]=values.at(-1).replace('%',' pts');
       return [label,...values];
     })]);
 }
@@ -108,17 +108,17 @@ function simulator(balance){
 }
 
 function history(balance,renderCharts){
-  const detail=balance.product==='palm'?' · F = prévision':' · valeurs du bilan de référence';
+  const detail=balance.origin==='world'?' · F = prévision':' · valeurs du bilan de référence';
+  const picker=balance.rows.ratio?'<label class="balance-history-picker">Indicateur de stock <select data-balance-history><option value="ending">Stocks finaux</option><option value="ratio"'+(state.historyMetric==='ratio'?' selected':'')+'>Stocks / utilisation</option></select></label>':'';
   return '<section class="panel balance-history" aria-labelledby="balance-history-title"><div class="balance-section-head"><div><h2 id="balance-history-title">Évolution du bilan</h2><p class="small">'+escape(balanceTitle(balance)+detail)+'</p></div>'+
-    '<label class="balance-history-picker">Indicateur de stock <select data-balance-history><option value="ending">Stocks finaux</option><option value="ratio"'+(state.historyMetric==='ratio'?' selected':'')+'>Stocks / utilisation</option></select></label></div>'+renderCharts(balance,state.historyMetric)+'</section>';
+    picker+'</div>'+renderCharts(balance,balance.rows.ratio?state.historyMetric:'ending')+'</section>';
 }
 
 function content(renderCharts){
   const tabs='<div class="balance-tabs" role="group" aria-label="Familles de bilans">'+Object.entries(balanceSections).map(([id,{title,detail}])=>
     '<button type="button" data-balance-section="'+id+'" aria-pressed="'+(id===state.section)+'"><strong>'+escape(title)+'</strong><span>'+escape(detail)+'</span></button>').join('')+'</div>';
-  if(state.section==='palm')return tabs+history(palmWorldBalance,renderCharts)+referenceTable(palmWorldBalance);
-  if(state.section==='sun')return tabs+'<section class="panel balance-empty"><h2>'+escape(balanceSections[state.section].title)+'</h2><p>Les bilans seront disponibles après intégration des données de campagne.</p></section>';
-  const balance=currentBalance();
+  const balance=displayedBalance();
+  if(balance.origin==='world')return tabs+history(balance,renderCharts)+referenceTable(balance);
   return tabs+'<div class="panel balance-selection"><div><span class="balance-control-label">Produit</span>'+group('Produit',balanceProducts,state.product,'product')+'</div><div><span class="balance-control-label">Origine</span>'+group('Origine',balanceOrigins,state.origin,'origin')+'</div></div>'+
     simulator(balance)+history(balance,renderCharts)+referenceTable(balance);
 }
