@@ -13,9 +13,10 @@ import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHist
 import {sunflowerHistory,sunflowerSources} from './sunflower-history.js?v=20261112-uga';
 
 import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261110-bopo-fob';
-import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261112-spreads';
-import {spreadPrices} from './spread-prices.mjs?v=20261112-spreads';
-import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,checkFocusParams} from './spread-focus.mjs?v=20261112-spreads';
+import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261112-prix';
+import {spreadPrices,priceFeed} from './spread-live.mjs?v=20261112-prix';
+import {sourceAlerts} from './price-feed.mjs?v=20261112-prix';
+import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,checkFocusParams} from './spread-focus.mjs?v=20261112-prix';
 import {datedReportPrices} from './spread-reference-prices.mjs?v=20261111-market-close';
 
 import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261112-tournesol';
@@ -1090,12 +1091,50 @@ function renderPairs(){
     panel(table(['Période',a.name,b.name,'Spread','Sources'],rows.slice().reverse().map(r=>[e(displayPeriod(r.date,a.grain)),valueCell(r.a,a.unit),valueCell(r.b,b.unit),common?valueCell(r.a-r.b,a.unit):'—',link(a.points[r.date]?.url,a.points[r.date]?.source||a.source)+' · '+link(b.points[r.date]?.url,b.points[r.date]?.source||b.source)])));
 }
 const crossViews={spreads:['Spreads','BOPO · BOHO · POGO',renderFocusSpreads],margins:['Marges','Trituration et biodiesel',renderSpreads],pairs:['Comparaison de séries','Base 100, écart et corrélation',renderPairs]};
+const priceSeriesNames={
+  arSoyOil:'Huile de soja · FOB Argentine',arSoyMeal:'Tourteau de soja · FOB Argentine',arSoySeed:'Graines de soja · FOB Argentine',
+  arSunOil:'Huile de tournesol · FOB Argentine',arSunMeal:'Pellets de tournesol · FOB Argentine',arSunSeed:'Graines de tournesol · FOB Argentine',
+  idPalmFob:'CPO · FOB Belawan (Indonésie)',myPalmFob:'CPO · FOB Port Klang (Malaisie)',mpobCpo:'CPO livré · Malaisie (MPOB)',
+  eurUsd:'EUR/USD · BCE',eurMyr:'EUR/MYR · BCE',eurIdr:'EUR/IDR · BCE',ulsdNy:'ULSD New York · spot',ulsdNyMonth:'ULSD New York · moyenne mensuelle',
+  imfSoyOil:'Huile de soja · FMI, mensuel',imfPalmOil:'Huile de palme · FMI, mensuel',b100:'B100 · Brésil (ANP)',d4:'RIN D4 · EPA',hip:'HIP biodiesel · Indonésie (ESDM)',
+};
+const priceStates={ok:['À jour','positive'],stale:['En attente de publication','mixed'],held:['Valeur à vérifier','mixed'],error:['Source en échec','negative'],manual:['Saisie manuelle','muted']};
+const stampFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Africa/Casablanca'});
+const priceValue=(key,value)=>Number.isFinite(value)?num(value,Math.abs(value)>=100?(Number.isInteger(value)?0:1):4)+(spreadLegs[key]?.unit&&!key.startsWith('eur')?' '+spreadLegs[key].unit:''):'—';
+function priceStatusPanel(){
+  const status=priceFeed.status;
+  const live=priceFeed.origin==='live'&&status;
+  const auto=live?status.series:{};
+  const rows=Object.keys(priceSeriesNames).filter(key=>spreadPrices[key]?.length||auto[key]).map(key=>{
+    const entry=auto[key];
+    const last=spreadPrices[key]?.at(-1);
+    const [label,tone]=priceStates[entry?.status??'manual']??priceStates.manual;
+    const source=spreadLegs[key]?.source??'';
+    const added=entry?.addedCount?'<small>+'+entry.addedCount+' lors de la dernière vérification</small>':'';
+    return [e(priceSeriesNames[key])+'<small>'+e(source)+'</small>',last?'<span class="num">'+e(priceValue(key,last[1]))+'</span><small>'+e(formatDate(last[0]))+'</small>':'—',
+      badge(tone==='muted'?'pending':tone,label)+(entry?.message?'<small>'+e(entry.message)+'</small>':'')+added];
+  });
+  const counts=Object.values(auto).reduce((acc,entry)=>{acc[entry.status]=(acc[entry.status]||0)+1;return acc;},{});
+  const alerts=live?sourceAlerts(status):[];
+  const held=live?status.held||[]:[];
+  const summary=live?
+    'Vérification automatique le '+stampFormat.format(new Date(status.checkedAt))+' · '+(counts.ok||0)+' séries à jour'+
+      (counts.stale?' · '+counts.stale+' en attente de publication':'')+(counts.held?' · '+counts.held+' à vérifier':'')+(counts.error?' · '+counts.error+' en échec':''):
+    'Flux automatique indisponible : le site affiche les prix intégrés lors de la dernière publication.';
+  const heldList=held.length?'<ul class="price-held">'+held.map(h=>'<li><b>'+e(priceSeriesNames[h.series]||h.series)+'</b> · '+e(formatDate(h.date))+' : <span class="num">'+e(priceValue(h.series,h.value))+'</span>'+
+    (h.previous!=null?' contre <span class="num">'+e(priceValue(h.series,h.previous))+'</span> le '+e(formatDate(h.previousDate)):'')+'. Écart inhabituel : la valeur sera publiée dès que la cotation suivante confirmera ce niveau.</li>').join('')+'</ul>':'';
+  const alertList=alerts.length?'<ul class="price-held">'+alerts.map(a=>'<li><b>'+e(a.name)+'</b> · '+(a.long?'en échec depuis le '+e(stampFormat.format(new Date(a.failingSince))):'indisponible lors de la dernière vérification')+'. Les prix déjà publiés restent affichés.</li>').join('')+'</ul>':'';
+  return '<section class="panel price-status"><div class="spread-between"><div><h2>Actualisation automatique des prix</h2><p class="small">'+e(summary)+'</p></div>'+
+    '<span class="badge '+(alerts.length||counts.error?'negative':counts.held?'mixed':'positive')+'"><span class="dot"></span>'+(live?'Flux automatique':'Copie intégrée')+'</span></div>'+heldList+alertList+
+    '<details><summary>État des séries</summary><p class="small">Trois vérifications par jour : 9 h 17 UTC (MPOB, IPOSS), 15 h 47 UTC (BCE) et 21 h 23 UTC (bulletins argentins, FRED, ANP). Chaque valeur est contrôlée : bornes de vraisemblance, cohérence avec l’historique et confirmation des écarts inhabituels. Le D4 de l’EPA et le HIP indonésien restent saisis à la main.</p>'+
+    table(['Série','Dernière observation','État'],rows)+'</details></section>';
+}
 function renderCross(){
   const view=Object.hasOwn(crossViews,state.crossView)?state.crossView:'spreads';
   const tabs='<div class="balance-tabs cross-tabs" role="group" aria-label="Vues de la rubrique">'+Object.entries(crossViews).map(([id,[title,detail]])=>
     '<button type="button" data-action="seg" data-key="crossView" data-value="'+id+'" aria-pressed="'+(id===view)+'"><strong>'+e(title)+'</strong><span>'+e(detail)+'</span></button>').join('')+'</div>';
   return head('Analyse intermarchés','Comparaisons & spreads','Suivez les spreads BOPO, BOHO et POGO, les marges de transformation et la comparaison de séries sur leurs observations communes.')+
-    tabs+crossViews[view][2]();
+    tabs+(view==='pairs'?'':priceStatusPanel())+crossViews[view][2]();
 }
 const horizonMultipliers={short:[.7,1.3,.9,1.1,1.2,1.15],medium:[1,1,1,1,1,1],long:[1.35,.75,1.25,.85,.8,.75]};
 const presets={up:[-5,-10,8,7,10,0],base:[0,0,0,0,0,0],down:[5,10,-8,-7,-10,0]};

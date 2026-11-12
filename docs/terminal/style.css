@@ -458,3 +458,10 @@
 @media(max-width:900px){.cot-grid{grid-template-columns:minmax(0,1fr)}.cot-method-grid{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.cot-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.cot-status{grid-template-columns:minmax(0,1fr)}.cot-kpi strong{font-size:19px}.cot-frame{grid-template-columns:40px minmax(0,1fr);column-gap:6px}.cot-y,.cot-x{font-size:10px}.cot-flow{grid-template-columns:minmax(0,1fr) 70px}.cot-flow-track{grid-column:1/-1;grid-row:2}.cot-flow-axis{display:none}.cot-controls{gap:10px}}
 @media print{.cot-plot{break-inside:avoid}}
+
+/* Actualisation automatique des prix */
+.price-status{margin:12px 0}
+.price-status h2{font-size:16px}
+.price-status .table td small{display:block}
+.price-held{margin:10px 0 0;padding-left:18px;font-size:12px;line-height:1.5;color:var(--muted)}
+.price-held li{margin:4px 0}

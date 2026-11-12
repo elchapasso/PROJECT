@@ -25,6 +25,10 @@ GitHub Pages publie le dossier `/docs` de la branche `main`. Une modification fu
 
 La vue [Simulateur CBOT – ARG](https://elchapasso.github.io/PROJECT/#cbot-arg) convertit le cours CBOT de l’huile de soja en prix argentin fret inclus. Elle applique `((CBOT − base) × 22,04622) + fret` et calcule le CBOT requis pour un objectif de prix. Les paramètres et les scénarios sont enregistrés dans le navigateur. Le bouton « Copier le lien » produit une adresse qui transmet les paramètres à un autre poste.
 
+## Actualisation automatique des prix
+
+Les prix des spreads et des marges (FOB argentins, CPO MPOB, FOB Belawan et Port Klang, fixings BCE, ULSD et références FMI, B100 brésilien) sont relus trois fois par jour par le workflow `.github/workflows/update-prices.yml` et publiés sur la branche `prices-live` après contrôle. Le site les charge à l’ouverture et revient à la copie intégrée si la branche est inaccessible. Les sources, les règles de lecture et les contrôles sont décrits dans [SPREADS.md](SPREADS.md#actualisation-automatique). Le D4 de l’EPA et le HIP indonésien restent saisis à la main.
+
 ## Rapport COT · CFTC
 
 La vue [Rapport COT · CFTC](https://elchapasso.github.io/PROJECT/#cot), dans la rubrique **Analyse**, suit le positionnement des opérateurs sur l’huile de soja (`007601`, ZL) et les graines de soja (`005602`, ZS) du CBOT, d’après le rapport hebdomadaire Commitments of Traders de la CFTC. Elle couvre les formats désagrégé et Legacy, futures seuls ou futures + options, depuis janvier 2010 : positions nettes par catégorie, longs et shorts, intérêt ouvert, mouvements de la semaine, indice COT sur 26 semaines à 5 ans, saisonnalité, comparaison huile / graines, détail du rapport avec concentration, historique et exports CSV.
