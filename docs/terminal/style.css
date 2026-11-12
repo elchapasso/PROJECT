@@ -206,3 +206,120 @@
   .balance-method dl{grid-template-columns:1fr;gap:3px}
   .balance-method dd{margin-bottom:4px}
 }
+
+.sim-view{display:grid;gap:14px}
+.sim-view .notice{margin:0}
+.sim-head{display:flex;gap:10px 16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:13px}
+.sim-decision{--tone:var(--grid-strong);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px 28px;align-items:start;border-left:4px solid var(--tone)}
+.sim-decision[data-signal="buy"]{--tone:var(--green)}
+.sim-decision[data-signal="watch"]{--tone:var(--amber)}
+.sim-decision[data-signal="wait"]{--tone:var(--red)}
+.sim-decision-main,.sim-decision-side{min-width:0}
+.sim-signal{display:flex;align-items:center;gap:10px;margin:7px 0 9px;color:var(--tone);font-size:clamp(21px,2.7vw,31px);font-weight:760;letter-spacing:-.04em;line-height:1.15}
+.sim-signal .dot{width:12px;height:12px}
+.sim-decision-text{margin:0;max-width:640px;color:var(--muted);font-size:13px;line-height:1.65}
+.sim-decision-text b{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}
+.sim-gauge{max-width:640px;margin-top:16px}
+.sim-gauge-zones{display:flex;justify-content:space-between;margin-bottom:8px;font-size:10px;font-weight:750;letter-spacing:.1em;text-transform:uppercase}
+.sim-gauge-track{position:relative;height:10px;border-radius:6px;background:linear-gradient(to right,color-mix(in srgb,var(--green) 42%,var(--surface)) 50%,color-mix(in srgb,var(--red) 38%,var(--surface)) 50%)}
+.sim-gauge-track::before{content:"";position:absolute;left:50%;top:-5px;bottom:-5px;width:2px;margin-left:-1px;background:var(--text)}
+.sim-gauge-track i{position:absolute;left:var(--x);top:50%;width:18px;height:18px;border:4px solid var(--tone);border-radius:50%;background:var(--surface);transform:translate(-50%,-50%);box-shadow:var(--shadow-float)}
+.sim-gauge-scale{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin-top:10px;color:var(--muted);font-size:11px}
+.sim-gauge-scale span:nth-child(2){color:var(--text);font-weight:700}
+.sim-gauge-scale span:last-child{text-align:right}
+.sim-decision-side{display:grid;gap:12px}
+.sim-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:0;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:var(--line)}
+.sim-facts div{min-width:0;padding:9px 12px;background:var(--surface2)}
+.sim-facts dt{color:var(--muted);font-size:10px;line-height:1.4}
+.sim-facts dd{margin:3px 0 0;font-size:14px;font-weight:700;overflow-wrap:anywhere}
+.sim-share{display:flex;gap:8px;flex-wrap:wrap}
+.sim-copy{width:100%;font-size:12px}
+.sim-layout{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.45fr);gap:14px;align-items:start}
+.sim-main{display:grid;gap:14px;min-width:0}
+.sim-fields{display:grid;gap:12px}
+.sim-field{display:grid;gap:5px;min-width:0;color:var(--text);font-size:12px;font-weight:650}
+.sim-field small{color:var(--muted);font-size:11px;font-weight:400;line-height:1.45}
+.sim-field-box{display:flex;align-items:center;gap:8px}
+.sim-field-box input{flex:1;min-width:0;min-height:42px;text-align:right;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.sim-field-box input[aria-invalid="true"]{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
+.sim-field-box span{flex:none;width:38px;color:var(--muted);font-size:11px;font-weight:650}
+.sim-slider{display:grid;gap:3px;margin-top:-4px}
+.sim-slider-scale{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:10px}
+.sim-quote{display:flex;align-items:center;justify-content:space-between;gap:8px 12px;flex-wrap:wrap;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface2)}
+.sim-quote b{color:var(--text)}
+.sim-quote .button{min-height:32px;padding:5px 10px}
+.sim-status{margin-top:10px}
+.sim-status:empty,.sim-save p:empty,.sim-implied p:empty{display:none}
+.sim-more>summary,.sim-grid-settings>summary,.sim-method>summary{font-size:12px}
+.sim-more .sim-fields{margin-top:12px}
+.sim-implied{display:grid;gap:8px;padding:11px 12px;border:1px solid var(--line);border-radius:9px;background:var(--surface2)}
+.sim-implied .button{justify-self:start}
+.sim-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:9px}
+.sim-kpi{display:grid;align-content:start;gap:4px;min-width:0;padding:12px 14px;border:1px solid var(--line);border-radius:9px;background:var(--surface2)}
+.sim-kpi>span,.sim-kpi>small{color:var(--muted);font-size:11px;line-height:1.4}
+.sim-kpi strong{font-size:clamp(19px,2.2vw,26px);line-height:1.25;overflow-wrap:anywhere}
+.sim-kpi strong small{color:var(--muted);font:650 11px Inter,"Segoe UI",system-ui,sans-serif;letter-spacing:0}
+.sim-kpi-main{background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-color:color-mix(in srgb,var(--accent) 50%,var(--line))}
+.sim-kpi-main strong{color:var(--accent)}
+.panel .sim-subtitle{margin:16px 0 8px;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:0}
+.sim-chart{margin:0}
+.sim-legend span{display:inline-flex;align-items:center;gap:7px}
+.sim-legend .sim-key-target{height:0;border-radius:0;border-top:2px dashed var(--amber);background:none}
+.sim-legend .sim-key-required{height:0;border-radius:0;border-top:2px dotted var(--grid-strong);background:none}
+.sim-legend .sim-key-dot{width:11px;height:11px;border:3px solid var(--text);border-radius:50%;background:var(--surface)}
+.sim-zone{fill:color-mix(in srgb,var(--green) 11%,transparent)}
+.sim-target-line,.sim-required-line{fill:none;stroke-width:1.75;vector-effect:non-scaling-stroke}
+.sim-target-line{stroke:var(--amber);stroke-dasharray:7 5}
+.sim-required-line{stroke:var(--grid-strong);stroke-dasharray:2 4}
+.sim-zone-label{position:absolute;left:8px;top:7px;color:var(--green);font-size:10px;font-weight:750;letter-spacing:.1em;text-transform:uppercase;pointer-events:none}
+.sim-chart-dot{position:absolute;left:var(--x);top:var(--y);width:15px;height:15px;border:4px solid var(--text);border-radius:50%;background:var(--surface);transform:translate(-50%,-50%);pointer-events:none}
+.sim-axis-title{margin-top:4px;text-align:center}
+.sim-grid-settings{margin:0 0 12px}
+.sim-grid-controls label{min-width:128px}
+.sim-scroll{border:1px solid var(--line);border-radius:9px}
+.sim-matrix{min-width:560px}
+.sim-matrix th,.sim-matrix td{text-align:right;white-space:nowrap}
+.sim-matrix thead th:first-child{position:sticky;left:0;z-index:2;text-align:left}
+.sim-matrix th small,.sim-ladder th small,.sim-compare td small{display:block;margin-top:2px;color:var(--muted);font:600 10px Inter,"Segoe UI",system-ui,sans-serif;letter-spacing:0}
+.sim-matrix tbody th,.sim-ladder tbody th{position:sticky;left:0;z-index:1;color:var(--text);text-align:left}
+.sim-cell{background:color-mix(in srgb,var(--cell) var(--heat),var(--surface))}
+.sim-cell.sim-good{--cell:var(--green);font-weight:700}
+.sim-cell.sim-near{--cell:var(--amber)}
+.sim-cell.sim-above{--cell:var(--red)}
+.sim-matrix .sim-current{box-shadow:inset 2px 0 var(--accent),inset -2px 0 var(--accent)}
+.sim-matrix thead .sim-current{color:var(--accent)}
+.sim-now th:first-child{box-shadow:inset 3px 0 var(--accent)}
+.sim-matrix-key{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px}
+.sim-swatch{display:inline-block;width:11px;height:11px;margin-left:10px;border-radius:3px}
+.sim-swatch:first-child{margin-left:0}
+.sim-swatch.sim-good{background:color-mix(in srgb,var(--green) 42%,var(--surface))}
+.sim-swatch.sim-near{background:color-mix(in srgb,var(--amber) 42%,var(--surface))}
+.sim-swatch.sim-above{background:color-mix(in srgb,var(--red) 42%,var(--surface))}
+.sim-ladder{min-width:640px}
+.sim-ladder td{text-align:right;white-space:nowrap}
+.sim-ladder thead th:not(:first-child):not(:last-child){text-align:right}
+.sim-ladder td:last-child{text-align:left}
+.sim-ladder .sim-now th,.sim-ladder .sim-now td{background:color-mix(in srgb,var(--accent) 11%,var(--surface))}
+.sim-save{display:flex;align-items:end;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.sim-save label{display:grid;gap:4px;flex:1 1 240px;max-width:380px;color:var(--muted);font-size:11px;font-weight:650}
+.sim-save input{min-height:38px}
+.sim-save p{flex-basis:100%}
+.sim-compare{min-width:880px}
+.sim-compare td.num,.sim-compare thead th:nth-child(n+2):nth-child(-n+8){text-align:right}
+.sim-compare tbody th{min-width:150px;background:var(--surface);color:var(--text);font-size:12px;white-space:normal}
+.sim-row-actions{display:flex;gap:5px}
+.sim-row-actions .button{min-height:30px;padding:4px 9px;font-size:11px}
+.panel>.sim-method{margin-top:0}
+.sim-method-list{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 14px;margin:12px 0;font-size:12px}
+.sim-method-list dt{font-weight:700}
+.sim-method-list dd{margin:0;color:var(--muted)}
+.sim-method p{margin-top:8px}
+@media(max-width:1080px){.sim-layout{grid-template-columns:1fr}}
+@media(max-width:900px){.sim-decision{grid-template-columns:1fr}}
+@media(max-width:760px){.sim-view select,.sim-view input[type="text"],.sim-save input{font-size:16px}}
+@media(max-width:560px){
+  .sim-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim-share .button{flex:1 1 auto}
+  .sim-method-list{grid-template-columns:1fr;gap:2px}
+  .sim-method-list dd{margin-bottom:6px}
+}
