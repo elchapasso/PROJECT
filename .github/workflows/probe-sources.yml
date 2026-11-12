@@ -1,0 +1,12 @@
+name: Probe price sources (temporary)
+on:
+  push:
+    branches: [feature/auto-prices]
+    paths: ['scripts/probe-sources.py', '.github/workflows/probe-sources.yml']
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/probe-sources.py
