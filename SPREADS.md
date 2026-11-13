@@ -14,16 +14,16 @@ Ces trois spreads existent en ligne sous forme de produits sous licence : contra
 | BOPO | Malaisie · FOB Port Klang | Huile de soja FOB Argentine − huile de palme FOB Port Klang | Quotidien depuis le 10/11/2026, l’historique s’allonge à chaque relevé automatique |
 | BOPO | Malaisie · CPO MPOB | Huile de soja FOB Argentine − CPO Malaisie ÷ USD/MYR | Quotidien depuis le 02/01/2025 |
 | BOPO | À terme · CBOT − Bursa | `CBOT:ZL1!` × 22,0462 − `MYX:FCPO1!` ÷ USD/MYR | Quotidien depuis le 02/01/2025, relevé TradingView |
-| BOPO | Mensuel · CBOT − Bursa (FMI) | Huile de soja FMI − huile de palme FMI | Mensuel, janvier 2015 à septembre 2026 |
+| BOPO | Mensuel · CBOT − Bursa | Moyenne mensuelle de `CBOT:ZL1!` × 22,0462 − moyenne mensuelle de `MYX:FCPO1!` ÷ USD/MYR du jour | Mensuel depuis janvier 2015, mois en cours compris |
 | BOHO | Quotidien · CBOT − NYMEX | `CBOT:ZL1!` × lb/gal ÷ 100 − `NYMEX:HO1!` | Quotidien depuis le 02/01/2025, relevé TradingView |
-| BOHO | Mensuel · CBOT − ULSD New York | Huile de soja FMI ÷ 22,0462 × lb/gal ÷ 100 − ULSD | Mensuel, janvier 2015 à septembre 2026 |
+| BOHO | Mensuel · CBOT − NYMEX | Moyenne mensuelle de `CBOT:ZL1!` × lb/gal ÷ 100 − moyenne mensuelle de `NYMEX:HO1!` | Mensuel depuis janvier 2015, mois en cours compris |
 | POGO | Quotidien · Bursa − ICE Gasoil | `MYX:FCPO1!` ÷ USD/MYR − `ICEEUR:ULS1!` | Quotidien depuis le 02/01/2025, relevé TradingView |
 | POGO | Physique · CPO Malaisie − ULSD New York | CPO Malaisie ÷ USD/MYR − ULSD × gal/t | Quotidien depuis le 02/01/2025 |
-| POGO | Mensuel · Bursa − ULSD New York | Huile de palme FMI − ULSD × gal/t | Mensuel, janvier 2015 à septembre 2026 |
+| POGO | Mensuel · Bursa − ICE Gasoil | Moyenne mensuelle de `MYX:FCPO1!` ÷ USD/MYR du jour − moyenne mensuelle de `ICEEUR:ULS1!` | Mensuel depuis janvier 2015, mois en cours compris |
 
 Paramètres modifiables : fret et frais par origine pour le BOPO, 7,5 lb d’huile par gallon et unité (USD/gal ou ¢ US/lb) pour le BOHO, densité du gazole de 0,845 kg/l pour le POGO, soit 312,6 gal/t. Le 10/11/2026, le CPO MPOB converti vaut 982,5 USD/t et le tableau IPOSS cote Port Klang à 982 USD/t. Le même jour, Belawan cote 1 090 USD/t : la référence malaisienne donne un BOPO plus élevé d’environ 100 USD/t que la référence indonésienne.
 
-Les versions quotidiennes du BOHO et du POGO utilisent les contrats NYMEX Heating Oil et ICE Low Sulphur Gasoil. Les versions mensuelles et la version physique du POGO utilisent le prix spot ULSD à New York de l’EIA, produit livrable du contrat Heating Oil. Le FMI décrit ses séries PSOIL et PPOIL comme des prix de référence mondiaux en moyenne mensuelle. Elles suivent le premier contrat à terme de Chicago et de Bursa Malaysia. Cette définition est reprise de la documentation du FMI et reste à confirmer sur la fiche de la série.
+Les versions quotidiennes et mensuelles du BOHO et du POGO utilisent les contrats NYMEX Heating Oil et ICE Low Sulphur Gasoil ; la version physique du POGO utilise le prix spot ULSD à New York de l’EIA, produit livrable du contrat Heating Oil. Les versions mensuelles reprennent les mêmes contrats que les versions quotidiennes (section « Moyennes mensuelles des contrats à terme »). Les séries mensuelles PSOIL et PPOIL du FMI restent disponibles dans la comparaison de séries, mais ne servent plus aux spreads : elles diffèrent en moyenne de 2,1 % (soja) et 2,6 % (palme) des moyennes des premiers contrats continus de TradingView sur janvier 2025 à septembre 2026, et sont publiées avec environ deux mois de retard.
 
 ## Sources et couverture
 
@@ -77,6 +77,14 @@ Six contrats continus sont relevés sur TradingView : huile de soja `CBOT:ZL1!` 
 - **Révisions :** une clôture déjà publiée ne peut changer que si elle date de moins de cinq jours. Au-delà, la série est bloquée pour vérification du contrat continu.
 - **Publication :** `scripts/update-futures.py` écrit `futures-prices.json` et `futures-status.json` sur la branche `futures-live`, que le site lit au chargement. La marche à suivre du relevé quotidien figure dans `scripts/futures-runbook.md`. TradingView n’est accessible que par le connecteur du compte Claude du propriétaire : le relevé est donc effectué par une tâche planifiée Claude, et non par GitHub Actions.
 - **Tests :** `python3 -m unittest discover -s tests -p 'test_*.py'`.
+
+## Moyennes mensuelles des contrats à terme
+
+Les versions mensuelles du BOPO, du BOHO et du POGO utilisent la moyenne, sur chaque mois, des clôtures quotidiennes des contrats continus `CBOT:ZL1!`, `MYX:FCPO1!`, `NYMEX:HO1!` et `ICEEUR:ULS1!`. La palme est convertie en USD/t chaque jour avant la moyenne.
+
+- **Janvier 2015 à décembre 2024 :** moyennes calculées par TradingView avec `scripts/pine/olea_monthly.pine` (ZL à 4 décimales, HO à 5, gazole à 3) et `scripts/pine/olea_monthly_fx.pine` (FCPO ÷ `FX_IDC:USDMYR` du jour, 3 décimales), sur un graphique mensuel (timeframe `M`). Le mois est celui de la date de séance. Les 120 valeurs de chaque contrat sont enregistrées dans `docs/terminal/spread-prices.mjs` (`zlMonth`, `fcpoUsdMonth`, `hoMonth`, `gasoilMonth`). Elles ont été copiées le 13/11/2026 et reproduisent exactement la somme de contrôle calculée par TradingView sur les 120 mois : nombre de mois, somme, somme × mois et somme × (année − 2000).
+- **Depuis janvier 2025 :** moyenne calculée sur le site à partir des clôtures quotidiennes de la branche `futures-live` (palme convertie au fixing BCE du jour, comme la version quotidienne). Le mois en cours est une moyenne partielle des séances closes, signalée « en cours » avec son nombre de séances.
+- **Raccord :** sur janvier 2025 à octobre 2026, les moyennes de TradingView et celles du site coïncident à 0,0002 % près pour ZL, HO et le gazole. Pour la palme en USD, l’écart moyen est de 0,06 % (0,27 % au plus, soit environ 3 USD/t), dû à la source de change.
 
 ## Actualisation automatique
 

@@ -52,7 +52,44 @@ function weekKey(date){
   const weekday=new Date(ms).getUTCDay();
   return iso(ms-((weekday+6)%7)*dayMs);
 }
-export function spreadLegPoints(id,raw){
+// Moyennes mensuelles des contrats à terme continus. Jusqu’en décembre 2024 : moyennes calculées par TradingView
+// (scripts/pine/olea_monthly*.pine), copiées et vérifiées par sommes de contrôle. Ensuite : moyenne des clôtures
+// quotidiennes du site, mois en cours compris (point marqué partial). La palme est convertie au change du jour.
+export const monthlyLegs={
+  zlM:{daily:'zl',history:'zlMonth'},
+  fcpoUsdM:{daily:'fcpo',history:'fcpoUsdMonth',fx:'usdm'},
+  hoM:{daily:'ho',history:'hoMonth'},
+  gasoilM:{daily:'gasoil',history:'gasoilMonth'},
+};
+function monthlyPoints(id,raw,today){
+  const {daily,history,fx}=monthlyLegs[id];
+  const rates=fx?spreadLegPoints(fx,raw):null;
+  const months=new Map();
+  let r=-1;
+  for(const point of spreadLegPoints(daily,raw)){
+    if(point.date>today||!Number.isFinite(point.value))continue;
+    let value=point.value;
+    if(rates){
+      while(r+1<rates.length&&rates[r+1].date<=point.date)r++;
+      if(!(rates[r]?.value>0))continue;
+      value/=rates[r].value;
+    }
+    const key=point.date.slice(0,7),month=months.get(key)??{sum:0,sessions:0,last:point.date};
+    month.sum+=value;
+    month.sessions++;
+    month.last=point.date;
+    months.set(key,month);
+  }
+  const keys=[...months.keys()].sort();
+  const stored=(raw[history]||[]).filter(([date])=>!keys.length||date.slice(0,7)<keys[0]).map(([date,value])=>({date,value,stored:true}));
+  return [...stored,...keys.map(key=>{
+    const {sum,sessions,last}=months.get(key);
+    return {date:key+'-01',value:sum/sessions,sessions,last,partial:key>=today.slice(0,7)};
+  })];
+}
+
+export function spreadLegPoints(id,raw,today=new Date().toISOString().slice(0,10)){
+  if(Object.hasOwn(monthlyLegs,id))return monthlyPoints(id,raw,today);
   if(!Object.hasOwn(usdCross,id))return (raw[id]||[]).map(([date,value,url])=>({date,value,url}));
   const cross=new Map(raw[usdCross[id]]||[]);
   return (raw.eurUsd||[]).flatMap(([date,value])=>{

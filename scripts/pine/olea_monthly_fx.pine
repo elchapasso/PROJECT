@@ -1,0 +1,38 @@
+//@version=6
+// Moyenne mensuelle des clôtures quotidiennes du contrat du graphique converties au change du jour : clôture ÷ in_3 (graphique mensuel, timeframe « M »).
+// Sommes de contrôle sur les mois de in_0 à in_1 (AAAAMM) : nombre de mois, somme, somme × mois, somme × (année − 2000).
+indicator("olea_monthly_fx")
+fromMonth = input.int(201501, "Premier mois")
+toMonth = input.int(202412, "Dernier mois")
+digits = input.int(4, "Décimales")
+fxSymbol = input.symbol("FX_IDC:USDMYR", "Change")
+monthAvg() =>
+    td = time_tradingday
+    var float s = 0.0
+    var int n = 0
+    if month(td, "UTC") != month(td[1], "UTC")
+        s := 0.0
+        n := 0
+    s += close / request.security(fxSymbol, "1D", close)
+    n += 1
+    [s / n, n, year(td, "UTC") * 100 + month(td, "UTC")]
+// Le mois vient de la date de séance : l’heure d’ouverture d’une barre mensuelle peut tomber la veille, en UTC.
+[raw, n, m] = request.security(syminfo.tickerid, "1D", monthAvg())
+avg = math.round(raw, digits)
+inRange = m >= fromMonth and m <= toMonth
+var float count = 0.0
+var float total = 0.0
+var float byMonth = 0.0
+var float byYear = 0.0
+if inRange and barstate.isconfirmed
+    count += 1
+    total += avg
+    byMonth += avg * (m % 100)
+    byYear += avg * (math.floor(m / 100) - 2000)
+plot(m, "m")
+plot(avg, "avg")
+plot(n, "n")
+plot(barstate.islast ? count : na, "count")
+plot(barstate.islast ? total : na, "total")
+plot(barstate.islast ? byMonth : na, "byMonth")
+plot(barstate.islast ? byYear : na, "byYear")
