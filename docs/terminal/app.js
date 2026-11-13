@@ -2,7 +2,9 @@
 import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scenarios,shockFields,horizonNotes,scoreWeights} from './data.js?v=20261111-market-close';
 import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js?v=20261111-market-close';
 import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js?v=20261110-mpob';
-import {biofuelReleaseDate,biofuelSeries} from './biofuels.js';
+import {biofuelReleaseDate,biofuelSeries,biofuelNativeSeries} from './biofuels.js';
+import {renderBiofuelPolicy,bindBiofuelPolicy} from './biofuel-policy-view.mjs?v=20261113-biofuels';
+import {worldBalances} from './balance-data.mjs';
 import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js?v=20261111-market-close';
 import {indiaOrigins} from './india-origins.js';
 import {usSoyHistory} from './us-soy-history.js?v=20261109-soja';
@@ -12,12 +14,12 @@ import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argenti
 import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHistory} from './brazil-soy-history.js?v=20261110-abiove';
 import {sunflowerHistory,sunflowerSources} from './sunflower-history.js?v=20261112-uga';
 
-import {spreadLegPoints} from './spread-model.mjs?v=20261113-marges';
+import {GASOIL_KG_PER_LITRE,spreadLegPoints} from './spread-model.mjs?v=20261113-marges';
 import {eurUsdSource,spreadLegs} from './spread-definitions.mjs?v=20261113-marges';
 import {spreadPrices,priceFeed} from './spread-live.mjs?v=20261113-marges';
 import {sourceAlerts} from './price-feed.mjs?v=20261113-futures';
-import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,focusInputs,focusParts,checkFocusParams} from './spread-focus.mjs?v=20261113-graphe';
-import {focusMargins} from './margin-focus.mjs?v=20261113-graphe';
+import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,focusInputs,checkFocusParams} from './spread-focus.mjs?v=20261113-marges';
+import {focusMargins} from './margin-focus.mjs?v=20261113-marges';
 
 import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261112-tournesol';
 import {renderCbotArgView,bindCbotArgView} from './cbot-arg-view.mjs?v=20261112-simulateur';
@@ -412,11 +414,26 @@ function seasonalHistory(title,years,sourceLinks,note='',digits=4){
 }
 const eiaFeedstocks='https://www.eia.gov/dnav/pet/pet_pnp_feedbiofuel_dcu_nus_m.htm';
 const eiaHistory=code=>[['EIA · Historique mensuel','https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s='+code]];
+const biofuelUi={section,panel,chart,chartSources,table,e,num,sign,formatDate,csv};
 function renderBiofuels(){
-  return head('Analyse','Biocarburants · États-Unis','Volumes d’huile consommés dans la production américaine de biocarburants. Chaque courbe représente une année, de janvier à décembre.')+
+  const today=new Date().toISOString().slice(0,10);
+  return head('Analyse','Biocarburants','Mandats EPA et B50, consommation réelle d’huiles et simulations de demande.')+
+    renderBiofuelPolicy(biofuelUi,{
+      totalSoy:biofuelNativeSeries.soybean[2026],canola:biofuelNativeSeries.canola[2026],balance:worldBalances.palm,
+      prices:{
+        hip:spreadLegPoints('hip',spreadPrices).map(point=>point.date==='2026-11-01'?{...point,url:'https://ebtke.esdm.go.id/artikel/pengumuman/hip-bbn-jenis-biodiesel-bulan-november-2026'}:point),
+        gasoil:spreadLegPoints('gasoil',spreadPrices),rates:spreadLegPoints('usdi',spreadPrices),density:GASOIL_KG_PER_LITRE,date:today,
+        refs:[
+          [spreadLegs.hip.source,'https://ebtke.esdm.go.id/artikel/pengumuman/hip-bbn-jenis-biodiesel-bulan-november-2026'],
+          [spreadLegs.gasoil.source,spreadLegs.gasoil.url],
+          ['BCE · Taux de change de référence','https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html'],
+        ],
+      },
+    })+
+    '<div id="bio-eia" tabindex="-1">'+section('États-Unis · Consommation saisonnière EIA','Chaque courbe représente une année de janvier à décembre.')+
     '<p class="small">'+link(eiaFeedstocks,'EIA · Feedstocks Consumed for Production of Biofuels')+' · Publication du '+e(formatDate(biofuelReleaseDate))+'. Les mois masqués par l’EIA ou encore non publiés restent vides.</p>'+
     seasonalHistory('Huile de soja · Total',biofuelSeries.soybean,eiaHistory('M_EPOOBDSO_YIFBP_NUS_MMLB'))+
-    seasonalHistory('Huile de canola · Total',biofuelSeries.canola,eiaHistory('M_EPOOBDCO_YIFBP_NUS_MMLB'));
+    seasonalHistory('Huile de canola · Total',biofuelSeries.canola,eiaHistory('M_EPOOBDCO_YIFBP_NUS_MMLB'))+'</div>';
 }
 function indiaOriginChart(title,rows,column,share,source){
   const ranked=rows.filter(row=>row[column]>0).sort((a,b)=>b[column]-a[column]);
@@ -782,13 +799,21 @@ function renderCbotArg(){
 const spreadDate=(date,grain)=>grain==='month'?displayPeriod(date.slice(0,7),'month'):formatDate(date);
 const grainNames={day:'Quotidien',week:'Hebdomadaire',month:'Mensuel'};
 const spreadLegName=id=>spreadLegs[id].fx?spreadLegs[id].unit:spreadLegs[id].description.split(' · ')[0];
+// Noms courts des composantes (boutons) et rôle stable d’une variante à l’autre : le change garde le rôle « fx »,
+// les autres prix gardent leur rang (huile puis palme, graines puis tourteau puis huile…).
+const componentNames={arSoyOil:'Huile de soja',zl:'Huile de soja',zlM:'Huile de soja',idPalmFob:'Huile de palme',myPalmFob:'Huile de palme',mpobCpo:'Huile de palme',
+  fcpo:'Huile de palme',fcpoUsdM:'Huile de palme',ho:'Gazole ULSD',hoM:'Gazole ULSD',ulsdNy:'Gazole ULSD',gasoil:'Gasoil',gasoilM:'Gasoil',
+  zs:'Graines de soja',zsM:'Graines de soja',arSoySeed:'Graines de soja',zm:'Tourteau de soja',zmM:'Tourteau de soja',arSoyMeal:'Tourteau de soja',
+  arSunSeed:'Graines de tournesol',arSunMeal:'Tourteau de tournesol',arSunOil:'Huile de tournesol'};
+const componentName=id=>componentNames[id]??spreadLegName(id);
+const componentRole=(variant,id)=>spreadLegs[id].fx?'fx':'p'+variant.legs.filter(leg=>!spreadLegs[leg].fx).indexOf(id);
 const spreadObservationUrl=(id,obs)=>obs.url||spreadLegs[id].observationUrl?.(obs.date)||spreadLegs[id].url;
 const spreadLegGrain={hip:'month',d4:'week',b100:'week',ulsdNyMonth:'month',imfSoyOil:'month',imfPalmOil:'month',zlM:'month',fcpoUsdM:'month',hoM:'month',gasoilM:'month',zsM:'month',zmM:'month'};
 const focusRanges={day:{3:'3 mois',6:'6 mois',12:'1 an',all:'Tout'},month:{24:'2 ans',60:'5 ans',all:'Depuis 2015'}};
 const focusAverages={day:{0:'Aucune',20:'20 séances',60:'60 séances'},month:{0:'Aucune',3:'3 mois',12:'12 mois'}};
 const focusDefaults={day:{range:'all',average:'20'},month:{range:'60',average:'12'}};
 const focusCards=[...focusSpreads,...focusMargins];
-// components : composantes du calcul ajoutées à la courbe, à la demande (aucune par défaut).
+// components : prix sources affichés sous la courbe, à la demande (aucun par défaut).
 const focusState=Object.fromEntries(focusCards.map(spread=>[spread.id,{variant:spread.variants[0].id,range:{},average:{},params:{...spread.defaults},components:[]}]));
 const focusVariant=spread=>spread.variants.find(variant=>variant.id===focusState[spread.id].variant);
 const focusSetting=(spread,key)=>{
@@ -815,8 +840,8 @@ function focusCard(spread){
   const partialRow=monthly?all.findLast(row=>Object.values(row.observations).some(o=>o?.partial)):null;
   const dateLabel=date=>spreadDate(date,grain)+(partialRow&&date===partialRow.date?' · en cours':'');
   const signed=value=>e(sign(value,digits));
-  // Composantes du calcul, dans l’unité de la fiche ; celles choisies s’ajoutent à la courbe principale.
-  const parts=focusParts(variant,params),shown=parts.filter(part=>focusState[spread.id].components.includes(part.role));
+  // Composantes affichées pour la variante choisie, dans l’ordre de ses prix.
+  const shown=variant.legs.filter(id=>focusState[spread.id].components.includes(componentRole(variant,id)));
   const seg=(key,choices,value,label)=>'<div class="focus-control"><span>'+e(label)+'</span><div class="seg" role="group" aria-label="'+e(label+' · '+spread.code)+'">'+
     Object.entries(choices).map(([id,name])=>'<button type="button" data-action="focus-set" data-id="'+spread.id+'" data-key="'+key+'" data-value="'+e(id)+'" class="'+
       (id===String(value)?'active':'')+'" aria-pressed="'+(id===String(value))+'">'+e(name)+'</button>').join('')+'</div></div>';
@@ -824,10 +849,10 @@ function focusCard(spread){
     seg('range',focusRanges[grain],focusSetting(spread,'range'),'Période')+seg('average',focusAverages[grain],size,'Moyenne mobile')+
     (spread.units?seg('unit',spread.units,params.unit,'Unité'):'')+
     '<div class="focus-control"><span>Composantes</span><div class="seg" role="group" aria-label="'+e('Composantes du calcul · '+spread.code)+'">'+
-    parts.map(part=>{
-      const on=shown.includes(part);
-      return '<button type="button" data-action="focus-component" data-id="'+spread.id+'" data-role="'+e(part.role)+'" class="'+(on?'active':'')+'" aria-pressed="'+on+'"'+
-        ' title="'+e((on?'Retirer du':'Ajouter au')+' graphique · '+part.label+' ('+unit+')')+'">'+e(part.short)+'</button>';
+    variant.legs.map(id=>{
+      const on=shown.includes(id);
+      return '<button type="button" data-action="focus-component" data-id="'+spread.id+'" data-leg="'+e(id)+'" class="'+(on?'active':'')+'" aria-pressed="'+on+'"'+
+        ' title="'+e((on?'Masquer':'Afficher')+' le prix · '+spreadLegs[id].description+' ('+spreadLegs[id].unit+')')+'">'+e(componentName(id))+'</button>';
     }).join('')+'</div></div></div>';
   const unitTag=' <small>'+e(unit)+'</small>';
   const kpi=(label,value,detail,klass='')=>'<div class="sim-kpi '+klass+'"><span>'+e(label)+'</span><strong class="num">'+value+'</strong><small>'+e(detail)+'</small></div>';
@@ -841,21 +866,20 @@ function focusCard(spread){
   const axis=first=>monthly?{periodType:'month'}:{periodType:'day',startDate:first,maxGapDays:10};
   const refs=refsFor([...variant.legs,...(context?.legs??[])].flatMap(id=>[spreadLegs[id],...(spreadLegs[id].fx?[{source:'BCE · EUR/USD',url:eurUsdSource}]:[])]));
   const tooltips=p=>num(p.value,digits)+' '+unit;
-  const spreadTooltips=p=>p.reading??sign(p.value,digits)+' '+unit;
+  const spreadTooltips=p=>sign(p.value,digits)+' '+unit;
   const lines=[{label:spread.code+' · '+variant.label,color:colors[0],width:context?3:2.25,points:rows.map(point(row=>row.value))}];
   if(contextRows.length)lines.push({label:'Repère · '+context.label,color:colors[5],width:1.75,points:contextRows.map(point(row=>row.value))});
   if(average.length)lines.push({label:'Moyenne mobile · '+focusAverages[grain][size],color:colors[2],width:1.75,points:average.map(point(row=>row.value))});
-  // Composantes sur le même axe que la courbe : l’infobulle rappelle la cotation d’origine quand elle diffère.
-  const partColors={a:colors[3],b:colors[4],oil:colors[3],meal:colors[4],seed:colors[6]};
-  for(const part of shown)lines.push({label:part.label,color:partColors[part.role],width:1.75,points:rows.map(row=>{
-    const value=row.parts[part.role],quotes=part.legs.filter(id=>spreadLegs[id].unit!==unit||Math.abs(row.observations[id].value-value)>1e-9)
-      .map(id=>num(row.observations[id].value,Math.abs(row.observations[id].value)>=100?2:4)+' '+spreadLegs[id].unit);
-    return {date:period(row.date),value,reading:num(value,digits)+' '+unit+(quotes.length?' ('+quotes.join(', ')+')':'')};
-  })});
   const first=[rows[0]?.date,contextRows[0]?.date].filter(Boolean).sort()[0];
-  const term=(part,i)=>(i?(part.sign<0?' − ':' + '):part.sign<0?'− ':'')+part.short.toLowerCase();
-  const partsNote=shown.length&&rows.length?'<p class="small focus-parts-note">Composantes en '+e(unit)+', sur le même axe : '+e(spread.valueLabel?'marge':'spread')+' = '+
-    e(parts.map(term).join('')+(params.cost?' − coût de trituration':''))+'. Cotations d’origine dans « Voir les valeurs ».</p>':'';
+  // Chaque composante garde son unité : un graphique par prix, sur les mêmes dates que la courbe principale.
+  const componentColors={p0:colors[3],p1:colors[4],p2:colors[6],fx:colors[1]};
+  const components=shown.length&&rows.length?'<div class="focus-components"><h4>Composantes du calcul</h4>'+shown.map(id=>{
+    const leg=spreadLegs[id],name=spreadLegName(id).split(' (')[0];
+    return chart([{label:name,color:componentColors[componentRole(variant,id)],
+      points:rows.map(row=>({date:period(row.date),value:row.observations[id]?.value}))}],
+      {unit:leg.unit,height:150,label:'Composante · '+name,sourceLinks:refsFor([leg,...(leg.fx?[{source:'BCE · EUR/USD',url:eurUsdSource}]:[])]),
+        tooltips:p=>num(p.value,Math.abs(p.value)>=100?2:4)+' '+leg.unit,...axis(rows[0].date)});
+  }).join('')+'</div>':'';
   const history=rows.length?chart(lines,{unit,height:230,label:spread.title+' · '+variant.label,zeroLine:true,sourceLinks:refs,tooltips:spreadTooltips,...axis(first)}):
     empty('Aucune date commune entre les deux prix.');
   const sides=rows.length?chart(variant.sides.map(([label],i)=>({label,color:colors[i],points:rows.map(point(row=>i?row.b:row.a))})),
@@ -880,7 +904,7 @@ function focusCard(spread){
   return panel('<div class="spread-heading"><div><span class="eyebrow">'+grainNames[grain]+(stats?' · '+(monthly?'':'au ')+e(dateLabel(stats.last.date)+partialNote):'')+'</span>'+
     '<h3>'+e(spread.title)+'</h3><p class="small">'+e(spread.summary)+'</p></div>'+
     action('export-focus',icon('download')+' CSV','ghost','data-id="'+spread.id+'"'+(all.length?'':' disabled')+' aria-label="'+e('Télécharger le CSV · '+spread.code)+'"')+'</div>'+
-    controls+kpis+'<div class="spread-body"><div class="spread-chart">'+history+partsNote+'</div><div class="spread-summary">'+
+    controls+kpis+'<div class="spread-body"><div class="spread-chart">'+history+components+'</div><div class="spread-summary">'+
       '<h4>Formule</h4><p>'+e(variant.formula(params))+'</p><h4>Comment lire le résultat</h4><p>'+e(spread.reading)+'</p>'+
       '<h4>Données</h4><p class="small">'+e(variant.note)+'</p>'+form+'</div></div>'+
     (sides?'<details class="spread-details spread-price-charts"><summary>Voir les deux prix comparés</summary>'+sides+'</details>':'')+
@@ -1216,6 +1240,7 @@ function render(){
   bindBalanceView(root,{csv,renderCharts:renderBalanceCharts,bindCharts:bindPageCharts});
   bindCbotArgView(root,{csv,toast});
   bindCotView(root,{csv,toast});
+  bindBiofuelPolicy(root,biofuelUi);
   bindPageCharts(root);
   if(focusFilter)root.querySelector('[data-filter="'+CSS.escape(focusFilter)+'"]')?.focus({preventScroll:true});
   if(focusControl)root.querySelector('[data-control="'+CSS.escape(focusControl)+'"]')?.focus({preventScroll:true});
@@ -1430,12 +1455,12 @@ const controlActions={
     root.querySelector('[data-action="focus-set"][data-id="'+id+'"][data-key="'+key+'"][data-value="'+CSS.escape(value)+'"]')?.focus({preventScroll:true});
   },
   'focus-component':el=>{
-    const spread=focusCards.find(item=>item.id===el.dataset.id),role=el.dataset.role;
-    if(!spread||!focusParts(focusVariant(spread),focusState[spread.id].params).some(part=>part.role===role))return;
-    const list=focusState[spread.id].components;
+    const spread=focusCards.find(item=>item.id===el.dataset.id),leg=el.dataset.leg,variant=spread&&focusVariant(spread);
+    if(!variant?.legs.includes(leg))return;
+    const role=componentRole(variant,leg),list=focusState[spread.id].components;
     focusState[spread.id].components=list.includes(role)?list.filter(item=>item!==role):[...list,role];
     render();
-    root.querySelector('[data-action="focus-component"][data-id="'+spread.id+'"][data-role="'+CSS.escape(role)+'"]')?.focus({preventScroll:true});
+    root.querySelector('[data-action="focus-component"][data-id="'+spread.id+'"][data-leg="'+CSS.escape(leg)+'"]')?.focus({preventScroll:true});
   },
   'focus-reset':el=>{
     const spread=focusCards.find(item=>item.id===el.dataset.id);

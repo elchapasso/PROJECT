@@ -3,7 +3,7 @@
 // null indique un chiffre masqué par l’EIA ou un mois à venir dans la série.
 export const biofuelReleaseDate='2026-10-30';
 const millionPoundsToMillionTonnes=0.00045359237;
-const sourceSeries={
+export const biofuelNativeSeries={
   soybean:{
     2021:[683,553,749,700,786,680,808,823,779,832,818,938],
     2022:[791,758,919,842,856,810,956,925,932,906,943,886],
@@ -22,7 +22,7 @@ const sourceSeries={
   },
 };
 
-export const biofuelSeries=Object.fromEntries(Object.entries(sourceSeries).map(([oil,years])=>[
+export const biofuelSeries=Object.fromEntries(Object.entries(biofuelNativeSeries).map(([oil,years])=>[
   oil,Object.entries(years).map(([year,months])=>({
     year,volumes:months.map(value=>value===null?null:value*millionPoundsToMillionTonnes),
   })),
