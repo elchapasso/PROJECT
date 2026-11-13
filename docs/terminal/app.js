@@ -12,11 +12,11 @@ import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argenti
 import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHistory} from './brazil-soy-history.js?v=20261110-abiove';
 import {sunflowerHistory,sunflowerSources} from './sunflower-history.js?v=20261112-uga';
 
-import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261110-bopo-fob';
-import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261113-futures';
-import {spreadPrices,priceFeed} from './spread-live.mjs?v=20261113-futures';
+import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261113-mensuel';
+import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261113-mensuel';
+import {spreadPrices,priceFeed} from './spread-live.mjs?v=20261113-mensuel';
 import {sourceAlerts} from './price-feed.mjs?v=20261113-futures';
-import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,focusInputs,checkFocusParams} from './spread-focus.mjs?v=20261113-futures';
+import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,focusInputs,checkFocusParams} from './spread-focus.mjs?v=20261113-mensuel';
 import {datedReportPrices} from './spread-reference-prices.mjs?v=20261111-market-close';
 
 import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261112-tournesol';
@@ -784,7 +784,7 @@ const spreadDate=(date,grain)=>grain==='month'?displayPeriod(date.slice(0,7),'mo
 const grainNames={day:'Quotidien',week:'Hebdomadaire',month:'Mensuel'};
 const spreadLegName=id=>spreadLegs[id].fx?spreadLegs[id].unit:spreadLegs[id].description.split(' · ')[0];
 const spreadObservationUrl=(id,obs)=>obs.url||spreadLegs[id].observationUrl?.(obs.date)||spreadLegs[id].url;
-const spreadLegGrain={hip:'month',d4:'week',b100:'week',ulsdNyMonth:'month',imfSoyOil:'month',imfPalmOil:'month'};
+const spreadLegGrain={hip:'month',d4:'week',b100:'week',ulsdNyMonth:'month',imfSoyOil:'month',imfPalmOil:'month',zlM:'month',fcpoUsdM:'month',hoM:'month',gasoilM:'month'};
 const spreadGapDays={day:7,week:14,month:45};
 const datedFutures={zl:'bo',zs:'zs',zm:'sm',fcpo:'fcpo-jan27',ho:'ho',euSeed:'rape-eu-fut'};
 const datedSeries={...Object.fromEntries(Object.entries(datedFutures).map(([id,key])=>[id,seedPrices[key]])),
@@ -950,7 +950,10 @@ function focusCard(spread){
   const {params,variant,grain,all,rows,context,contextRows,size,average,unit,digits}=focusData(spread);
   const stats=focusStats(rows),monthly=grain==='month';
   const period=date=>monthly?date.slice(0,7):date;
-  const dateLabel=date=>spreadDate(date,grain);
+  // Mois en cours : moyenne partielle des séances déjà closes.
+  const sessionsOf=row=>Math.min(...Object.values(row?.observations??{}).map(o=>o?.sessions).filter(Number.isFinite));
+  const partialRow=monthly?all.findLast(row=>Object.values(row.observations).some(o=>o?.partial)):null;
+  const dateLabel=date=>spreadDate(date,grain)+(partialRow&&date===partialRow.date?' · en cours':'');
   const signed=value=>e(sign(value,digits));
   const seg=(key,choices,value,label)=>'<div class="focus-control"><span>'+e(label)+'</span><div class="seg" role="group" aria-label="'+e(label+' · '+spread.code)+'">'+
     Object.entries(choices).map(([id,name])=>'<button type="button" data-action="focus-set" data-id="'+spread.id+'" data-key="'+key+'" data-value="'+e(id)+'" class="'+
@@ -995,7 +998,8 @@ function focusCard(spread){
         const observation=row.observations[id];
         return valueCell(observation.value,'',4)+(observation.date===row.date?'':'<small>'+e(formatDate(observation.date))+'</small>');
       })]));
-  return panel('<div class="spread-heading"><div><span class="eyebrow">'+grainNames[grain]+(stats?' · '+(monthly?'':'au ')+e(dateLabel(stats.last.date)):'')+'</span>'+
+  const partialNote=partialRow&&stats?.last.date===partialRow.date?' ('+sessionsOf(partialRow)+' séance'+(sessionsOf(partialRow)>1?'s':'')+')':'';
+  return panel('<div class="spread-heading"><div><span class="eyebrow">'+grainNames[grain]+(stats?' · '+(monthly?'':'au ')+e(dateLabel(stats.last.date)+partialNote):'')+'</span>'+
     '<h3>'+e(spread.title)+'</h3><p class="small">'+e(spread.summary)+'</p></div>'+
     action('export-focus',icon('download')+' CSV','ghost','data-id="'+spread.id+'"'+(all.length?'':' disabled')+' aria-label="'+e('Télécharger le CSV · '+spread.code)+'"')+'</div>'+
     controls+kpis+'<div class="spread-body"><div class="spread-chart">'+history+'</div><div class="spread-summary">'+

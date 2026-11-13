@@ -1,6 +1,6 @@
 // Spreads de référence : BOPO, BOHO et POGO.
 // Chaque variante compare deux prix ramenés à la même unité, aux dates communes des deux sources.
-import {ZL_USD_PER_TONNE,CENTS_PER_DOLLAR,OIL_LB_PER_GALLON,GASOIL_KG_PER_LITRE,KG_PER_TONNE,spreadLegPoints} from './spread-model.mjs?v=20261110-bopo-fob';
+import {ZL_USD_PER_TONNE,CENTS_PER_DOLLAR,OIL_LB_PER_GALLON,GASOIL_KG_PER_LITRE,KG_PER_TONNE,spreadLegPoints} from './spread-model.mjs?v=20261113-mensuel';
 
 export const LITRES_PER_GALLON=3.785411784;
 export const gallonsPerTonne=density=>KG_PER_TONNE/(density*LITRES_PER_GALLON);
@@ -16,6 +16,7 @@ const freightText=({soyFreight,palmFreight})=>soyFreight||palmFreight?
 const bohoUnits={usdgal:'USD/gal','clb':'¢ US/lb'};
 // Contrats continus de première échéance relevés chaque jour sur TradingView. Ils changent de contrat à l’échéance, sans ajustement.
 const futuresNote=symbols=>'Clôtures quotidiennes des contrats continus '+symbols+', relevées sur TradingView et contrôlées par somme de contrôle à chaque passage. Ces séries changent de contrat à l’échéance, sans ajustement : un saut peut apparaître ce jour-là.';
+const monthlyNote=symbols=>'Moyennes mensuelles des clôtures quotidiennes des contrats continus '+symbols+' sur TradingView, depuis janvier 2015. Jusqu’en décembre 2024, les moyennes sont calculées par TradingView et vérifiées par somme de contrôle ; depuis janvier 2025, elles reprennent les clôtures quotidiennes de la version quotidienne. Le mois en cours est une moyenne partielle, actualisée chaque jour.';
 // Huile de soja en ¢ US/lb et gazole en USD/gal, ramenés à l’unité choisie.
 const bohoSides=(cents,dieselPerGallon,{unit,lbPerGallon})=>unit==='clb'?
   [cents,dieselPerGallon*CENTS_PER_DOLLAR/lbPerGallon]:[cents*lbPerGallon/CENTS_PER_DOLLAR,dieselPerGallon];
@@ -42,10 +43,10 @@ export const focusSpreads=[
         sides:[['Huile de soja · CBOT',(o,p)=>o.zl*ZL_USD_PER_TONNE+p.soyFreight],['Huile de palme · Bursa Malaysia',(o,p)=>o.fcpo/o.usdm+p.palmFreight]],
         formula:p=>'Huile de soja CBOT (¢ US/lb) × '+decimal(ZL_USD_PER_TONNE)+' − huile de palme Bursa (MYR/t) ÷ USD/MYR.'+freightText(p),
         note:futuresNote('CBOT:ZL1! et MYX:FCPO1!')+' Aux dates vérifiées, MYX:FCPO1! reprend les clôtures du contrat de référence de Bursa Malaysia. La conversion utilise le fixing BCE du jour.'},
-      {id:'imf',label:'Mensuel · CBOT − Bursa (FMI)',grain:'month',legs:['imfSoyOil','imfPalmOil'],
-        sides:[['Huile de soja · référence FMI',(o,p)=>o.imfSoyOil+p.soyFreight],['Huile de palme · référence FMI',(o,p)=>o.imfPalmOil+p.palmFreight]],
-        formula:p=>'Huile de soja, référence FMI (USD/t) − huile de palme, référence FMI (USD/t), en moyennes mensuelles.'+freightText(p),
-        note:'Les séries PSOIL et PPOIL du FMI suivent le premier contrat à terme de Chicago pour le soja et de Bursa Malaysia pour la palme.'},
+      {id:'monthly',label:'Mensuel · CBOT − Bursa',grain:'month',legs:['zlM','fcpoUsdM'],
+        sides:[['Huile de soja · CBOT',(o,p)=>o.zlM*ZL_USD_PER_TONNE+p.soyFreight],['Huile de palme · Bursa Malaysia',(o,p)=>o.fcpoUsdM+p.palmFreight]],
+        formula:p=>'Moyenne mensuelle de l’huile de soja CBOT (¢ US/lb) × '+decimal(ZL_USD_PER_TONNE)+' − moyenne mensuelle de l’huile de palme Bursa convertie chaque jour en USD/t.'+freightText(p),
+        note:monthlyNote('CBOT:ZL1! et MYX:FCPO1!')+' La palme est convertie au change du jour : fixing BCE depuis janvier 2025, USD/MYR de TradingView avant.'},
     ]},
   {id:'boho',code:'BOHO',title:'BOHO · Huile de soja CBOT − Heating Oil',legacy:'boho',
     summary:'Coût de l’huile de soja pour un gallon de biodiesel, comparé au gazole de New York.',
@@ -59,12 +60,12 @@ export const focusSpreads=[
           'Huile de soja CBOT (¢ US/lb) − Heating Oil NYMEX (USD/gal) × '+CENTS_PER_DOLLAR+' ÷ '+decimal(lbPerGallon)+' lb/gal.':
           'Huile de soja CBOT (¢ US/lb) × '+decimal(lbPerGallon)+' lb/gal ÷ '+CENTS_PER_DOLLAR+' − Heating Oil NYMEX (USD/gal).',
         note:futuresNote('CBOT:ZL1! et NYMEX:HO1!')+' Le contrat Heating Oil du NYMEX livre du gazole ULSD à New York.'},
-      {id:'imf',label:'Mensuel · CBOT − ULSD New York',grain:'month',legs:['imfSoyOil','ulsdNyMonth'],
-        sides:[['Huile de soja · CBOT',(o,p)=>bohoSides(o.imfSoyOil/ZL_USD_PER_TONNE,o.ulsdNyMonth,p)[0]],['Gazole · ULSD New York',(o,p)=>bohoSides(o.imfSoyOil/ZL_USD_PER_TONNE,o.ulsdNyMonth,p)[1]]],
+      {id:'monthly',label:'Mensuel · CBOT − NYMEX',grain:'month',legs:['zlM','hoM'],
+        sides:[['Huile de soja · CBOT',(o,p)=>bohoSides(o.zlM,o.hoM,p)[0]],['Heating Oil · NYMEX',(o,p)=>bohoSides(o.zlM,o.hoM,p)[1]]],
         formula:({unit,lbPerGallon})=>unit==='clb'?
-          'Huile de soja (USD/t) ÷ '+decimal(ZL_USD_PER_TONNE)+' − ULSD (USD/gal) × '+CENTS_PER_DOLLAR+' ÷ '+decimal(lbPerGallon)+' lb/gal.':
-          'Huile de soja (USD/t) ÷ '+decimal(ZL_USD_PER_TONNE)+' × '+decimal(lbPerGallon)+' lb/gal ÷ '+CENTS_PER_DOLLAR+' − ULSD (USD/gal).',
-        note:'Le soja est la moyenne mensuelle de la série PSOIL du FMI, qui suit le premier contrat de Chicago. Le gazole est la moyenne mensuelle du prix spot ULSD à New York, produit livrable du contrat Heating Oil du NYMEX. Cette référence donne un historique depuis 2015.'},
+          'Moyenne mensuelle de l’huile de soja CBOT (¢ US/lb) − moyenne mensuelle du Heating Oil NYMEX (USD/gal) × '+CENTS_PER_DOLLAR+' ÷ '+decimal(lbPerGallon)+' lb/gal.':
+          'Moyenne mensuelle de l’huile de soja CBOT (¢ US/lb) × '+decimal(lbPerGallon)+' lb/gal ÷ '+CENTS_PER_DOLLAR+' − moyenne mensuelle du Heating Oil NYMEX (USD/gal).',
+        note:monthlyNote('CBOT:ZL1! et NYMEX:HO1!')},
     ]},
   {id:'pogo',code:'POGO',title:'POGO · Huile de palme − gazole',legacy:'pogo',
     summary:'Coût de l’huile de palme brute comparé au gazole fossile, par tonne.',
@@ -79,10 +80,10 @@ export const focusSpreads=[
         sides:[['Huile de palme · CPO Malaisie',o=>o.mpobCpo/o.usdm],['Gazole · ULSD New York',(o,p)=>o.ulsdNy*gallonsPerTonne(p.density)]],
         formula:({density})=>'CPO Malaisie (MYR/t) ÷ USD/MYR − ULSD New York (USD/gal) × '+decimal(gallonsPerTonne(density),1)+' gal/t. La conversion retient '+decimal(density,3)+' kg/l.',
         note:'Version sur prix physiques : CPO livré en Malaisie (MPOB) et prix spot ULSD à New York publié par l’EIA.'},
-      {id:'imf',label:'Mensuel · Bursa − ULSD New York',grain:'month',legs:['imfPalmOil','ulsdNyMonth'],
-        sides:[['Huile de palme · référence FMI',o=>o.imfPalmOil],['Gazole · ULSD New York',(o,p)=>o.ulsdNyMonth*gallonsPerTonne(p.density)]],
-        formula:({density})=>'Huile de palme, référence FMI (USD/t) − ULSD New York (USD/gal) × '+decimal(gallonsPerTonne(density),1)+' gal/t, en moyennes mensuelles. La conversion retient '+decimal(density,3)+' kg/l.',
-        note:'La série PPOIL du FMI suit le premier contrat à terme de Bursa Malaysia. Le gazole est la moyenne mensuelle du prix spot ULSD à New York publié par l’EIA.'},
+      {id:'monthly',label:'Mensuel · Bursa − ICE Gasoil',grain:'month',legs:['fcpoUsdM','gasoilM'],inputs:[],
+        sides:[['Huile de palme · Bursa Malaysia',o=>o.fcpoUsdM],['Gazole · ICE Low Sulphur Gasoil',o=>o.gasoilM]],
+        formula:()=>'Moyenne mensuelle de l’huile de palme Bursa convertie chaque jour en USD/t − moyenne mensuelle du Low Sulphur Gasoil ICE (USD/t).',
+        note:monthlyNote('MYX:FCPO1! et ICEEUR:ULS1!')+' La palme est convertie au change du jour : fixing BCE depuis janvier 2025, USD/MYR de TradingView avant.'},
     ]},
 ];
 
@@ -102,7 +103,7 @@ export function checkFocusParams(spread,values){
 
 export function focusRows(variant,raw,params,today=new Date().toISOString().slice(0,10)){
   const direct=variant.legs.filter(id=>!fxLegs.has(id));
-  const points=Object.fromEntries(direct.map(id=>[id,new Map(spreadLegPoints(id,raw)
+  const points=Object.fromEntries(direct.map(id=>[id,new Map(spreadLegPoints(id,raw,today)
     .filter(({date,value})=>date<=today&&Number.isFinite(value)).map(point=>[point.date,point]))]));
   const fx=Object.fromEntries(variant.legs.filter(id=>fxLegs.has(id)).map(id=>[id,spreadLegPoints(id,raw)]));
   const dates=[...points[direct[0]].keys()].filter(date=>direct.every(id=>points[id].has(date))).sort();

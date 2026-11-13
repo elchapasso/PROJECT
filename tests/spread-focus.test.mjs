@@ -19,18 +19,16 @@ test('BOPO compares Argentine soybean oil with each palm oil reference on common
   close(malaysia.observations.usdm.value,4.056,.0005);
   close(malaysia.b,3985/malaysia.observations.usdm.value);
   close(malaysia.value,1188-malaysia.b);
-  const futures=at(focusRows(variant('bopo','imf'),spreadPrices,defaults,today),'2026-09-01');
-  close(futures.value,1596.49-1133.13);
   const delivered=at(focusRows(variant('bopo','belawan'),spreadPrices,{soyFreight:88,palmFreight:60},today),'2026-11-11');
   assert.equal(delivered.value,93+88-60);
 });
 
 test('BOHO converts soybean oil and diesel to the chosen unit',()=>{
-  const dollars=at(focusRows(variant('boho','imf'),spreadPrices,spread('boho').defaults,today),'2026-09-01');
-  close(dollars.a,1596.49/22.0462*7.5/100);
-  assert.equal(dollars.b,4.956);
-  const cents=at(focusRows(variant('boho','imf'),spreadPrices,{unit:'clb',lbPerGallon:7.5},today),'2026-09-01');
-  close(cents.a,1596.49/22.0462);
+  const dollars=at(focusRows(variant('boho','monthly'),spreadPrices,spread('boho').defaults,today),'2015-01-01');
+  close(dollars.a,32.186*7.5/100);
+  assert.equal(dollars.b,1.65714);
+  const cents=at(focusRows(variant('boho','monthly'),spreadPrices,{unit:'clb',lbPerGallon:7.5},today),'2015-01-01');
+  close(cents.a,32.186);
   close(cents.value,dollars.value*100/7.5);
   assert.equal(spread('boho').unit({unit:'clb'}),'¢ US/lb');
 });
@@ -42,8 +40,8 @@ test('POGO converts diesel from USD per gallon to USD per tonne',()=>{
   const row=at(daily,'2026-11-03');
   close(row.b,4.823*gallonsPerTonne(.845));
   close(row.a,4366/row.observations.usdm.value);
-  const monthly=at(focusRows(variant('pogo','imf'),spreadPrices,{density:.85},today),'2026-09-01');
-  close(monthly.value,1133.13-4.956*gallonsPerTonne(.85));
+  const monthly=at(focusRows(variant('pogo','monthly'),spreadPrices,{density:.85},today),'2024-12-01');
+  close(monthly.value,1072.124-674.869);
 });
 
 test('daily futures spreads use the closes of the same session',()=>{
@@ -99,4 +97,33 @@ test('imported histories are ordered, positive and free of duplicate dates',()=>
     assert.deepEqual(rows.map(([date])=>date),[...new Set(rows.map(([date])=>date))].sort(),key);
     assert.ok(rows.every(([,value])=>Number.isFinite(value)&&value>0),key);
   }
+});
+
+test('monthly futures spreads join TradingView averages to the daily closes, current month included',()=>{
+  const {defaults}=spread('bopo');
+  const rows=focusRows(variant('bopo','monthly'),spreadPrices,defaults,today);
+  assert.equal(rows[0].date,'2015-01-01');
+  close(rows[0].value,32.186*22.0462-637.035);
+  close(at(rows,'2024-12-01').value,41.2948*22.0462-1072.124);
+  assert.ok(at(rows,'2024-12-01').observations.zlM.stored);
+  // Depuis janvier 2025 : moyenne des clôtures quotidiennes du site.
+  const daily=focusRows(variant('bopo','futures'),spreadPrices,defaults,today);
+  const zlDays=spreadPrices.zl.filter(([date])=>date.startsWith('2026-10'));
+  const october=at(rows,'2026-10-01');
+  close(october.observations.zlM.value,zlDays.reduce((sum,[,v])=>sum+v,0)/zlDays.length);
+  assert.equal(october.observations.zlM.sessions,zlDays.length);
+  assert.ok(!october.observations.zlM.partial);
+  const november=rows.at(-1);
+  assert.equal(november.date,'2026-11-01');
+  assert.ok(november.observations.zlM.partial);
+  assert.ok(november.observations.fcpoUsdM.partial);
+  assert.equal(november.observations.zlM.last<=today,true);
+  // Le BOPO mensuel reste proche de la moyenne des valeurs quotidiennes du même mois.
+  const octoberDaily=daily.filter(row=>row.date.startsWith('2026-10'));
+  close(october.value,octoberDaily.reduce((sum,row)=>sum+row.value,0)/octoberDaily.length,3);
+  // Valeurs mensuelles 2015–2024 : 120 mois par contrat.
+  for(const key of ['zlMonth','fcpoUsdMonth','hoMonth','gasoilMonth'])assert.equal(spreadPrices[key].length,120,key);
+  const pogo=focusRows(variant('pogo','monthly'),spreadPrices,spread('pogo').defaults,today);
+  assert.equal(pogo[0].date,'2015-01-01');
+  assert.equal(pogo.at(-1).date,'2026-11-01');
 });

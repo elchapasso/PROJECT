@@ -3,7 +3,7 @@ import {
   BEAN_LB_PER_BUSHEL,PERCENT_SCALE,LITRES_PER_CUBIC_METRE,MEAL_LB_PER_BUSHEL,OIL_LB_PER_BUSHEL,LB_PER_SHORT_TON,MEAL_SHORT_TON_PER_BUSHEL,OIL_DOLLARS_PER_BUSHEL,
   MEAL_CENTS_PER_BUSHEL,D4_PER_GALLON,GASOIL_KG_PER_LITRE,SOYOIL_KG_PER_LITRE,KG_PER_TONNE,
   HIP_CONVERSION_USD_PER_TONNE,HIP_BIODIESEL_KG_PER_CUBIC_METRE,
-} from './spread-model.mjs?v=20261110-bopo-fob';
+} from './spread-model.mjs?v=20261113-mensuel';
 
 const decimal=n=>String(n).replace('.',',');
 const tv='https://www.tradingview.com/symbols/';
@@ -24,6 +24,10 @@ const future=(source,symbol,unit,description,history,official=cmeHistory)=>({
   history:investing+history+'-historical-data',official,
   missing:'Série relevée chaque jour sur TradingView. Aucune observation dans le jeu de données pour ce contrat.',
 });
+const monthly=(source,symbol,unit,description)=>({
+  source:source+' · via TradingView',url:tv+encodeURIComponent(symbol.replace(':','-'))+'/',unit,symbol,
+  description:description+' · '+symbol+' · moyenne mensuelle des clôtures quotidiennes, mois en cours compris',
+});
 const arg=(description)=>({source:'Secretaría de Agricultura · MAGyP',url:ar,unit:'USD/t',description,observationUrl:date=>arAPI+encodeURIComponent(date.split('-').reverse().join('/'))});
 const rapeseed=description=>({source:'Commission européenne · Agri-food Data Portal',url:commission,unit:'EUR/t',description,
   missing:'Série quotidienne de prix physiques avec une base comparable non vérifiée.'});
@@ -37,6 +41,10 @@ export const spreadLegs={
     'https://www.bursamalaysia.com/market/products-services/information-products/historical-data-packages/'),
   gasoil:future('ICE Futures Europe','ICEEUR:ULS1!','USD/t','Low Sulphur Gasoil','london-gas-oil','https://www.ice.com/report/10'),
   ho:future('NYMEX · CME Group','NYMEX:HO1!','USD/gal','NY Harbor ULSD','heating-oil'),
+  zlM:monthly('CBOT · CME Group','CBOT:ZL1!','¢ US/lb','Huile de soja'),
+  fcpoUsdM:monthly('Bursa Malaysia Derivatives','MYX:FCPO1!','USD/t','Huile de palme brute, convertie chaque jour en USD/t (fixing BCE depuis 2025, USD/MYR TradingView avant)'),
+  hoM:monthly('NYMEX · CME Group','NYMEX:HO1!','USD/gal','NY Harbor ULSD'),
+  gasoilM:monthly('ICE Futures Europe','ICEEUR:ULS1!','USD/t','Low Sulphur Gasoil'),
   usdm:{source:'BCE · EXR',url:ecb+'MYR.EUR.SP00.A',unit:'MYR/USD',description:'EUR/MYR ÷ EUR/USD, fixings BCE du même jour. Dernier fixing commun si absent ce jour.',fx:['eurMyr','eurUsd']},
   usdi:{source:'BCE · EXR',url:ecb+'IDR.EUR.SP00.A',unit:'IDR/USD',description:'EUR/IDR ÷ EUR/USD, fixings BCE du même jour. Dernier fixing commun si absent ce jour.',fx:['eurIdr','eurUsd']},
   arSoyOil:arg('Huile de soja brute en vrac · position 15071000100Q'),
