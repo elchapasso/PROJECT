@@ -60,6 +60,8 @@ export const monthlyLegs={
   fcpoUsdM:{daily:'fcpo',history:'fcpoUsdMonth',fx:'usdm'},
   hoM:{daily:'ho',history:'hoMonth'},
   gasoilM:{daily:'gasoil',history:'gasoilMonth'},
+  zsM:{daily:'zs',history:'zsMonth'},
+  zmM:{daily:'zm',history:'zmMonth'},
 };
 function monthlyPoints(id,raw,today){
   const {daily,history,fx}=monthlyLegs[id];

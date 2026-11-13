@@ -3,7 +3,7 @@ import {
   BEAN_LB_PER_BUSHEL,PERCENT_SCALE,LITRES_PER_CUBIC_METRE,MEAL_LB_PER_BUSHEL,OIL_LB_PER_BUSHEL,LB_PER_SHORT_TON,MEAL_SHORT_TON_PER_BUSHEL,OIL_DOLLARS_PER_BUSHEL,
   MEAL_CENTS_PER_BUSHEL,D4_PER_GALLON,GASOIL_KG_PER_LITRE,SOYOIL_KG_PER_LITRE,KG_PER_TONNE,
   HIP_CONVERSION_USD_PER_TONNE,HIP_BIODIESEL_KG_PER_CUBIC_METRE,
-} from './spread-model.mjs?v=20261113-mensuel';
+} from './spread-model.mjs?v=20261113-marges';
 
 const decimal=n=>String(n).replace('.',',');
 const tv='https://www.tradingview.com/symbols/';
@@ -45,6 +45,8 @@ export const spreadLegs={
   fcpoUsdM:monthly('Bursa Malaysia Derivatives','MYX:FCPO1!','USD/t','Huile de palme brute, convertie chaque jour en USD/t (fixing BCE depuis 2025, USD/MYR TradingView avant)'),
   hoM:monthly('NYMEX · CME Group','NYMEX:HO1!','USD/gal','NY Harbor ULSD'),
   gasoilM:monthly('ICE Futures Europe','ICEEUR:ULS1!','USD/t','Low Sulphur Gasoil'),
+  zsM:monthly('CBOT · CME Group','CBOT:ZS1!','¢ US/bu','Graines de soja'),
+  zmM:monthly('CBOT · CME Group','CBOT:ZM1!','USD/short ton','Tourteau de soja'),
   usdm:{source:'BCE · EXR',url:ecb+'MYR.EUR.SP00.A',unit:'MYR/USD',description:'EUR/MYR ÷ EUR/USD, fixings BCE du même jour. Dernier fixing commun si absent ce jour.',fx:['eurMyr','eurUsd']},
   usdi:{source:'BCE · EXR',url:ecb+'IDR.EUR.SP00.A',unit:'IDR/USD',description:'EUR/IDR ÷ EUR/USD, fixings BCE du même jour. Dernier fixing commun si absent ce jour.',fx:['eurIdr','eurUsd']},
   arSoyOil:arg('Huile de soja brute en vrac · position 15071000100Q'),

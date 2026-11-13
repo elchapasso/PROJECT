@@ -1,10 +1,10 @@
 # Spreads et marges d’Oléa Terminal
 
-La vue [Comparaisons & spreads](https://elchapasso.github.io/PROJECT/#cross) présente les marges calculables et leurs prix sources. Si une composante manque, la marge affiche « Non disponible » et les séries vérifiées restent consultables sous « Prix et taux disponibles », avec leur propre tableau et CSV. Pour vérifier le site en local, lancer `python -m http.server 8000 --directory docs` puis ouvrir [Comparaisons & spreads](http://localhost:8000/#cross). Les hypothèses saisies s’appliquent à la courbe, au tableau et à l’export de la marge jusqu’au rechargement de la page.
+La vue [Comparaisons & spreads](https://elchapasso.github.io/PROJECT/#cross) présente les spreads BOPO, BOHO et POGO, les marges de trituration et la comparaison de séries. Pour vérifier le site en local, lancer `python -m http.server 8000 --directory docs` puis ouvrir [Comparaisons & spreads](http://localhost:8000/#cross). Les paramètres saisis s’appliquent à la courbe, au tableau et à l’export jusqu’au rechargement de la page.
 
 ## Spreads de référence
 
-L’onglet « Spreads » présente BOPO, BOHO et POGO. Chaque fiche propose une ou plusieurs références, une période, une moyenne mobile et des paramètres de calcul. Les onglets « Marges » et « Comparaison de séries » regroupent les marges de trituration et de biodiesel et l’outil de comparaison.
+L’onglet « Spreads » présente BOPO, BOHO et POGO. Chaque fiche propose une ou plusieurs références, une période, une moyenne mobile et des paramètres de calcul. L’onglet « Marges » présente les marges de trituration (section suivante) et l’onglet « Comparaison de séries » l’outil de comparaison.
 
 Ces trois spreads existent en ligne sous forme de produits sous licence : contrats POG du CME pour le POGO, évaluations sur abonnement pour le BOHO et le BOPO. Aucun historique librement téléchargeable n’a été trouvé. Oléa les calcule donc à partir de prix : contrats à terme relevés sur TradingView et prix publics.
 
@@ -23,7 +23,7 @@ Ces trois spreads existent en ligne sous forme de produits sous licence : contra
 
 Paramètres modifiables : fret et frais par origine pour le BOPO, 7,5 lb d’huile par gallon et unité (USD/gal ou ¢ US/lb) pour le BOHO, densité du gazole de 0,845 kg/l pour le POGO, soit 312,6 gal/t. Le 10/11/2026, le CPO MPOB converti vaut 982,5 USD/t et le tableau IPOSS cote Port Klang à 982 USD/t. Le même jour, Belawan cote 1 090 USD/t : la référence malaisienne donne un BOPO plus élevé d’environ 100 USD/t que la référence indonésienne.
 
-Les versions quotidiennes et mensuelles du BOHO et du POGO utilisent les contrats NYMEX Heating Oil et ICE Low Sulphur Gasoil ; la version physique du POGO utilise le prix spot ULSD à New York de l’EIA, produit livrable du contrat Heating Oil. Les versions mensuelles reprennent les mêmes contrats que les versions quotidiennes (section « Moyennes mensuelles des contrats à terme »). Les séries mensuelles PSOIL et PPOIL du FMI restent disponibles dans la comparaison de séries, mais ne servent plus aux spreads : elles diffèrent en moyenne de 2,1 % (soja) et 2,6 % (palme) des moyennes des premiers contrats continus de TradingView sur janvier 2025 à septembre 2026, et sont publiées avec environ deux mois de retard.
+Les versions quotidiennes et mensuelles du BOHO et du POGO utilisent les contrats NYMEX Heating Oil et ICE Low Sulphur Gasoil ; la version physique du POGO utilise le prix spot ULSD à New York de l’EIA, produit livrable du contrat Heating Oil. Les versions mensuelles reprennent les mêmes contrats que les versions quotidiennes (section « Moyennes mensuelles des contrats à terme »). Les séries mensuelles PSOIL et PPOIL du FMI restent collectées et visibles dans le panneau « Actualisation automatique des prix », mais ne servent plus aux spreads : elles diffèrent en moyenne de 2,1 % (soja) et 2,6 % (palme) des moyennes des premiers contrats continus de TradingView sur janvier 2025 à septembre 2026, et sont publiées avec environ deux mois de retard.
 
 ## Sources et couverture
 
@@ -46,25 +46,29 @@ Les volumes ci-dessous décrivent l’import initial du 12/11/2026. Depuis, les 
 | [Commission européenne · Oilseeds](https://agridata.ec.europa.eu/extensions/DashboardCereals/OilseedPrices.html) et [API](https://agridata.ec.europa.eu/extensions/API_Documentation/oilseeds.html) | Le portail documente des prix hebdomadaires. Aucun triplet quotidien de colza physique à base géographique et commerciale commune n’a été vérifié. | [Politique générale de réutilisation](https://commission.europa.eu/legal-notice_en), sous réserve des droits de tiers. Aucun historique intégré. |
 | Mer Noire | Aucun triplet gratuit, vérifiable et comparable pour l’huile, les pellets et les graines. | Redistribution publique non vérifiée. |
 
-## Données à compléter
+## Marges de trituration
 
-Les contrats à terme de Chicago, New York, Londres et Kuala Lumpur sont désormais intégrés. Les séries ci-dessous restent à trouver. EUR/USD est déjà intégré via la BCE et entre dans les deux taux croisés.
+L’onglet « Marges » présente trois fiches, construites comme celles des spreads : référence, période, moyenne mobile, unité et paramètres modifiables, valeurs et CSV. Les prix se mettent à jour sans intervention : contrats CBOT par le relevé quotidien TradingView (branche `futures-live`), prix FOB argentins par le workflow « Actualiser les prix » (branche `prices-live`).
 
-Les fiches incomplètes peuvent afficher des repères datés distincts des séries continues. Pour le Brésil, la cotation ponctuelle du 24 mars 2026 publiée par le [CEPEA](https://cepea.org.br/br/diarias-de-mercado/soja-cepea-oleo-segue-em-valorizacao-no-br.aspx?pagina=1024) est rapprochée du prix B100 ANP de la même semaine. Les repères datés restent hors des CSV des historiques. Les liens Investing.com, TradingView et bourses permettent de consulter les historiques de futures chez leurs fournisseurs.
+| Fiche | Référence | Calcul | Paramètres et options |
+| --- | --- | --- | --- |
+| Board crush · Soja aux États-Unis | Quotidien · première échéance | `CBOT:ZM1!` (USD/short ton) × 44 lb ÷ 2 000 + `CBOT:ZL1!` (¢ US/lb) × 11 lb ÷ 100 − `CBOT:ZS1!` (¢ US/bu) ÷ 100 − coût | Huile et tourteau par boisseau (lb), coût de trituration (USD/bu), unité USD/bu ou USD/t de graines (× 36,744 bu/t) |
+| Board crush · Soja aux États-Unis | Mensuel · depuis 2015 | Même calcul sur les moyennes mensuelles des trois contrats, mois en cours compris | Idem |
+| Trituration du soja · Argentine | FOB · avant droits | Rendement huile × huile FOB + rendement tourteau × tourteau FOB − graines FOB − coût, en USD/t de graines | Rendements (0,19 et 0,78 t/t par défaut), coût de trituration et frais (USD/t) |
+| Trituration du soja · Argentine | Net des droits d’exportation | Chaque prix FOB multiplié par (1 − droit d’exportation) avant le même calcul | Idem, plus les droits : graines 24 %, huile et tourteau 22,5 % par défaut |
+| Trituration du tournesol · Argentine | FOB · avant droits, ou net des droits | Même calcul avec l’huile et les pellets de tournesol | Rendements 0,44 et 0,39 t/t ; droits 4,5 % par défaut |
 
-| Carte | Séries manquantes | Séries déjà intégrées |
-| --- | --- | --- |
-| BOPO Argentine / Indonésie | Historique FOB Belawan, réservé aux comptes IPOSS approuvés | FOB Argentine officiel, six cotations Belawan |
-| Biodiesel Brésil | Huile brute dégommée CEPEA, São Paulo, ICMS 12 % inclus | B100 ANP |
-| Colza UE | Huile, tourteau et graines physiques sur une base commune | `EURONEXT:ECO1!` identifié comme futur de référence |
-| Tournesol mer Noire | Huile, pellets et graines FOB d’une même origine | — |
+- **Prix argentins :** prix FOB officiels du Secrétariat de l’Agriculture (MAGyP), qui servent de base aux droits d’exportation. Une date est retenue si les trois produits ont un prix unique pour la position couvrant le mois de cotation.
+- **Droits d’exportation :** les taux par défaut sont ceux du Décret 877/2025 (Boletín Oficial du 12/12/2025) : 24 % pour les graines de soja, 22,5 % pour l’huile et le tourteau, 4,5 % pour le tournesol. Le Décret 423/2026 (Boletín Oficial du 03/06/2026) les maintient en 2026 et les réduit chaque mois à partir de janvier 2027 (graines de soja : 21 % en décembre 2027, 15 % en décembre 2028). Les taux saisis s’appliquent à toute la période affichée. Après le 31/12/2026, la fiche invite à saisir le taux du mois ; `ARG_DUTIES_UNTIL` et les valeurs par défaut se trouvent dans `docs/terminal/margin-focus.mjs`. Le taux par défaut des pellets de tournesol (position 2306.30) reprend celui des graines et de l’huile en vrac ; il reste à confirmer selon la position tarifaire.
+- **Version nette :** elle approche la marge d’un triturateur argentin, qui achète les graines sur le marché intérieur (prix FOB moins le droit sur les graines) et exporte l’huile et le tourteau (prix FOB moins le droit sur les produits). Les frais FOBbing et le coût de trituration peuvent être saisis dans « Coût de trituration et frais ».
+- **Contrats CBOT :** première échéance continue, sans ajustement. En octobre et novembre, le soja de novembre est associé à l’huile et au tourteau de décembre, comme dans le board crush usuel. Les moyennes mensuelles 2015–2024 de `CBOT:ZS1!` et `CBOT:ZM1!` (`zsMonth`, `zmMonth`) ont été calculées par TradingView avec `scripts/pine/olea_monthly.pine` le 13/11/2026 et reproduisent exactement sa somme de contrôle ; sur janvier 2025 à octobre 2026, elles coïncident avec les moyennes des clôtures quotidiennes du site.
+- **Tests :** `node --test tests/margin-focus.test.mjs`.
 
 ## Calcul et actualisation
 
-- Les positions FOB sélectionnées figurent dans `scripts/prices_lib.py` et dans les cartes. Chaque position doit couvrir le mois de la cotation. Aucun prix d’une autre date ou position ne remplace un bulletin manquant.
-- Le D4 est daté du lundi de référence et ANP du dimanche de clôture. Pour ces séries hebdomadaires, la dernière cotation commune de la même semaine est utilisée pour les jambes quotidiennes. Pour le HIP mensuel, on retient le dernier règlement ICE disponible dans le mois et le fixing BCE correspondant. Seuls les fixings de change peuvent être reportés, à partir de la dernière date commune connue.
-- Les contrats continus attendent une source autorisant la publication des règlements et du CSV. Les rendements initiaux de la mer Noire reprennent 0,44 t/t d’huile et 0,39 t/t de pellets. Cette hypothèse est visible et modifiable.
-- Vérifier les résultats avec `node --test tests/spread-focus.test.mjs tests/spread-model.test.mjs`. Examiner les changements de données et publier uniquement après validation de la branche.
+- Les positions FOB sélectionnées figurent dans `scripts/prices_lib.py` et dans les fiches. Chaque position doit couvrir le mois de la cotation. Aucun prix d’une autre date ou position ne remplace un bulletin manquant.
+- Les séries hebdomadaires et mensuelles encore collectées (D4 de l’EPA, B100 de l’ANP, HIP indonésien, séries du FMI) restent collectées et visibles dans le panneau « Actualisation automatique des prix » (dernière valeur et état) ; elles ne servent plus aux fiches de spreads ni de marges.
+- Vérifier les résultats avec `node --test tests/*.test.mjs`. Examiner les changements de données et publier uniquement après validation de la branche.
 
 ## Contrats à terme
 

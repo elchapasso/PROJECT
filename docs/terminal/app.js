@@ -12,12 +12,12 @@ import {argentinaSoyHistory} from './argentina-soy-history.js?v=20261109-argenti
 import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHistory} from './brazil-soy-history.js?v=20261110-abiove';
 import {sunflowerHistory,sunflowerSources} from './sunflower-history.js?v=20261112-uga';
 
-import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261113-mensuel';
-import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261113-mensuel';
-import {spreadPrices,priceFeed} from './spread-live.mjs?v=20261113-mensuel';
+import {spreadLegPoints} from './spread-model.mjs?v=20261113-marges';
+import {eurUsdSource,spreadLegs} from './spread-definitions.mjs?v=20261113-marges';
+import {spreadPrices,priceFeed} from './spread-live.mjs?v=20261113-marges';
 import {sourceAlerts} from './price-feed.mjs?v=20261113-futures';
-import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,focusInputs,checkFocusParams} from './spread-focus.mjs?v=20261113-mensuel';
-import {datedReportPrices} from './spread-reference-prices.mjs?v=20261111-market-close';
+import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,focusInputs,checkFocusParams} from './spread-focus.mjs?v=20261113-marges';
+import {focusMargins} from './margin-focus.mjs?v=20261113-marges';
 
 import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261112-tournesol';
 import {renderCbotArgView,bindCbotArgView} from './cbot-arg-view.mjs?v=20261112-simulateur';
@@ -217,7 +217,7 @@ function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,season
   const axisLabel=d=>periodLabels?.[d]??(seasonal?smallMonth('2000-'+d):periodType==='month'?smallMonth(d)+(multiYear?' '+d.slice(2,4):''):periodType==='day'||periodType==='week'?d.slice(8)+' '+smallMonth(d)+(startDate&&multiYear?' '+d.slice(2,4):''):d);
   const yLabels=ticks.map(v=>'<span style="--y:'+y(v)+'%">'+e(num(v,tickDigits))+'</span>').join('');
   const lastTick=x(axisColumns.at(-1));
-  const axisTicks=startDate?axisColumns.filter((column,i)=>i===axisColumns.length-1||lastTick-x(column)>=9):axisColumns;
+  const axisTicks=startDate?axisColumns.filter((column,i)=>i===axisColumns.length-1||lastTick-x(column)>=12):axisColumns;
   const xLabels=axisTicks.map(i=>'<span style="--x:'+x(i)+'%">'+e(axisLabel(dates[i]))+'</span>').join('');
   const gridValues=zeroLine&&!ticks.includes(0)?[...ticks,0]:ticks;
   const grid=gridValues.map(v=>'<line class="grid'+(v===0?' zero':'')+'" x1="0" x2="100" y1="'+y(v)+'" y2="'+y(v)+'"/>').join('');
@@ -779,157 +779,16 @@ function renderCbotArg(){
   return head('Analyse','Simulateur CBOT – ARG','Convertissez le cours CBOT de l’huile de soja en prix argentin fret inclus et repérez le niveau de CBOT qui déclenche votre objectif d’achat.')+renderCbotArgView(quote);
 }
 
-const spreadParameters=Object.fromEntries(spreadMetrics.filter(m=>m.defaults).map(m=>[m.id,{...m.defaults}]));
 const spreadDate=(date,grain)=>grain==='month'?displayPeriod(date.slice(0,7),'month'):formatDate(date);
 const grainNames={day:'Quotidien',week:'Hebdomadaire',month:'Mensuel'};
 const spreadLegName=id=>spreadLegs[id].fx?spreadLegs[id].unit:spreadLegs[id].description.split(' · ')[0];
 const spreadObservationUrl=(id,obs)=>obs.url||spreadLegs[id].observationUrl?.(obs.date)||spreadLegs[id].url;
-const spreadLegGrain={hip:'month',d4:'week',b100:'week',ulsdNyMonth:'month',imfSoyOil:'month',imfPalmOil:'month',zlM:'month',fcpoUsdM:'month',hoM:'month',gasoilM:'month'};
-const spreadGapDays={day:7,week:14,month:45};
-const datedFutures={zl:'bo',zs:'zs',zm:'sm',fcpo:'fcpo-jan27',ho:'ho',euSeed:'rape-eu-fut'};
-const datedSeries={...Object.fromEntries(Object.entries(datedFutures).map(([id,key])=>[id,seedPrices[key]])),
-  cepea:{name:'Huile brute dégommée · São Paulo, ICMS 12 %',...spreadLegs.cepea},
-};
-const datedPrices=Object.fromEntries(Object.entries(datedSeries).map(([id,series])=>[id,
-  datedReportPrices[id]??Object.entries(series.values).map(([date,value])=>[date,value,series.pointSources?.[date]||series.url]),
-]));
-const spreadLegHistory=metric=>{
-  const today=new Date().toISOString().slice(0,10);
-  return metric.legs.map(id=>({id,points:spreadLegPoints(id,spreadPrices).filter(({date,value})=>
-    date>=START_DATE&&date<=today&&Number.isFinite(value))}));
-};
-function spreadPriceCharts(history){
-  const groups=Object.groupBy(history,({id})=>spreadLegs[id].unit);
-  return Object.entries(groups).map(([unit,legs])=>{
-    const sourceLinks=refsFor(legs.flatMap(({id})=>[spreadLegs[id],...(spreadLegs[id].fx?[{source:'BCE · EUR/USD',url:eurUsdSource}]:[])]));
-    const grain=spreadLegGrain[legs[0].id]||'day';
-    return chart(legs.map(({id,points},i)=>({label:spreadLegName(id),color:colors[i],points})),{
-      unit,periodType:grain==='month'?'day':grain,height:155,label:legs.map(({id})=>spreadLegName(id)).join(' / '),
-      sourceLinks,startDate:START_DATE,maxGapDays:spreadGapDays[grain],tooltips:p=>num(p.value,4)+' '+unit,
-    });
-  }).join('');
-}
-const spreadPriceRecords=history=>history.flatMap(({id,points})=>points.map(point=>({id,...point})))
-  .sort((a,b)=>b.date.localeCompare(a.date));
-function spreadDatedReference(metric,parameters){
-  const legs=metric.legs.filter(id=>datedSeries[id]);
-  if(!legs.length)return '';
-  const raw=metric.id==='brBio'?{cepea:datedPrices.cepea,b100:spreadPrices.b100}:
-    {...datedPrices,eurUsd:spreadPrices.eurUsd,eurMyr:spreadPrices.eurMyr};
-  const rows=spreadRows(metric,raw,parameters);
-  const latest=rows.at(-1);
-  const references=legs.map(id=>datedSeries[id]);
-  const result=latest?'<p class="spread-reference-value"><b class="num">'+num(latest.value,metric.unit==='%'?1:2)+' '+e(metric.unit)+'</b> · '+e(formatDate(latest.date))+'</p>'+
-    chart([{label:'Calcul sur les références indiquées',color:colors[0],points:rows}],{
-      unit:metric.unit,periodType:'day',height:140,label:'Calcul daté · '+metric.title,zeroLine:metric.id!=='oilShare',startDate:rows[0].date,maxGapDays:7,
-      sourceLinks:refsFor([...references,...(metric.legs.includes('usdm')?[spreadLegs.usdm,{source:'BCE · EUR/USD',url:eurUsdSource}]:[]),
-        ...(metric.id==='brBio'?[spreadLegs.b100]:[])]),
-    }):legs.length===1?chart([{label:references[0].name,color:colors[0],points:datedPrices[legs[0]].map(([date,value])=>({date,value}))}],{
-      unit:references[0].unit,periodType:'day',height:140,label:'Cours datés · '+references[0].name,sourceLinks:refsFor(references),
-      startDate:datedPrices[legs[0]][0][0],maxGapDays:7,
-    }):'';
-  const quotes=legs.flatMap(id=>datedPrices[id].map(([date,value,url])=>({series:datedSeries[id],date,value,url})));
-  if(latest)for(const id of metric.legs.filter(id=>!legs.includes(id))){
-    const {date,value,url}=latest.observations[id];
-    quotes.push({series:{...spreadLegs[id],name:id==='b100'?'B100 · moyenne hebdomadaire':spreadLegs[id].unit+' · fixing BCE'},date,value,url:url||spreadLegs[id].url});
-  }
-  const details=quotes.sort((a,b)=>b.date.localeCompare(a.date)).map(({series,date,value,url})=>[
-      e(formatDate(date)),e(series.name),valueCell(value,series.unit,4),link(url,series.source),
-    ]);
-  return '<div class="spread-price-charts spread-reference"><h4>'+ (latest?'Calcul ponctuel sur les cours datés':'Cours datés de référence')+'</h4>'+
-    '<p class="small">'+(metric.id==='brBio'?'Cotations CEPEA publiées ponctuellement et prix ANP de la même semaine.':
-      'Repères de marché sur les contrats indiqués, distincts de la série continue et des prix physiques.')+'</p>'+
-    result+table(['Date','Référence','Cours','Source'],details)+'</div>';
-}
-function spreadExternalSources(missing){
-  const futures=missing.map(id=>spreadLegs[id]).filter(leg=>leg.history);
-  if(!futures.length)return '';
-  return '<details class="spread-details spread-market-links"><summary>Consulter les historiques de futures à la source</summary>'+
-    '<p class="small">Vérifiez l’échéance et le type de prix. Ces historiques externes sont consultables sur les sites des fournisseurs.</p><ul>'+
-    futures.map(leg=>'<li>'+e(leg.symbol)+' · '+link(leg.url,'Graphique TradingView')+' · '+link(leg.history,'Historique Investing.com')+
-      ' · '+link(leg.official,'Source officielle')+'</li>').join('')+'</ul></details>';
-}
-function spreadInputForm(metric,parameters){
-  if(!metric.inputs)return '';
-  return '<form class="spread-inputs" data-spread-form="'+e(metric.id)+'">'+metric.inputs.map(([key,label])=>
-    '<label>'+e(label)+'<input name="'+e(key)+'" type="number" min="0" '+(key.endsWith('Yield')?'max="1" ':'')+
-    'step="any" value="'+e(parameters[key])+'" required></label>').join('')+
-    '<button type="submit" class="button">Recalculer</button></form>';
-}
-function spreadCard(metric){
-  const parameters=spreadParameters[metric.id];
-  const rows=spreadRows(metric,spreadPrices,parameters);
-  const last=rows.at(-1),previous=rows.at(-2);
-  const legHistory=spreadLegHistory(metric);
-  const available=legHistory.filter(({points})=>points.length);
-  const missing=legHistory.filter(({points})=>!points.length).map(({id})=>id);
-  const missingNames=missing.map(id=>spreadLegName(id)+(spreadLegs[id].symbol?' ('+spreadLegs[id].symbol+')':''));
-  const sourceList=legHistory.map(({id,points})=>{
-    const {source,url,unit,description,missing,fx}=spreadLegs[id];
-    const observation=points.at(-1);
-    return '<li>'+link(url,source)+' · '+e(description+' ('+unit+')')+
-      '<small>'+(observation?'Dernière observation · '+link(spreadObservationUrl(id,observation),spreadDate(observation.date,spreadLegGrain[id])):
-        'Non disponible · '+e(missing||'Aucune observation publiée dans le jeu de données.'))+'</small>'+
-      (fx?'<small>'+link(eurUsdSource,'Fixing EUR/USD · BCE')+'</small>':'')+'</li>';
-  }).join('');
-  const sourceLinks=refsFor(metric.legs.map(id=>spreadLegs[id]));
-  const valueHeader='Valeur ('+metric.unit+')';
-  const legHeaders=metric.legs.map(id=>spreadLegName(id)+' ('+spreadLegs[id].unit+')');
-  const observations=rows.toReversed().map(row=>[e(spreadDate(row.date,metric.grain)),valueCell(row.value,'',6),
-    ...metric.legs.map(id=>{
-      const obs=row.observations[id];
-      return valueCell(obs.value,'',8)+'<small>'+link(spreadObservationUrl(id,obs),formatDate(obs.date))+'</small>';
-    })]);
-  const changeUnit=metric.unit==='%'?'pts':metric.unit;
-  const lastReading=last?'<b class="spread-value num">'+num(last.value,metric.unit==='%'?1:2)+' '+e(metric.unit)+'</b>'+
-    '<span class="small">'+e(spreadDate(last.date,metric.grain))+'</span>'+
-    '<span class="small">'+(previous?e(sign(last.value-previous.value,2)+' '+changeUnit+' vs '+spreadDate(previous.date,metric.grain)):
-      'Variation non disponible')+'</span>':
-    '';
-  const history=last?chart([{label:metric.title,color:colors[0],points:rows}],{
-    unit:metric.unit,periodType:metric.grain==='month'?'day':metric.grain,label:metric.title,
-    sourceLinks,zeroLine:metric.id!=='oilShare',startDate:metric.chartFromFirst?rows[0].date:START_DATE,maxGapDays:spreadGapDays[metric.grain],
-    tooltips:p=>num(p.value,4)+' '+metric.unit,
-  }):'<div class="spread-coverage"><p class="small">Historique du calcul</p><b class="spread-value">Non disponible</b>'+
-    (missingNames.length?'<h4>Séries manquantes</h4><p>'+e(missingNames.join(' · '))+'</p>':'<p>Aucune date commune exploitable.</p>')+
-    '</div>'+spreadDatedReference(metric,parameters)+
-    (available.length?'<div class="spread-price-charts"><h4>Prix et taux disponibles</h4>'+spreadPriceCharts(available)+'</div>':'');
-  const values=last?table(['Date de référence',valueHeader,...legHeaders],observations):
-    available.length?table(['Date de référence','Série','Valeur','Source'],spreadPriceRecords(available).map(({id,date,value,url})=>[
-      e(spreadDate(date,spreadLegGrain[id])),e(spreadLegName(id)),valueCell(value,spreadLegs[id].unit,6),
-      link(spreadObservationUrl(id,{date,url}),spreadLegs[id].source),
-    ])):empty('Non disponible');
-  const csvLabel=last?'Télécharger le CSV du calcul':'Télécharger le CSV des séries disponibles';
-  return panel('<div class="spread-heading"><div><span class="eyebrow">'+grainNames[metric.grain]+'</span>'+
-    '<h3>'+e(metric.title)+'</h3></div>'+action('export-spread',icon('download')+(last||!available.length?' CSV':' CSV des séries'),'ghost',
-      'data-id="'+e(metric.id)+'"'+(last||available.length?'':' disabled')+' aria-label="'+e(csvLabel+' · '+metric.title)+'"')+'</div>'+
-    '<div class="spread-body"><div class="spread-chart">'+history+'</div><div class="spread-summary">'+lastReading+
-      '<h4>Formule</h4><p>'+e(metric.formula(parameters))+'</p><h4>Comment lire le résultat</h4><p>'+e(metric.reading)+'</p>'+
-      (metric.note?'<p class="small">'+e(metric.note)+'</p>':'')+
-      (metric.legs.some(id=>spreadLegs[id].description.includes('première échéance continue'))?
-        '<p class="small">Les changements d’échéance des contrats continus peuvent provoquer des sauts.</p>':'')+
-      spreadInputForm(metric,parameters)+'</div></div>'+
-    '<details class="spread-details"><summary>Sources et dernières observations</summary><ul>'+sourceList+'</ul></details>'+
-    spreadExternalSources(missing)+
-    (metric.id==='blackSeaSun'?'<p class="small spread-market-note">'+link('https://ukragroconsult.com/en/oil-prices/','Cotations de marché · UkrAgroConsult')+
-      ' · Consultez les prix par produit et par base commerciale. Les cotations de cette page ne sont pas utilisées dans le calcul.</p>':'')+
-    (last?'<details class="spread-details spread-price-charts"><summary>Voir les graphiques des prix sources</summary>'+spreadPriceCharts(available)+'</details>':'')+
-    '<details class="spread-details"><summary>Voir les valeurs</summary>'+
-    values+'</details>'+
-    (metric.id==='idBio'?'<details class="spread-details"><summary>Voir les prix HIP et leurs avis officiels</summary>'+
-      table(['Mois','HIP hors fret (Rp/l)','Avis officiel'],(spreadPrices.hip||[]).toReversed().map(([date,value,url])=>[
-        e(spreadDate(date,'month')),valueCell(value,'',0),link(url,'ESDM · Ditjen EBTKE'),
-      ]))+'</details>':''),'spread-card');
-}
-const focusLegacy=new Set(['bopoPhysical',...focusSpreads.map(spread=>spread.legacy)]);
-function renderSpreads(){
-  return section('Marges de trituration et de biodiesel','Historique depuis le 1ᵉʳ janvier 2025 · calcul sur les dates communes · fréquences selon la source')+
-    '<div class="spread-list">'+spreadMetrics.filter(metric=>!focusLegacy.has(metric.id)).map(spreadCard).join('')+'</div>';
-}
+const spreadLegGrain={hip:'month',d4:'week',b100:'week',ulsdNyMonth:'month',imfSoyOil:'month',imfPalmOil:'month',zlM:'month',fcpoUsdM:'month',hoM:'month',gasoilM:'month',zsM:'month',zmM:'month'};
 const focusRanges={day:{3:'3 mois',6:'6 mois',12:'1 an',all:'Tout'},month:{24:'2 ans',60:'5 ans',all:'Depuis 2015'}};
 const focusAverages={day:{0:'Aucune',20:'20 séances',60:'60 séances'},month:{0:'Aucune',3:'3 mois',12:'12 mois'}};
 const focusDefaults={day:{range:'all',average:'20'},month:{range:'60',average:'12'}};
-const focusState=Object.fromEntries(focusSpreads.map(spread=>[spread.id,{variant:spread.variants[0].id,range:{},average:{},params:{...spread.defaults}}]));
+const focusCards=[...focusSpreads,...focusMargins];
+const focusState=Object.fromEntries(focusCards.map(spread=>[spread.id,{variant:spread.variants[0].id,range:{},average:{},params:{...spread.defaults}}]));
 const focusVariant=spread=>spread.variants.find(variant=>variant.id===focusState[spread.id].variant);
 const focusSetting=(spread,key)=>{
   const {grain}=focusVariant(spread);
@@ -964,7 +823,7 @@ function focusCard(spread){
   const unitTag=' <small>'+e(unit)+'</small>';
   const kpi=(label,value,detail,klass='')=>'<div class="sim-kpi '+klass+'"><span>'+e(label)+'</span><strong class="num">'+value+'</strong><small>'+e(detail)+'</small></div>';
   const kpis=stats?'<div class="sim-kpis focus-kpis">'+
-    kpi('Dernier spread',signed(stats.last.value)+unitTag,dateLabel(stats.last.date),'sim-kpi-main')+
+    kpi(spread.valueLabel??'Dernier spread',signed(stats.last.value)+unitTag,dateLabel(stats.last.date),'sim-kpi-main')+
     kpi('Variation',stats.previous?signed(stats.change)+unitTag:'—',stats.previous?'vs '+dateLabel(stats.previous.date):'Une seule observation')+
     kpi('Moyenne de la période',signed(stats.mean)+unitTag,stats.count+' observation'+(stats.count>1?'s':''))+
     kpi('Plus bas · plus haut',signed(stats.low.value)+' · '+signed(stats.high.value),dateLabel(stats.low.date)+' · '+dateLabel(stats.high.date))+
@@ -1009,12 +868,16 @@ function focusCard(spread){
     '<details class="spread-details"><summary>Sources et dernières observations</summary><ul>'+sourceList+'</ul></details>'+
     '<details class="spread-details"><summary>Voir les valeurs</summary>'+values+'</details>','spread-card focus-card');
 }
+function renderFocusMargins(){
+  return section('Marges de trituration','Soja aux États-Unis sur les contrats du CBOT · soja et tournesol en Argentine sur les prix FOB officiels · références, période, unité et paramètres modifiables')+
+    '<div class="spread-list">'+focusMargins.map(focusCard).join('')+'</div>';
+}
 function renderFocusSpreads(){
   return section('Spreads de référence','BOPO, BOHO et POGO · calcul sur les dates communes des deux prix · références, période et paramètres modifiables')+
     '<div class="spread-list">'+focusSpreads.map(focusCard).join('')+'</div>';
 }
 function exportFocus(button){
-  const spread=focusSpreads.find(item=>item.id===button.dataset.id);
+  const spread=focusCards.find(item=>item.id===button.dataset.id);
   if(!spread)return;
   const {params,variant,all,unit}=focusData(spread);
   const number=value=>String(Number(value.toFixed(6))).replace('.',',');
@@ -1025,33 +888,6 @@ function exportFocus(button){
       ...variant.legs.flatMap(id=>[number(row.observations[id].value),row.observations[id].date,spreadLegs[id].source]),
       ...focusInputs(spread,variant).map(([key])=>number(params[key]))]),
   ]);
-}
-function exportSpread(button){
-  const metric=spreadMetrics.find(m=>m.id===button.dataset.id);
-  if(!metric)return;
-  const parameters=spreadParameters[metric.id];
-  const rows=spreadRows(metric,spreadPrices,parameters);
-  const number=value=>String(value).replace('.',',');
-  if(!rows.length){
-    const records=spreadPriceRecords(spreadLegHistory(metric));
-    if(records.length)csv('olea_prix_sources_'+metric.id+'.csv',[
-      ['Date de référence','Série','Valeur','Unité','Source','Lien'],
-      ...records.map(({id,date,value,url})=>[
-        date,spreadLegName(id),number(value),spreadLegs[id].unit,spreadLegs[id].source,spreadObservationUrl(id,{date,url})||'',
-      ]),
-    ]);
-    return;
-  }
-  const headers=['Date de référence',metric.title+' ('+metric.unit+')',...metric.legs.flatMap(id=>{
-    const leg=spreadLegs[id];
-    return [id+' ('+leg.unit+')','Date '+id,'Source '+id,'Lien '+id];
-  }),...(metric.inputs||[]).map(([,label])=>label)];
-  csv('olea_spread_'+metric.id+'.csv',[headers,...rows.map(row=>[
-    row.date,number(row.value),...metric.legs.flatMap(id=>{
-      const {date,value,url}=row.observations[id];
-      return [number(value),date,spreadLegs[id].source,spreadObservationUrl(id,{date,url})||''];
-    }),...(metric.inputs||[]).map(([key])=>number(parameters[key])),
-  ])]);
 }
 const pairLabel=([a,b])=>seedPrices[a].name+' / '+seedPrices[b].name;
 function crossData(){
@@ -1092,7 +928,7 @@ function renderPairs(){
     section('Observations et provenance','Valeurs brutes avant indexation')+
     panel(table(['Période',a.name,b.name,'Spread','Sources'],rows.slice().reverse().map(r=>[e(displayPeriod(r.date,a.grain)),valueCell(r.a,a.unit),valueCell(r.b,b.unit),common?valueCell(r.a-r.b,a.unit):'—',link(a.points[r.date]?.url,a.points[r.date]?.source||a.source)+' · '+link(b.points[r.date]?.url,b.points[r.date]?.source||b.source)])));
 }
-const crossViews={spreads:['Spreads','BOPO · BOHO · POGO',renderFocusSpreads],margins:['Marges','Trituration et biodiesel',renderSpreads],pairs:['Comparaison de séries','Base 100, écart et corrélation',renderPairs]};
+const crossViews={spreads:['Spreads','BOPO · BOHO · POGO',renderFocusSpreads],margins:['Marges','Trituration · États-Unis et Argentine',renderFocusMargins],pairs:['Comparaison de séries','Base 100, écart et corrélation',renderPairs]};
 const priceSeriesNames={
   zl:'Huile de soja · CBOT ZL',zs:'Graines de soja · CBOT ZS',zm:'Tourteau de soja · CBOT ZM',ho:'Heating Oil · NYMEX HO',
   fcpo:'Huile de palme · Bursa FCPO',gasoil:'Low Sulphur Gasoil · ICE',
@@ -1562,10 +1398,9 @@ const controlActions={
   },
   'export-feed':exportFeed,
   'export-cross':exportCross,
-  'export-spread':exportSpread,
   'export-focus':exportFocus,
   'focus-set':el=>{
-    const {id,key,value}=el.dataset,spread=focusSpreads.find(item=>item.id===id);
+    const {id,key,value}=el.dataset,spread=focusCards.find(item=>item.id===id);
     if(!spread)return;
     const current=focusState[id],{grain}=focusVariant(spread);
     if(key==='variant'&&spread.variants.some(variant=>variant.id===value))current.variant=value;
@@ -1576,7 +1411,7 @@ const controlActions={
     root.querySelector('[data-action="focus-set"][data-id="'+id+'"][data-key="'+key+'"][data-value="'+CSS.escape(value)+'"]')?.focus({preventScroll:true});
   },
   'focus-reset':el=>{
-    const spread=focusSpreads.find(item=>item.id===el.dataset.id);
+    const spread=focusCards.find(item=>item.id===el.dataset.id);
     if(!spread)return;
     focusState[spread.id].params={...spread.defaults,...(spread.units?{unit:focusState[spread.id].params.unit}:{})};
     render();
@@ -1608,26 +1443,13 @@ root.addEventListener('click',event=>{
   if(anchor&&anchor.hash===location.hash&&state.mobile){state.mobile=false;render();}
 });
 root.addEventListener('submit',event=>{
-  if(event.target.matches('form[data-spread-form]')){
-    event.preventDefault();
-    const metric=spreadMetrics.find(m=>m.id===event.target.dataset.spreadForm);
-    const fields=new FormData(event.target);
-    const values=Object.fromEntries(metric.inputs.map(([key])=>[key,Number(fields.get(key))]));
-    if(metric.defaults.oilYield!==undefined&&values.oilYield+values.mealYield>1){
-      toast('La somme des rendements doit être inférieure ou égale à 1 t/t.');
-      return;
-    }
-    spreadParameters[metric.id]=values;
-    render();
-    root.querySelector('[data-spread-form="'+metric.id+'"] button')?.focus({preventScroll:true});
-  }
   if(event.target.matches('form[data-focus-form]')){
     event.preventDefault();
-    const spread=focusSpreads.find(item=>item.id===event.target.dataset.focusForm);
+    const spread=focusCards.find(item=>item.id===event.target.dataset.focusForm);
     const fields=new FormData(event.target);
     const {params,error}=checkFocusParams(spread,{...focusState[spread.id].params,...Object.fromEntries(focusInputs(spread,focusVariant(spread)).map(([key])=>[key,Number(fields.get(key))]))});
     if(error){
-      toast(error.label+' · saisissez une valeur de '+num(error.min,3)+' à '+num(error.max,3)+'.');
+      toast(error.message??error.label+' · saisissez une valeur de '+num(error.min,3)+' à '+num(error.max,3)+'.');
       return;
     }
     focusState[spread.id].params=params;
