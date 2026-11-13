@@ -466,5 +466,38 @@
 .price-held{margin:10px 0 0;padding-left:18px;font-size:12px;line-height:1.5;color:var(--muted)}
 .price-held li{margin:4px 0}
 
-/* Composantes des spreads et marges, ajoutées à la demande à la courbe principale */
-.focus-parts-note{margin:6px 0 0}
+/* Composantes des spreads et marges, affichées à la demande sous la courbe principale */
+.focus-components{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.focus-components h4{margin:0 0 6px;font-size:13px}
+.focus-components .chart-wrap+.chart-wrap,.focus-components>*+*{margin-top:10px}
+
+/* Biocarburants · mandats, simulations et séries observées */
+.bio-policy { min-width: 0; }
+.bio-controls,.bio-kpis { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,13rem),1fr)); gap: .8rem; }
+.bio-controls .field { min-width: 0; align-self: end; }
+.bio-controls select,.bio-controls input { width: 100%; min-width: 0; text-overflow: ellipsis; }
+.bio-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 1rem; }
+.bio-kpis { margin: 0 0 .9rem; }
+.bio-kpi { display: grid; align-content: start; gap: .25rem; min-width: 0; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: .65rem; }
+.bio-kpi span { color: var(--muted); font-size: .8rem; }
+.bio-kpi strong { font-size: clamp(1.15rem,3vw,1.65rem); font-variant-numeric: tabular-nums; line-height: 1.3; }
+.bio-positive { color: var(--green); }
+.bio-negative,.bio-error { color: var(--red); }
+.bio-method { border-top: 1px solid var(--line); padding-top: .6rem; margin-top: .9rem; }
+.bio-method summary { cursor: pointer; font-weight: 650; }
+.bio-method p { margin: .55rem 0 0; }
+.bio-formula { overflow-wrap: anywhere; font-family: ui-monospace,SFMono-Regular,Consolas,monospace; font-size: .86rem; }
+.bio-bars { display: grid; gap: .65rem; }
+.bio-bar-row { display: grid; grid-template-columns: minmax(11rem,1fr) minmax(8rem,2fr) 3.4rem; align-items: center; gap: .5rem; font-size: .85rem; }
+.bio-bar-row strong { text-align: right; font-variant-numeric: tabular-nums; }
+.bio-bar { display: flex; height: .8rem; border: 1px solid var(--line); border-radius: .4rem; overflow: hidden; }
+.bio-bar>i,.bio-legend>span::before { background: var(--series-1); }
+.bio-bar>i:nth-child(2),.bio-legend>span:nth-child(2)::before { background: var(--series-2); }
+.bio-bar>i:nth-child(3),.bio-legend>span:nth-child(3)::before { background: repeating-linear-gradient(135deg,var(--series-4) 0 3px,transparent 3px 5px); }
+.bio-legend { display: flex; flex-wrap: wrap; gap: .75rem; }
+.bio-legend>span::before { content: ''; display: inline-block; width: .7rem; height: .7rem; margin-right: .3rem; border-radius: .15rem; vertical-align: -.05rem; }
+.bio-csv { margin-top: .65rem; }
+@media(max-width: 580px) {
+  .bio-bar-row { grid-template-columns: minmax(0,1fr) 3rem; gap: .2rem .45rem; }
+  .bio-bar-row>span:first-child { grid-column: 1/-1; }
+}
