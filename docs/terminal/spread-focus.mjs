@@ -14,6 +14,8 @@ const freightInputs=[
 const freightText=({soyFreight,palmFreight})=>soyFreight||palmFreight?
   ' Fret et frais ajoutés : '+decimal(soyFreight)+' USD/t pour le soja, '+decimal(palmFreight)+' USD/t pour la palme.':'';
 const bohoUnits={usdgal:'USD/gal','clb':'¢ US/lb'};
+// Contrats continus de première échéance relevés chaque jour sur TradingView. Ils changent de contrat à l’échéance, sans ajustement.
+const futuresNote=symbols=>'Clôtures quotidiennes des contrats continus '+symbols+', relevées sur TradingView et contrôlées par somme de contrôle à chaque passage. Ces séries changent de contrat à l’échéance, sans ajustement : un saut peut apparaître ce jour-là.';
 // Huile de soja en ¢ US/lb et gazole en USD/gal, ramenés à l’unité choisie.
 const bohoSides=(cents,dieselPerGallon,{unit,lbPerGallon})=>unit==='clb'?
   [cents,dieselPerGallon*CENTS_PER_DOLLAR/lbPerGallon]:[cents*lbPerGallon/CENTS_PER_DOLLAR,dieselPerGallon];
@@ -36,7 +38,11 @@ export const focusSpreads=[
         sides:[['Huile de soja · FOB Argentine',(o,p)=>o.arSoyOil+p.soyFreight],['Huile de palme · CPO Malaisie',(o,p)=>o.mpobCpo/o.usdm+p.palmFreight]],
         formula:p=>'Huile de soja brute FOB Argentine (USD/t) − CPO Malaisie (MYR/t) ÷ USD/MYR.'+freightText(p),
         note:'La Malaisie sert de repère régional avec un historique quotidien. Le prix MPOB est un prix livré localement et diffère du FOB indonésien.'},
-      {id:'imf',label:'À terme · CBOT − Bursa',grain:'month',legs:['imfSoyOil','imfPalmOil'],
+      {id:'futures',label:'À terme · CBOT − Bursa',grain:'day',legs:['zl','fcpo','usdm'],
+        sides:[['Huile de soja · CBOT',(o,p)=>o.zl*ZL_USD_PER_TONNE+p.soyFreight],['Huile de palme · Bursa Malaysia',(o,p)=>o.fcpo/o.usdm+p.palmFreight]],
+        formula:p=>'Huile de soja CBOT (¢ US/lb) × '+decimal(ZL_USD_PER_TONNE)+' − huile de palme Bursa (MYR/t) ÷ USD/MYR.'+freightText(p),
+        note:futuresNote('CBOT:ZL1! et MYX:FCPO1!')+' Aux dates vérifiées, MYX:FCPO1! reprend les clôtures du contrat de référence de Bursa Malaysia. La conversion utilise le fixing BCE du jour.'},
+      {id:'imf',label:'Mensuel · CBOT − Bursa (FMI)',grain:'month',legs:['imfSoyOil','imfPalmOil'],
         sides:[['Huile de soja · référence FMI',(o,p)=>o.imfSoyOil+p.soyFreight],['Huile de palme · référence FMI',(o,p)=>o.imfPalmOil+p.palmFreight]],
         formula:p=>'Huile de soja, référence FMI (USD/t) − huile de palme, référence FMI (USD/t), en moyennes mensuelles.'+freightText(p),
         note:'Les séries PSOIL et PPOIL du FMI suivent le premier contrat à terme de Chicago pour le soja et de Bursa Malaysia pour la palme.'},
@@ -47,28 +53,41 @@ export const focusSpreads=[
     inputs:[['lbPerGallon','Huile de soja par gallon (lb/gal)',6,9]],defaults:{unit:'usdgal',lbPerGallon:OIL_LB_PER_GALLON},
     reading:'Au-dessus de zéro, l’huile de soja nécessaire à un gallon de biodiesel coûte plus cher que le gallon de gazole. Une hausse de l’écart pèse sur la marge du biodiesel, avant crédits et subventions.',
     variants:[
+      {id:'futures',label:'Quotidien · CBOT − NYMEX',grain:'day',legs:['zl','ho'],
+        sides:[['Huile de soja · CBOT',(o,p)=>bohoSides(o.zl,o.ho,p)[0]],['Heating Oil · NYMEX',(o,p)=>bohoSides(o.zl,o.ho,p)[1]]],
+        formula:({unit,lbPerGallon})=>unit==='clb'?
+          'Huile de soja CBOT (¢ US/lb) − Heating Oil NYMEX (USD/gal) × '+CENTS_PER_DOLLAR+' ÷ '+decimal(lbPerGallon)+' lb/gal.':
+          'Huile de soja CBOT (¢ US/lb) × '+decimal(lbPerGallon)+' lb/gal ÷ '+CENTS_PER_DOLLAR+' − Heating Oil NYMEX (USD/gal).',
+        note:futuresNote('CBOT:ZL1! et NYMEX:HO1!')+' Le contrat Heating Oil du NYMEX livre du gazole ULSD à New York.'},
       {id:'imf',label:'Mensuel · CBOT − ULSD New York',grain:'month',legs:['imfSoyOil','ulsdNyMonth'],
         sides:[['Huile de soja · CBOT',(o,p)=>bohoSides(o.imfSoyOil/ZL_USD_PER_TONNE,o.ulsdNyMonth,p)[0]],['Gazole · ULSD New York',(o,p)=>bohoSides(o.imfSoyOil/ZL_USD_PER_TONNE,o.ulsdNyMonth,p)[1]]],
         formula:({unit,lbPerGallon})=>unit==='clb'?
           'Huile de soja (USD/t) ÷ '+decimal(ZL_USD_PER_TONNE)+' − ULSD (USD/gal) × '+CENTS_PER_DOLLAR+' ÷ '+decimal(lbPerGallon)+' lb/gal.':
           'Huile de soja (USD/t) ÷ '+decimal(ZL_USD_PER_TONNE)+' × '+decimal(lbPerGallon)+' lb/gal ÷ '+CENTS_PER_DOLLAR+' − ULSD (USD/gal).',
-        note:'Le soja est la moyenne mensuelle de la série PSOIL du FMI, qui suit le premier contrat de Chicago. Le gazole est la moyenne mensuelle du prix spot ULSD à New York, produit livrable du contrat Heating Oil du NYMEX. Les règlements quotidiens des deux bourses sont sous licence et restent hors du graphique.'},
+        note:'Le soja est la moyenne mensuelle de la série PSOIL du FMI, qui suit le premier contrat de Chicago. Le gazole est la moyenne mensuelle du prix spot ULSD à New York, produit livrable du contrat Heating Oil du NYMEX. Cette référence donne un historique depuis 2015.'},
     ]},
   {id:'pogo',code:'POGO',title:'POGO · Huile de palme − gazole',legacy:'pogo',
     summary:'Coût de l’huile de palme brute comparé au gazole fossile, par tonne.',
     unit:()=>'USD/t',digits:()=>1,inputs:[['density','Densité du gazole (kg/l)',.8,.9]],defaults:{density:GASOIL_KG_PER_LITRE},
     reading:'Au-dessus de zéro, l’huile de palme coûte plus cher que le gazole : l’incorporation de biodiesel de palme dépend alors des mandats et des subventions. En dessous de zéro, la palme est moins chère que le gazole et l’incorporation volontaire devient rentable.',
     variants:[
-      {id:'mpob',label:'Quotidien · CPO Malaisie − ULSD New York',grain:'day',legs:['mpobCpo','usdm','ulsdNy'],
+      {id:'futures',label:'Quotidien · Bursa − ICE Gasoil',grain:'day',legs:['fcpo','usdm','gasoil'],inputs:[],
+        sides:[['Huile de palme · Bursa Malaysia',o=>o.fcpo/o.usdm],['Gazole · ICE Low Sulphur Gasoil',o=>o.gasoil]],
+        formula:()=>'Huile de palme Bursa (MYR/t) ÷ USD/MYR − Low Sulphur Gasoil ICE (USD/t).',
+        note:futuresNote('MYX:FCPO1! et ICEEUR:ULS1!')+' Aux dates vérifiées, MYX:FCPO1! reprend les clôtures du contrat de référence de Bursa Malaysia. La conversion utilise le fixing BCE du jour.'},
+      {id:'mpob',label:'Physique · CPO Malaisie − ULSD New York',grain:'day',legs:['mpobCpo','usdm','ulsdNy'],
         sides:[['Huile de palme · CPO Malaisie',o=>o.mpobCpo/o.usdm],['Gazole · ULSD New York',(o,p)=>o.ulsdNy*gallonsPerTonne(p.density)]],
         formula:({density})=>'CPO Malaisie (MYR/t) ÷ USD/MYR − ULSD New York (USD/gal) × '+decimal(gallonsPerTonne(density),1)+' gal/t. La conversion retient '+decimal(density,3)+' kg/l.',
-        note:'Le gazole est le prix spot ULSD à New York publié par l’EIA. La référence de marché habituelle du POGO, le contrat ICE Low Sulphur Gasoil, est sous licence.'},
+        note:'Version sur prix physiques : CPO livré en Malaisie (MPOB) et prix spot ULSD à New York publié par l’EIA.'},
       {id:'imf',label:'Mensuel · Bursa − ULSD New York',grain:'month',legs:['imfPalmOil','ulsdNyMonth'],
         sides:[['Huile de palme · référence FMI',o=>o.imfPalmOil],['Gazole · ULSD New York',(o,p)=>o.ulsdNyMonth*gallonsPerTonne(p.density)]],
         formula:({density})=>'Huile de palme, référence FMI (USD/t) − ULSD New York (USD/gal) × '+decimal(gallonsPerTonne(density),1)+' gal/t, en moyennes mensuelles. La conversion retient '+decimal(density,3)+' kg/l.',
         note:'La série PPOIL du FMI suit le premier contrat à terme de Bursa Malaysia. Le gazole est la moyenne mensuelle du prix spot ULSD à New York publié par l’EIA.'},
     ]},
 ];
+
+// Paramètres affichés pour une variante : ceux du spread, sauf si la variante en déclare d’autres.
+export const focusInputs=(spread,variant)=>variant?.inputs??spread.inputs;
 
 export function checkFocusParams(spread,values){
   const params={...spread.defaults};

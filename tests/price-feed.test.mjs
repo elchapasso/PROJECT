@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {mergePrices,validLiveFeed,validStatus,sourceAlerts} from '../docs/terminal/price-feed.mjs';
+import {mergePrices,onlySeries,validLiveFeed,validStatus,sourceAlerts,FUTURES_SERIES} from '../docs/terminal/price-feed.mjs';
 
 const bundled={
   arSoyOil:[['2026-11-10',1190,'https://source/10'],['2026-11-11',1195,'https://source/11']],
@@ -37,4 +37,14 @@ test('source alerts flag failures older than 48 hours',()=>{
   const alerts=sourceAlerts(status,new Date('2026-11-12T20:00:00Z'));
   assert.deepEqual(alerts.map(a=>[a.id,a.long]),[['magyp',true],['mpob',false]]);
   assert.deepEqual(sourceAlerts(null),[]);
+});
+
+test('the futures feed can only provide its six contracts',()=>{
+  const feed={schema:1,generatedAt:'2026-11-13T05:40:00Z',series:{zl:[['2026-11-12',63.42]],fcpo:[['2026-11-12',4440]],arSoyOil:[['2026-11-12',1]]}};
+  const filtered=onlySeries(feed,FUTURES_SERIES);
+  assert.deepEqual(Object.keys(filtered.series),['zl','fcpo']);
+  const merged=mergePrices(mergePrices(bundled,live),filtered);
+  assert.deepEqual(merged.zl,[['2026-11-12',63.42]]);
+  assert.equal(merged.arSoyOil.at(-1)[1],1201);
+  assert.deepEqual(FUTURES_SERIES,['zl','zs','zm','ho','gasoil','fcpo']);
 });

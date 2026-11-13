@@ -19,10 +19,10 @@ const mpob='https://bepi.mpob.gov.my/admin2/price_local_daily_view_cpo_msia.php?
 const eia=(code,description)=>({source:'EIA (via FRED)',url:fred+code,unit:'USD/gal',description});
 const imf=(code,description)=>({source:'FMI (via FRED)',url:fred+code,unit:'USD/t',description});
 const future=(source,symbol,unit,description,history,official=cmeHistory)=>({
-  source,url:tv+encodeURIComponent(symbol.replace(':','-'))+'/',unit,symbol,
-  description:description+' · '+symbol+' · règlement quotidien, première échéance continue',
+  source:source+' · via TradingView',url:tv+encodeURIComponent(symbol.replace(':','-'))+'/',unit,symbol,
+  description:description+' · '+symbol+' · clôture quotidienne relevée sur TradingView, première échéance continue',
   history:investing+history+'-historical-data',official,
-  missing:'Droits de publication des règlements historiques à confirmer. Le MCP TradingView est réservé à un usage personnel et exclut la republication de ses séries.',
+  missing:'Série relevée chaque jour sur TradingView. Aucune observation dans le jeu de données pour ce contrat.',
 });
 const arg=(description)=>({source:'Secretaría de Agricultura · MAGyP',url:ar,unit:'USD/t',description,observationUrl:date=>arAPI+encodeURIComponent(date.split('-').reverse().join('/'))});
 const rapeseed=description=>({source:'Commission européenne · Agri-food Data Portal',url:commission,unit:'EUR/t',description,

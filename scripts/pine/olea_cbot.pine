@@ -1,0 +1,7 @@
+//@version=6
+indicator("olea_cbot")
+td = time_tradingday
+plot(year(td, "UTC") * 10000 + month(td, "UTC") * 100 + dayofmonth(td, "UTC"), "d")
+plot(close, "zl")
+plot(request.security("CBOT:ZS1!", "1D", close), "zs")
+plot(request.security("CBOT:ZM1!", "1D", close), "zm")
