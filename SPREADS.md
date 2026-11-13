@@ -10,11 +10,12 @@ Ces trois spreads existent en ligne sous forme de produits sous licence : contra
 
 | Spread | Référence | Calcul | Fréquence et couverture |
 | --- | --- | --- | --- |
-| BOPO | Indonésie · FOB Belawan | Huile de soja FOB Argentine − huile de palme FOB Belawan | Quotidien, 5 dates communes du 04/11/2026 au 11/11/2026 |
-| BOPO | Malaisie · CPO MPOB | Huile de soja FOB Argentine − CPO Malaisie ÷ USD/MYR | Quotidien, 221 dates communes du 02/01/2025 au 10/11/2026 |
+| BOPO | Indonésie · FOB Belawan | Huile de soja FOB Argentine − huile de palme FOB Belawan | Quotidien depuis le 04/11/2026, l’historique s’allonge à chaque relevé automatique |
+| BOPO | Malaisie · FOB Port Klang | Huile de soja FOB Argentine − huile de palme FOB Port Klang | Quotidien depuis le 10/11/2026, l’historique s’allonge à chaque relevé automatique |
+| BOPO | Malaisie · CPO MPOB | Huile de soja FOB Argentine − CPO Malaisie ÷ USD/MYR | Quotidien depuis le 02/01/2025 |
 | BOPO | À terme · CBOT − Bursa | Huile de soja FMI − huile de palme FMI | Mensuel, janvier 2015 à septembre 2026 |
 | BOHO | Mensuel · CBOT − ULSD New York | Huile de soja FMI ÷ 22,0462 × lb/gal ÷ 100 − ULSD | Mensuel, janvier 2015 à septembre 2026 |
-| POGO | Quotidien · CPO Malaisie − ULSD New York | CPO Malaisie ÷ USD/MYR − ULSD × gal/t | Quotidien, 427 dates communes du 02/01/2025 au 03/11/2026 |
+| POGO | Quotidien · CPO Malaisie − ULSD New York | CPO Malaisie ÷ USD/MYR − ULSD × gal/t | Quotidien depuis le 02/01/2025 |
 | POGO | Mensuel · Bursa − ULSD New York | Huile de palme FMI − ULSD × gal/t | Mensuel, janvier 2015 à septembre 2026 |
 
 Paramètres modifiables : fret et frais par origine pour le BOPO, 7,5 lb d’huile par gallon et unité (USD/gal ou ¢ US/lb) pour le BOHO, densité du gazole de 0,845 kg/l pour le POGO, soit 312,6 gal/t. Le 10/11/2026, le CPO MPOB converti vaut 982,5 USD/t et le tableau IPOSS cote Port Klang à 982 USD/t. Le même jour, Belawan cote 1 090 USD/t : la référence malaisienne donne un BOPO plus élevé d’environ 100 USD/t que la référence indonésienne.
@@ -22,6 +23,8 @@ Paramètres modifiables : fret et frais par origine pour le BOPO, 7,5 lb d’hui
 Le gazole du BOHO et du POGO est le prix spot ULSD à New York de l’EIA, produit livrable du contrat Heating Oil du NYMEX. Le POGO de marché utilise le contrat ICE Low Sulphur Gasoil, sous licence. Le FMI décrit ses séries PSOIL et PPOIL comme des prix de référence mondiaux en moyenne mensuelle. Elles suivent le premier contrat à terme de Chicago et de Bursa Malaysia. Cette définition est reprise de la documentation du FMI et reste à confirmer sur la fiche de la série.
 
 ## Sources et couverture
+
+Les volumes ci-dessous décrivent l’import initial du 12/11/2026. Depuis, les séries publiques sont actualisées automatiquement (voir « Actualisation automatique »).
 
 | Source | Données retenues ou résultat de la recherche | Réutilisation publique |
 | --- | --- | --- |
@@ -62,11 +65,38 @@ Les fiches incomplètes peuvent afficher des repères datés distincts des séri
 
 ## Calcul et actualisation
 
-- Les positions FOB sélectionnées figurent dans `scripts/update-spreads.py` et dans les cartes. Chaque position doit couvrir le mois de la cotation. Aucun prix d’une autre date ou position ne remplace un bulletin manquant.
+- Les positions FOB sélectionnées figurent dans `scripts/prices_lib.py` et dans les cartes. Chaque position doit couvrir le mois de la cotation. Aucun prix d’une autre date ou position ne remplace un bulletin manquant.
 - Le D4 est daté du lundi de référence et ANP du dimanche de clôture. Pour ces séries hebdomadaires, la dernière cotation commune de la même semaine est utilisée pour les jambes quotidiennes. Pour le HIP mensuel, on retient le dernier règlement ICE disponible dans le mois et le fixing BCE correspondant. Seuls les fixings de change peuvent être reportés, à partir de la dernière date commune connue.
-- Pour mettre à jour les bulletins argentins et les trois séries BCE, exécuter `python scripts/update-spreads.py --from YYYY-MM-DD --through YYYY-MM-DD` sur la branche de travail. Utiliser des plages courtes pour l’API argentine. Le script conserve les valeurs vérifiées, enregistre les progrès, et s’arrête sur une erreur. Relancer à partir de la date indiquée une fois la source rétablie.
-- Pour le D4, exporter le graphique EPA « Weekly D3, D4, D5 and D6 RINs Prices » et conserver les lignes D4 en USD/RIN, avec leur date de semaine. Pour ANP, extraire la série « Biodiesel B-100 (R$/litro) », colonne « Brasil », en conservant la date de fin de semaine. Pour HIP, vérifier l’avis mensuel et sa lettre signée, puis ajouter le prix hors fret, la date d’effet et le lien. Ajouter les lignes à `docs/terminal/spread-prices.mjs` sous la forme `[date ISO, valeur native, lien facultatif]`, triées et sans doublons.
 - Les contrats continus attendent une source autorisant la publication des règlements et du CSV. Les rendements initiaux de la mer Noire reprennent 0,44 t/t d’huile et 0,39 t/t de pellets. Cette hypothèse est visible et modifiable.
-- Pour les séries EIA et FMI, ajouter `--fred` à la commande précédente. Le script lit `DDFUELNYH`, `MDFUELNYH`, `PSOILUSDM` et `PPOILUSDM` sur FRED. Cette option a été écrite pour le format CSV de FRED et n’a pas pu être exécutée depuis l’environnement de développement, sans accès réseau. Vérifier sa première exécution. Les valeurs initiales ont été relevées sur les pages FRED le 12/11/2026.
-- Pour le CPO MPOB, ouvrir le tableau annuel et ajouter les prix quotidiens à `mpobCpo` dans `docs/terminal/spread-prices.mjs`, en MYR/t. Les mentions NT, PH et les prix relevés à 8 h 30, marqués `**`, sont exclus. Pour Belawan, ajouter les cotations du tableau IPOSS à `idPalmFob`.
 - Vérifier les résultats avec `node --test tests/spread-focus.test.mjs tests/spread-model.test.mjs`. Examiner les changements de données et publier uniquement après validation de la branche.
+
+## Actualisation automatique
+
+Le workflow `.github/workflows/update-prices.yml` exécute `scripts/update-prices.py` trois fois par jour : 9 h 17 UTC (prix MPOB définitifs, cotations IPOSS), 15 h 47 UTC les jours ouvrés (fixings BCE) et 21 h 23 UTC (bulletin FOB argentin, séries EIA et FMI sur FRED, B100 de l’ANP). Le résultat est publié sur la branche `prices-live` (`docs/terminal/live/spread-prices.json` et `price-status.json`). Le site lit cette branche au chargement, en 3 secondes au plus, et complète la copie intégrée `docs/terminal/spread-prices.mjs`. Le panneau « Actualisation automatique des prix » de la page Comparaisons & spreads affiche l’état de chaque série.
+
+| Série | Source | Règle appliquée |
+| --- | --- | --- |
+| `arSoyOil`, `arSoyMeal`, `arSoySeed`, `arSunOil`, `arSunMeal`, `arSunSeed` | MAGyP | Bulletin du jour exact, position couvrant le mois de cotation, prix unique. Dix derniers jours ouvrés relus à chaque passage, jours manquants des 45 derniers jours recherchés, 120 jours revérifiés le dimanche. |
+| `eurUsd`, `eurMyr`, `eurIdr` | BCE | Fixings des 45 derniers jours. |
+| `ulsdNy`, `ulsdNyMonth`, `imfSoyOil`, `imfPalmOil` | FRED | Séries complètes relues, révisions reprises. |
+| `mpobCpo` | MPOB | Tableau annuel. Seuls les prix définitifs sont retenus : NT, PH, « - » et prix de 8 h 30 marqués `**` exclus. Année précédente revérifiée le dimanche et en janvier. |
+| `idPalmFob`, `myPalmFob` | IPOSS | Tableau public, cotations FOB Port Belawan et Port Klang. Le tableau n’affiche que les derniers jours : l’historique s’allonge à chaque relevé. |
+| `b100` | ANP | Classeur hebdomadaire, ligne Biodiesel B-100, colonne Brasil, date du dimanche de clôture. |
+
+Contrôles :
+
+- Format de chaque source vérifié (en-têtes, colonnes, dates). Une source illisible est signalée et ses séries restent inchangées. Les autres sources sont mises à jour normalement.
+- Bornes de vraisemblance par série, en unité native. Une valeur hors bornes est ignorée et signalée.
+- Une valeur nouvelle ou révisée qui s’écarte de la précédente au-delà du seuil de la série (4 à 5 % pour les changes, 10 à 15 % pour les prix quotidiens, 25 % pour les moyennes mensuelles) est retenue. Elle est publiée dès que l’observation suivante confirme le niveau. Une valeur isolée reste retenue et s’affiche comme « à vérifier ».
+- Si plus de 10 % des valeurs déjà publiées d’une série diffèrent de la source, aucune modification n’est appliquée : un changement de format est probable.
+- Une valeur publiée n’est jamais supprimée. Les révisions de la source remplacent l’ancienne valeur et sont listées dans `price-status.json` et dans le résumé du workflow.
+- Le workflow échoue, et GitHub prévient par courriel, si une source échoue depuis plus de 48 heures ou si une série ne passe pas les contrôles.
+
+Pour forcer une mise à jour : onglet **Actions** › **Actualiser les prix** › **Run workflow**, qui revérifie aussi 120 jours de bulletins argentins. Pour accepter une valeur retenue avant confirmation, l’ajouter à `docs/terminal/spread-prices.mjs` sur `main`. Tests : `python3 -m unittest discover -s tests -p 'test_*.py'` et `node --test tests/*.test.mjs`.
+
+## Saisie manuelle
+
+Le D4 de l’EPA est publié dans un tableau de bord Qlik sans fichier téléchargeable, et le HIP indonésien dans des avis mensuels signés : ces deux séries restent saisies à la main.
+
+- Pour le D4, exporter le graphique EPA « Weekly D3, D4, D5 and D6 RINs Prices » et conserver les lignes D4 en USD/RIN, avec leur date de semaine. Pour HIP, vérifier l’avis mensuel et sa lettre signée, puis ajouter le prix hors fret, la date d’effet et le lien. Ajouter les lignes à `docs/terminal/spread-prices.mjs` sous la forme `[date ISO, valeur native, lien facultatif]`, triées et sans doublons.
+- Pour rattraper une longue période de bulletins argentins sur une branche de travail : `python scripts/update-spreads.py --from AAAA-MM-JJ --through AAAA-MM-JJ` (ajouter `--fred` pour les séries EIA et FMI). Le script partage ses lecteurs avec la mise à jour automatique (`scripts/prices_lib.py`).

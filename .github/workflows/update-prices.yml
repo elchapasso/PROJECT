@@ -1,0 +1,63 @@
+name: Actualiser les prix
+
+# Trois passages par jour, calés sur les publications des sources :
+# 09 h 17 UTC : prix MPOB définitifs (16 h 30 en Malaisie) et cotations IPOSS du jour ;
+# 15 h 47 UTC, jours ouvrés : fixings BCE (14 h 15 CET) ;
+# 21 h 23 UTC : bulletin FOB argentin du jour, séries EIA et FMI sur FRED, B100 de l’ANP.
+# Le passage du dimanche, les lancements manuels et les modifications du script revérifient 120 jours de bulletins argentins.
+on:
+  schedule:
+    - cron: '17 9 * * *'
+    - cron: '47 15 * * 1-5'
+    - cron: '23 21 * * *'
+  workflow_dispatch:
+    inputs:
+      deep:
+        description: 'Revérifier 120 jours de bulletins argentins'
+        type: boolean
+        default: true
+  push:
+    paths:
+      - '.github/workflows/update-prices.yml'
+      - 'scripts/update-prices.py'
+      - 'scripts/prices_lib.py'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prices-live
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Installer le lecteur de classeurs ANP
+        run: python -m pip install --quiet xlrd==2.0.1
+      - name: Préparer la branche prices-live
+        run: |
+          if git fetch --no-tags --depth=1 origin refs/heads/prices-live; then
+            git worktree add --detach "$RUNNER_TEMP/prices-live" FETCH_HEAD
+          else
+            git worktree add --detach "$RUNNER_TEMP/prices-live" HEAD
+          fi
+      - name: Interroger et contrôler les sources
+        id: refresh
+        continue-on-error: true
+        run: python scripts/update-prices.py "$RUNNER_TEMP/prices-live/docs/terminal/live" ${{ (github.event_name == 'push' || inputs.deep) && '--deep' || '' }}
+      - name: Publier les données vérifiées
+        run: |
+          cd "$RUNNER_TEMP/prices-live"
+          git add docs/terminal/live
+          if git diff --cached --quiet; then echo "Aucun changement."; exit 0; fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh spread and margin prices'
+          git push origin HEAD:refs/heads/prices-live
+      - name: Signaler une source en échec ou une donnée rejetée
+        if: steps.refresh.outcome == 'failure'
+        run: exit 1
