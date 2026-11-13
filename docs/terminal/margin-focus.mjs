@@ -22,6 +22,15 @@ const usSides=legs=>[
   ['Huile et tourteau · CBOT',(o,p)=>usCrushSides(o[legs[0]],o[legs[1]],o[legs[2]],p)[0]],
   ['Graines de soja · CBOT',(o,p)=>usCrushSides(o[legs[0]],o[legs[1]],o[legs[2]],p)[1]],
 ];
+// Composantes du board crush dans l’unité choisie : huile et tourteau tirés d’un boisseau, prix du boisseau.
+const usParts=([seed,meal,oil])=>({unit,oilLb,mealLb})=>{
+  const scale=unit==='usdt'?BUSHELS_PER_TONNE:1;
+  return [
+    {role:'oil',short:'Huile de soja',label:'Huile de soja · '+decimal(oilLb)+' lb par boisseau',sign:1,legs:[oil],value:o=>o[oil]*oilLb/CENTS_PER_DOLLAR*scale},
+    {role:'meal',short:'Tourteau de soja',label:'Tourteau de soja · '+decimal(mealLb)+' lb par boisseau',sign:1,legs:[meal],value:o=>o[meal]*mealLb/LB_PER_SHORT_TON*scale},
+    {role:'seed',short:'Graines de soja',label:'Graines de soja · prix '+(unit==='usdt'?'de la tonne':'du boisseau'),sign:-1,legs:[seed],value:o=>o[seed]/CENTS_PER_DOLLAR*scale},
+  ];
+};
 const rollNote='La première échéance continue associe chaque jour le contrat le plus proche de chaque produit : en octobre et novembre, le soja de novembre face à l’huile et au tourteau de décembre, comme dans le board crush usuel. Les séries changent de contrat à l’échéance, sans ajustement : un saut peut apparaître ces jours-là.';
 
 /* ---------- Argentine · prix FOB officiels ---------- */
@@ -29,6 +38,16 @@ const argSides=(oil,meal,seed,net)=>[
   ['Huile et tourteau · FOB'+(net?' net de droits':''),(o,p)=>p.oilYield*o[oil]*(net?1-p.dexOil/100:1)+p.mealYield*o[meal]*(net?1-p.dexMeal/100:1)],
   ['Graines · FOB'+(net?' net de droits':''),(o,p)=>o[seed]*(net?1-p.dexSeed/100:1)+p.cost],
 ];
+// Composantes argentines par tonne de graines : produits pondérés par leur rendement, graines au prix FOB.
+const argParts=([oilName,mealName,seedName],oil,meal,seed,net)=>p=>[
+  {role:'oil',short:oilName,label:oilName+' · '+decimal(p.oilYield)+' t par t de graines'+(net?', net de droits':''),sign:1,legs:[oil],
+    value:o=>p.oilYield*o[oil]*(net?1-p.dexOil/100:1)},
+  {role:'meal',short:mealName,label:mealName+' · '+decimal(p.mealYield)+' t par t de graines'+(net?', net de droits':''),sign:1,legs:[meal],
+    value:o=>p.mealYield*o[meal]*(net?1-p.dexMeal/100:1)},
+  {role:'seed',short:seedName,label:seedName+' · prix de la tonne'+(net?', net de droits':''),sign:-1,legs:[seed],
+    value:o=>o[seed]*(net?1-p.dexSeed/100:1)},
+];
+const soyNames=['Huile de soja','Tourteau de soja','Graines de soja'],sunNames=['Huile de tournesol','Pellets de tournesol','Graines de tournesol'];
 const argFormula=(names,net)=>({oilYield,mealYield,cost,dexOil,dexMeal,dexSeed})=>
   decimal(oilYield)+' t d’huile × '+names[0]+' FOB'+(net?' × (1 − '+percent(dexOil)+')':'')+
   ' + '+decimal(mealYield)+' t de '+names[1]+' × '+names[1]+' FOB'+(net?' × (1 − '+percent(dexMeal)+')':'')+
@@ -59,10 +78,10 @@ export const focusMargins=[
     defaults:{unit:'usdbu',oilLb:11,mealLb:44,cost:0},
     reading:'Au-dessus de zéro, l’huile et le tourteau valent plus que les graines : la trituration couvre le prix du soja, avant coûts si aucun coût n’est saisi. Une marge qui se resserre freine la trituration américaine ; une marge élevée l’encourage et pèse sur les prix de l’huile et du tourteau.',
     variants:[
-      {id:'daily',label:'Quotidien · première échéance',grain:'day',legs:['zs','zm','zl'],sides:usSides(['zs','zm','zl']),
+      {id:'daily',label:'Quotidien · première échéance',grain:'day',legs:['zs','zm','zl'],sides:usSides(['zs','zm','zl']),parts:usParts(['zs','zm','zl']),
         formula:p=>usFormula('',p),
         note:'Clôtures quotidiennes des contrats continus CBOT:ZS1!, CBOT:ZM1! et CBOT:ZL1!, relevées sur TradingView chaque matin et contrôlées par somme de contrôle. '+rollNote},
-      {id:'monthly',label:'Mensuel · depuis 2015',grain:'month',legs:['zsM','zmM','zlM'],sides:usSides(['zsM','zmM','zlM']),
+      {id:'monthly',label:'Mensuel · depuis 2015',grain:'month',legs:['zsM','zmM','zlM'],sides:usSides(['zsM','zmM','zlM']),parts:usParts(['zsM','zmM','zlM']),
         formula:p=>usFormula('Moyennes mensuelles : ',p),
         note:'Moyennes mensuelles des clôtures quotidiennes de CBOT:ZS1!, CBOT:ZM1! et CBOT:ZL1!. Jusqu’en décembre 2024, moyennes calculées par TradingView et vérifiées par somme de contrôle ; depuis janvier 2025, moyennes des clôtures quotidiennes de la version quotidienne. Le mois en cours est une moyenne partielle, actualisée chaque jour.'},
     ]},
@@ -73,9 +92,9 @@ export const focusMargins=[
     defaults:{...defaultYields.arSoy,cost:0,dexSeed:24,dexOil:22.5,dexMeal:22.5},
     reading:'Au-dessus de zéro, l’huile et le tourteau valent plus que les graines. La version nette de droits approche la marge d’un triturateur argentin, qui achète les graines sur le marché intérieur et exporte l’huile et le tourteau : l’écart entre le droit sur les graines et celui sur les produits pèse directement sur sa marge.',
     variants:[
-      {id:'fob',label:'FOB · avant droits',grain:'day',legs:['arSoyOil','arSoyMeal','arSoySeed'],sides:argSides('arSoyOil','arSoyMeal','arSoySeed',false),
+      {id:'fob',label:'FOB · avant droits',grain:'day',legs:['arSoyOil','arSoyMeal','arSoySeed'],sides:argSides('arSoyOil','arSoyMeal','arSoySeed',false),parts:argParts(soyNames,'arSoyOil','arSoyMeal','arSoySeed',false),
         inputs:yieldInputs([.15,.23],[.7,.85,'tourteau']),formula:argFormula(['huile de soja','tourteau'],false),note:argNote},
-      {id:'net',label:'Net des droits d’exportation',grain:'day',legs:['arSoyOil','arSoyMeal','arSoySeed'],sides:argSides('arSoyOil','arSoyMeal','arSoySeed',true),
+      {id:'net',label:'Net des droits d’exportation',grain:'day',legs:['arSoyOil','arSoyMeal','arSoySeed'],sides:argSides('arSoyOil','arSoyMeal','arSoySeed',true),parts:argParts(soyNames,'arSoyOil','arSoyMeal','arSoySeed',true),
         formula:argFormula(['huile de soja','tourteau'],true),note:argNote+' '+dutyNote('graines 24 %, huile et tourteau 22,5 %')},
     ]},
   {id:'arSunCrush',code:'Trituration tournesol AR',valueLabel:'Dernière marge',title:'Trituration du tournesol · Argentine',
@@ -85,9 +104,9 @@ export const focusMargins=[
     defaults:{...defaultYields.arSun,cost:0,dexSeed:4.5,dexOil:4.5,dexMeal:4.5},
     reading:'Au-dessus de zéro, l’huile et les pellets valent plus que les graines. Le tournesol argentin est surtout exporté sous forme d’huile : la marge indique la capacité de paiement des triturateurs face aux exportations de graines.',
     variants:[
-      {id:'fob',label:'FOB · avant droits',grain:'day',legs:['arSunOil','arSunMeal','arSunSeed'],sides:argSides('arSunOil','arSunMeal','arSunSeed',false),
+      {id:'fob',label:'FOB · avant droits',grain:'day',legs:['arSunOil','arSunMeal','arSunSeed'],sides:argSides('arSunOil','arSunMeal','arSunSeed',false),parts:argParts(sunNames,'arSunOil','arSunMeal','arSunSeed',false),
         inputs:yieldInputs([.35,.5],[.3,.5,'pellets']),formula:argFormula(['huile de tournesol','pellets'],false),note:argNote},
-      {id:'net',label:'Net des droits d’exportation',grain:'day',legs:['arSunOil','arSunMeal','arSunSeed'],sides:argSides('arSunOil','arSunMeal','arSunSeed',true),
+      {id:'net',label:'Net des droits d’exportation',grain:'day',legs:['arSunOil','arSunMeal','arSunSeed'],sides:argSides('arSunOil','arSunMeal','arSunSeed',true),parts:argParts(sunNames,'arSunOil','arSunMeal','arSunSeed',true),
         formula:argFormula(['huile de tournesol','pellets'],true),
         note:argNote+' '+dutyNote('4,5 % pour les graines et l’huile en vrac')+' Le taux des pellets (position 2306.30) est fixé par défaut au même niveau ; vérifiez-le selon la position tarifaire.'},
     ]},
