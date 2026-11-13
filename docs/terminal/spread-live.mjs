@@ -2,7 +2,7 @@
 // prices-live : sources publiques, actualisées par la tâche GitHub « Actualiser les prix » (scripts/update-prices.py).
 // futures-live : contrats à terme relevés chaque jour sur TradingView (scripts/update-futures.py).
 // Le chargement attend au plus 3 secondes ; au-delà, le site s’ouvre avec la copie intégrée.
-import {spreadPrices as bundled} from './spread-prices.mjs?v=20261113-mensuel';
+import {spreadPrices as bundled} from './spread-prices.mjs?v=20261113-marges';
 import {mergePrices,onlySeries,validLiveFeed,validStatus,FUTURES_SERIES} from './price-feed.mjs?v=20261113-futures';
 
 const RAW='https://raw.githubusercontent.com/elchapasso/PROJECT/';

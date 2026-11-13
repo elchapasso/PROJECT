@@ -1,6 +1,6 @@
 // Spreads de référence : BOPO, BOHO et POGO.
 // Chaque variante compare deux prix ramenés à la même unité, aux dates communes des deux sources.
-import {ZL_USD_PER_TONNE,CENTS_PER_DOLLAR,OIL_LB_PER_GALLON,GASOIL_KG_PER_LITRE,KG_PER_TONNE,spreadLegPoints} from './spread-model.mjs?v=20261113-mensuel';
+import {ZL_USD_PER_TONNE,CENTS_PER_DOLLAR,OIL_LB_PER_GALLON,GASOIL_KG_PER_LITRE,KG_PER_TONNE,spreadLegPoints} from './spread-model.mjs?v=20261113-marges';
 
 export const LITRES_PER_GALLON=3.785411784;
 export const gallonsPerTonne=density=>KG_PER_TONNE/(density*LITRES_PER_GALLON);
@@ -98,6 +98,7 @@ export function checkFocusParams(spread,values){
     if(typeof value!=='number'||!(value>=min&&value<=max))return {error:{key,label,min,max}};
     params[key]=value;
   }
+  if(params.oilYield!==undefined&&params.oilYield+params.mealYield>1)return {error:{message:'La somme des rendements en huile et en tourteau doit rester inférieure ou égale à 1 t par t de graines.'}};
   return {params};
 }
 
