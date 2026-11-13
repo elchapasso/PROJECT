@@ -1,0 +1,5 @@
+//@version=6
+indicator("olea_close")
+td = time_tradingday
+plot(year(td, "UTC") * 10000 + month(td, "UTC") * 100 + dayofmonth(td, "UTC"), "d")
+plot(close, "c")

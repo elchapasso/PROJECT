@@ -13,10 +13,10 @@ import {abioveAnnualUpdate,abioveProjectionStart,abioveSampleStart,brazilSoyHist
 import {sunflowerHistory,sunflowerSources} from './sunflower-history.js?v=20261112-uga';
 
 import {START_DATE,spreadLegPoints,spreadRows} from './spread-model.mjs?v=20261110-bopo-fob';
-import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261112-prix';
-import {spreadPrices,priceFeed} from './spread-live.mjs?v=20261112-prix';
-import {sourceAlerts} from './price-feed.mjs?v=20261112-prix';
-import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,checkFocusParams} from './spread-focus.mjs?v=20261112-prix';
+import {eurUsdSource,spreadLegs,spreadMetrics} from './spread-definitions.mjs?v=20261113-futures';
+import {spreadPrices,priceFeed} from './spread-live.mjs?v=20261113-futures';
+import {sourceAlerts} from './price-feed.mjs?v=20261113-futures';
+import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,focusInputs,checkFocusParams} from './spread-focus.mjs?v=20261113-futures';
 import {datedReportPrices} from './spread-reference-prices.mjs?v=20261111-market-close';
 
 import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261112-tournesol';
@@ -979,7 +979,8 @@ function focusCard(spread){
     empty('Aucune date commune entre les deux prix.');
   const sides=rows.length?chart(variant.sides.map(([label],i)=>({label,color:colors[i],points:rows.map(point(row=>i?row.b:row.a))})),
     {unit,height:170,label:'Prix comparés · '+spread.code,sourceLinks:refs,tooltips,...axis(rows[0].date)}):'';
-  const form='<form class="spread-inputs" data-focus-form="'+spread.id+'">'+spread.inputs.map(([key,label,min,max])=>
+  const inputs=focusInputs(spread,variant);
+  const form=!inputs.length?'':'<h4>Paramètres</h4><form class="spread-inputs" data-focus-form="'+spread.id+'">'+inputs.map(([key,label,min,max])=>
     '<label>'+e(label)+'<input name="'+key+'" type="number" min="'+min+'" max="'+max+'" step="any" value="'+e(params[key])+'" required></label>').join('')+
     '<button type="submit" class="button">Recalculer</button>'+action('focus-reset','Valeurs par défaut','ghost','data-id="'+spread.id+'"')+'</form>';
   const sourceList=variant.legs.map(id=>{
@@ -994,18 +995,15 @@ function focusCard(spread){
         const observation=row.observations[id];
         return valueCell(observation.value,'',4)+(observation.date===row.date?'':'<small>'+e(formatDate(observation.date))+'</small>');
       })]));
-  const legacy=spreadMetrics.find(metric=>metric.id===spread.legacy);
-  const futures=spreadDatedReference(legacy,spreadParameters[legacy.id])+spreadExternalSources(legacy.legs);
   return panel('<div class="spread-heading"><div><span class="eyebrow">'+grainNames[grain]+(stats?' · '+(monthly?'':'au ')+e(dateLabel(stats.last.date)):'')+'</span>'+
     '<h3>'+e(spread.title)+'</h3><p class="small">'+e(spread.summary)+'</p></div>'+
     action('export-focus',icon('download')+' CSV','ghost','data-id="'+spread.id+'"'+(all.length?'':' disabled')+' aria-label="'+e('Télécharger le CSV · '+spread.code)+'"')+'</div>'+
     controls+kpis+'<div class="spread-body"><div class="spread-chart">'+history+'</div><div class="spread-summary">'+
       '<h4>Formule</h4><p>'+e(variant.formula(params))+'</p><h4>Comment lire le résultat</h4><p>'+e(spread.reading)+'</p>'+
-      '<h4>Données</h4><p class="small">'+e(variant.note)+'</p><h4>Paramètres</h4>'+form+'</div></div>'+
+      '<h4>Données</h4><p class="small">'+e(variant.note)+'</p>'+form+'</div></div>'+
     (sides?'<details class="spread-details spread-price-charts"><summary>Voir les deux prix comparés</summary>'+sides+'</details>':'')+
     '<details class="spread-details"><summary>Sources et dernières observations</summary><ul>'+sourceList+'</ul></details>'+
-    '<details class="spread-details"><summary>Voir les valeurs</summary>'+values+'</details>'+
-    (futures?'<details class="spread-details"><summary>Contrats à terme · repères datés et historiques externes</summary>'+futures+'</details>':''),'spread-card focus-card');
+    '<details class="spread-details"><summary>Voir les valeurs</summary>'+values+'</details>','spread-card focus-card');
 }
 function renderFocusSpreads(){
   return section('Spreads de référence','BOPO, BOHO et POGO · calcul sur les dates communes des deux prix · références, période et paramètres modifiables')+
@@ -1018,10 +1016,10 @@ function exportFocus(button){
   const number=value=>String(Number(value.toFixed(6))).replace('.',',');
   csv('olea_'+spread.id+'_'+variant.id+'.csv',[
     ['Date',spread.code+' ('+unit+')',...variant.sides.map(([label])=>label+' ('+unit+')'),
-      ...variant.legs.flatMap(id=>[spreadLegName(id)+' ('+spreadLegs[id].unit+')','Date '+id,'Source '+id]),...spread.inputs.map(([,label])=>label)],
+      ...variant.legs.flatMap(id=>[spreadLegName(id)+' ('+spreadLegs[id].unit+')','Date '+id,'Source '+id]),...focusInputs(spread,variant).map(([,label])=>label)],
     ...all.map(row=>[row.date,number(row.value),number(row.a),number(row.b),
       ...variant.legs.flatMap(id=>[number(row.observations[id].value),row.observations[id].date,spreadLegs[id].source]),
-      ...spread.inputs.map(([key])=>number(params[key]))]),
+      ...focusInputs(spread,variant).map(([key])=>number(params[key]))]),
   ]);
 }
 function exportSpread(button){
@@ -1092,6 +1090,8 @@ function renderPairs(){
 }
 const crossViews={spreads:['Spreads','BOPO · BOHO · POGO',renderFocusSpreads],margins:['Marges','Trituration et biodiesel',renderSpreads],pairs:['Comparaison de séries','Base 100, écart et corrélation',renderPairs]};
 const priceSeriesNames={
+  zl:'Huile de soja · CBOT ZL',zs:'Graines de soja · CBOT ZS',zm:'Tourteau de soja · CBOT ZM',ho:'Heating Oil · NYMEX HO',
+  fcpo:'Huile de palme · Bursa FCPO',gasoil:'Low Sulphur Gasoil · ICE',
   arSoyOil:'Huile de soja · FOB Argentine',arSoyMeal:'Tourteau de soja · FOB Argentine',arSoySeed:'Graines de soja · FOB Argentine',
   arSunOil:'Huile de tournesol · FOB Argentine',arSunMeal:'Pellets de tournesol · FOB Argentine',arSunSeed:'Graines de tournesol · FOB Argentine',
   idPalmFob:'CPO · FOB Belawan (Indonésie)',myPalmFob:'CPO · FOB Port Klang (Malaisie)',mpobCpo:'CPO livré · Malaisie (MPOB)',
@@ -1104,7 +1104,8 @@ const priceValue=(key,value)=>Number.isFinite(value)?num(value,Math.abs(value)>=
 function priceStatusPanel(){
   const status=priceFeed.status;
   const live=priceFeed.origin==='live'&&status;
-  const auto=live?status.series:{};
+  const futures=priceFeed.futures.status;
+  const auto={...(live?status.series:{}),...(futures?.series??{})};
   const rows=Object.keys(priceSeriesNames).filter(key=>spreadPrices[key]?.length||auto[key]).map(key=>{
     const entry=auto[key];
     const last=spreadPrices[key]?.at(-1);
@@ -1115,18 +1116,19 @@ function priceStatusPanel(){
       badge(tone==='muted'?'pending':tone,label)+(entry?.message?'<small>'+e(entry.message)+'</small>':'')+added];
   });
   const counts=Object.values(auto).reduce((acc,entry)=>{acc[entry.status]=(acc[entry.status]||0)+1;return acc;},{});
-  const alerts=live?sourceAlerts(status):[];
-  const held=live?status.held||[]:[];
+  const alerts=[...(live?sourceAlerts(status):[]),...(futures?sourceAlerts(futures):[])];
+  const held=[...(live?status.held||[]:[]),...(futures?.held??[])];
   const summary=live?
     'Vérification automatique le '+stampFormat.format(new Date(status.checkedAt))+' · '+(counts.ok||0)+' séries à jour'+
-      (counts.stale?' · '+counts.stale+' en attente de publication':'')+(counts.held?' · '+counts.held+' à vérifier':'')+(counts.error?' · '+counts.error+' en échec':''):
+      (counts.stale?' · '+counts.stale+' en attente de publication':'')+(counts.held?' · '+counts.held+' à vérifier':'')+(counts.error?' · '+counts.error+' en échec':'')+
+      (futures?' · contrats à terme relevés le '+stampFormat.format(new Date(futures.checkedAt)):''):
     'Flux automatique indisponible : le site affiche les prix intégrés lors de la dernière publication.';
   const heldList=held.length?'<ul class="price-held">'+held.map(h=>'<li><b>'+e(priceSeriesNames[h.series]||h.series)+'</b> · '+e(formatDate(h.date))+' : <span class="num">'+e(priceValue(h.series,h.value))+'</span>'+
     (h.previous!=null?' contre <span class="num">'+e(priceValue(h.series,h.previous))+'</span> le '+e(formatDate(h.previousDate)):'')+'. Écart inhabituel : la valeur sera publiée dès que la cotation suivante confirmera ce niveau.</li>').join('')+'</ul>':'';
   const alertList=alerts.length?'<ul class="price-held">'+alerts.map(a=>'<li><b>'+e(a.name)+'</b> · '+(a.long?'en échec depuis le '+e(stampFormat.format(new Date(a.failingSince))):'indisponible lors de la dernière vérification')+'. Les prix déjà publiés restent affichés.</li>').join('')+'</ul>':'';
   return '<section class="panel price-status"><div class="spread-between"><div><h2>Actualisation automatique des prix</h2><p class="small">'+e(summary)+'</p></div>'+
     '<span class="badge '+(alerts.length||counts.error?'negative':counts.held?'mixed':'positive')+'"><span class="dot"></span>'+(live?'Flux automatique':'Copie intégrée')+'</span></div>'+heldList+alertList+
-    '<details><summary>État des séries</summary><p class="small">Trois vérifications par jour : 9 h 17 UTC (MPOB, IPOSS), 15 h 47 UTC (BCE) et 21 h 23 UTC (bulletins argentins, FRED, ANP). Chaque valeur est contrôlée : bornes de vraisemblance, cohérence avec l’historique et confirmation des écarts inhabituels. Le D4 de l’EPA et le HIP indonésien restent saisis à la main.</p>'+
+    '<details><summary>État des séries</summary><p class="small">Trois vérifications par jour : 9 h 17 UTC (MPOB, IPOSS), 15 h 47 UTC (BCE) et 21 h 23 UTC (bulletins argentins, FRED, ANP). Chaque valeur est contrôlée : bornes de vraisemblance, cohérence avec l’historique et confirmation des écarts inhabituels. Les contrats à terme de Chicago, New York, Londres et Kuala Lumpur sont relevés une fois par jour sur TradingView, puis comparés à une somme de contrôle calculée par TradingView avant publication. Le D4 de l’EPA et le HIP indonésien restent saisis à la main.</p>'+
     table(['Série','Dernière observation','État'],rows)+'</details></section>';
 }
 function renderCross(){
@@ -1619,7 +1621,7 @@ root.addEventListener('submit',event=>{
     event.preventDefault();
     const spread=focusSpreads.find(item=>item.id===event.target.dataset.focusForm);
     const fields=new FormData(event.target);
-    const {params,error}=checkFocusParams(spread,{...focusState[spread.id].params,...Object.fromEntries(spread.inputs.map(([key])=>[key,Number(fields.get(key))]))});
+    const {params,error}=checkFocusParams(spread,{...focusState[spread.id].params,...Object.fromEntries(focusInputs(spread,focusVariant(spread)).map(([key])=>[key,Number(fields.get(key))]))});
     if(error){
       toast(error.label+' · saisissez une valeur de '+num(error.min,3)+' à '+num(error.max,3)+'.');
       return;

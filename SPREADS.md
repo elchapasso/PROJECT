@@ -6,21 +6,24 @@ La vue [Comparaisons & spreads](https://elchapasso.github.io/PROJECT/#cross) pr�
 
 L’onglet « Spreads » présente BOPO, BOHO et POGO. Chaque fiche propose une ou plusieurs références, une période, une moyenne mobile et des paramètres de calcul. Les onglets « Marges » et « Comparaison de séries » regroupent les marges de trituration et de biodiesel et l’outil de comparaison.
 
-Ces trois spreads existent en ligne sous forme de produits sous licence : contrats POG du CME pour le POGO, évaluations sur abonnement pour le BOHO et le BOPO. Aucun historique librement réutilisable n’a été trouvé. Oléa les calcule donc à partir de prix publics.
+Ces trois spreads existent en ligne sous forme de produits sous licence : contrats POG du CME pour le POGO, évaluations sur abonnement pour le BOHO et le BOPO. Aucun historique librement téléchargeable n’a été trouvé. Oléa les calcule donc à partir de prix : contrats à terme relevés sur TradingView et prix publics.
 
 | Spread | Référence | Calcul | Fréquence et couverture |
 | --- | --- | --- | --- |
 | BOPO | Indonésie · FOB Belawan | Huile de soja FOB Argentine − huile de palme FOB Belawan | Quotidien depuis le 04/11/2026, l’historique s’allonge à chaque relevé automatique |
 | BOPO | Malaisie · FOB Port Klang | Huile de soja FOB Argentine − huile de palme FOB Port Klang | Quotidien depuis le 10/11/2026, l’historique s’allonge à chaque relevé automatique |
 | BOPO | Malaisie · CPO MPOB | Huile de soja FOB Argentine − CPO Malaisie ÷ USD/MYR | Quotidien depuis le 02/01/2025 |
-| BOPO | À terme · CBOT − Bursa | Huile de soja FMI − huile de palme FMI | Mensuel, janvier 2015 à septembre 2026 |
+| BOPO | À terme · CBOT − Bursa | `CBOT:ZL1!` × 22,0462 − `MYX:FCPO1!` ÷ USD/MYR | Quotidien depuis le 02/01/2025, relevé TradingView |
+| BOPO | Mensuel · CBOT − Bursa (FMI) | Huile de soja FMI − huile de palme FMI | Mensuel, janvier 2015 à septembre 2026 |
+| BOHO | Quotidien · CBOT − NYMEX | `CBOT:ZL1!` × lb/gal ÷ 100 − `NYMEX:HO1!` | Quotidien depuis le 02/01/2025, relevé TradingView |
 | BOHO | Mensuel · CBOT − ULSD New York | Huile de soja FMI ÷ 22,0462 × lb/gal ÷ 100 − ULSD | Mensuel, janvier 2015 à septembre 2026 |
-| POGO | Quotidien · CPO Malaisie − ULSD New York | CPO Malaisie ÷ USD/MYR − ULSD × gal/t | Quotidien depuis le 02/01/2025 |
+| POGO | Quotidien · Bursa − ICE Gasoil | `MYX:FCPO1!` ÷ USD/MYR − `ICEEUR:ULS1!` | Quotidien depuis le 02/01/2025, relevé TradingView |
+| POGO | Physique · CPO Malaisie − ULSD New York | CPO Malaisie ÷ USD/MYR − ULSD × gal/t | Quotidien depuis le 02/01/2025 |
 | POGO | Mensuel · Bursa − ULSD New York | Huile de palme FMI − ULSD × gal/t | Mensuel, janvier 2015 à septembre 2026 |
 
 Paramètres modifiables : fret et frais par origine pour le BOPO, 7,5 lb d’huile par gallon et unité (USD/gal ou ¢ US/lb) pour le BOHO, densité du gazole de 0,845 kg/l pour le POGO, soit 312,6 gal/t. Le 10/11/2026, le CPO MPOB converti vaut 982,5 USD/t et le tableau IPOSS cote Port Klang à 982 USD/t. Le même jour, Belawan cote 1 090 USD/t : la référence malaisienne donne un BOPO plus élevé d’environ 100 USD/t que la référence indonésienne.
 
-Le gazole du BOHO et du POGO est le prix spot ULSD à New York de l’EIA, produit livrable du contrat Heating Oil du NYMEX. Le POGO de marché utilise le contrat ICE Low Sulphur Gasoil, sous licence. Le FMI décrit ses séries PSOIL et PPOIL comme des prix de référence mondiaux en moyenne mensuelle. Elles suivent le premier contrat à terme de Chicago et de Bursa Malaysia. Cette définition est reprise de la documentation du FMI et reste à confirmer sur la fiche de la série.
+Les versions quotidiennes du BOHO et du POGO utilisent les contrats NYMEX Heating Oil et ICE Low Sulphur Gasoil. Les versions mensuelles et la version physique du POGO utilisent le prix spot ULSD à New York de l’EIA, produit livrable du contrat Heating Oil. Le FMI décrit ses séries PSOIL et PPOIL comme des prix de référence mondiaux en moyenne mensuelle. Elles suivent le premier contrat à terme de Chicago et de Bursa Malaysia. Cette définition est reprise de la documentation du FMI et reste à confirmer sur la fiche de la série.
 
 ## Sources et couverture
 
@@ -35,7 +38,7 @@ Les volumes ci-dessous décrivent l’import initial du 12/11/2026. Depuis, les 
 | [IPOSS Data · Daily FOB Prices for CPO, CPKO & Vegetable Oils](https://data.iposs.co.id/en/data/fob-price-cpo-cpko) | Six cotations FOB Belawan (Indonésie), du 04/11/2026 au 12/11/2026, en USD/t. Le BOPO physique utilise les dates communes avec le FOB officiel de l’huile de soja brute argentine. | Cotations ponctuelles du tableau public citées avec attribution. L’historique complet requiert un compte approuvé. |
 | [BCR · FOB/FAS Argentina](https://www.bcr.com.ar/es/mercados/mercado-de-granos/cotizaciones/cotizaciones-locales/fobfas-argentina/precios-fobfas-4454) | Feuille du 01/09/2026 consultée pour la méthode et les définitions. Son FAS net et les cotations de tiers sont distincts de la série de prix FOB officiels. | Autorisation de redistribution du contenu et des cotations de tiers non vérifiée. Aucun historique BCR intégré. |
 | [BCE · EXR](https://data-api.ecb.europa.eu/service/data/EXR/D.USD+MYR+IDR.EUR.SP00.A?startPeriod=2024-12-30&format=csvdata) | 478 fixings EUR/USD, EUR/MYR et EUR/IDR par série du 30/12/2024 au 11/11/2026. Les deux jours de décembre servent au report initial des fixings. | [Réutilisation permise avec attribution](https://www.ecb.europa.eu/stats/ecb_statistics/governance_and_quality_framework/html/usage_policy.en.html). Les taux sources sont conservés et le calcul des cours croisés est identifié. |
-| [CME / CBOT / NYMEX](https://www.cmegroup.com/market-data/licensing.html), [Bursa FCPO](https://www.bursamalaysia.com/trade/our_products_services/derivatives/commodity_derivatives/crude_palm_oil_futures), [ICE Gasoil](https://www.ice.com/products/219/Low-Sulphur-Gasoil-Futures), [TradingView](https://www.tradingview.com/policies/) et [Euronext ECO](https://live.euronext.com/en/product/commodities-futures/ECO-DPAR) | Contrats de référence identifiés. Aucun historique de règlements redistribuable obtenu. | Les conditions de TradingView limitent l’affichage à un usage personnel ou interne. Aucun droit de redistribution publique vérifié pour les règlements continus des bourses. |
+| [TradingView](https://www.tradingview.com/) pour [CME / CBOT / NYMEX](https://www.cmegroup.com/market-data/licensing.html), [Bursa FCPO](https://www.bursamalaysia.com/trade/our_products_services/derivatives/commodity_derivatives/crude_palm_oil_futures) et [ICE Gasoil](https://www.ice.com/products/219/Low-Sulphur-Gasoil-Futures) | Clôtures quotidiennes de six contrats continus de première échéance depuis le 02/01/2025 : `CBOT:ZL1!`, `CBOT:ZS1!`, `CBOT:ZM1!`, `NYMEX:HO1!`, `ICEEUR:ULS1!`, `MYX:FCPO1!`. Relevé quotidien, voir « Contrats à terme ». | Les [conditions de TradingView](https://www.tradingview.com/policies/) et des bourses encadrent la republication de ces données. Le propriétaire du site a décidé de les publier le 13/11/2026. [Euronext ECO](https://live.euronext.com/en/product/commodities-futures/ECO-DPAR) reste non intégré. |
 | [EPA · RIN Trades and Price Information](https://www.epa.gov/fuels-registration-reporting-and-compliance-help/rin-trades-and-price-information) | 90 valeurs D4 séparées du 06/01/2025 au 21/09/2026, par semaine de transfert, pondérées par volume. Série « Weekly D3, D4, D5 and D6 RINs Prices ». | Statistiques agrégées publiées par une agence fédérale américaine et attribuées à l’EPA. [17 USC § 105](https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title17-section105). |
 | [ESDM / Ditjen EBTKE](https://ebtke.esdm.go.id/) | 23 prix de base HIP, janvier 2025 à novembre 2026. La fiche Indonésie contient le lien de chaque avis. Les lettres signées font foi pour février, mars et novembre 2026, dont les pages présentent des incohérences. | Seuls les prix de référence factuels des annonces officielles sont repris, avec attribution et lien. Les documents eux-mêmes ne sont pas redistribués. [Loi indonésienne n° 28/2014, art. 42–43](https://www.wipo.int/wipolex/en/legislation/details/15600). |
 | [ANP · prix producteurs](https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/precos-de-produtores-e-importadores-de-derivados-de-petroleo-e-biodiesel) | 96 observations hebdomadaires B100 du 05/01/2025 au 01/11/2026 (fin de semaine). Moyenne pondérée, colonne Brasil du [fichier officiel](https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/ppidp/precos-medios-ponderados-semanais-2013.xls), hors ICMS. | Le portail affiche CC BY-ND 3.0. Les chiffres officiels repris sont inchangés. Les conditions applicables à une redistribution du classeur adapté restent à vérifier. |
@@ -45,20 +48,13 @@ Les volumes ci-dessous décrivent l’import initial du 12/11/2026. Depuis, les 
 
 ## Données à compléter
 
-Les tickers identifient les contrats. La documentation du [MCP TradingView](https://www.tradingview.com/mcp/docs) décrit des barres OHLCV. Pour alimenter Oléa, il faut une source qui confirme le règlement officiel, la règle de roulement du continu et le droit de publier les valeurs, les calculs et les CSV. Les [conditions TradingView, section 27](https://www.tradingview.com/policies/) réservent le MCP à l’usage personnel non commercial et encadrent la republication. EUR/USD est déjà intégré via la BCE et entre dans les deux taux croisés.
+Les contrats à terme de Chicago, New York, Londres et Kuala Lumpur sont désormais intégrés. Les séries ci-dessous restent à trouver. EUR/USD est déjà intégré via la BCE et entre dans les deux taux croisés.
 
-Les fiches incomplètes peuvent afficher des repères datés distincts des séries continues. Pour les quatre calculs sur futures, Oléa réutilise ses cours à échéance fixe et les clôtures FCPO de janvier 2027 rapportées par Bernama. Les cours à terme doivent partager la même date et le BOPO utilise le fixing BCE. Pour le Brésil, la cotation ponctuelle du 24 mars 2026 publiée par le [CEPEA](https://cepea.org.br/br/diarias-de-mercado/soja-cepea-oleo-segue-em-valorizacao-no-br.aspx?pagina=1024) est rapprochée du prix B100 ANP de la même semaine. Les repères datés restent hors des CSV des historiques. Les liens Investing.com, TradingView et bourses permettent de consulter les historiques de futures chez leurs fournisseurs.
+Les fiches incomplètes peuvent afficher des repères datés distincts des séries continues. Pour le Brésil, la cotation ponctuelle du 24 mars 2026 publiée par le [CEPEA](https://cepea.org.br/br/diarias-de-mercado/soja-cepea-oleo-segue-em-valorizacao-no-br.aspx?pagina=1024) est rapprochée du prix B100 ANP de la même semaine. Les repères datés restent hors des CSV des historiques. Les liens Investing.com, TradingView et bourses permettent de consulter les historiques de futures chez leurs fournisseurs.
 
 | Carte | Séries manquantes | Séries déjà intégrées |
 | --- | --- | --- |
-| BOPO quotidien sur contrats à terme | Huile de soja `CBOT:ZL1!`, palme `MYX:FCPO1!` | USD/MYR via BCE, moyennes mensuelles FMI |
 | BOPO Argentine / Indonésie | Historique FOB Belawan, réservé aux comptes IPOSS approuvés | FOB Argentine officiel, six cotations Belawan |
-| POGO sur ICE Gasoil | Palme `MYX:FCPO1!`, gazole `ICEEUR:ULS1!` | CPO MPOB, ULSD New York EIA, USD/MYR via BCE |
-| BOHO quotidien | Huile de soja `CBOT:ZL1!`, ULSD `NYMEX:HO1!` | Moyennes mensuelles FMI et EIA |
-| Board crush | Tourteau `CBOT:ZM1!`, huile `CBOT:ZL1!`, graines `CBOT:ZS1!` | — |
-| Part de l’huile | Huile `CBOT:ZL1!`, tourteau `CBOT:ZM1!` | — |
-| Biodiesel États-Unis | ULSD `NYMEX:HO1!`, huile `CBOT:ZL1!` | D4 EPA |
-| Biodiesel Indonésie | Gazole `ICEEUR:ULS1!` | HIP ESDM, USD/IDR via BCE |
 | Biodiesel Brésil | Huile brute dégommée CEPEA, São Paulo, ICMS 12 % inclus | B100 ANP |
 | Colza UE | Huile, tourteau et graines physiques sur une base commune | `EURONEXT:ECO1!` identifié comme futur de référence |
 | Tournesol mer Noire | Huile, pellets et graines FOB d’une même origine | — |
@@ -69,6 +65,18 @@ Les fiches incomplètes peuvent afficher des repères datés distincts des séri
 - Le D4 est daté du lundi de référence et ANP du dimanche de clôture. Pour ces séries hebdomadaires, la dernière cotation commune de la même semaine est utilisée pour les jambes quotidiennes. Pour le HIP mensuel, on retient le dernier règlement ICE disponible dans le mois et le fixing BCE correspondant. Seuls les fixings de change peuvent être reportés, à partir de la dernière date commune connue.
 - Les contrats continus attendent une source autorisant la publication des règlements et du CSV. Les rendements initiaux de la mer Noire reprennent 0,44 t/t d’huile et 0,39 t/t de pellets. Cette hypothèse est visible et modifiable.
 - Vérifier les résultats avec `node --test tests/spread-focus.test.mjs tests/spread-model.test.mjs`. Examiner les changements de données et publier uniquement après validation de la branche.
+
+## Contrats à terme
+
+Six contrats continus sont relevés sur TradingView : huile de soja `CBOT:ZL1!` (¢ US/lb), graines `CBOT:ZS1!` (¢ US/bu), tourteau `CBOT:ZM1!` (USD/short ton), Heating Oil `NYMEX:HO1!` (USD/gal), Low Sulphur Gasoil `ICEEUR:ULS1!` (USD/t) et huile de palme `MYX:FCPO1!` (MYR/t). Ils alimentent les versions quotidiennes du BOPO, du BOHO et du POGO, le board crush, la part de l’huile et les marges de biodiesel des États-Unis et d’Indonésie.
+
+- **Valeur retenue :** clôture de la barre quotidienne, datée par la séance de bourse (`time_tradingday`). Les horodatages bruts sont écartés : celui du NYMEX porte la date de la veille.
+- **Contrat :** première échéance continue, sans ajustement. La série change de contrat à l’échéance et peut alors présenter un saut. Les 6, 10 et 11/11/2026, `MYX:FCPO1!` reprend les clôtures du contrat de référence de janvier 2027 rapportées par Bernama. Le 06/11 et le 11/11/2026, `CBOT:ZL1!` reprend les règlements du contrat de décembre 2026.
+- **Contrôle :** chaque relevé est copié depuis la réponse de TradingView, puis comparé à une somme de contrôle calculée par TradingView sur la même fenêtre : nombre de séances, somme des clôtures, somme pondérée par le jour du mois et somme pondérée par le mois. Une série n’est publiée que si la copie reproduit exactement ces quatre valeurs. L’historique initial (469 séances CBOT et NYMEX, 482 séances ICE, 455 séances Bursa, du 02/01/2025 au 12/11/2026) a passé ce contrôle le 13/11/2026.
+- **Séance en cours :** jamais publiée. La fenêtre s’arrête à la veille.
+- **Révisions :** une clôture déjà publiée ne peut changer que si elle date de moins de cinq jours. Au-delà, la série est bloquée pour vérification du contrat continu.
+- **Publication :** `scripts/update-futures.py` écrit `futures-prices.json` et `futures-status.json` sur la branche `futures-live`, que le site lit au chargement. La marche à suivre du relevé quotidien figure dans `scripts/futures-runbook.md`. TradingView n’est accessible que par le connecteur du compte Claude du propriétaire : le relevé est donc effectué par une tâche planifiée Claude, et non par GitHub Actions.
+- **Tests :** `python3 -m unittest discover -s tests -p 'test_*.py'`.
 
 ## Actualisation automatique
 

@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {checkFocusParams,focusAverage,focusRows,focusSpreads,focusStats,focusWindow,gallonsPerTonne} from '../docs/terminal/spread-focus.mjs';
+import {checkFocusParams,focusAverage,focusInputs,focusRows,focusSpreads,focusStats,focusWindow,gallonsPerTonne} from '../docs/terminal/spread-focus.mjs';
 import {spreadPrices} from '../docs/terminal/spread-prices.mjs';
 
 const close=(actual,expected,tolerance=1e-9)=>assert.ok(Math.abs(actual-expected)<tolerance,actual+' ≠ '+expected);
@@ -46,6 +46,25 @@ test('POGO converts diesel from USD per gallon to USD per tonne',()=>{
   close(monthly.value,1133.13-4.956*gallonsPerTonne(.85));
 });
 
+test('daily futures spreads use the closes of the same session',()=>{
+  const boho=focusRows(variant('boho','futures'),spreadPrices,spread('boho').defaults,today);
+  close(at(boho,'2026-11-06').value,62.26*7.5/100-4.3317);
+  close(at(boho,'2026-11-12').value,63.42*7.5/100-4.1888);
+  close(at(focusRows(variant('boho','futures'),spreadPrices,{unit:'clb',lbPerGallon:7.5},today),'2026-11-12').value,63.42-4.1888*100/7.5);
+  const pogo=at(focusRows(variant('pogo','futures'),spreadPrices,spread('pogo').defaults,today),'2026-11-11');
+  close(pogo.value,4410/pogo.observations.usdm.value-1341.25);
+  assert.equal(pogo.observations.usdm.date,'2026-11-11');
+  const bopo=at(focusRows(variant('bopo','futures'),spreadPrices,spread('bopo').defaults,today),'2026-11-11');
+  close(bopo.value,63.88*22.0462-4410/bopo.observations.usdm.value);
+  // le 9 novembre 2026 est férié à Kuala Lumpur : aucune valeur ce jour-là pour les spreads qui utilisent Bursa
+  assert.equal(at(focusRows(variant('pogo','futures'),spreadPrices,spread('pogo').defaults,today),'2026-11-09'),undefined);
+  assert.ok(at(boho,'2026-11-09'));
+  assert.equal(spread('boho').variants[0].id,'futures');
+  assert.equal(spread('pogo').variants[0].id,'futures');
+  assert.deepEqual(focusInputs(spread('pogo'),variant('pogo','futures')),[]);
+  assert.equal(focusInputs(spread('pogo'),variant('pogo','mpob')),spread('pogo').inputs);
+});
+
 test('rows stop at the reference date and keep source observations',()=>{
   const rows=focusRows(variant('pogo','mpob'),spreadPrices,spread('pogo').defaults,'2025-01-10');
   assert.deepEqual(rows.map(row=>row.date),['2025-01-02','2025-01-03','2025-01-06','2025-01-07','2025-01-08','2025-01-10']);
@@ -73,7 +92,8 @@ test('parameters outside their limits are rejected',()=>{
 });
 
 test('imported histories are ordered, positive and free of duplicate dates',()=>{
-  for(const [key,minimum] of [['ulsdNy',459],['ulsdNyMonth',142],['imfSoyOil',141],['imfPalmOil',141],['mpobCpo',448]]){
+  for(const [key,minimum] of [['ulsdNy',459],['ulsdNyMonth',142],['imfSoyOil',141],['imfPalmOil',141],['mpobCpo',448],
+    ['zl',469],['zs',469],['zm',469],['ho',469],['gasoil',482],['fcpo',455]]){
     const rows=spreadPrices[key];
     assert.ok(rows.length>=minimum,key);
     assert.deepEqual(rows.map(([date])=>date),[...new Set(rows.map(([date])=>date))].sort(),key);

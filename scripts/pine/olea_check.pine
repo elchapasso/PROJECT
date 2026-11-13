@@ -1,0 +1,19 @@
+//@version=6
+indicator("olea_check")
+lo = input.int(20250101, "from")
+hi = input.int(20261112, "to")
+td = time_tradingday
+d = year(td, "UTC") * 10000 + month(td, "UTC") * 100 + dayofmonth(td, "UTC")
+var float s = 0.0
+var float w = 0.0
+var float m = 0.0
+var int n = 0
+if d >= lo and d <= hi
+    n += 1
+    s += close
+    w += close * dayofmonth(td, "UTC")
+    m += close * month(td, "UTC")
+plot(n, "n")
+plot(s, "s")
+plot(w, "w")
+plot(m, "m")

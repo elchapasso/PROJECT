@@ -6,6 +6,9 @@ export function validLiveFeed(feed){
   if(!feed||feed.schema!==1||!feed.series||typeof feed.series!=='object')return false;
   return Object.values(feed.series).every(rows=>Array.isArray(rows)&&rows.every(r=>Array.isArray(r)&&DATE.test(r[0])&&Number.isFinite(r[1])));
 }
+// Séries que la branche futures-live a le droit de fournir. Toute autre clé de ce flux est ignorée.
+export const FUTURES_SERIES=['zl','zs','zm','ho','gasoil','fcpo'];
+export const onlySeries=(feed,keys)=>({...feed,series:Object.fromEntries(keys.filter(key=>Object.hasOwn(feed.series,key)).map(key=>[key,feed.series[key]]))});
 export const validStatus=status=>!!status&&status.schema===1&&typeof status.series==='object'&&typeof status.sources==='object';
 
 // Les séries du flux complètent celles du site : une date nouvelle s’ajoute, une valeur révisée remplace l’ancienne,
