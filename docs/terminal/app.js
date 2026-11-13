@@ -782,13 +782,22 @@ function renderCbotArg(){
 const spreadDate=(date,grain)=>grain==='month'?displayPeriod(date.slice(0,7),'month'):formatDate(date);
 const grainNames={day:'Quotidien',week:'Hebdomadaire',month:'Mensuel'};
 const spreadLegName=id=>spreadLegs[id].fx?spreadLegs[id].unit:spreadLegs[id].description.split(' · ')[0];
+// Noms courts des composantes (boutons) et rôle stable d’une variante à l’autre : le change garde le rôle « fx »,
+// les autres prix gardent leur rang (huile puis palme, graines puis tourteau puis huile…).
+const componentNames={arSoyOil:'Huile de soja',zl:'Huile de soja',zlM:'Huile de soja',idPalmFob:'Huile de palme',myPalmFob:'Huile de palme',mpobCpo:'Huile de palme',
+  fcpo:'Huile de palme',fcpoUsdM:'Huile de palme',ho:'Gazole ULSD',hoM:'Gazole ULSD',ulsdNy:'Gazole ULSD',gasoil:'Gasoil',gasoilM:'Gasoil',
+  zs:'Graines de soja',zsM:'Graines de soja',arSoySeed:'Graines de soja',zm:'Tourteau de soja',zmM:'Tourteau de soja',arSoyMeal:'Tourteau de soja',
+  arSunSeed:'Graines de tournesol',arSunMeal:'Tourteau de tournesol',arSunOil:'Huile de tournesol'};
+const componentName=id=>componentNames[id]??spreadLegName(id);
+const componentRole=(variant,id)=>spreadLegs[id].fx?'fx':'p'+variant.legs.filter(leg=>!spreadLegs[leg].fx).indexOf(id);
 const spreadObservationUrl=(id,obs)=>obs.url||spreadLegs[id].observationUrl?.(obs.date)||spreadLegs[id].url;
 const spreadLegGrain={hip:'month',d4:'week',b100:'week',ulsdNyMonth:'month',imfSoyOil:'month',imfPalmOil:'month',zlM:'month',fcpoUsdM:'month',hoM:'month',gasoilM:'month',zsM:'month',zmM:'month'};
 const focusRanges={day:{3:'3 mois',6:'6 mois',12:'1 an',all:'Tout'},month:{24:'2 ans',60:'5 ans',all:'Depuis 2015'}};
 const focusAverages={day:{0:'Aucune',20:'20 séances',60:'60 séances'},month:{0:'Aucune',3:'3 mois',12:'12 mois'}};
 const focusDefaults={day:{range:'all',average:'20'},month:{range:'60',average:'12'}};
 const focusCards=[...focusSpreads,...focusMargins];
-const focusState=Object.fromEntries(focusCards.map(spread=>[spread.id,{variant:spread.variants[0].id,range:{},average:{},params:{...spread.defaults}}]));
+// components : prix sources affichés sous la courbe, à la demande (aucun par défaut).
+const focusState=Object.fromEntries(focusCards.map(spread=>[spread.id,{variant:spread.variants[0].id,range:{},average:{},params:{...spread.defaults},components:[]}]));
 const focusVariant=spread=>spread.variants.find(variant=>variant.id===focusState[spread.id].variant);
 const focusSetting=(spread,key)=>{
   const {grain}=focusVariant(spread);
@@ -814,12 +823,20 @@ function focusCard(spread){
   const partialRow=monthly?all.findLast(row=>Object.values(row.observations).some(o=>o?.partial)):null;
   const dateLabel=date=>spreadDate(date,grain)+(partialRow&&date===partialRow.date?' · en cours':'');
   const signed=value=>e(sign(value,digits));
+  // Composantes affichées pour la variante choisie, dans l’ordre de ses prix.
+  const shown=variant.legs.filter(id=>focusState[spread.id].components.includes(componentRole(variant,id)));
   const seg=(key,choices,value,label)=>'<div class="focus-control"><span>'+e(label)+'</span><div class="seg" role="group" aria-label="'+e(label+' · '+spread.code)+'">'+
     Object.entries(choices).map(([id,name])=>'<button type="button" data-action="focus-set" data-id="'+spread.id+'" data-key="'+key+'" data-value="'+e(id)+'" class="'+
       (id===String(value)?'active':'')+'" aria-pressed="'+(id===String(value))+'">'+e(name)+'</button>').join('')+'</div></div>';
   const controls='<div class="focus-controls">'+seg('variant',Object.fromEntries(spread.variants.map(option=>[option.id,option.label])),variant.id,'Référence')+
     seg('range',focusRanges[grain],focusSetting(spread,'range'),'Période')+seg('average',focusAverages[grain],size,'Moyenne mobile')+
-    (spread.units?seg('unit',spread.units,params.unit,'Unité'):'')+'</div>';
+    (spread.units?seg('unit',spread.units,params.unit,'Unité'):'')+
+    '<div class="focus-control"><span>Composantes</span><div class="seg" role="group" aria-label="'+e('Composantes du calcul · '+spread.code)+'">'+
+    variant.legs.map(id=>{
+      const on=shown.includes(id);
+      return '<button type="button" data-action="focus-component" data-id="'+spread.id+'" data-leg="'+e(id)+'" class="'+(on?'active':'')+'" aria-pressed="'+on+'"'+
+        ' title="'+e((on?'Masquer':'Afficher')+' le prix · '+spreadLegs[id].description+' ('+spreadLegs[id].unit+')')+'">'+e(componentName(id))+'</button>';
+    }).join('')+'</div></div></div>';
   const unitTag=' <small>'+e(unit)+'</small>';
   const kpi=(label,value,detail,klass='')=>'<div class="sim-kpi '+klass+'"><span>'+e(label)+'</span><strong class="num">'+value+'</strong><small>'+e(detail)+'</small></div>';
   const kpis=stats?'<div class="sim-kpis focus-kpis">'+
@@ -837,6 +854,15 @@ function focusCard(spread){
   if(contextRows.length)lines.push({label:'Repère · '+context.label,color:colors[5],width:1.75,points:contextRows.map(point(row=>row.value))});
   if(average.length)lines.push({label:'Moyenne mobile · '+focusAverages[grain][size],color:colors[2],width:1.75,points:average.map(point(row=>row.value))});
   const first=[rows[0]?.date,contextRows[0]?.date].filter(Boolean).sort()[0];
+  // Chaque composante garde son unité : un graphique par prix, sur les mêmes dates que la courbe principale.
+  const componentColors={p0:colors[3],p1:colors[4],p2:colors[6],fx:colors[1]};
+  const components=shown.length&&rows.length?'<div class="focus-components"><h4>Composantes du calcul</h4>'+shown.map(id=>{
+    const leg=spreadLegs[id],name=spreadLegName(id).split(' (')[0];
+    return chart([{label:name,color:componentColors[componentRole(variant,id)],
+      points:rows.map(row=>({date:period(row.date),value:row.observations[id]?.value}))}],
+      {unit:leg.unit,height:150,label:'Composante · '+name,sourceLinks:refsFor([leg,...(leg.fx?[{source:'BCE · EUR/USD',url:eurUsdSource}]:[])]),
+        tooltips:p=>num(p.value,Math.abs(p.value)>=100?2:4)+' '+leg.unit,...axis(rows[0].date)});
+  }).join('')+'</div>':'';
   const history=rows.length?chart(lines,{unit,height:230,label:spread.title+' · '+variant.label,zeroLine:true,sourceLinks:refs,tooltips:spreadTooltips,...axis(first)}):
     empty('Aucune date commune entre les deux prix.');
   const sides=rows.length?chart(variant.sides.map(([label],i)=>({label,color:colors[i],points:rows.map(point(row=>i?row.b:row.a))})),
@@ -861,7 +887,7 @@ function focusCard(spread){
   return panel('<div class="spread-heading"><div><span class="eyebrow">'+grainNames[grain]+(stats?' · '+(monthly?'':'au ')+e(dateLabel(stats.last.date)+partialNote):'')+'</span>'+
     '<h3>'+e(spread.title)+'</h3><p class="small">'+e(spread.summary)+'</p></div>'+
     action('export-focus',icon('download')+' CSV','ghost','data-id="'+spread.id+'"'+(all.length?'':' disabled')+' aria-label="'+e('Télécharger le CSV · '+spread.code)+'"')+'</div>'+
-    controls+kpis+'<div class="spread-body"><div class="spread-chart">'+history+'</div><div class="spread-summary">'+
+    controls+kpis+'<div class="spread-body"><div class="spread-chart">'+history+components+'</div><div class="spread-summary">'+
       '<h4>Formule</h4><p>'+e(variant.formula(params))+'</p><h4>Comment lire le résultat</h4><p>'+e(spread.reading)+'</p>'+
       '<h4>Données</h4><p class="small">'+e(variant.note)+'</p>'+form+'</div></div>'+
     (sides?'<details class="spread-details spread-price-charts"><summary>Voir les deux prix comparés</summary>'+sides+'</details>':'')+
@@ -1409,6 +1435,14 @@ const controlActions={
     else return;
     render();
     root.querySelector('[data-action="focus-set"][data-id="'+id+'"][data-key="'+key+'"][data-value="'+CSS.escape(value)+'"]')?.focus({preventScroll:true});
+  },
+  'focus-component':el=>{
+    const spread=focusCards.find(item=>item.id===el.dataset.id),leg=el.dataset.leg,variant=spread&&focusVariant(spread);
+    if(!variant?.legs.includes(leg))return;
+    const role=componentRole(variant,leg),list=focusState[spread.id].components;
+    focusState[spread.id].components=list.includes(role)?list.filter(item=>item!==role):[...list,role];
+    render();
+    root.querySelector('[data-action="focus-component"][data-id="'+spread.id+'"][data-leg="'+CSS.escape(leg)+'"]')?.focus({preventScroll:true});
   },
   'focus-reset':el=>{
     const spread=focusCards.find(item=>item.id===el.dataset.id);
