@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {focusMargins,usCrushSides,BUSHELS_PER_TONNE} from '../docs/terminal/margin-focus.mjs';
-import {focusRows,checkFocusParams,focusInputs} from '../docs/terminal/spread-focus.mjs';
+import {focusRows,checkFocusParams,focusInputs,focusParts,focusSpreads} from '../docs/terminal/spread-focus.mjs';
 import {spreadPrices} from '../docs/terminal/spread-prices.mjs';
 
 const close=(actual,expected,tolerance=1e-9)=>assert.ok(Math.abs(actual-expected)<tolerance,actual+' ≠ '+expected);
@@ -67,4 +67,30 @@ test('parameters are validated, and the FOB version hides the duty inputs',()=>{
   assert.deepEqual(checkFocusParams(soy,soy.defaults).params,soy.defaults);
   const us=card('usCrush');
   assert.deepEqual(checkFocusParams(us,{...us.defaults,unit:'usdt'}).params.unit,'usdt');
+});
+
+test('les composantes de chaque fiche se somment en spread ou en marge', () => {
+  const today='2026-11-13';
+  for(const card of [...focusSpreads,...focusMargins])for(const option of card.variants){
+    for(const params of [card.defaults,{...card.defaults,...(card.units?{unit:Object.keys(card.units).at(-1)}:{})}]){
+      const parts=focusParts(option,params),row=focusRows(option,spreadPrices,params,today).at(-1);
+      assert.ok(row,card.id+' '+option.id);
+      assert.deepEqual(Object.keys(row.parts),parts.map(part=>part.role));
+      const total=parts.reduce((sum,part)=>sum+part.sign*row.parts[part.role],0)-(params.cost?(params.unit==='usdt'?params.cost*BUSHELS_PER_TONNE:params.cost):0);
+      assert.ok(Math.abs(total-row.value)<1e-9,card.id+' '+option.id+' '+total+' '+row.value);
+      for(const part of parts)assert.ok(part.legs.every(id=>option.legs.includes(id)),card.id+' '+part.role);
+    }
+  }
+});
+
+test('les composantes gardent leur rôle d’une variante à l’autre', () => {
+  for(const card of [...focusSpreads,...focusMargins]){
+    const roles=card.variants.map(option=>focusParts(option,card.defaults).map(part=>part.role).join());
+    assert.equal(new Set(roles).size,1,card.id);
+  }
+  const cost=focusMargins.find(card=>card.id==='usCrush');
+  const option=cost.variants[0],params={...cost.defaults,cost:.5};
+  const row=focusRows(option,spreadPrices,params,'2026-11-13').at(-1);
+  const total=focusParts(option,params).reduce((sum,part)=>sum+part.sign*row.parts[part.role],0);
+  assert.ok(Math.abs(total-.5-row.value)<1e-9);
 });

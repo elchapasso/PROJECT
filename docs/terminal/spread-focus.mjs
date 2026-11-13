@@ -87,6 +87,15 @@ export const focusSpreads=[
     ]},
 ];
 
+// Composantes affichables dans le graphique du spread ou de la marge : chaque prix tel qu’il entre dans le calcul,
+// ramené à l’unité de la fiche, avec son signe dans la formule et les prix d’origine qui le composent.
+// Sans liste propre à la variante, les deux côtés du spread, chacun associé à son prix hors change.
+export function focusParts(variant,params){
+  if(variant.parts)return variant.parts(params);
+  const prices=variant.legs.filter(id=>!fxLegs.has(id));
+  return variant.sides.map(([label,value],i)=>({role:i?'b':'a',label,short:label.split(' · ')[0],sign:i?-1:1,legs:[prices[i]],value}));
+}
+
 // Paramètres affichés pour une variante : ceux du spread, sauf si la variante en déclare d’autres.
 export const focusInputs=(spread,variant)=>variant?.inputs??spread.inputs;
 
@@ -107,6 +116,7 @@ export function focusRows(variant,raw,params,today=new Date().toISOString().slic
   const points=Object.fromEntries(direct.map(id=>[id,new Map(spreadLegPoints(id,raw,today)
     .filter(({date,value})=>date<=today&&Number.isFinite(value)).map(point=>[point.date,point]))]));
   const fx=Object.fromEntries(variant.legs.filter(id=>fxLegs.has(id)).map(id=>[id,spreadLegPoints(id,raw)]));
+  const parts=focusParts(variant,params);
   const dates=[...points[direct[0]].keys()].filter(date=>direct.every(id=>points[id].has(date))).sort();
   return dates.flatMap(date=>{
     const observations=Object.fromEntries(variant.legs.map(id=>
@@ -114,7 +124,8 @@ export function focusRows(variant,raw,params,today=new Date().toISOString().slic
     if(Object.values(observations).some(o=>!Number.isFinite(o?.value)))return [];
     const values=Object.fromEntries(Object.entries(observations).map(([id,o])=>[id,o.value]));
     const [a,b]=variant.sides.map(([,side])=>side(values,params));
-    return Number.isFinite(a-b)?[{date,a,b,value:a-b,observations}]:[];
+    const components=Object.fromEntries(parts.map(part=>[part.role,part.value(values,params)]));
+    return Number.isFinite(a-b)?[{date,a,b,value:a-b,observations,parts:components}]:[];
   });
 }
 
