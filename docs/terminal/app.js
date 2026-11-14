@@ -3,7 +3,7 @@ import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,see
 import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js?v=20261111-market-close';
 import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js?v=20261110-mpob';
 import {biofuelReleaseDate,biofuelSeries,biofuelNativeSeries} from './biofuels.js';
-import {renderBiofuelPolicy,bindBiofuelPolicy} from './biofuel-policy-view.mjs?v=20261114-biofuel-observations';
+import {renderBiofuelPolicy,bindBiofuelPolicy} from './biofuel-policy-view.mjs?v=20261114-biofuel-observations-v2';
 import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js?v=20261111-market-close';
 import {indiaOrigins} from './india-origins.js';
 import {usSoyHistory} from './us-soy-history.js?v=20261109-soja';
