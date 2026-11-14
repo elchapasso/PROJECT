@@ -1,0 +1,61 @@
+  20.00
+   Other States 1/               15.00         14.60         15.00         15.00
+================================================================================
+                                WASDE - 677 - 15                   November 2026
+                                        
+        U.S. Soybeans and Products Supply and Use (Domestic Measure)  1/
+================================================================================
+                               2024/25  2025/26 Est. 2026/27 Proj. 2026/27 Proj.
+Item                                                           Oct           Nov
+================================================================================
+                                                 Million Acres
+SOYBEANS
+Area Planted                      87.3          81.2          86.9          86.9
+Area Harvested                    86.2          80.4          85.9          85.9
+
+                                                  Bushels
+Yield per Harvested Acre          50.7          53.0          53.1          53.3
+
+                                                Million Bushels
+Beginning Stocks                   342           325           315           315
+Production                        4374          4261          4562          4574
+Imports                             30            22            25            25
+  Supply, Total                   4746          4608          4902          4914
+Crushings                         2445          2646          2780          2780
+Exports                           1892          1515          1695          1720
+Seed                                70            75            73            76
+Residual                            14            57            39            38
+  Use, Total                      4421          4293          4587          4614
+Ending Stocks                      325           315           315           300
+Avg.FarmPrice ($/bu)  2/         10.00         10.50         12.00         12.10
+
+                                                Million Pounds
+
+SOYBEAN OIL
+Beginning Stocks                  1551          1747          1657          1458
+Production 4/                    29218         30576         32945         32945
+Imports                            362           528           700           700
+  Supply, Total                  31131         32851         35302         35103
+Domestic Disappearance           26912         30411         33105         33005
+   Biofuel 3/                    11758         14900         17800         17800
+   Food, Feed & other
+   Industrial                    15154         15511         15305         15205
+Exports                           2472           982           400           400
+   Use, Total                    29384         31393         33505         33405
+Ending stocks                     1747          1458          1797          1698
+Avg. Price (c/lb)  2/            47.59         64.08         70.00         68.00
+
+                                               Thousand Short Tons
+
+SOYBEAN MEAL
+Beginning Stocks                   453           398           450           333
+Production 4/                    58443         62608         65800         65800
+Imports                            806          1003          1000          1000
+  Supply, Total                  59703         64009         67250         67133
+Domestic Disappearance           41232         43374         44100         44033
+Exports                          18073         20302         22700         22700
+  Use, Total                     59305         63677         66800         66733
+Ending Stocks                      398           333           450           400
+Avg. Price ($/s.t.)  2/         300.33        325.32        340.00        340.00
+================================================================================
+                                WASDE - 677 - 16                   Novem

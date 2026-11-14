@@ -513,3 +513,28 @@
 .link-button{background:none;border:0;padding:0;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline}
 .calendar-coverage p{margin:3px 0}
 @media(max-width:560px){.day .cal-item time{display:none}.day .cal-item{font-size:8px;padding:2px}}
+
+/* Rapports & publications */
+.pub-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:18px 0 12px}
+.pub-toolbar p{margin:0}
+.pub-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pub-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow)}
+.pub-card.major{border-top:3px solid var(--accent)}
+.pub-card header h3{font-size:17px;margin:4px 0}
+.pub-card header h3 a{text-decoration:none;color:var(--text)}
+.pub-card header h3 a:hover{color:var(--accent)}
+.pub-card header p{margin:4px 0 0}
+.pub-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pub-cols h4{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 6px}
+.pub-cols p{margin:2px 0}
+.pub-date{font-weight:700;font-size:14px}
+.pub-docs{font-size:12px}
+.pub-figures{width:100%;border-collapse:collapse;font-size:12px}
+.pub-figures th{text-align:left;font-weight:600;padding:6px 8px 6px 0;vertical-align:top}
+.pub-figures td{text-align:right;padding:6px 0;vertical-align:top;white-space:nowrap}
+.pub-figures tr+tr th,.pub-figures tr+tr td{border-top:1px solid var(--line)}
+.pub-figures small{display:block;font-weight:400;color:var(--muted);margin-top:2px}
+.pub-links{font-size:12px;color:var(--muted);margin-top:auto}
+.pub-note{margin-top:14px}
+@media(max-width:1100px){.pub-grid{grid-template-columns:1fr}}
+@media(max-width:470px){.pub-cols{grid-template-columns:1fr}.pub-card{padding:13px}}

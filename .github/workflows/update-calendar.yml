@@ -2,7 +2,8 @@ name: Actualiser le calendrier
 
 on:
   schedule:
-    - cron: '23 6,12,19 * * *'
+    # Toutes les deux heures : rapports USDA (ESMIS, FAS, AMS), CONAB, SEA, ANEC, COT et Forex Factory.
+    - cron: '23 */2 * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -10,6 +11,7 @@ on:
       - '.github/workflows/update-calendar.yml'
       - 'scripts/update-calendar.py'
       - 'scripts/calendar_lib.py'
+      - 'scripts/reports_lib.py'
 
 permissions:
   contents: write
@@ -32,6 +34,9 @@ jobs:
       - name: Récupérer les calendriers publics
         id: refresh
         continue-on-error: true
+        env:
+          # Clé api.data.gov facultative pour l’API des ventes à l’exportation de la FAS (DEMO_KEY sinon).
+          FAS_API_KEY: ${{ secrets.FAS_API_KEY }}
         run: |
           git fetch --no-tags origin refs/heads/calendar-live
           git worktree add --detach "$RUNNER_TEMP/calendar-live" FETCH_HEAD
@@ -41,7 +46,7 @@ jobs:
           cd "$RUNNER_TEMP/calendar-live"
           git add docs/terminal/calendar-feed.json
           if git diff --cached --quiet; then exit 0; fi
-          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh publication calendar'
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh publication calendar and latest reports'
           git push origin HEAD:refs/heads/calendar-live
       - name: Signaler une source indisponible
         if: steps.refresh.outcome == 'failure'
