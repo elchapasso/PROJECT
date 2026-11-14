@@ -26,6 +26,8 @@ import {renderCotView,bindCotView,cotCalendarEntries} from './cot-view.mjs?v=202
 import {feedEntries,toCasablanca,dateStatusLabels,FOREX_CALENDAR_URL,casablanca} from './calendar-model.mjs?v=20261114-calendrier';
 import {publicationCards,publicationGroups,cardSpec,nextDates,latestFor,figureDigits} from './publications-model.mjs?v=20261114-publications';
 
+import {renderEnergyNews,bindEnergyNews,refreshEnergyNews} from './energy-news-view.mjs?v=20261114';
+
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
 const monthFormat=new Intl.DateTimeFormat('fr-FR',{month:'long',year:'numeric',timeZone:'UTC'});
@@ -393,7 +395,7 @@ function shell(body){
     const change=pct(s.values[last],s.values[prev]);const direction=change>0?'positive':change<0?'negative':'muted';
     return '<div class="tick" title="'+e(last?displayPeriod(last,s.grain)+' · '+s.points[last].source+' · '+s.definition:'Série non disponible')+'"><span>'+e(s.name)+'</span><div><b class="num">'+num(s.values[last],2)+'</b><small class="'+direction+'">'+(change===null?e(last?s.unit:'Non dispo.'):e(percent(change)))+'</small></div></div>';
   }).join('');
-  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['biofuels','demand','balances','cbot-arg','cot','publications'].includes(state.page)||state.page==='cross'&&state.crossView!=='pairs'?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
+  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['biofuels','demand','balances','cbot-arg','cot','publications','macro'].includes(state.page)||state.page==='cross'&&state.crossView!=='pairs'?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
 }
 
 
@@ -809,7 +811,7 @@ function renderComplex(key){
     const s=seedPrices[id];return group.products.includes(s.product)&&(!origin||s.origin===origin)&&(!product||s.product===product);
   });
   const selectedOrigin=origin?origins[origin]:'Toutes les origines';
-  return head(key==='macro'?'Marchés transversaux':'Complexes de marché',group.name,'Analyse de l’offre, de la demande, des stocks et des flux. Les fiches distinguent les chiffres publiés, les projections et les effets attendus.')+
+  return head('Complexes de marché',group.name,'Analyse de l’offre, de la demande, des stocks et des flux. Les fiches distinguent les chiffres publiés, les projections et les effets attendus.')+
     (isSoy?'<div class="toolbar">'+btnSeg('soyFamily',soyFamilies,product,'Sous-famille du soja')+'</div>'+
       '<div class="toolbar">'+btnSeg('soyOrigin',soyOrigins,origin,'Origine du soja')+'</div>'+
       (origin==='us'?usSoyHistoryPanels(product):origin==='arg'?argentinaSoyPanels(product):brazilSoyPanels(product)) :
@@ -1312,9 +1314,10 @@ function renderSources(){
 }
 
 
+const energyUi={e,icon,chart,link,num,formatDate,colors,series,spreadPrices,spreadLegs};
 const pageRender={
   overview:renderOverview,soy:()=>renderComplex('soy'),sun:()=>renderComplex('sun'),palm:()=>renderComplex('palm'),
-  publications:renderPublications,macro:()=>renderComplex('macro'),drivers:()=>renderFeed(false),news:()=>renderFeed(true),
+  publications:renderPublications,macro:()=>renderEnergyNews(energyUi),drivers:()=>renderFeed(false),news:()=>renderFeed(true),
   balances:renderBalances,demand:renderDemand,cot:renderCot,cross:renderCross,'cbot-arg':renderCbotArg,biofuels:renderBiofuels,calendar:renderCalendar,reports:renderReports,comex:renderComex,sources:renderSources,
 };
 function bindPageCharts(scope){
@@ -1332,6 +1335,7 @@ function render(){
   bindCotView(root,{csv,toast});
   bindBiofuelPolicy(root,biofuelUi);
   bindPageCharts(root);
+  bindEnergyNews(root,energyUi,render);
   if(focusFilter)root.querySelector('[data-filter="'+CSS.escape(focusFilter)+'"]')?.focus({preventScroll:true});
   if(focusControl)root.querySelector('[data-control="'+CSS.escape(focusControl)+'"]')?.focus({preventScroll:true});
 }
@@ -1629,5 +1633,6 @@ render();
 refreshCalendar();
 // Rapports et calendrier relus toutes les 30 minutes tant que la page est affichée.
 setInterval(()=>{if(document.visibilityState==='visible')refreshCalendar();},30*60*1000);
+setInterval(()=>{if(document.visibilityState==='visible'&&state.page==='macro')refreshEnergyNews();},15*60*1000);
 if(loadError)toast(loadError);
 

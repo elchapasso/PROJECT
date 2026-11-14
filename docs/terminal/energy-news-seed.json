@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "checkedAt": null,
+  "collectedAt": null,
+  "providers": [],
+  "articles": [
+    {
+      "title": "Le pétrole termine une deuxième semaine de baisse sur fond d’excédent d’offre",
+      "source": "Reuters",
+      "url": "https://www.reuters.com/business/energy/oil-prices-set-second-weekly-decline-trump-stay-with-iran-blockade-2026-11-13/",
+      "publishedAt": "2026-11-13T00:00:00Z",
+      "dateOnly": true,
+      "topics": ["energy", "policy"],
+      "via": "editorial",
+      "summary": "Les contrats Brent et WTI ont clôturé vendredi à 95,84 et 88,56 USD/baril. Le marché met en balance la perspective d’un excédent de brut et le risque de nouvelles perturbations au Moyen-Orient."
+    },
+    {
+      "title": "La perspective d’un excédent pétrolier se heurte au risque sur l’offre du Moyen-Orient",
+      "source": "Bloomberg",
+      "url": "https://www.rigzone.com/news/wire/crude_fluctuates_as_iran_tensions_persist-13-nov-2026-185085-article/",
+      "publishedAt": "2026-11-13T20:49:00Z",
+      "topics": ["energy", "policy"],
+      "via": "editorial",
+      "summary": "Bloomberg, repris par Rigzone, relève que l’incertitude sur les pourparlers entre Washington et Téhéran a entretenu la volatilité du Brent."
+    },
+    {
+      "title": "Le dollar se dirige vers sa plus forte hausse hebdomadaire en deux mois",
+      "source": "Reuters",
+      "url": "https://www.reuters.com/world/africa/dollar-near-19-month-high-fed-hike-bets-yen-tests-160-2026-11-13/",
+      "publishedAt": "2026-11-13T00:00:00Z",
+      "dateOnly": true,
+      "topics": ["fx"],
+      "via": "editorial",
+      "summary": "L’inflation américaine et les anticipations de taux soutiennent le dollar. Pour un achat d’huile au Maroc, le taux à suivre pour le coût en dirhams reste le USD/MAD."
+    },
+    {
+      "title": "Des arrêts d’usines perturbent la trituration du tournesol en Ukraine",
+      "source": "UkrAgroConsult",
+      "url": "https://ukragroconsult.com/en/news/sunseed-prices-in-ukraine-decline-as-crushing-plants-shut-down-following-russian-attacks/",
+      "publishedAt": "2026-11-13T00:00:00Z",
+      "dateOnly": true,
+      "topics": ["oils", "shipping"],
+      "via": "editorial",
+      "summary": "UkrAgroConsult rapporte des arrêts de trituration et une suspension des achats de graines par Kernel. À surveiller pour les offres d’huile et les dates de chargement."
+    },
+    {
+      "title": "Rapport pétrolier de novembre de l’AIE",
+      "source": "AIE",
+      "url": "https://www.iea.org/reports/oil-market-report-november-2026",
+      "publishedAt": "2026-11-13T00:00:00Z",
+      "dateOnly": true,
+      "topics": ["energy"],
+      "via": "editorial",
+      "summary": "Le rapport mensuel donne les perspectives d’offre et de demande, les stocks et l’activité de raffinage."
+    },
+    {
+      "title": "Constanța gagne en importance pour les expéditions d’huile de tournesol",
+      "source": "UkrAgroConsult",
+      "url": "https://ukragroconsult.com/en/news/sunflower-oil-through-constanta-a-new-growth-driver-for-romania-and-ukrainian-exports/",
+      "publishedAt": "2026-11-11T00:00:00Z",
+      "dateOnly": true,
+      "topics": ["shipping", "oils"],
+      "via": "editorial",
+      "summary": "Le port roumain traite davantage d’huile ukrainienne. Le transit par Constanța mérite d’être suivi lors de la comparaison des offres de mer Noire."
+    },
+    {
+      "title": "UKMTO signale un incident impliquant un pétrolier dans le détroit d’Ormuz",
+      "source": "UKMTO",
+      "url": "https://www.ukmto.org/-/media/ukmto/products/20261111-ukmto_warning_202_26.pdf?rev=c16d26ad15904f0fb70edc01e13ca9a8",
+      "publishedAt": "2026-11-11T00:00:00Z",
+      "dateOnly": true,
+      "topics": ["shipping", "energy"],
+      "via": "editorial"
+    }
+  ],
+  "spot": {
+    "brent": [["2026-11-05", 97.96], ["2026-11-06", 97.83], ["2026-11-09", 91.03], ["2026-11-10", 90.16], ["2026-11-11", 92.14]],
+    "wti": [["2026-11-05", 94.05], ["2026-11-06", 94.37], ["2026-11-09", 90.4], ["2026-11-10", 89.62], ["2026-11-11", 89.62]]
+  }
+}
