@@ -3,8 +3,6 @@ export const reviewedOn = '2026-11-13';
 export const sources = {
   epaHistory: ['EPA · Mandats historiques', 'https://www.epa.gov/renewable-fuel-standard/renewable-fuel-annual-standards'],
   epaFinal: ['EPA · Règle finale Set 2', 'https://www.epa.gov/renewable-fuel-standard/final-renewable-fuel-standards-2026-and-2027'],
-  epaProposal: ['Federal Register · Proposition du 16 octobre 2026', 'https://www.govinfo.gov/content/pkg/FR-2026-10-16/html/2026-21155.htm'],
-  epaFactors: ['Federal Register · Set 2, 40 CFR § 80.1415', 'https://www.govinfo.gov/content/pkg/FR-2026-04-01/html/2026-06275.htm'],
   epaGeneration: ['EPA · Fichiers EMTS de génération', 'https://www.epa.gov/fuels-registration-reporting-and-compliance-help/spreadsheet-rin-generation-data-renewable-fuel'],
   epaAvailable: ['EPA · RIN disponibles par millésime', 'https://www.epa.gov/fuels-registration-reporting-and-compliance-help/spreadsheet-available-rins-date-renewable-fuel'],
   farmdoc: ['University of Illinois · farmdoc daily, figure 1', 'https://farmdocdaily.illinois.edu/2026/11/rewriting-the-rfs-playbook-the-coming-battle-over-the-2027-biomass-based-diesel-rvos.html'],
@@ -23,7 +21,6 @@ export const sources = {
   gapkiAug: ['GAPKI · Juillet–août', 'https://gapki.id/news/2026/10/10/ekspor-sawit-agustus-2026-naik-1256-stok-turun/'],
   gapkiYtd: ['GAPKI · Cumul janvier–août 2026', 'https://gapki.id/news/2026/10/12/ipoc-2026-bahas-prospek-industri-sawit-dan-harga-minyak-nabati-2027/'],
   gapkiForecast: ['GAPKI · Projections 2026 / 2027', 'https://gapki.id/news/2026/09/21/produksi-cpo-cukup-untuk-b50-tetapi-produktivitas-harus-jadi-kunci-menjaga-ekspor/'],
-  usda: ['USDA FAS · Biofuels Annual, tableau 3', 'https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Biofuels+Annual_Jakarta_Indonesia_ID2026-0033.pdf'],
 };
 
 export const historicalGallons = [
@@ -32,17 +29,8 @@ export const historicalGallons = [
   [2022, 2.76], [2023, 2.82], [2024, 3.04], [2025, 3.35],
 ];
 
-// Volumes réglementaires en millions de RIN. Les deux colonnes proposées
-// contiennent la réallocation SRE totale, y compris la part déjà adoptée.
-export const epaPolicy = {
-  2026: {base: 8860, adopted: 210, equal: 300, all2027: 210},
-  2027: {base: 8950, adopted: 250, equal: 340, all2027: 430},
-};
-export const epaScenarios = {
-  adopted: 'Règle en vigueur',
-  equal: 'Proposition · 50 % en 2026 / 50 % en 2027',
-  all2027: 'Proposition · 100 % en 2027',
-};
+// Obligations BBD en vigueur, réallocation adoptée incluse, en millions de RIN.
+export const adoptedBbdMandates = [[2026, 9070], [2027, 9200]];
 
 // Série nette publiée par farmdoc à partir d’EMTS, arrondie au million.
 export const netD4 = [436, 478, 652, 709, 735, 838, 793, 714, 786]

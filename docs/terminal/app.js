@@ -3,8 +3,7 @@ import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,see
 import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js?v=20261111-market-close';
 import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js?v=20261110-mpob';
 import {biofuelReleaseDate,biofuelSeries,biofuelNativeSeries} from './biofuels.js';
-import {renderBiofuelPolicy,bindBiofuelPolicy} from './biofuel-policy-view.mjs?v=20261114-biofuel-charts';
-import {worldBalances} from './balance-data.mjs';
+import {renderBiofuelPolicy,bindBiofuelPolicy} from './biofuel-policy-view.mjs?v=20261114-biofuel-observations';
 import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js?v=20261111-market-close';
 import {indiaOrigins} from './india-origins.js';
 import {usSoyHistory} from './us-soy-history.js?v=20261109-soja';
@@ -482,9 +481,9 @@ function eiaBiofuelHistory(oil){
 }
 function renderBiofuels(){
   const today=new Date().toISOString().slice(0,10);
-  return head('Analyse','Biocarburants','Mandats EPA et B50, consommation réelle d’huiles et simulations de demande.')+
+  return head('Analyse','Biocarburants','Mandats EPA, programme B50 et consommation d’huiles dans les biocarburants.')+
     renderBiofuelPolicy(biofuelUi,{
-      totalSoy:biofuelNativeSeries.soybean[2026],canola:biofuelNativeSeries.canola[2026],balance:worldBalances.palm,
+      totalSoy:biofuelNativeSeries.soybean[2026],canola:biofuelNativeSeries.canola[2026],
       prices:{
         hip:spreadLegPoints('hip',spreadPrices).map(point=>point.date==='2026-11-01'?{...point,url:'https://ebtke.esdm.go.id/artikel/pengumuman/hip-bbn-jenis-biodiesel-bulan-november-2026'}:point),
         gasoil:spreadLegPoints('gasoil',spreadPrices),rates:spreadLegPoints('usdi',spreadPrices),density:GASOIL_KG_PER_LITRE,date:today,

@@ -473,16 +473,12 @@
 
 /* Biocarburants · mandats, simulations et séries observées */
 .bio-policy { min-width: 0; }
-.bio-controls,.bio-kpis { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,13rem),1fr)); gap: .8rem; }
-.bio-controls .field { min-width: 0; align-self: end; }
-.bio-controls select,.bio-controls input { width: 100%; min-width: 0; text-overflow: ellipsis; }
+.bio-kpis { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,13rem),1fr)); gap: .8rem; }
 .bio-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 1rem; }
 .bio-kpis { margin: 0 0 .9rem; }
 .bio-kpi { display: grid; align-content: start; gap: .25rem; min-width: 0; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: .65rem; }
 .bio-kpi span { color: var(--muted); font-size: .8rem; }
 .bio-kpi strong { font-size: clamp(1.15rem,3vw,1.65rem); font-variant-numeric: tabular-nums; line-height: 1.3; }
-.bio-positive { color: var(--green); }
-.bio-negative,.bio-error { color: var(--red); }
 .bio-method { border-top: 1px solid var(--line); padding-top: .6rem; margin-top: .9rem; }
 .bio-method summary { cursor: pointer; font-weight: 650; }
 .bio-method p { margin: .55rem 0 0; }
