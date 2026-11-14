@@ -3,8 +3,7 @@ import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,see
 import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js?v=20261111-market-close';
 import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js?v=20261110-mpob';
 import {biofuelReleaseDate,biofuelSeries,biofuelNativeSeries} from './biofuels.js';
-import {renderBiofuelPolicy,bindBiofuelPolicy} from './biofuel-policy-view.mjs?v=20261113-biofuels';
-import {worldBalances} from './balance-data.mjs';
+import {renderBiofuelPolicy,bindBiofuelPolicy} from './biofuel-policy-view.mjs?v=20261114-biofuel-observations-v2';
 import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js?v=20261111-market-close';
 import {indiaOrigins} from './india-origins.js';
 import {usSoyHistory} from './us-soy-history.js?v=20261109-soja';
@@ -141,24 +140,58 @@ function chartTicks(values,scale,zeroLine){
   return Array.from({length:last-first+1},(_,i)=>(i+first)*step);
 }
 const chartModels=[];
-const chartDefaults=last=>({height:'standard',scale:'auto',start:0,end:last,hidden:new Set()});
-function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=false,label='Historique '+unit,sourceLinks,zeroLine=false,startDate,maxGapDays,periodLabels}={}){
+const chartDefaults=(last,scale)=>({height:'standard',scale,start:0,end:last,average:0,hidden:new Set()});
+const chartMonthIndex=date=>Number(date.slice(0,4))*12+Number(date.slice(5,7))-1;
+function chartRanges(dates,periodType){
+  const period=periodType==='year'?Number:chartMonthIndex;
+  const end=period(dates.at(-1));
+  const windows=periodType==='year'?[[3,'3 ans'],[5,'5 ans'],[10,'10 ans']]:[[3,'3 mois'],[6,'6 mois'],[12,'1 an'],[24,'2 ans']];
+  const seen=new Set();
+  return [['all','Tout',0],...windows.flatMap(([size,label])=>{
+    const start=dates.findIndex(date=>period(date)>=end-size+1);
+    if(start<=0||seen.has(start))return [];
+    seen.add(start);
+    return [[size,label,start]];
+  })];
+}
+function chartMovingAverage(points,dates,size){
+  const byDate=new Map(points.map(point=>[point.date,point.value]));
+  const positions=new Map(dates.map((date,i)=>[date,i]));
+  return focusAverage(dates.map(date=>{
+    const value=byDate.get(date);
+    return {date,value:Number.isFinite(value)?value:0};
+  }),size).map(point=>{
+    const index=positions.get(point.date);
+    const window=dates.slice(index-size+1,index+1);
+    const complete=chartMonthIndex(point.date)-chartMonthIndex(window[0])===size-1&&
+      window.every(date=>Number.isFinite(byDate.get(date)));
+    return complete?point:{...point,value:null};
+  });
+}
+function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=false,label='Historique '+unit,sourceLinks,zeroLine=false,startDate,maxGapDays,periodLabels,optionsOpen=false,quickRanges=false,movingAverage=false,defaultScale='auto'}={}){
   const valid=lines.filter(l=>l.points.some(p=>Number.isFinite(p.value)));
   if(!valid.length)return empty('Série non disponible pour la sélection.');
   const dates=seasonal?yearMonths:[...new Set([...(startDate?[startDate]:[]),...valid.flatMap(l=>l.points.map(p=>p.date))])].sort();
   const periodLabel=date=>periodLabels?.[date]??(seasonal?monthName.format(monthDate(date)):displayPeriod(date,periodType));
   const periods=Object.fromEntries(dates.map((date,i)=>[i,periodLabel(date)]));
-  const settings=chartDefaults(dates.length-1);
-  const model={valid,dates,unit,periodType,height,tooltips,seasonal,settings,zeroLine,startDate,maxGapDays,periodLabels};
+  const settings=chartDefaults(dates.length-1,defaultScale);
+  const ranges=quickRanges?chartRanges(dates,periodType):[];
+  const averages=movingAverage?[3,12].filter(size=>size<=dates.length&&valid.some(line=>
+    chartMovingAverage(line.points,dates,size).some(point=>Number.isFinite(point.value)))):[];
+  const model={valid,dates,unit,periodType,height,tooltips,seasonal,settings,zeroLine,startDate,maxGapDays,periodLabels,ranges,defaultScale};
+  const shortcuts=ranges.length>1?'<div class="chart-shortcuts"><span>Période rapide</span><div class="seg" role="group" aria-label="Période rapide · '+e(label)+'">'+
+    ranges.map(([id,name])=>'<button type="button" data-chart-range="'+id+'" aria-pressed="'+(id==='all')+'"'+(id==='all'?' class="active"':'')+'>'+e(name)+'</button>').join('')+
+    '</div></div>':'';
   const index=chartModels.push(model)-1;
   const selectSetting=(key,title,choices)=>'<label>'+e(title)+'<select aria-label="'+e(title)+'" data-chart-setting="'+key+'">'+options(choices,settings[key])+'</select></label>';
   const legend=valid.map((l,i)=>'<button type="button" data-chart-series="'+i+'" aria-pressed="true" title="Afficher ou masquer cette série"><i style="--series:'+l.color+'"></i>'+e(l.label)+'</button>').join('');
   return '<figure class="chart-wrap" aria-label="'+e(label)+'" data-chart="'+index+'">'+
     '<figcaption class="chart-key"><div class="legend" role="group" aria-label="Séries affichées">'+legend+'</div>'+(unit?'<span class="chart-unit">'+e(unit)+'</span>':'')+'</figcaption>'+
-    '<details class="chart-settings"><summary>Réglages du graphique</summary><div class="chart-controls">'+
+    shortcuts+'<details class="chart-settings"'+(optionsOpen?' open':'')+'><summary>Réglages du graphique</summary><div class="chart-controls">'+
     selectSetting('height','Hauteur',{compact:'Compacte',standard:'Standard',large:'Agrandie'})+
     selectSetting('scale','Échelle verticale',{auto:'Automatique',tight:'Resserrée',zero:'Inclure zéro'})+
     selectSetting('start','Du',periods)+selectSetting('end','Au',periods)+
+    (averages.length?selectSetting('average','Moyenne mobile',Object.fromEntries([[0,'Aucune'],...averages.map(size=>[size,size+' mois'])])):'')+
     '<button type="button" class="button" data-chart-reset>Réinitialiser</button></div></details>'+
     '<div class="chart-content">'+chartFrame(model)+'</div>'+
     chartSources(sourceLinks??refsFor(valid.flatMap(l=>l.points).filter(p=>Number.isFinite(p.value))))+'</figure>';
@@ -168,6 +201,12 @@ function bindChart(wrap,model){
   const refresh=()=>{
     const {settings}=model;
     for(const select of wrap.querySelectorAll('[data-chart-setting]'))select.value=settings[select.dataset.chartSetting];
+    for(const button of wrap.querySelectorAll('[data-chart-range]')){
+      const preset=model.ranges.find(([id])=>String(id)===button.dataset.chartRange);
+      const active=settings.start===preset[2]&&settings.end===model.dates.length-1;
+      button.setAttribute('aria-pressed',active);
+      button.classList.toggle('active',active);
+    }
     const legend=wrap.querySelectorAll('[data-chart-series]');
     for(const button of legend){
       const visible=!settings.hidden.has(Number(button.dataset.chartSeries));
@@ -182,16 +221,19 @@ function bindChart(wrap,model){
     const key=event.target.dataset.chartSetting;
     if(!key)return;
     const {settings}=model;
-    settings[key]=key==='start'||key==='end'?Number(event.target.value):event.target.value;
+    settings[key]=['start','end','average'].includes(key)?Number(event.target.value):event.target.value;
     if(key==='start'&&settings.start>settings.end)settings.end=settings.start;
     if(key==='end'&&settings.end<settings.start)settings.start=settings.end;
     refresh();
   });
   wrap.addEventListener('click',event=>{
-    const button=event.target.closest('[data-chart-series],[data-chart-reset]');
+    const button=event.target.closest('[data-chart-series],[data-chart-range],[data-chart-reset]');
     if(!button)return;
-    if(button.hasAttribute('data-chart-reset'))model.settings=chartDefaults(model.dates.length-1);
-    else{
+    if(button.hasAttribute('data-chart-reset'))model.settings=chartDefaults(model.dates.length-1,model.defaultScale);
+    else if(button.hasAttribute('data-chart-range')){
+      model.settings.start=model.ranges.find(([id])=>String(id)===button.dataset.chartRange)[2];
+      model.settings.end=model.dates.length-1;
+    }else{
       const index=Number(button.dataset.chartSeries),hidden=model.settings.hidden;
       if(hidden.has(index))hidden.delete(index);
       else hidden.add(index);
@@ -205,8 +247,18 @@ function bindChart(wrap,model){
 function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,seasonal,settings,zeroLine,startDate,maxGapDays,periodLabels}){
   const dates=allDates.slice(settings.start,settings.end+1);
   const dateSet=new Set(dates);
+  const columnByDate=new Map(dates.map((date,i)=>[date,i]));
   const key=p=>seasonal?p.date.slice(5):p.date;
-  const lines=valid.filter((_,i)=>!settings.hidden.has(i)).map(line=>({...line,points:line.points.filter(p=>dateSet.has(key(p)))}));
+  const visible=valid.filter((_,i)=>!settings.hidden.has(i));
+  const lines=visible.map(line=>({...line,points:line.points.filter(p=>dateSet.has(key(p)))}));
+  if(settings.average){
+    for(const line of visible){
+      const average=chartMovingAverage(line.points,allDates,settings.average).filter(p=>dateSet.has(p.date));
+      if(average.some(point=>Number.isFinite(point.value))){
+        lines.push({...line,label:line.label+' · MM '+settings.average,width:1.75,dashed:true,points:average});
+      }
+    }
+  }
   const values=lines.flatMap(l=>l.points.map(p=>p.value)).filter(Number.isFinite);
   if(!values.length)return empty('Aucune observation pour les séries et la période sélectionnées.');
   const ticks=chartTicks(values,settings.scale,zeroLine);
@@ -216,7 +268,7 @@ function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,season
   const x=i=>dates.length===1?50:startDate?
     100*(dateValues[i]-dateValues[0])/(dateValues.at(-1)-dateValues[0]):100*i/(dates.length-1);
   const y=v=>100*(max-v)/(max-min);
-  const column=p=>dates.indexOf(key(p));
+  const column=p=>columnByDate.get(key(p));
   const tickCount=Math.min(7,dates.length);
   const axisColumns=seasonal||tickCount===1?dates.map((_,i)=>i):Array.from({length:tickCount},(_,i)=>Math.round(i*(dates.length-1)/(tickCount-1)));
   const multiYear=dates[0].slice(0,4)!==dates.at(-1).slice(0,4);
@@ -236,7 +288,7 @@ function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,season
       const command=Number.isFinite(previous?.value)&&!gap?'L':'M';
       return command+x(column(p))+','+y(p.value);
     }).join(' ');
-    paths.push('<path class="chart-line" d="'+path+'" stroke="'+l.color+'" stroke-width="'+(l.width??2.25)+'"/>');
+    paths.push('<path class="chart-line" d="'+path+'" stroke="'+l.color+'" stroke-width="'+(l.width??2.25)+'"'+(l.dashed?' stroke-dasharray="5 4"':'')+'/>');
     for(const p of l.points){
       if(!Number.isFinite(p.value))continue;
       const index=column(p);
@@ -410,7 +462,7 @@ function mpobHistoryPanel(){
     mpobHistorySources);
 }
 const seasonalColors=colors.slice(1);
-function seasonalHistory(title,years,sourceLinks,note='',digits=4){
+function seasonalHistory(title,years,sourceLinks,note='',digits=4,chartOptions={}){
   const latest=years.at(-1);
   const lastMonth=yearMonths[latest.volumes.findLastIndex(Number.isFinite)];
   const lines=years.map(({year,volumes},i)=>({
@@ -419,17 +471,29 @@ function seasonalHistory(title,years,sourceLinks,note='',digits=4){
   }));
   const rows=yearMonths.map((month,m)=>[e(smallMonth('2000-'+month)),...years.map(({volumes})=>num(volumes[m],digits))]);
   return section(title,'Dernière observation · '+displayPeriod(latest.year+'-'+lastMonth,'month')+' · millions de tonnes')+
-    panel(chart(lines,{unit:'Mt',height:244,seasonal:true,label:title+' en millions de tonnes',tooltips:p=>num(p.value,digits)+' Mt',sourceLinks})+note+
+    panel(chart(lines,{unit:'Mt',height:244,seasonal:true,label:title+' en millions de tonnes',tooltips:p=>num(p.value,digits)+' Mt',sourceLinks,...chartOptions})+note+
       '<details><summary class="small">Voir les valeurs mensuelles en Mt</summary>'+table(['Mois',...years.map(y=>y.year)],rows)+'</details>');
 }
 const eiaFeedstocks='https://www.eia.gov/dnav/pet/pet_pnp_feedbiofuel_dcu_nus_m.htm';
 const eiaHistory=code=>[['EIA · Historique mensuel','https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s='+code]];
 const biofuelUi={section,panel,chart,chartSources,table,e,num,sign,formatDate,csv};
+const eiaBiofuelCharts={
+  soybean:{title:'Huile de soja · Total',code:'M_EPOOBDSO_YIFBP_NUS_MMLB',
+    reading:'Ce graphique montre la quantité totale d’huile de soja utilisée chaque mois par les producteurs américains de biocarburants. Compare un même mois sur plusieurs années pour distinguer la saisonnalité d’un changement de demande.'},
+  canola:{title:'Huile de canola · Total',code:'M_EPOOBDCO_YIFBP_NUS_MMLB',
+    reading:'Ce graphique suit l’huile de canola utilisée chaque mois dans les biocarburants américains. Compare les mêmes mois avec la courbe du soja pour repérer une évolution du mix de matières premières. Les variations seules ne démontrent pas un remplacement de l’une par l’autre.'},
+};
+function eiaBiofuelHistory(oil){
+  const {title,code,reading}=eiaBiofuelCharts[oil];
+  const note='<div class="bio-reading"><strong>Comment lire ce graphique</strong><p>'+e(reading)+'</p></div>'+
+    action('export-eia-biofuel',icon('download')+' Télécharger le CSV','ghost','data-oil="'+oil+'"');
+  return seasonalHistory(title,biofuelSeries[oil],eiaHistory(code),note,4,{optionsOpen:true});
+}
 function renderBiofuels(){
   const today=new Date().toISOString().slice(0,10);
-  return head('Analyse','Biocarburants','Mandats EPA et B50, consommation réelle d’huiles et simulations de demande.')+
+  return head('Analyse','Biocarburants','Mandats EPA, programme B50 et consommation d’huiles dans les biocarburants.')+
     renderBiofuelPolicy(biofuelUi,{
-      totalSoy:biofuelNativeSeries.soybean[2026],canola:biofuelNativeSeries.canola[2026],balance:worldBalances.palm,
+      totalSoy:biofuelNativeSeries.soybean[2026],canola:biofuelNativeSeries.canola[2026],
       prices:{
         hip:spreadLegPoints('hip',spreadPrices).map(point=>point.date==='2026-11-01'?{...point,url:'https://ebtke.esdm.go.id/artikel/pengumuman/hip-bbn-jenis-biodiesel-bulan-november-2026'}:point),
         gasoil:spreadLegPoints('gasoil',spreadPrices),rates:spreadLegPoints('usdi',spreadPrices),density:GASOIL_KG_PER_LITRE,date:today,
@@ -440,10 +504,10 @@ function renderBiofuels(){
         ],
       },
     })+
-    '<div id="bio-eia" tabindex="-1">'+section('États-Unis · Consommation saisonnière EIA','Chaque courbe représente une année de janvier à décembre.')+
-    '<p class="small">'+link(eiaFeedstocks,'EIA · Feedstocks Consumed for Production of Biofuels')+' · Publication du '+e(formatDate(biofuelReleaseDate))+'. Les mois masqués par l’EIA ou encore non publiés restent vides.</p>'+
-    seasonalHistory('Huile de soja · Total',biofuelSeries.soybean,eiaHistory('M_EPOOBDSO_YIFBP_NUS_MMLB'))+
-    seasonalHistory('Huile de canola · Total',biofuelSeries.canola,eiaHistory('M_EPOOBDCO_YIFBP_NUS_MMLB'))+'</div>';
+    '<div id="bio-eia" tabindex="-1">'+section('États-Unis · Consommation saisonnière EIA','Comparaison de janvier à décembre, en millions de tonnes.')+
+    '<p class="small">Chaque courbe représente une année. Clique sur une année dans la légende pour l’afficher ou la masquer. Les mois masqués par l’EIA ou encore non publiés restent vides.</p>'+
+    '<p class="small">'+link(eiaFeedstocks,'EIA · Feedstocks Consumed for Production of Biofuels')+' · Publication du '+e(formatDate(biofuelReleaseDate))+'.</p>'+
+    Object.keys(eiaBiofuelCharts).map(eiaBiofuelHistory).join('')+'</div>';
 }
 function indiaOriginChart(title,rows,column,share,source){
   const ranked=rows.filter(row=>row[column]>0).sort((a,b)=>b[column]-a[column]);
@@ -1065,16 +1129,19 @@ function scenarioTable(h){
 
 const liveCalendarFeed='https://raw.githubusercontent.com/elchapasso/PROJECT/calendar-live/docs/terminal/calendar-feed.json';
 async function refreshCalendar(){
+  let older=null;
   for(const url of [liveCalendarFeed,'./terminal/calendar-feed.json?v=20261114-calendrier']){
     try{
       const response=await fetch(url,{cache:'no-cache',signal:AbortSignal.timeout(7000)});
       if(!response.ok)continue;
       const feed=await response.json();
       if(!Array.isArray(feed.forex)||!Array.isArray(feed.reports)&&!Array.isArray(feed.nass))continue;
-      calendarFeed=feed;
-      break;
+      // Un flux à l’ancien format (Crop Progress seul) ne sert que si aucun flux complet n’est disponible.
+      if(Array.isArray(feed.reports)){calendarFeed=feed;break;}
+      older??=feed;
     }catch{}
   }
+  calendarFeed??=older;
   calendarFeedLoaded=true;
   if((state.page==='calendar'||state.page==='overview')&&!root.querySelector('dialog[open]'))render();
 }
@@ -1442,6 +1509,13 @@ const controlActions={
         [forecast&&date>=forecast?'Prévision USDA':'',note].filter(Boolean).join(' · ')]));
     csv('olea_tournesol_'+state.sunFamily+'_'+state.sunOrigin+'_'+view+'.csv',
       [['Période','Indicateur','Volume','Unité','Source','URL','Périmètre / statut'],...rows]);
+  },
+  'export-eia-biofuel':el=>{
+    const oil=el.dataset.oil,ref=eiaBiofuelCharts[oil];
+    if(!ref)return;
+    csv('olea-eia-saisonnier-'+oil+'.csv',[['Mois','Millions de tonnes','Source'],
+      ...biofuelSeries[oil].flatMap(({year,volumes})=>volumes.flatMap((value,i)=>
+        Number.isFinite(value)?[[year+'-'+yearMonths[i],value,eiaHistory(ref.code)[0][1]]]:[]))]);
   },
   'export-feed':exportFeed,
   'export-cross':exportCross,
