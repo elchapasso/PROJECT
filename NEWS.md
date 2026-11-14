@@ -72,7 +72,8 @@ Une tâche planifiée la lance chaque matin (lundi-samedi) :
 2. Lire `../news-live/docs/terminal/news-feed.json` et rechercher les nouvelles des dernières 24-48 h, complexe par complexe et origine par origine.
 3. Ajouter les nouvelles fiches (en général 5 à 15), corriger celles qui ont évolué.
 4. Contrôler et dater : `node scripts/update-news.mjs ../news-live/docs/terminal/news-feed.json`. Le script refuse le fichier s’il contient une fiche invalide, trie, supprime les fiches de plus de 120 jours et affiche la couverture des 7 derniers jours.
-5. Publier : commit sur `news-live` puis `git push origin HEAD:news-live`. Ne jamais pousser sur `main`.
+5. Mettre à jour le fret (`docs/terminal/freight-feed.json` et fiches `freight`) selon [FRET.md](FRET.md), puis contrôler avec `node scripts/update-freight.mjs ../news-live/docs/terminal/freight-feed.json`.
+6. Publier : commit sur `news-live` puis `git push origin HEAD:news-live`. Ne jamais pousser sur `main`.
 
 Le site lit `news-live` à l’ouverture puis toutes les 30 minutes. Si la branche est inaccessible, il utilise la copie intégrée `docs/terminal/news-feed.json`.
 

@@ -53,6 +53,10 @@ La vue [Marché & actualités](https://elchapasso.github.io/PROJECT/#overview), 
 
 Le flux est rédigé chaque matin et publié sur la branche `news-live` (`docs/terminal/news-feed.json`). Format, règles de rédaction et procédure : [NEWS.md](NEWS.md). Contrôle : `node scripts/update-news.mjs <fichier>` et `node --test tests/news-feed.test.mjs`.
 
+## Fret
+
+La page [Fret](https://elchapasso.github.io/PROJECT/#fret) (rubrique **Terminal**) estime le fret vrac liquide vers Casablanca depuis l’Argentine (18-24 kt), l’Ukraine, la Russie et la Bulgarie (6-8 kt), la Colombie, l’Indonésie et la Malaisie (4 kt, via Suez ou le Cap). L’estimation se recalcule avec les relevés publics des soutes VLSFO et des indices tankers Baltic, mis à jour chaque jour sur la branche `news-live` (`docs/terminal/freight-feed.json`). La page montre aussi la décomposition du coût, l’historique, les cotations publiques, les actualités du fret et les dépêches maritimes, et permet de caler le modèle avec ses propres cotations courtier (enregistrées dans le navigateur seulement). Méthode, format et procédure : [FRET.md](FRET.md). Contrôle : `node scripts/update-freight.mjs <fichier>` et `node --test tests/freight-model.test.mjs`.
+
 ## Rapports & publications
 
 La vue [Rapports & publications](https://elchapasso.github.io/PROJECT/#publications), dans la rubrique **Terminal**, donne une fiche par rapport suivi au calendrier : dernière publication (date et fichiers officiels), chiffres clés quand la source les publie en accès libre, prochaine date (heure de Casablanca, niveau de certitude) et les deux suivantes, liens vers la page officielle et les archives.
