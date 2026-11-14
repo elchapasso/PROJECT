@@ -51,9 +51,9 @@ const iconPaths={
 };
 const icon=(name,size=17)=>'<svg class="ico" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="'+iconPaths[name]+'"/></svg>';
 const menu=[
-  ['Terminal',[['overview','Marché & actualités','news'],['publications','Rapports & publications','report'],['calendar','Calendrier','calendar']]],
+  ['Terminal',[['overview','Marché & actualités','news'],['macro','Énergie & géopolitique','bolt'],['publications','Rapports & publications','report'],['calendar','Calendrier','calendar']]],
   ['Complexes',[['soy','Soja & dérivés','leaf'],['sun','Tournesol','sun'],['palm','Palme','drop']]],
-  ['Analyse',[['balances','Bilans offre / demande','table'],['demand','Demande','grain'],['cot','Rapport COT · CFTC','users'],['cross','Comparaisons & spreads','chart'],['cbot-arg','Simulateur CBOT – ARG','calc'],['macro','Énergie & géopolitique','bolt'],['biofuels','Biocarburants','drop']]],
+  ['Analyse',[['balances','Bilans offre / demande','table'],['demand','Demande','grain'],['cot','Rapport COT · CFTC','users'],['cross','Comparaisons & spreads','chart'],['cbot-arg','Simulateur CBOT – ARG','calc'],['biofuels','Biocarburants','drop']]],
 ];
 const nav=Object.fromEntries(menu.flatMap(([,items])=>items.map(([id,title])=>[id,title])).concat([['sources','Sources & données']]));
 const FILTERS={product:'',origin:'',period:'',horizon:'',impact:'',source:'',status:''};
