@@ -6,6 +6,7 @@
   "articles": [
     {
       "title": "Le pétrole termine une deuxième semaine de baisse sur fond d’excédent d’offre",
+      "originalTitle": "Oil prices set for second straight weekly drop on signs of growing supply surplus",
       "source": "Reuters",
       "url": "https://www.reuters.com/business/energy/oil-prices-set-second-weekly-decline-trump-stay-with-iran-blockade-2026-11-13/",
       "publishedAt": "2026-11-13T00:00:00Z",
@@ -25,6 +26,7 @@
     },
     {
       "title": "Le dollar se dirige vers sa plus forte hausse hebdomadaire en deux mois",
+      "originalTitle": "Dollar set for best week in two months, yen weakens toward 160",
       "source": "Reuters",
       "url": "https://www.reuters.com/world/africa/dollar-near-19-month-high-fed-hike-bets-yen-tests-160-2026-11-13/",
       "publishedAt": "2026-11-13T00:00:00Z",
@@ -35,6 +37,7 @@
     },
     {
       "title": "Des arrêts d’usines perturbent la trituration du tournesol en Ukraine",
+      "originalTitle": "Sunseed prices in Ukraine decline as crushing plants shut down following Russian attacks",
       "source": "UkrAgroConsult",
       "url": "https://ukragroconsult.com/en/news/sunseed-prices-in-ukraine-decline-as-crushing-plants-shut-down-following-russian-attacks/",
       "publishedAt": "2026-11-13T00:00:00Z",
@@ -45,6 +48,7 @@
     },
     {
       "title": "Rapport pétrolier de novembre de l’AIE",
+      "originalTitle": "Oil Market Report - November 2026",
       "source": "AIE",
       "url": "https://www.iea.org/reports/oil-market-report-november-2026",
       "publishedAt": "2026-11-13T00:00:00Z",
@@ -55,6 +59,7 @@
     },
     {
       "title": "Constanța gagne en importance pour les expéditions d’huile de tournesol",
+      "originalTitle": "Sunflower oil through Constanta: a new growth driver for Romania and Ukrainian exports",
       "source": "UkrAgroConsult",
       "url": "https://ukragroconsult.com/en/news/sunflower-oil-through-constanta-a-new-growth-driver-for-romania-and-ukrainian-exports/",
       "publishedAt": "2026-11-11T00:00:00Z",

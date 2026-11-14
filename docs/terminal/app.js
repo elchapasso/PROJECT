@@ -26,7 +26,7 @@ import {renderCotView,bindCotView,cotCalendarEntries} from './cot-view.mjs?v=202
 import {feedEntries,toCasablanca,dateStatusLabels,FOREX_CALENDAR_URL,casablanca} from './calendar-model.mjs?v=20261114-calendrier';
 import {publicationCards,publicationGroups,cardSpec,nextDates,latestFor,figureDigits} from './publications-model.mjs?v=20261114-publications';
 
-import {renderEnergyNews,bindEnergyNews,refreshEnergyNews} from './energy-news-view.mjs?v=20261114';
+import {renderEnergyNews,bindEnergyNews,refreshEnergyNews} from './energy-news-view.mjs?v=20261114-v2';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -156,7 +156,8 @@ function chartRanges(dates,periodType){
     return [[size,label,start]];
   })];
 }
-function chartMovingAverage(points,dates,size){
+function chartMovingAverage(points,dates,size,periodType){
+  if(periodType==='day')return focusAverage(points.filter(point=>Number.isFinite(point.value)),size);
   const byDate=new Map(points.map(point=>[point.date,point.value]));
   const positions=new Map(dates.map((date,i)=>[date,i]));
   return focusAverage(dates.map(date=>{
@@ -178,8 +179,9 @@ function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=fa
   const periods=Object.fromEntries(dates.map((date,i)=>[i,periodLabel(date)]));
   const settings=chartDefaults(dates.length-1,defaultScale);
   const ranges=quickRanges?chartRanges(dates,periodType):[];
-  const averages=movingAverage?[3,12].filter(size=>size<=dates.length&&valid.some(line=>
-    chartMovingAverage(line.points,dates,size).some(point=>Number.isFinite(point.value)))):[];
+  const averageWindows=periodType==='day'?[5,20]:[3,12];
+  const averages=movingAverage?averageWindows.filter(size=>size<=dates.length&&valid.some(line=>
+    chartMovingAverage(line.points,dates,size,periodType).some(point=>Number.isFinite(point.value)))):[];
   const model={valid,dates,unit,periodType,height,tooltips,seasonal,settings,zeroLine,startDate,maxGapDays,periodLabels,ranges,defaultScale};
   const shortcuts=ranges.length>1?'<div class="chart-shortcuts"><span>Période rapide</span><div class="seg" role="group" aria-label="Période rapide · '+e(label)+'">'+
     ranges.map(([id,name])=>'<button type="button" data-chart-range="'+id+'" aria-pressed="'+(id==='all')+'"'+(id==='all'?' class="active"':'')+'>'+e(name)+'</button>').join('')+
@@ -193,7 +195,7 @@ function chart(lines,{unit='',periodType='month',height=200,tooltips,seasonal=fa
     selectSetting('height','Hauteur',{compact:'Compacte',standard:'Standard',large:'Agrandie'})+
     selectSetting('scale','Échelle verticale',{auto:'Automatique',tight:'Resserrée',zero:'Inclure zéro'})+
     selectSetting('start','Du',periods)+selectSetting('end','Au',periods)+
-    (averages.length?selectSetting('average','Moyenne mobile',Object.fromEntries([[0,'Aucune'],...averages.map(size=>[size,size+' mois'])])):'')+
+    (averages.length?selectSetting('average','Moyenne mobile',Object.fromEntries([[0,'Aucune'],...averages.map(size=>[size,size+(periodType==='day'?' observations':' mois')])])):'')+
     '<button type="button" class="button" data-chart-reset>Réinitialiser</button></div></details>'+
     '<div class="chart-content">'+chartFrame(model)+'</div>'+
     chartSources(sourceLinks??refsFor(valid.flatMap(l=>l.points).filter(p=>Number.isFinite(p.value))))+'</figure>';
@@ -255,7 +257,7 @@ function chartFrame({valid,dates:allDates,unit,periodType,height,tooltips,season
   const lines=visible.map(line=>({...line,points:line.points.filter(p=>dateSet.has(key(p)))}));
   if(settings.average){
     for(const line of visible){
-      const average=chartMovingAverage(line.points,allDates,settings.average).filter(p=>dateSet.has(p.date));
+      const average=chartMovingAverage(line.points,allDates,settings.average,periodType).filter(p=>dateSet.has(p.date));
       if(average.some(point=>Number.isFinite(point.value))){
         lines.push({...line,label:line.label+' · MM '+settings.average,width:1.75,dashed:true,points:average});
       }

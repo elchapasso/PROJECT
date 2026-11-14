@@ -114,7 +114,7 @@ function statusMarkup(e) {
 }
 
 function articleMarkup(item, {e,icon}) {
-  const topic = topics[item.topics[0]];
+  const topic = topics[filters.topic || item.topics[0]];
   const time = item.dateOnly ? day(item.publishedAt) : date(item.publishedAt);
   return '<article class="energy-story"><div class="energy-story-meta"><span class="energy-topic">'+e(topic.label)+'</span><strong>'+e(item.source)+'</strong><time datetime="'+e(item.publishedAt)+'">'+e(time)+'</time></div>'+
     '<h3><a href="'+e(url(item.url))+'" target="_blank" rel="noopener noreferrer">'+e(item.title)+' '+icon('arrow', 14)+'</a></h3>'+
@@ -158,7 +158,7 @@ function energyCharts({chart,e,link,num,formatDate,colors,series,spreadPrices,sp
   }).join('');
   const plot = (items, label, index) => chart(items.map((item,i) => ({label:item.name,color:colors[index+i],points:(item.rows ?? []).slice(-285).map(([date,value]) => ({date,value}))})), {
     unit:items[0].unit, periodType:'day', label, sourceLinks:[...new Map(items.map(item => [item.ref[1],item.ref])).values()],
-    quickRanges:true, height:205,
+    quickRanges:true, movingAverage:true, height:205,
   });
   return '<div class="energy-quotes">'+cards+'</div><div class="energy-chart-grid">'+
     '<section class="panel energy-plot"><h3>Brut spot · Brent et WTI</h3>'+plot(market.slice(0,2),'Cours spot du Brent et du WTI',0)+'</section>'+

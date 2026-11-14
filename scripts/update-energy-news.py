@@ -22,11 +22,13 @@ TOPICS = {
     'biofuels': r'biofuels?|biodiesel|renewable (?:diesel|fuels?)|renewable volume obligation|sustainable aviation fuel|rin credits?|b40|b50|ethanol|biocarburants?',
     'shipping': r'hormuz|red sea|suez|bab el mandeb|panama canal|tanker|tankers|black sea|constanta|odesa|odessa|novorossiysk|freight rates?|shipping routes?|shipping costs?|maritime security|port (?:closures?|strikes?|disruptions?)|mer noire|mer rouge',
     'oils': r'soybean oil|soy oil|soyoil|sunflower oil|sunseed|sunflower seed|palm oil|rapeseed oil|canola oil|vegetable oils?|oilseeds?|huile[s]? de (?:soja|palme|tournesol|colza)',
-    'energy': r'opec\+?|brent|wti|crude(?: oil)?|oil (?:price[s]?|futures|supply|production|market|output|inventor(?:y|ies)|stocks|exports)|petroleum|gasoil|diesel|refiner(?:y|ies)|fuel prices?|oil and gas|energy information administration',
+    'energy': r'opec\+?|brent|wti|crude(?: oil)?|oil (?:price[s]?|futures|supply|production|market|output|inventor(?:y|ies)|stocks|exports)|petroleum|gasoil|diesel|refiner(?:y|ies)|fuel prices?|oil and gas|spr|strategic petroleum reserve',
     'policy': r'sanctions?|export (?:ban|tax|dut(?:y|ies)|restrictions?)|import (?:tax|dut(?:y|ies)|restrictions?)|embargo|(?:iran|russia|ukraine|houthis?|middle east).{0,45}(?:blockade|ceasefire|strikes?|peace talks)|(?:blockade|ceasefire).{0,45}(?:iran|russia|ukraine|middle east)',
     'fx': r'u\.s\. dollar|us dollar|usd/mad|moroccan dirham|eur/usd|dollar index|dollar (?:rises?|falls?|gains?|weakens?|strengthens?|slips?|stead(?:y|ies))|federal reserve|fed (?:rate|holds|cuts|hikes)|interest rate decision|ecb (?:rate|holds|cuts|hikes)|banque centrale europeenne',
 }
 PATTERNS = {key: re.compile(r'\b(?:' + pattern + r')\b', re.I) for key, pattern in TOPICS.items()}
+UKMTO_TITLE = re.compile(r'\b(?:joint maritime information cent(?:er|re)|jmic)\b', re.I)
+PASSENGER_INCIDENT = re.compile(r'\b(?:cruise ship|paddlewheeler|yacht|passenger ferry)\b', re.I)
 GOOGLE_TERMS = '(Brent OR WTI OR OPEC OR Hormuz OR "Red Sea" OR "Black Sea" OR biodiesel OR "renewable diesel" OR "palm oil" OR "soybean oil" OR "sunflower oil" OR "US dollar" OR "export duties" OR sanctions)'
 FRED = {'brent': 'DCOILBRENTEU', 'wti': 'DCOILWTICO'}
 NEWS_WINDOW = timedelta(days=30)
@@ -83,7 +85,7 @@ def public_link(url):
         # Some feeds expose a direct publisher URL, others only a Google News redirect.
         query = parse_qs(parts.query, keep_blank_values=True)
         if host_matches(url, 'news.google.com'):
-            return urlunsplit(parts._replace(fragment=''))
+            return urlunsplit(parts._replace(query='', fragment=''))
         for key in list(query):
             if key.startswith('utm_') or key in {'cmpid', 'smid', 'ocid', 'fbclid', 'outputType', 'srnd'}:
                 del query[key]
@@ -119,7 +121,23 @@ def google_feed(domain, terms=GOOGLE_TERMS):
     return 'https://news.google.com/rss/search?' + query
 
 
-def article(record, source, domain, mode, default_topic=None):
+def classify(title, source):
+    normalized = normal(title)
+    if PASSENGER_INCIDENT.search(normalized):
+        return []
+    topics = [key for key, pattern in PATTERNS.items() if pattern.search(normalized)]
+    if 'oils' in topics and not re.search(r'\b(?:brent|wti|crude|petroleum|gasoil|diesel|refiner(?:y|ies))\b', normalized):
+        topics = [key for key in topics if key != 'energy']
+    if source == 'UKMTO' and UKMTO_TITLE.search(normalized) and 'shipping' not in topics:
+        topics.append('shipping')
+    if source == 'Fed' and 'fx' not in topics:
+        topics.append('fx')
+    if source == 'Federal Register · EPA' and 'biofuels' not in topics:
+        return []
+    return topics
+
+
+def article(record, source, domain, mode):
     title = clean(record.get('title'))
     url = public_link(record.get('url') or '')
     date = timestamp(record.get('date'))
@@ -133,9 +151,7 @@ def article(record, source, domain, mode, default_topic=None):
             title = title[:-len(suffix)]
     elif not host_matches(url, domain):
         return None
-    topics = [key for key, pattern in PATTERNS.items() if pattern.search(normal(title))]
-    if default_topic and default_topic not in topics:
-        topics.append(default_topic)
+    topics = classify(title, source)
     if not topics:
         return None
     return {'title': title[:300], 'url': url, 'publishedAt': iso(date), 'source': source, 'topics': topics, 'via': mode}
@@ -160,23 +176,23 @@ def trading_economics(key):
 
 def provider_jobs():
     jobs = [
-        ('Reuters', 'reuters.com', (), None),
-        ('Bloomberg', 'bloomberg.com', ('https://feeds.bloomberg.com/markets/news.rss',), None),
-        ('The New York Times', 'nytimes.com', ('https://rss.nytimes.com/services/xml/rss/nyt/Business.xml', 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml'), None),
-        ('UkrAgroConsult', 'ukragroconsult.com', ('https://ukragroconsult.com/en/feed/',), None),
-        ('Trading Economics', 'tradingeconomics.com', (), None),
-        ('EIA', 'eia.gov', ('https://www.eia.gov/rss/todayinenergy.xml',), 'energy'),
-        ('AIE', 'iea.org', (), 'energy'),
-        ('gCaptain', 'gcaptain.com', ('https://gcaptain.com/feed/',), None),
-        ('UKMTO', 'ukmto.org', (), 'shipping'),
-        ('Fed', 'federalreserve.gov', ('https://www.federalreserve.gov/feeds/press_monetary.xml',), 'fx'),
-        ('Federal Register · EPA', 'federalregister.gov', (), 'biofuels'),
+        ('Reuters', 'reuters.com', ()),
+        ('Bloomberg', 'bloomberg.com', ('https://feeds.bloomberg.com/markets/news.rss',)),
+        ('The New York Times', 'nytimes.com', ('https://rss.nytimes.com/services/xml/rss/nyt/Business.xml', 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml')),
+        ('UkrAgroConsult', 'ukragroconsult.com', ('https://ukragroconsult.com/en/feed/',)),
+        ('Trading Economics', 'tradingeconomics.com', ()),
+        ('EIA', 'eia.gov', ('https://www.eia.gov/rss/todayinenergy.xml',)),
+        ('AIE', 'iea.org', ()),
+        ('gCaptain', 'gcaptain.com', ('https://gcaptain.com/feed/',)),
+        ('UKMTO', 'ukmto.org', ()),
+        ('Fed', 'federalreserve.gov', ('https://www.federalreserve.gov/feeds/press_monetary.xml',)),
+        ('Federal Register · EPA', 'federalregister.gov', ()),
     ]
     return jobs
 
 
 def collect_provider(job):
-    source, domain, direct, default_topic = job
+    source, domain, direct = job
     lookups = [('rss', lambda url=url: rss_records(read_url(url))) for url in direct]
     if source == 'Federal Register · EPA':
         lookups.append(('official', federal_register))
@@ -188,7 +204,7 @@ def collect_provider(job):
     rows, successful = [], []
     for mode, lookup in lookups:
         try:
-            fresh = [entry for record in lookup() if (entry := article(record, source, domain, mode, default_topic))]
+            fresh = [entry for record in lookup() if (entry := article(record, source, domain, mode))]
             rows.extend(fresh)
             successful.append(mode)
         except (OSError, ValueError, ET.ParseError, KeyError, TypeError) as error:
@@ -203,10 +219,11 @@ def deduplicate(rows):
     ordered.sort(key=lambda row: mode_priority.get(row['via'], 3))
     links, titles, result = set(), set(), []
     for row in ordered:
-        signature = re.sub(r'\W+', ' ', normal(row['title'])).strip()
-        if row['url'] in links or signature in titles:
+        signature = re.sub(r'\W+', ' ', normal(row.get('originalTitle') or row['title'])).strip()
+        link = public_link(row['url'])
+        if link in links or signature in titles:
             continue
-        links.add(row['url'])
+        links.add(link)
         titles.add(signature)
         result.append(row)
     return sorted(result, key=lambda row: row['publishedAt'], reverse=True)
@@ -258,7 +275,12 @@ def refresh(output, seed):
 
     providers = [status for _, status in news]
     collected = [row for rows, _ in news for row in rows]
-    saved = previous.get('articles', []) + initial.get('articles', [])
+    saved = []
+    for row in previous.get('articles', []):
+        topics = classify(row['title'], row['source'])
+        if row['via'] != 'editorial' and topics:
+            saved.append({**row, 'topics': topics, 'url': public_link(row['url'])})
+    saved.extend(initial.get('articles', []))
     articles = [row for row in deduplicate(collected + saved) if iso(NOW - NEWS_WINDOW) <= row['publishedAt']]
     # Keep a balanced result even when one publisher has many matching articles.
     counts = {}
