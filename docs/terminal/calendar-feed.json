@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-08",
  "forexWeekEnd": "2026-11-14",
- "forexCheckedAt": "2026-11-14T00:48:02+00:00",
+ "forexCheckedAt": "2026-11-14T09:05:11+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -1673,6 +1673,15 @@
    "period": ""
   },
   {
+   "id": "sea-2027-04-13",
+   "kind": "sea",
+   "date": "2027-04-13",
+   "at": "",
+   "url": "https://seaofindia.com/category/statistical-update/import-of-vegetable-oil/",
+   "status": "usual",
+   "period": "2027-03"
+  },
+  {
    "id": "wasde-2027-05-12",
    "kind": "wasde",
    "date": "2027-05-12",
@@ -1745,7 +1754,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-14T00:48:02+00:00",
+ "reportsCheckedAt": "2026-11-14T09:05:11+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2135,5 +2144,5 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-14T00:48:02+00:00"
+ "latestCheckedAt": "2026-11-14T09:05:11+00:00"
 }
