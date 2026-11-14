@@ -1,6 +1,6 @@
 # Oléa Terminal
 
-Terminal en français pour suivre les marchés mondiaux des huiles végétales et des oléagineux. Il réunit les fondamentaux, les prix datés, les facteurs de marché, les spreads, les scénarios et le brief COMEX.
+Terminal en français pour suivre les marchés mondiaux des huiles végétales et des oléagineux. Il réunit les fondamentaux, les prix datés, les facteurs de marché, les spreads, les rapports officiels, le calendrier et le brief COMEX.
 
 [Ouvrir le terminal](https://elchapasso.github.io/PROJECT/)
 
@@ -54,7 +54,7 @@ NOPA (données payantes), MPOB et la Bolsa de Cereales ne publient pas de chiffr
 
 ## Calendrier des publications
 
-La vue [Calendrier](https://elchapasso.github.io/PROJECT/#calendar) réunit les annonces macroéconomiques de Forex Factory et les rapports agricoles du domaine. Chaque publication ouvre sa page officielle ; « Détails » donne la lecture de marché. Les heures sont affichées à Casablanca, avec l’heure de la source.
+La vue [Calendrier](https://elchapasso.github.io/PROJECT/#calendar), dans la rubrique **Terminal**, réunit les annonces macroéconomiques de Forex Factory et les rapports agricoles du domaine. Chaque publication ouvre sa page officielle ; « Détails » donne la lecture de marché. Les heures sont affichées à Casablanca, avec l’heure de la source.
 
 Le workflow `.github/workflows/update-calendar.yml` exécute `scripts/update-calendar.py` toutes les deux heures et publie `docs/terminal/calendar-feed.json` sur la branche `calendar-live`. Chaque date porte un niveau de certitude :
 
