@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-08",
  "forexWeekEnd": "2026-11-14",
- "forexCheckedAt": "2026-11-14T00:23:38+00:00",
+ "forexCheckedAt": "2026-11-14T00:48:02+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -1745,5 +1745,395 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-14T00:23:38+00:00"
+ "reportsCheckedAt": "2026-11-14T00:48:02+00:00",
+ "latest": {
+  "wasde": {
+   "date": "2026-11-10",
+   "url": "https://esmis.nal.usda.gov/publication/world-agricultural-supply-and-demand-estimates",
+   "documents": [
+    {
+     "label": "PDF",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796142/wasde1126.pdf"
+    },
+    {
+     "label": "Texte",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796142/wasde1126.txt"
+    },
+    {
+     "label": "Excel",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796142/wasde1126.xls"
+    },
+    {
+     "label": "XML",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796142/wasde1126.xml"
+    }
+   ],
+   "source": "https://esmis.nal.usda.gov/sites/default/release-files/796142/wasde1126.txt",
+   "figures": [
+    {
+     "label": "Soja US · production 2026/27",
+     "value": 4574.0,
+     "unit": "M bu",
+     "previous": 4562.0,
+     "previousLabel": "WASDE Oct"
+    },
+    {
+     "label": "Soja US · stocks finaux 2026/27",
+     "value": 300.0,
+     "unit": "M bu",
+     "previous": 315.0,
+     "previousLabel": "WASDE Oct"
+    },
+    {
+     "label": "Huile de soja US · biocarburants 2026/27",
+     "value": 17800.0,
+     "unit": "M lb",
+     "previous": 17800.0,
+     "previousLabel": "WASDE Oct"
+    },
+    {
+     "label": "Huile de soja US · stocks finaux 2026/27",
+     "value": 1698.0,
+     "unit": "M lb",
+     "previous": 1797.0,
+     "previousLabel": "WASDE Oct"
+    },
+    {
+     "label": "Huile de soja US · prix moyen 2026/27",
+     "value": 68.0,
+     "unit": "¢/lb",
+     "previous": 70.0,
+     "previousLabel": "WASDE Oct"
+    }
+   ],
+   "title": "Campagne 2026/27"
+  },
+  "nass-progress": {
+   "date": "2026-11-09",
+   "url": "https://esmis.nal.usda.gov/publication/crop-progress",
+   "documents": [
+    {
+     "label": "PDF",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796141/prog4526.pdf"
+    },
+    {
+     "label": "Texte",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796141/prog4526.txt"
+    },
+    {
+     "label": "Tableaux (zip)",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796141/prog4526.zip"
+    }
+   ],
+   "source": "https://esmis.nal.usda.gov/sites/default/release-files/796141/prog4526.txt",
+   "figures": [
+    {
+     "label": "Soja récolté",
+     "value": 92.0,
+     "unit": "%",
+     "previous": 88.0,
+     "previousLabel": "semaine précédente",
+     "note": "moyenne 5 ans 91 %"
+    }
+   ],
+   "title": ""
+  },
+  "nass-fats-oils": {
+   "date": "2026-11-02",
+   "url": "https://esmis.nal.usda.gov/publication/fats-and-oils-oilseed-crushings-production-consumption-and-stocks",
+   "documents": [
+    {
+     "label": "PDF",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796132/cafo1126.pdf"
+    },
+    {
+     "label": "Texte",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796132/cafo1126.txt"
+    },
+    {
+     "label": "Tableaux (zip)",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796132/cafo1126.zip"
+    }
+   ],
+   "source": "https://esmis.nal.usda.gov/sites/default/release-files/796132/cafo1126.txt",
+   "figures": [
+    {
+     "label": "Soja trituré · septembre 2026",
+     "value": 5.96,
+     "unit": "M short tons",
+     "previous": 6.29,
+     "previousLabel": "août 2026",
+     "note": "199 M bu"
+    },
+    {
+     "label": "Huile de soja brute produite · septembre 2026",
+     "value": 2.31,
+     "unit": "Md lb"
+    }
+   ],
+   "title": ""
+  },
+  "nass-production": {
+   "date": "2026-11-10",
+   "url": "https://esmis.nal.usda.gov/publication/crop-production",
+   "documents": [
+    {
+     "label": "PDF",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796144/crop1126.pdf"
+    },
+    {
+     "label": "Texte",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796144/crop1126.txt"
+    },
+    {
+     "label": "Tableaux (zip)",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796144/crop1126.zip"
+    }
+   ],
+   "source": "https://esmis.nal.usda.gov/sites/default/release-files/796144/crop1126.txt",
+   "figures": [
+    {
+     "label": "Soja US · production",
+     "value": 4570.0,
+     "unit": "M bu"
+    },
+    {
+     "label": "Soja US · rendement",
+     "value": 53.3,
+     "unit": "bu/acre"
+    }
+   ],
+   "title": ""
+  },
+  "nass-stocks": {
+   "date": "2026-09-30",
+   "url": "https://esmis.nal.usda.gov/publication/grain-stocks",
+   "documents": [
+    {
+     "label": "PDF",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796087/grst0926_0.pdf"
+    },
+    {
+     "label": "Texte",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796087/grst0926_0.txt"
+    },
+    {
+     "label": "Tableaux (zip)",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796087/grst0926_0.zip"
+    }
+   ],
+   "source": "https://esmis.nal.usda.gov/sites/default/release-files/796087/grst0926_0.txt",
+   "figures": [
+    {
+     "label": "Stocks de soja US au 01/09/2026",
+     "value": 315.0,
+     "unit": "M bu",
+     "note": "−3 % sur un an"
+    }
+   ],
+   "title": ""
+  },
+  "nass-acreage": {
+   "date": "2026-06-30",
+   "url": "https://esmis.nal.usda.gov/publication/acreage",
+   "documents": [
+    {
+     "label": "PDF",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/795961/acrg0626.pdf"
+    },
+    {
+     "label": "Texte",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/795961/acrg0626.txt"
+    },
+    {
+     "label": "Tableaux (zip)",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/795961/acrg0626.zip"
+    }
+   ],
+   "source": "https://esmis.nal.usda.gov/sites/default/release-files/795961/acrg0626.txt",
+   "figures": [
+    {
+     "label": "Soja US · surfaces semées 2026",
+     "value": 85.4,
+     "unit": "M acres",
+     "note": "+5 % sur un an"
+    }
+   ],
+   "title": ""
+  },
+  "nass-plantings": {
+   "date": "2026-03-31",
+   "url": "https://esmis.nal.usda.gov/publication/prospective-plantings",
+   "documents": [
+    {
+     "label": "PDF",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/795840/pspl0326.pdf"
+    },
+    {
+     "label": "Texte",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/795840/pspl0326.txt"
+    },
+    {
+     "label": "Tableaux (zip)",
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/795840/pspl0326.zip"
+    }
+   ],
+   "source": "https://esmis.nal.usda.gov/sites/default/release-files/795840/pspl0326.txt",
+   "figures": [
+    {
+     "label": "Soja US · surfaces semées 2026",
+     "value": 84.7,
+     "unit": "M acres",
+     "note": "+4 % sur un an"
+    }
+   ],
+   "title": ""
+  },
+  "fas-export-sales": {
+   "date": "2026-11-13",
+   "title": "Semaine close le 05/11",
+   "figures": [
+    {
+     "label": "Graines de soja · ventes nettes",
+     "value": 1154.772,
+     "unit": "kt",
+     "previous": 1456.12,
+     "previousLabel": "semaine précédente",
+     "note": "expéditions 1 882 kt"
+    },
+    {
+     "label": "Tourteau de soja · ventes nettes",
+     "value": 360.944,
+     "unit": "kt",
+     "previous": 390.381,
+     "previousLabel": "semaine précédente",
+     "note": "expéditions 387 kt"
+    },
+    {
+     "label": "Huile de soja · ventes nettes",
+     "value": 1.694,
+     "unit": "kt",
+     "previous": 1.523,
+     "previousLabel": "semaine précédente",
+     "note": "expéditions 2 kt"
+    }
+   ],
+   "stamp": "2026-11-13T08:30:22.49",
+   "url": "https://www.fas.usda.gov/programs/export-sales-reporting-program",
+   "documents": [
+    {
+     "label": "Résumé",
+     "url": "https://apps.fas.usda.gov/export-sales/summfax.htm"
+    },
+    {
+     "label": "Rapport complet",
+     "url": "https://apps.fas.usda.gov/export-sales/complete.htm"
+    }
+   ]
+  },
+  "usda-inspections": {
+   "date": "2026-11-09",
+   "title": "Semaine close le 05/11",
+   "url": "https://www.ams.usda.gov/mnreports/wa_gr101.txt",
+   "documents": [
+    {
+     "label": "Texte",
+     "url": "https://www.ams.usda.gov/mnreports/wa_gr101.txt"
+    }
+   ],
+   "figures": [
+    {
+     "label": "Soja inspecté · semaine au 05/11",
+     "value": 1896.151,
+     "unit": "kt",
+     "previous": 2511.973,
+     "previousLabel": "semaine précédente",
+     "note": "campagne : 14,15 Mt"
+    }
+   ]
+  },
+  "conab": {
+   "title": "2e relevé · récolte 2026/27",
+   "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/safra-de-graos/boletim-da-safra-de-graos/2o-levantamento-safra-2026-27/2o-levantamento-safra-2026-27",
+   "documents": [
+    {
+     "label": "Présentation",
+     "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/safra-de-graos/boletim-da-safra-de-graos/2o-levantamento-safra-2026-27/apresentacao-2o-lev-safra-graos-nov.pdf"
+    },
+    {
+     "label": "Bulletin (PDF)",
+     "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/safra-de-graos/boletim-da-safra-de-graos/2o-levantamento-safra-2026-27/e-book_boletim-de-safras-2o-levantamento_2026.pdf"
+    },
+    {
+     "label": "Tableur",
+     "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/safra-de-graos/boletim-da-safra-de-graos/2o-levantamento-safra-2026-27/site_previsao_de_safra-por_produto-nov-2026.xlsx"
+    }
+   ],
+   "date": "2026-11-13",
+   "source": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/safra-de-graos/boletim-da-safra-de-graos/2o-levantamento-safra-2026-27/site_previsao_de_safra-por_produto-nov-2026.xlsx",
+   "figures": [
+    {
+     "label": "Soja Brésil · production",
+     "value": 181.6166,
+     "unit": "Mt",
+     "previous": 181.6166,
+     "previousLabel": "relevé de octobre 2026",
+     "note": "+0,7 % sur la récolte précédente"
+    }
+   ]
+  },
+  "sea": {
+   "date": "2026-10-15",
+   "title": "Vegetable Oil Imports – Nov.’25 – Sept.’ 26",
+   "url": "https://seaofindia.com/import-of-veg-oils-november-2025/",
+   "documents": [
+    {
+     "label": "Circulaire (PDF)",
+     "url": "https://seaofindia.com/wp-content/uploads/2026/09/EC-162-dt.-15.10.2026-Import-of-Veg-Oil-Nov.25-Sept.26.pdf"
+    }
+   ],
+   "figures": []
+  },
+  "anec": {
+   "date": "2026-11-05",
+   "title": "Semaine 43/2026",
+   "url": "https://anec.com.br/article/anec-exportacoes-acumuladas-432026",
+   "documents": [
+    {
+     "label": "Relevé (PDF)",
+     "url": "https://anec.com.br/uploads/cmw3twona0000fltx7160e2as.pdf"
+    }
+   ],
+   "figures": []
+  },
+  "cftc-cot": {
+   "title": "Positions au 03/11/2026",
+   "asOf": "2026-11-03",
+   "figures": [
+    {
+     "label": "Huile de soja (ZL) · position nette des fonds",
+     "value": 47413,
+     "unit": "contrats",
+     "previous": 60331,
+     "previousLabel": "semaine précédente"
+    },
+    {
+     "label": "Graines de soja (ZS) · position nette des fonds",
+     "value": 142727,
+     "unit": "contrats",
+     "previous": 193781,
+     "previousLabel": "semaine précédente"
+    }
+   ],
+   "date": "2026-11-06",
+   "url": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm",
+   "documents": [
+    {
+     "label": "Données (API CFTC)",
+     "url": "https://publicreporting.cftc.gov/d/72hh-3qpy"
+    }
+   ]
+  }
+ },
+ "latestCheckedAt": "2026-11-14T00:48:02+00:00"
 }
