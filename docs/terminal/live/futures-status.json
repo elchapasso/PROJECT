@@ -1,17 +1,17 @@
 {
  "schema": 1,
- "checkedAt": "2026-11-13T11:23:25Z",
- "dataChangedAt": "2026-11-13T11:23:25Z",
- "today": "2026-11-13",
+ "checkedAt": "2026-11-14T05:53:33Z",
+ "dataChangedAt": "2026-11-14T05:53:33Z",
+ "today": "2026-11-14",
  "window": [
-  20250101,
-  20261112
+  20261023,
+  20261113
  ],
  "sources": {
   "tradingview": {
    "name": "TradingView",
    "ok": true,
-   "lastSuccess": "2026-11-13T11:23:25Z"
+   "lastSuccess": "2026-11-14T05:53:33Z"
   }
  },
  "series": {
@@ -19,73 +19,103 @@
    "source": "tradingview",
    "symbol": "CBOT:ZL1!",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-13",
+     63.77
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 469,
-   "last": "2026-11-12",
-   "lastValue": 63.42
+   "count": 470,
+   "last": "2026-11-13",
+   "lastValue": 63.77
   },
   "zs": {
    "source": "tradingview",
    "symbol": "CBOT:ZS1!",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-13",
+     1231.5
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 469,
-   "last": "2026-11-12",
-   "lastValue": 1219
+   "count": 470,
+   "last": "2026-11-13",
+   "lastValue": 1231.5
   },
   "zm": {
    "source": "tradingview",
    "symbol": "CBOT:ZM1!",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-13",
+     329.8
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 469,
-   "last": "2026-11-12",
-   "lastValue": 325.4
+   "count": 470,
+   "last": "2026-11-13",
+   "lastValue": 329.8
   },
   "ho": {
    "source": "tradingview",
    "symbol": "NYMEX:HO1!",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-13",
+     4.1663
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 469,
-   "last": "2026-11-12",
-   "lastValue": 4.1888
+   "count": 470,
+   "last": "2026-11-13",
+   "lastValue": 4.1663
   },
   "gasoil": {
    "source": "tradingview",
    "symbol": "ICEEUR:ULS1!",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-13",
+     1287.5
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 482,
-   "last": "2026-11-12",
-   "lastValue": 1249.75
+   "count": 483,
+   "last": "2026-11-13",
+   "lastValue": 1287.5
   },
   "fcpo": {
    "source": "tradingview",
    "symbol": "MYX:FCPO1!",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-13",
+     4462
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 455,
-   "last": "2026-11-12",
-   "lastValue": 4440
+   "count": 456,
+   "last": "2026-11-13",
+   "lastValue": 4462
   }
  },
  "held": []
