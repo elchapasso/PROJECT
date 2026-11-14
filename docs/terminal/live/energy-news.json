@@ -1,8 +1,18 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-14T12:56:09Z",
-  "collectedAt": "2026-11-14T12:56:09Z",
+  "checkedAt": "2026-11-14T18:49:55Z",
+  "collectedAt": "2026-11-14T18:49:55Z",
   "articles": [
+    {
+      "title": "Oil Tanker On Fire After Hitting Mine In Hormuz",
+      "url": "https://gcaptain.com/oil-tanker-on-fire-after-hitting-mine-in-hormuz/",
+      "publishedAt": "2026-11-14T14:41:03Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
     {
       "title": "Iran's navy says oil tanker on fire after hitting mine in Hormuz",
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPZWt1cHFualJEVktnTTVvd21uVnljc0FqR2dRaWpaRnYwZ3luZ2t1dUlJNVUtLTVlWHJFOS1ocDBlaVZsTFNZdjRMeldFVFE1Q0Jqem9FbU9fMmp1YTBUTUhqTmYzR3FJN1Z1Y1dHY2d0Yjlzb2lBR0JvNllyT3pScjI2SEpkbkhiYzZSWW9Tb3dwemdWaVVmMjBPbXZqd0hOZzdpRDVSZlVlbzBnV1BjMQ",
@@ -118,6 +128,16 @@
         "shipping"
       ],
       "via": "rss"
+    },
+    {
+      "title": "Russian Economy Slows as Ukrainian Strikes Weigh on Output",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOZW9mVi1IcTZCNEJGaUVmb3I0U3IxUjhxTGc3TmkyRUhEc0hXcnc1N01US3RTUEV0UGRVamxBMURlMXltSGRVQVdERE92Y0hGTElzaTNmeG1ZX1l5bjV4SlpjSlQ0cnp4azJlcENWVU82Z1FPRUlkQ2FvMENYeDdXYTFXSF90Q3NjSVFIem10c29GZm9EUm5CQTVsdWlwaGNHcTUxRS1OSDZPUGhqeVE",
+      "publishedAt": "2026-11-13T16:11:40Z",
+      "source": "Bloomberg",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
     },
     {
       "title": "Russian Diesel Exports Drop as Ukraine Renews Refinery Attacks",
@@ -615,6 +635,16 @@
       "via": "editorial"
     },
     {
+      "title": "US yields climb, stocks fall as inflation data boosts chances for larger Fed rate hike",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE9CVDNSVXJpWURQMkF1dUt1amw1WkxILXhVSjZyZkQxdGlBdWZvT0tqclhabXRKZC1xNlRIRmJSdkhINDVsYXlRdk9paVRCa085WWVKRTJFcm9CZWo2VzNaYU5lQ2RXbDdqb3QxdkY4SDFRb2JMVE8yemVJMA",
+      "publishedAt": "2026-11-10T23:19:59Z",
+      "source": "Reuters",
+      "topics": [
+        "fx"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Strathcona, CN to Partner on Crude-by-Rail Project to BC",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxONlZ6MVdxZlRfNXM0bHRnVWk5SHdRRVg3VUNCcmpPaFU2dkJyVUxvZ09TWXl4VUR1bE1GZTNGWlZhTFpFXzVyNDFPS1h1bG5IdzdmdGc3WFZZMjdhY2UxZUdWVkN6RWstaTVLRVlLMk9GXzh4OFROYUgtcGthMUszX3JzeEtPV2JsdkpUM0ExTVQzS2lzSkg3SlhpWmtHaEt5cHl2TDdKRGgwel9RcjNuZ1ln",
       "publishedAt": "2026-11-10T20:51:54Z",
@@ -799,6 +829,16 @@
       "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNbTVGS2RyTXNjdkZfWVhDVzdLSEZ6Z3RvMDVvM3laaTU3c3ZhRUZnb2lZVl92UjBiQWJjbjlVaFFjbXVFMnlrVjBIZzFxM2VsNzVXVmhVdzNCcS0xeDJPYng0YWpUMVZOWmU2dTlSaXFlTWU5d2oydzRyQ1htVHpKSVV1c3NKbUZWWWc2QUd5UmR4RTIzNDdsOTZTdkpfWjFfTDRhTUM4VjFkalEtNE55elJMenBjUUVST0RnV3pn",
       "publishedAt": "2026-11-10T07:11:00Z",
       "source": "Reuters",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Saudi Oil Tanker Firm Crossing Hormuz With US Coordination",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPQVNZUmQwREVGTDdab2NHQlprcktlUUN4MV8xN1pMenlGVU5kT2pkOHlXc1B4R3BaOEJOT0Q2YXNzNllMdERKNXpvcnAxNXR4NjA0THFFS3p0RUp1R2tGQkFtcnlVY0x3N0ZHeUZrRDlSQ3FJZGlLT05NeTM4aWVNRGJwRUg5eVMxekI1RVpzcjFWM3ZfZG1LRFVuNWljbFFyMEc0R1l2RzB0TEExQlE",
+      "publishedAt": "2026-11-10T06:35:00Z",
+      "source": "Bloomberg",
       "topics": [
         "shipping"
       ],
@@ -996,6 +1036,16 @@
       "topics": [
         "shipping",
         "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Seafarer Killed in Suspected Missile Attack on Tanker in Gulf",
+      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOdmQ3QldoQ0VPMTR5dFR1WXgzNE9wMG9UTGk4T0ZwTW9LR2FaZ2dKQ1RaVkRiMEw4TFJPUEFQaHVLSUZlbzVpOE9adjFkekFzbDVpZXJ6V01ZQldMMDAxWHU2Q1NaYkRlVUhYaUFnVmllcG50ZS1kakh3RVFJVE1idGFTQ096VmZQS2xn",
+      "publishedAt": "2026-11-06T16:32:47Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
       ],
       "via": "google"
     },
@@ -1375,7 +1425,7 @@
       "channels": [
         "google"
       ],
-      "articles": 31
+      "articles": 32
     },
     {
       "name": "Bloomberg",
@@ -1385,7 +1435,7 @@
         "google",
         "rss"
       ],
-      "articles": 21
+      "articles": 23
     },
     {
       "name": "The New York Times",
@@ -1442,7 +1492,7 @@
         "google",
         "rss"
       ],
-      "articles": 20
+      "articles": 22
     },
     {
       "name": "UKMTO",
