@@ -1,10 +1,10 @@
 import {
   reviewedOn, sources, historicalGallons, adoptedBbdMandates, netD4, soyByFacility, palmMonthly,
   palmForecast, indonesiaDeliveries, initialAllocation2026, substituteSeries, bankEstimates,
-} from './biofuel-policy-data.mjs';
+} from './biofuel-policy-data.mjs?v=20261114-biofuel-observations-v2';
 import {
   MILLION_LB_TO_MT, monthlyHipGap, cumulativeNetRins,
-} from './biofuel-policy-model.mjs';
+} from './biofuel-policy-model.mjs?v=20261114-biofuel-observations-v2';
 
 const value = n => Number.isFinite(n) ? n : '';
 const graphLine = (label, color, points) => ({label, color:'var(--series-' + color + ')', points});

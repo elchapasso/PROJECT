@@ -1,4 +1,4 @@
-import {netD4} from './biofuel-policy-data.mjs';
+import {netD4} from './biofuel-policy-data.mjs?v=20261114-biofuel-observations-v2';
 
 export const KG_PER_POUND = 0.45359237;
 export const KG_PER_TONNE = 1000;
