@@ -1,6 +1,6 @@
 # Oléa Terminal
 
-Terminal en français pour suivre les marchés mondiaux des huiles végétales et des oléagineux. Il réunit les fondamentaux, les prix datés, les facteurs de marché, les spreads, les rapports officiels, le calendrier et le brief COMEX.
+Terminal en français pour suivre les marchés mondiaux des huiles végétales et des oléagineux. Il réunit la veille quotidienne par origine, les fondamentaux, les prix datés, les spreads, les rapports officiels et le calendrier.
 
 [Ouvrir le terminal](https://elchapasso.github.io/PROJECT/)
 
@@ -40,6 +40,18 @@ Mise à jour automatique :
 3. La page lit la branche `cot-live`, puis la copie intégrée à `docs/terminal/cot/` si elle est plus récente. Si un rapport publié manque encore, elle interroge directement l’API de la CFTC. Une page restée ouverte vérifie chaque minute si un rapport est attendu et s’actualise, au plus toutes les 10 minutes.
 
 Pour lancer la mise à jour à la main : onglet **Actions** › **Actualiser le rapport COT** › **Run workflow**, ou `node scripts/update-cot.mjs` en local (Node 18 ou plus récent). Vérifier les calculs et le calendrier avec `node --test tests/cot-model.test.mjs`. Le calendrier officiel des publications 2026 est repris dans `cot-model.mjs` (`officialDelays`) ; au-delà, les reports fériés sont estimés. GitHub suspend les workflows planifiés d’un dépôt public après 60 jours sans activité : la page se complète alors depuis l’API de la CFTC, et le workflow se réactive depuis l’onglet **Actions**.
+
+## Marché & actualités
+
+La vue [Marché & actualités](https://elchapasso.github.io/PROJECT/#overview), page d’accueil de la rubrique **Terminal**, remplace la vue d’ensemble, le fil d’actualité, les rapports de marché, le brief COMEX et les facteurs de marché, qui lisaient les mêmes événements. Elle réunit :
+
+- la lecture par complexe (soja & huile de soja, tournesol, palme) : nombre d’actualités haussières, baissières et mixtes et orientation sur la période ;
+- la carte des impacts par origine (États-Unis, Argentine, Brésil ; Russie, Ukraine, UE, Bulgarie, Roumanie, Argentine ; Indonésie, Malaisie, Thaïlande, Colombie, Amérique latine), qui filtre le flux d’un clic ;
+- le flux d’actualités daté, avec lien vers la source, impact (haussier, baissier, mixte), intensité, horizon et mécanisme ;
+- les exports : brief COMEX en PDF, rapport hebdomadaire en texte, copie du brief et CSV du flux filtré ;
+- l’historique des prix et l’agenda des prochaines publications.
+
+Le flux est rédigé chaque matin et publié sur la branche `news-live` (`docs/terminal/news-feed.json`). Format, règles de rédaction et procédure : [NEWS.md](NEWS.md). Contrôle : `node scripts/update-news.mjs <fichier>` et `node --test tests/news-feed.test.mjs`.
 
 ## Rapports & publications
 

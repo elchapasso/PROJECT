@@ -14,7 +14,7 @@ export const products = {
   rso:'Huile de colza',rape:'Graines de colza',rsm:'Tourteau de colza',canola:'Canola',
   energy:'Énergie',bio:'Biocarburants',fx:'Devises',freight:'Fret maritime',
 };
-export const origins = {us:'États-Unis',arg:'Argentine',bra:'Brésil',chn:'Chine',ind:'Inde',eu:'Union européenne',ukr:'Ukraine',rus:'Russie',bgr:'Bulgarie',rou:'Roumanie',sea:'Mer Noire',mys:'Malaisie',idn:'Indonésie',can:'Canada',aus:'Australie',mar:'Maroc',world:'Monde'};
+export const origins = {us:'États-Unis',arg:'Argentine',bra:'Brésil',chn:'Chine',ind:'Inde',eu:'Union européenne',ukr:'Ukraine',rus:'Russie',bgr:'Bulgarie',rou:'Roumanie',sea:'Mer Noire',mys:'Malaisie',idn:'Indonésie',tha:'Thaïlande',col:'Colombie',latam:'Amérique latine',can:'Canada',aus:'Australie',mar:'Maroc',world:'Monde'};
 export const groups = {
   soy:{name:'Complexe soja',products:['sbo','soy','sm'],origins:['us','arg','bra','chn','ind','eu'],watch:['USDA WASDE et Crop Progress','Crush et stocks NOPA','Ventes USDA et demande chinoise','CONAB, ANEC et Bolsa de Cereales','EPA, CBOT et marges de crush'], channels:[
     ['Offre','Une récolte plus rapide peut accélérer les livraisons aux usines. Une hausse du crush augmente en parallèle l’offre d’huile et de tourteau.'],
@@ -22,13 +22,13 @@ export const groups = {
     ['Stocks','Des stocks d’huile bas renforcent les tensions à court terme si les stocks commerciaux et la production ne compensent pas.'],
     ['Commerce','Comparer des prix FOB à date et qualité équivalentes avant d’interpréter l’écart Argentine / États-Unis.']
   ]},
-  sun:{name:'Complexe tournesol',products:['sfo','sun','sfm'],origins:['ukr','rus','bgr','rou','eu','sea'],watch:['Surfaces, rendement et récolte','Trituration et stocks','FOB mer Noire','Taxes russes et continuité portuaire','Spreads SFO / SBO / CPO'],channels:[
+  sun:{name:'Complexe tournesol',products:['sfo','sun','sfm'],origins:['ukr','rus','bgr','rou','eu','arg','sea'],watch:['Surfaces, rendement et récolte','Trituration et stocks','FOB mer Noire','Taxes russes et continuité portuaire','Spreads SFO / SBO / CPO'],channels:[
     ['Graines','Les surfaces et rendements déterminent le potentiel de production. Une rétention des ventes de graines peut maintenir les coûts des triturateurs.'],
     ['Huile','La disponibilité exportable dépend du crush, des stocks, des taxes et des capacités de chargement.'],
     ['Demande','Les acheteurs indiens et européens peuvent arbitrer vers le soja ou la palme lorsque le tournesol se renchérit.'],
     ['Commerce','Une perturbation portuaire peut tendre l’huile FOB même si le bilan de graines s’améliore.']
   ]},
-  palm:{name:'Complexe palme',products:['palm','rbd','olein','pko'],origins:['mys','idn','ind','chn'],watch:['MPOB et estimations avant publication','Inspections ITS / AmSpec','Stocks et flux GAPKI','Mandats B40 / B50','Importations SEA India et spreads'],channels:[
+  palm:{name:'Complexe palme',products:['palm','rbd','olein','pko'],origins:['mys','idn','tha','col','latam','ind','chn'],watch:['MPOB et estimations avant publication','Inspections ITS / AmSpec','Stocks et flux GAPKI','Mandats B40 / B50','Importations SEA India et spreads'],channels:[
     ['Offre','La production et les rendements varient avec la saison, les pluies et la disponibilité de main-d’œuvre.'],
     ['Demande','Les mandats biodiesel peuvent retenir du CPO en Indonésie. Le prix relatif influence les achats indiens et chinois.'],
     ['Stocks','Un gonflement des stocks malaisiens peut peser sur le FCPO, en particulier si les exportations ralentissent.'],

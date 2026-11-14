@@ -1,6 +1,6 @@
 
-import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scoreWeights} from './data.js?v=20261111-market-close';
-import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js?v=20261111-market-close';
+import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,metrics,periodTypes,pairs,scoreWeights} from './data.js?v=20261114-news';
+import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js?v=20261114-news';
 import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js?v=20261110-mpob';
 import {biofuelReleaseDate,biofuelSeries,biofuelNativeSeries} from './biofuels.js';
 import {renderBiofuelPolicy,bindBiofuelPolicy} from './biofuel-policy-view.mjs?v=20261114-biofuel-observations-v2';
@@ -51,9 +51,9 @@ const iconPaths={
 };
 const icon=(name,size=17)=>'<svg class="ico" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="'+iconPaths[name]+'"/></svg>';
 const menu=[
-  ['Terminal',[['overview','Vue d’ensemble','grid'],['publications','Rapports & publications','report'],['news','Fil d’actualité','news'],['calendar','Calendrier','calendar'],['reports','Rapports de marché','report'],['comex','Brief COMEX','brief']]],
+  ['Terminal',[['overview','Marché & actualités','news'],['publications','Rapports & publications','report'],['calendar','Calendrier','calendar']]],
   ['Complexes',[['soy','Soja & dérivés','leaf'],['sun','Tournesol','sun'],['palm','Palme','drop']]],
-  ['Analyse',[['drivers','Facteurs de marché','pulse'],['balances','Bilans offre / demande','table'],['demand','Demande','grain'],['cot','Rapport COT · CFTC','users'],['cross','Comparaisons & spreads','chart'],['cbot-arg','Simulateur CBOT – ARG','calc'],['macro','Énergie & géopolitique','bolt'],['biofuels','Biocarburants','drop']]],
+  ['Analyse',[['balances','Bilans offre / demande','table'],['demand','Demande','grain'],['cot','Rapport COT · CFTC','users'],['cross','Comparaisons & spreads','chart'],['cbot-arg','Simulateur CBOT – ARG','calc'],['macro','Énergie & géopolitique','bolt'],['biofuels','Biocarburants','drop']]],
 ];
 const nav=Object.fromEntries(menu.flatMap(([,items])=>items.map(([id,title])=>[id,title])).concat([['sources','Sources & données']]));
 const FILTERS={product:'',origin:'',period:'',horizon:'',impact:'',source:'',status:''};
@@ -63,19 +63,21 @@ let data=emptyStore();
 let loadError='';
 try{const raw=localStorage.getItem(localKey);if(raw)data=parseStore(raw);}catch{loadError='Les données locales n’ont pas pu être chargées.';}
 const state={
-  page:'overview',filters:{...FILTERS},theme:'light',mobile:false,eventWindow:'7',chart:'oils',pubGroup:'all',
+  page:'overview',filters:{...FILTERS},theme:'light',mobile:false,chart:'oils',pubGroup:'all',
   indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
   soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',sunFamily:'sun',sunOrigin:'ukr',sunView:'',seasonYears:{},
-  originTab:{},query:'',category:'',importance:'',start:'',end:'',
+  originTab:{},query:'',newsComplex:'all',newsOrigin:'',newsImpact:'',newsWindow:'30',newsLimit:60,
   crossView:'spreads',crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',
-  reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:calendarToday().slice(0,7),editType:'events',
+  month:calendarToday().slice(0,7),editType:'events',
 };
 try{if(localStorage.getItem('olea-theme')==='dark')state.theme='dark';}catch{}
 const readPage=()=>{const p=location.hash.slice(1).split('?')[0];return Object.hasOwn(nav,p)?p:'overview';};
 state.page=readPage();
-let memoryReport=null;
 let toastTimer;
-const fullEvents=()=>unique([...seedEvents,...data.events],eventKey).sort(byDate);
+// Veille quotidienne (news-feed.json) : rédigée chaque matin et publiée sur la branche news-live.
+let newsFeed={updatedAt:'',items:[]};
+let newsFeedLoaded=false;
+const fullEvents=()=>unique([...seedEvents,...newsFeed.items,...data.events],eventKey).sort(byDate);
 const fullBalances=()=>balancesWithRatios(unique([...seedBalances,...data.balances],balanceKey));
 let calendarFeed=null;
 let calendarFeedLoaded=false;
@@ -397,7 +399,7 @@ function shell(body){
     const change=pct(s.values[last],s.values[prev]);const direction=change>0?'positive':change<0?'negative':'muted';
     return '<div class="tick" title="'+e(last?displayPeriod(last,s.grain)+' · '+s.points[last].source+' · '+s.definition:'Série non disponible')+'"><span>'+e(s.name)+'</span><div><b class="num">'+num(s.values[last],2)+'</b><small class="'+direction+'">'+(change===null?e(last?s.unit:'Non dispo.'):e(percent(change)))+'</small></div></div>';
   }).join('');
-  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['biofuels','demand','balances','cbot-arg','cot','publications','macro'].includes(state.page)||state.page==='cross'&&state.crossView!=='pairs'?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
+  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['overview','biofuels','demand','balances','cbot-arg','cot','publications','macro'].includes(state.page)||state.page==='cross'&&state.crossView!=='pairs'?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
 }
 
 
@@ -422,30 +424,125 @@ const checkedStatus=r=>['confirmed','estimate','projection','consensus'].include
 function ranked(rows,impact,horizon){
   return rows.filter(r=>r.impact===impact&&(!horizon||r.horizon===horizon)&&checkedStatus(r)).sort((a,b)=>b.intensity-a.intensity||byDate(a,b));
 }
-function renderOverview(){
-  const scoped=eventsFor(), now=asOf(), sentimentData=sentiment(scoped,now);
-  const {score,count,coverage,orientation,contributions}=sentimentData;
-  const sentimentBox='<div class="gauge"><div class="spread-between"><span class="eyebrow">Sentiment de marché</span>'+badge(orientation)+'</div><div class="num score">'+sign(score,0)+' <span class="small">/ 100</span></div><div class="gaugebar">'+(score===null?'':'<i style="left:'+((score+100)/2)+'%"></i>')+'</div><div class="spread-between scale mono"><span>−100</span><span>0</span><span>+100</span></div><details><summary>'+coverage+'/6 piliers · '+count+' facteurs · méthode</summary><p>Sur 30 jours, moyenne signée de l’intensité et de la fiabilité dans chaque pilier, puis somme pondérée. Un pilier sans donnée contribue à 0. Cet indicateur résume les facteurs disponibles.</p><p>'+contributions.map(c=>e(labels.category[c.key])+' '+scoreWeights[c.key]+' % ('+sign(c.value,1)+')').join(' · ')+'</p><p>Fiabilité des données confirmées ×1, estimations/projections ×0,55, consensus ×0,45. Mixte et neutre valent 0. Seuils haussier/baissier ±12, neutre entre −3 et +3.</p></details></div>';
-  const hero='<section class="hero"><div><span class="eyebrow">Marchés mondiaux · Huiles végétales</span><h1>Vue d’ensemble</h1><p>Suivez les prix de référence, les bilans et les facteurs qui influencent les marchés du soja, du tournesol, de la palme et du colza.</p><div class="actions">'+route('drivers',icon('pulse')+' Explorer les facteurs','primary')+route('comex',icon('brief')+' Préparer le COMEX','ghost')+'</div></div>'+sentimentBox+'</section>';
-  const marketCards=cards.filter(c=>Object.hasOwn(nav,c.group)&&(!state.filters.product||c.related.includes(state.filters.product))&&(!state.filters.origin||c.origins.includes(state.filters.origin))).map(c=>{
-    const rows=scoped.filter(r=>c.related.includes(r.product)&&c.origins.includes(r.origin));
-    const s=sentiment(rows,now,90), top=[...rows].sort((a,b)=>b.intensity-a.intensity||byDate(a,b));
-    const drivers=[...new Set([...top.map(r=>r.title),...c.drivers])].slice(0,3);
-    const confidence=s.count===0?'Non évaluable':s.coverage>=3&&s.count>=6?'Élevée':s.count>=3?'Modérée':'Limitée';
-    return '<a href="#'+c.group+'" data-market="'+c.key+'" class="market-card"><span class="market-code">'+e(c.code)+'</span><h3>'+e(c.title)+'</h3>'+badge(s.orientation)+'<p class="small" style="margin-top:7px">'+e(top[0]?.number?top[0].number+' · '+top[0].variation:c.summary)+'</p><ul>'+drivers.map(d=>'<li title="'+e(d)+'">'+e(d)+'</li>').join('')+'</ul><footer>'+e(confidence)+' · '+(rows[0]?e(formatDate(rows[0].date)):'À confirmer')+'</footer></a>';
-  });
+// ── Marché & actualités : page unique de veille. Elle remplace la vue d’ensemble, le fil d’actualité,
+// les rapports de marché, le brief COMEX et les facteurs de marché, qui lisaient les mêmes événements.
+const newsComplexes={
+  soy:{name:'Soja & huile de soja',short:'Soja',code:'SOJA · ZS / ZL / ZM',products:['soy','sbo','sm'],origins:['us','arg','bra']},
+  sun:{name:'Tournesol',short:'Tournesol',code:'TOURNESOL · GRAINES / HUILE',products:['sun','sfo','sfm'],origins:['rus','ukr','eu','bgr','rou','arg']},
+  palm:{name:'Huile de palme',short:'Palme',code:'PALME · FCPO / CPO',products:['palm','rbd','olein','pko'],origins:['idn','mys','tha','col','latam']},
+  macro:{name:'Énergie, biocarburants & devises',short:'Transversal',code:'ÉNERGIE · BIO · FX',products:['energy','bio','fx','freight'],origins:[]},
+};
+const newsWindows={7:'7 j',14:'14 j',30:'30 j',90:'90 j'};
+const impactMarks={positive:'▲',negative:'▼',mixed:'◆',neutral:'●'};
+const complexOf=r=>Object.keys(newsComplexes).find(k=>newsComplexes[k].products.includes(r.product))||'other';
+const newsToday=()=>calendarToday();
+const newsSince=()=>addDays(newsToday(),1-Number(state.newsWindow));
+const byRecent=(a,b)=>b.date.localeCompare(a.date)||String(b.time??'').localeCompare(String(a.time??''))||b.intensity-a.intensity;
+const newsBase=()=>{const since=newsSince(),today=newsToday();return fullEvents().filter(r=>r.date>=since&&r.date<=today);};
+function newsMatches(r){
+  const complex=state.newsComplex,origin=state.newsOrigin;
+  if(complex!=='all'&&complexOf(r)!==complex)return false;
+  if(origin&&(origin==='other'?newsComplexes[complex]?.origins.includes(r.origin):r.origin!==origin))return false;
+  if(state.newsImpact&&r.impact!==state.newsImpact)return false;
+  const q=String(state.query||'').trim().toLocaleLowerCase('fr');
+  return !q||[r.title,r.summary,r.source,r.transmission,r.number,products[r.product],origins[r.origin]].some(v=>String(v??'').toLocaleLowerCase('fr').includes(q));
+}
+const newsRows=()=>newsBase().filter(newsMatches).sort(byRecent);
+const tally=rows=>Object.fromEntries(['positive','negative','mixed'].map(k=>[k,rows.filter(r=>r.impact===k).length]));
+const impactPill=r=>'<span class="impact-pill" data-impact="'+e(r.impact)+'">'+impactMarks[r.impact]+' '+e(labels.impact[r.impact])+'</span>';
+const intensityDots=n=>'<span class="intensity" title="Intensité '+e(labels.intensity[n].toLowerCase())+'">'+[1,2,3].map(i=>'<i class="'+(i<=n?'on':'')+'"></i>').join('')+'<span>'+e(labels.intensity[n])+'</span></span>';
+const tallyBar=t=>'<div class="tally-bar" aria-hidden="true">'+['positive','negative','mixed'].map(k=>t[k]?'<i class="'+k+'" style="flex:'+t[k]+'"></i>':'').join('')+'</div>';
+const tallyText=t=>'<span class="tally num"><b class="positive" title="Haussier">▲ '+t.positive+'</b><b class="negative" title="Baissier">▼ '+t.negative+'</b><b class="mixed" title="Mixte">◆ '+t.mixed+'</b></span>';
+const newsWindowLabel=()=>'les '+state.newsWindow+' derniers jours';
+const dayFormat=new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+function dayLabel(d){
+  const t=newsToday(),label=dayFormat.format(new Date(d+'T12:00:00Z'));
+  return (d===t?'Aujourd’hui · ':d===addDays(t,-1)?'Hier · ':'')+label.charAt(0).toUpperCase()+label.slice(1);
+}
+const newsSourceLink=r=>safeURL(r.url)?'<a class="news-source" href="'+e(safeURL(r.url))+'" target="_blank" rel="noopener noreferrer" title="Ouvrir la source">'+e(r.source)+' '+icon('arrow',12)+'</a>':'<span class="small">'+e(r.source)+'</span>';
+function newsItem(r){
+  const c=newsComplexes[complexOf(r)];
+  return '<article class="news-item" data-impact="'+e(r.impact)+'">'+
+    '<div class="news-when"><b class="num">'+e(formatDate(r.date).replace(/ \d{4}$/,''))+'</b><small>'+e(r.time||'Heure n. d.')+'</small></div>'+
+    '<div class="news-body"><div class="news-tags"><span class="news-tag">'+e(c?.short??(groups.rape.products.includes(r.product)?'Colza':'Autre'))+'</span><span>'+e(products[r.product])+'</span><span>'+e(origins[r.origin])+'</span>'+(labels.category[r.category]!==products[r.product]?'<span>'+e(labels.category[r.category])+'</span>':'')+'<span>'+e(labels.status[r.status])+'</span></div>'+
+    '<h4>'+eventBtn(r)+'</h4><p class="news-summary">'+e(r.summary)+'</p>'+
+    '<p class="news-figure"><b class="num">'+e(r.number)+'</b>'+(r.variation?'<span>'+e(r.variation)+'</span>':'')+'<span>'+e(r.period)+'</span></p>'+
+    '<p class="news-why"><strong>Pourquoi '+e(labels.impact[r.impact].toLowerCase())+'</strong> · '+e(r.transmission)+'</p></div>'+
+    '<div class="news-side">'+impactPill(r)+intensityDots(r.intensity)+'<span class="small">'+e(labels.horizon[r.horizon])+'</span>'+newsSourceLink(r)+'</div></article>';
+}
+function newsFeedHtml(rows){
+  if(!rows.length)return empty('Aucune actualité pour ces filtres sur '+newsWindowLabel()+'.');
+  const shown=rows.slice(0,state.newsLimit);
+  const days=[...new Set(shown.map(r=>r.date))];
+  return days.map(d=>{
+    const items=shown.filter(r=>r.date===d);
+    return '<section class="news-day"><h3><span>'+e(dayLabel(d))+'</span>'+tallyText(tally(items))+'</h3><div class="news-list">'+items.map(newsItem).join('')+'</div></section>';
+  }).join('')+(rows.length>shown.length?'<div class="news-more">'+action('news-more','Afficher '+Math.min(60,rows.length-shown.length)+' actualités de plus','ghost')+'</div>':'');
+}
+function complexCard(key,base){
+  const c=newsComplexes[key],rows=base.filter(r=>complexOf(r)===key),t=tally(rows);
+  const s=sentiment(rows,newsToday(),Number(state.newsWindow));
+  const top=[...rows].sort((a,b)=>b.intensity-a.intensity||byRecent(a,b)).slice(0,3);
+  const active=state.newsComplex===key&&!state.newsOrigin;
+  return '<article class="complex-card'+(active?' active':'')+'"><div class="spread-between"><span class="market-code">'+e(c.code)+'</span>'+
+    badge(s.orientation,s.score===null?'Sans signal':labels.impact[s.orientation]+' '+sign(s.score,0)+' / 100')+'</div><h3>'+e(c.name)+'</h3>'+tallyText(t)+tallyBar(t)+
+    '<ul>'+(top.length?top.map(r=>'<li><span class="mark '+e(r.impact)+'">'+impactMarks[r.impact]+'</span><div>'+eventBtn(r)+'<small>'+e(origins[r.origin]+' · '+formatDate(r.date)+' · '+r.source)+'</small></div></li>').join(''):'<li class="small">Aucune actualité sur '+e(newsWindowLabel())+'.</li>')+'</ul>'+
+    '<footer><span>'+e(c.origins.map(o=>origins[o]).join(' · '))+'</span><button type="button" class="link-button" data-action="news-filter" data-complex="'+key+'" data-origin="">'+(active?'Tout afficher':'Voir le flux')+'</button></footer></article>';
+}
+function impactMap(base){
+  const row=(complex,origin,label,rows)=>{
+    const t=tally(rows),net=t.positive-t.negative,last=[...rows].sort(byRecent)[0];
+    const active=state.newsComplex===complex&&state.newsOrigin===origin,width=Math.min(50,Math.abs(net)*10);
+    return '<tr class="'+(active?'active':'')+(rows.length?'':' quiet')+'"><th scope="row"><button type="button" class="cell-link" data-action="news-filter" data-complex="'+complex+'" data-origin="'+origin+'" aria-pressed="'+active+'">'+e(label)+'</button></th>'+
+      ['positive','negative','mixed'].map(k=>'<td class="num map-count">'+(t[k]?'<b class="'+k+'">'+t[k]+'</b>':'<span class="map-zero">·</span>')+'</td>').join('')+
+      '<td><div class="net"><div class="net-bar">'+(net?'<span class="'+(net>0?'positive':'negative')+'" style="'+(net>0?'left':'right')+':50%;width:'+width+'%"></span>':'')+'</div><small class="num '+(net>0?'positive':net<0?'negative':'')+'">'+(net>0?'+':net<0?'−':'')+Math.abs(net)+'</small></div></td>'+
+      '<td class="map-last">'+(last?'<span class="mark '+e(last.impact)+'">'+impactMarks[last.impact]+'</span> '+eventBtn(last)+'<small>'+e(formatDate(last.date)+' · '+last.source)+'</small>':'<span class="small">Rien de nouveau sur la période</span>')+'</td></tr>';
+  };
+  const body=['soy','sun','palm'].map(key=>{
+    const c=newsComplexes[key],rows=base.filter(r=>complexOf(r)===key),others=rows.filter(r=>!c.origins.includes(r.origin));
+    return '<tr class="map-group"><th colspan="6">'+e(c.name)+'</th></tr>'+c.origins.map(o=>row(key,o,origins[o],rows.filter(r=>r.origin===o))).join('')+
+      (others.length?row(key,'other','Demande & autres origines',others):'');
+  }).join('');
+  return '<div class="scroll"><table class="table impact-map"><thead><tr><th>Origine</th><th class="num">▲ Haussier</th><th class="num">▼ Baissier</th><th class="num">◆ Mixte</th><th>Solde</th><th>Dernière actualité</th></tr></thead><tbody>'+body+'</tbody></table></div>';
+}
+function newsHeader(base){
+  const t=tally(base);
+  const at=newsFeed.updatedAt;
+  const stale=!!at&&at.slice(0,10)<addDays(newsToday(),-2);
+  const status=!newsFeedLoaded?'Chargement de la veille…':at?'Veille mise à jour le '+formatDate(at.slice(0,10))+' à '+casablanca(at).time+' (Casablanca)':'Veille quotidienne indisponible : seules les données intégrées au site sont affichées';
+  return '<section class="hero news-hero"><div><span class="eyebrow">Terminal · Veille quotidienne</span><h1>Marché & actualités</h1>'+
+    '<p>Les nouvelles qui font bouger le soja, le tournesol et la palme, origine par origine. Chaque fiche donne sa date, sa source et son impact attendu sur les prix.</p>'+
+    '<p class="news-status'+(stale||!at?' stale':'')+'"><span class="dot"></span>'+e(status)+(stale?' · plus de deux jours sans mise à jour':'')+'</p>'+
+    '<div class="actions">'+action('pdf',icon('download')+' Brief COMEX (PDF)','primary')+action('news-report',icon('report')+' Rapport hebdo','ghost')+action('copy-brief',icon('copy')+' Copier le brief','ghost')+action('export-feed',icon('table')+' CSV','ghost')+'</div></div>'+
+    '<div class="news-tally"><span class="eyebrow">Sur '+e(newsWindowLabel())+'</span><div class="tally-grid"><div><b class="num positive">'+t.positive+'</b><span>▲ Haussier</span></div><div><b class="num negative">'+t.negative+'</b><span>▼ Baissier</span></div><div><b class="num mixed">'+t.mixed+'</b><span>◆ Mixte</span></div></div>'+tallyBar(t)+
+    '<p class="small"><span>'+base.length+' actualité'+(base.length>1?'s':'')+' · '+new Set(base.map(r=>r.source)).size+' sources</span>'+btnSeg('newsWindow',newsWindows,state.newsWindow,'Période')+'</p></div></section>';
+}
+function newsToolbar(){
+  const c=newsComplexes[state.newsComplex];
+  const originChoices=c?.origins.length?Object.fromEntries([...c.origins.map(o=>[o,origins[o]]),['other','Demande & autres origines']]):null;
+  const active=state.newsComplex!=='all'||state.newsOrigin||state.newsImpact||state.query;
+  return '<div class="news-toolbar">'+btnSeg('newsComplex',{all:'Tous',soy:'Soja',sun:'Tournesol',palm:'Palme',macro:'Transversal'},state.newsComplex,'Complexe')+
+    (originChoices?select('newsOrigin',originChoices,state.newsOrigin,'Toutes les origines'):'')+
+    btnSeg('newsImpact',{'':'Tous impacts',positive:'▲ Haussier',negative:'▼ Baissier',mixed:'◆ Mixte'},state.newsImpact,'Impact')+
+    '<form id="feed-search" class="news-search" role="search"><label class="sr" for="search">Rechercher</label><input id="search" name="search" type="search" placeholder="MPOB, taxe, B50, WASDE…" value="'+e(state.query)+'"><button class="button" type="submit" aria-label="Rechercher">'+icon('search')+'</button></form>'+
+    (active?action('news-reset','Réinitialiser','ghost'):'')+'</div>';
+}
+function marketPrices(){
   const chartIds=state.chart==='oils'?['wb-sbo','wb-palm']:state.chart==='grains'?['wb-soy','wb-sm']:['brent','wti'];
   const pricePanel=panel('<div class="spread-between"><div><h2>Historique des prix</h2><p class="small">Moyennes mensuelles</p></div>'+btnSeg('chart',{oils:'Huiles',grains:'Graines et tourteaux',energy:'Pétrole'},state.chart)+'</div>'+chart(linesFrom(chartIds),{unit:state.chart==='energy'?'USD/b':'USD/t'}));
-  const next=calendarFilter().filter(r=>r.date&&r.date>=calendarToday()&&r.importance>=2).slice(0,4);
-  const agenda=panel('<div class="spread-between"><h2>À surveiller</h2><a class="small" href="#calendar">Calendrier '+icon('arrow',14)+'</a></div>'+(next.length?next.map(calMini).join(''):empty('Aucune publication datée dans la sélection.')));
-  const selected=scoped.filter(r=>r.date>=stamp(now,state.eventWindow)&&r.date<=now);
-  const list=(rows,blank)=>rows.length?'<ul class="brief-list">'+rows.slice(0,3).map(r=>'<li>'+eventBtn(r)+'<small>'+e(r.number+' · '+r.variation)+'</small></li>').join('')+'</ul>':empty(blank);
-  const near=selected.filter(r=>r.status==='consensus'||r.status==='estimate'||r.status==='pending'||['geo','logistics','weather'].includes(r.category));
-  const pers=panel('<h2>Perspectives</h2><p class="analysis-text"><strong>Court terme</strong> · '+e((ranked(scoped,'negative','short')[0]||ranked(scoped,'positive','short')[0])?.caveat||'Les prochains bilans et cotations aideront à préciser la tendance.')+'</p><p class="analysis-text"><strong>Moyen terme</strong> · '+e((ranked(scoped,'negative','medium')[0]||ranked(scoped,'positive','medium')[0])?.caveat||'À confirmer avec les révisions des bilans.')+'</p>');
-  return hero+'<div class="dashboard-grid">'+pricePanel+agenda+'</div>'+
-    section('Marchés clés','Orientation issue des événements disponibles sur 90 jours','<a href="#balances">Bilans '+icon('arrow',14)+'</a>')+(marketCards.length?'<div class="market-grid">'+marketCards.join('')+'</div>':empty())+
-    section('Ce qui a changé','Fenêtre relative au point de veille affiché en haut de page',btnSeg('eventWindow',{1:'24 h',7:'7 j',30:'30 j'},state.eventWindow))+panel(eventRows(selected.slice(0,7)))+
-    section('Lecture des facteurs','Les signaux sont classés par intensité et par date')+'<div class="grid3">'+panel('<h3 class="positive">Soutiens de prix</h3>'+list(ranked(selected,'positive'),'Aucun soutien documenté.'))+panel('<h3 class="negative">Pressions baissières</h3>'+list(ranked(selected,'negative'),'Aucune pression documentée.'))+panel('<h3 class="mixed">Risques et anticipations</h3>'+list(near,'Aucun risque nouveau documenté.'))+'</div><div style="margin-top:12px">'+pers+'</div>';
+  const next=calendarFilter({...FILTERS}).filter(r=>r.date&&r.date>=calendarToday()&&r.importance>=2).slice(0,5);
+  const agenda=panel('<div class="spread-between"><h2>À surveiller</h2><a class="small" href="#calendar">Calendrier '+icon('arrow',14)+'</a></div>'+(next.length?next.map(calMini).join(''):empty('Aucune publication datée à venir.')));
+  return '<div class="dashboard-grid">'+pricePanel+agenda+'</div>';
+}
+function renderMarket(){
+  const base=newsBase(),rows=newsRows();
+  const c=newsComplexes[state.newsComplex];
+  const scope=[c?c.name:'Tous les complexes',state.newsOrigin?(state.newsOrigin==='other'?'Demande & autres origines':origins[state.newsOrigin]):'',state.newsImpact?labels.impact[state.newsImpact]:''].filter(Boolean).join(' · ');
+  return newsHeader(base)+
+    '<div class="complex-grid">'+['soy','sun','palm'].map(k=>complexCard(k,base)).join('')+'</div>'+
+    section('Carte des impacts','Actualités par origine et par sens d’impact sur '+newsWindowLabel()+' · un clic sur une origine filtre le flux')+panel(impactMap(base),'map-panel')+
+    '<div id="news-feed">'+section('Flux d’actualités',rows.length+' actualité'+(rows.length>1?'s':'')+' · '+scope)+newsToolbar()+newsFeedHtml(rows)+'</div>'+
+    section('Prix et agenda','Repères mensuels et prochaines publications')+marketPrices();
 }
 function monthlyHistory(title,rows,names,sourceLinks,note){
   const period=displayPeriod(rows[0][0],'month')+' – '+displayPeriod(rows.at(-1)[0],'month');
@@ -830,17 +927,6 @@ function renderComplex(key){
     })))+section('Facteurs et événements','Cliquer sur un événement pour ouvrir son mécanisme de transmission')+panel(eventRows(events))+
     section('Indicateurs à surveiller','Les séries peuvent être complétées dans le registre')+panel('<ul class="brief-list">'+group.watch.map(w=>'<li>'+e(w)+'</li>').join('')+'</ul>');
 }
-function filteredFeed(){
-  const q=state.query.trim().toLocaleLowerCase('fr');
-  return eventsFor().filter(r=>(!q||[r.title,r.summary,r.source,products[r.product],origins[r.origin]].some(v=>v.toLocaleLowerCase('fr').includes(q)))&&(!state.category||r.category===state.category)&&(!state.importance||r.intensity===Number(state.importance))&&(!state.start||r.date>=state.start)&&(!state.end||r.date<=state.end));
-}
-function renderFeed(isNews){
-  const rows=filteredFeed();
-  const toolbar='<form id="feed-search" class="toolbar"><label class="sr" for="search">Rechercher</label><input id="search" name="search" placeholder="Rechercher un sujet…" value="'+e(state.query)+'"><button class="button" type="submit">'+icon('search')+' Rechercher</button>'+select('category',labels.category,state.category,'Toutes les catégories')+select('importance',labels.intensity,state.importance,'Toutes les intensités')+'<label>Du <input type="date" data-control="start" value="'+e(state.start)+'"></label><label>au <input type="date" data-control="end" value="'+e(state.end)+'"></label>'+action('export-feed',icon('download')+' CSV','ghost')+'</form>';
-  if(!isNews)return head('Analyse fondamentale','Facteurs de marché','Les chiffres, la fiabilité et la transmission économique de chaque événement.')+toolbar+panel(eventRows(rows));
-  const articles=arr=>arr.length?'<div class="grid2 flow">'+arr.map(r=>panel('<div class="spread-between">'+lineBadge(r)+'<span class="small">'+e(formatDate(r.date))+' · '+e(r.time||'Heure non disponible')+'</span></div><h3>'+eventBtn(r)+'</h3><p class="analysis-text">'+e(r.summary)+'</p><dl><dt>Chiffres clés</dt><dd>'+e(r.number+' · '+r.variation)+'</dd><dt>Marché</dt><dd>'+e(products[r.product]+' · '+origins[r.origin])+'</dd><dt>Horizon</dt><dd>'+e(labels.horizon[r.horizon])+'</dd><dt>Interprétation</dt><dd>'+e(r.transmission)+'</dd></dl><p class="small">'+link(r.url,r.source)+'</p>','article')).join('')+'</div>':empty();
-  return head('Terminal','Fil d’actualité','Les publications confirmées sont séparées des projections, consensus et informations à confirmer.')+toolbar+section('Faits confirmés')+articles(rows.filter(r=>r.status==='confirmed'))+section('Anticipations et informations à confirmer')+articles(rows.filter(r=>r.status!=='confirmed'));
-}
 
 
 function renderBalanceCharts(balance,metric){
@@ -1101,6 +1187,25 @@ function renderCross(){
 }
 
 
+const liveNewsFeed='https://raw.githubusercontent.com/elchapasso/PROJECT/news-live/docs/terminal/news-feed.json';
+const newsPages=['overview','soy','sun','palm','sources'];
+async function refreshNews(){
+  // La branche news-live porte la veille du jour ; la copie intégrée au site sert de secours. La plus récente l’emporte.
+  const read=async url=>{
+    try{
+      const response=await fetch(url,{cache:'no-cache',signal:AbortSignal.timeout(7000)});
+      if(!response.ok)return null;
+      const feed=await response.json();
+      return Array.isArray(feed?.items)?feed:null;
+    }catch{return null;}
+  };
+  const feeds=(await Promise.all([read(liveNewsFeed),read('./terminal/news-feed.json')])).filter(Boolean);
+  const feed=feeds.sort((a,b)=>String(b.updatedAt??'').localeCompare(String(a.updatedAt??'')))[0];
+  const changed=!newsFeedLoaded||(feed&&feed.updatedAt!==newsFeed.updatedAt);
+  if(feed)newsFeed={updatedAt:String(feed.updatedAt??''),items:feed.items.filter(validEvent)};
+  newsFeedLoaded=true;
+  if(changed&&newsPages.includes(state.page)&&!root.querySelector('dialog[open]'))render();
+}
 const liveCalendarFeed='https://raw.githubusercontent.com/elchapasso/PROJECT/calendar-live/docs/terminal/calendar-feed.json';
 async function refreshCalendar(){
   // Flux complet = calendrier (reports) et dernières publications (latest). Le flux en ligne passe d’abord ;
@@ -1206,11 +1311,11 @@ function renderCalendar(){
     section('Publications programmées','Heures de Casablanca · un clic sur le titre ouvre la page officielle')+panel(renderRows(rows.filter(r=>r.date?.startsWith(state.month)&&r.date>=today)))+
     section('Dates à confirmer','Les annonces sans date restent dans la liste de veille')+panel(renderRows(rows.filter(r=>!r.date)));
 }
-const reportScope=(end=state.reportEnd,kind=state.reportKind)=>{
+const reportScope=(end=calendarToday(),kind='weekly')=>{
   const start=kind==='weekly'?addDays(end,-6):end.slice(0,7)+'-01';
   return {start,end,kind};
 };
-function getReport(end=state.reportEnd,kind=state.reportKind){
+function getReport(end=calendarToday(),kind='weekly'){
   const scope=reportScope(end,kind);
   const weekly=kind==='weekly';
   const rows=eventsFor().filter(r=>r.date>=scope.start&&r.date<=end&&checkedStatus(r));
@@ -1254,52 +1359,24 @@ function getReport(end=state.reportEnd,kind=state.reportKind){
   const text=title+' · '+formatDate(scope.start)+' – '+formatDate(end)+'\n\n'+sections.map(([label,items])=>label+'\n'+(items.length?items.map(x=>'• '+x).join('\n'):'• Données non disponibles.')).join('\n\n');
   return {...scope,title,text,sections,priceCount:prices.length,events:rows.length};
 }
-function reportHtml(text){
-  return text.split('\n\n').map((block,i)=>{
-    const [title,...items]=block.split('\n');
-    if(!i)return '<h2>'+e(title)+'</h2>';
-    return '<h3 style="margin-top:16px">'+e(title)+'</h3><ul class="brief-list">'+items.map(line=>{
-      const matched=line.match(/ (https?:\/\/\S+)$/);
-      return '<li>'+e((matched?line.slice(0,matched.index):line).replace(/^•\s*/,''))+(matched?' · '+link(matched[1],'Source'):'')+'</li>';
-    }).join('')+'</ul>';
-  }).join('');
-}
-function renderReports(){
-  memoryReport=getReport();
-  const active=data.reports.find(r=>r.id===state.reportView);
-  const compared=data.reports.find(r=>r.id===state.reportOther&&r.id!==active?.id);
-  const archive=[...data.reports].sort((a,b)=>b.end.localeCompare(a.end));
-  return head('Terminal · Synthèses','Rapports de marché','Les rapports sont assemblés à partir des données présentes. Archivez une version pour conserver la lecture et les sources à la date de génération.')+
-    '<div class="toolbar">'+btnSeg('reportKind',{weekly:'Hebdomadaire',monthly:'Mensuel'},state.reportKind)+'<label>Fin de période <input type="date" data-control="reportEnd" value="'+e(state.reportEnd)+'"></label>'+action('save-report',icon('plus')+' Archiver','primary')+action('export-report',icon('download')+' Texte','ghost')+'</div>'+
-    panel('<p class="small">Aperçu calculé · '+memoryReport.events+' événements · '+memoryReport.priceCount+' séries de prix</p>'+reportHtml(memoryReport.text))+
-    section('Archives','Versions sauvegardées dans ce navigateur')+panel(archive.length?'<div class="toolbar"><label>Rapport archivé</label>'+select('reportView',Object.fromEntries(archive.map(r=>[r.id,r.title+' · '+formatDate(r.end)])),state.reportView,'Choisir un rapport')+
-    (active&&archive.length>1?'<label>Comparer avec</label>'+select('reportOther',Object.fromEntries(archive.filter(r=>r.id!==active.id).map(r=>[r.id,r.title+' · '+formatDate(r.end)])),state.reportOther,'Choisir une version'):'')+'</div>':'<p class="small">Les rapports archivés apparaîtront ici.</p>')+
-    (active?'<div class="'+(compared?'grid2 flow':'stack')+'" style="margin-top:12px">'+panel(reportHtml(active.text))+(compared?panel(reportHtml(compared.text)):'')+'</div>':'');
-}
 function briefGroups(){
-  const since=stamp(asOf(),state.comexWindow);
-  const rows=eventsFor().filter(r=>r.date>=since&&checkedStatus(r)&&/\d/.test(r.number));
-  return Object.entries(groups).map(([key,g])=>{
-    const filtered=rows.filter(r=>g.products.includes(r.product)).sort((a,b)=>b.intensity-a.intensity||byDate(a,b));
-    return {key,name:g.name,rows:filtered.slice(0,state.exec?2:8),total:filtered.length};
-  }).filter(g=>g.total||!state.filters.product);
+  const rows=newsRows().filter(r=>!['rumor','pending'].includes(r.status));
+  const keys=state.newsComplex==='all'?Object.keys(newsComplexes):[state.newsComplex];
+  return keys.map(key=>{
+    const filtered=rows.filter(r=>complexOf(r)===key).sort((a,b)=>b.intensity-a.intensity||byRecent(a,b));
+    return {key,name:newsComplexes[key].name,rows:filtered.slice(0,8),total:filtered.length};
+  }).filter(g=>g.total);
 }
-function briefLine(r){return origins[r.origin]+' / '+r.title+' · '+r.period+' · '+r.number+(r.variation?' · '+r.variation:'')+' → '+labels.impact[r.impact].toLowerCase()+' · '+r.transmission;}
+function briefLine(r){return origins[r.origin]+' / '+r.title+' · '+r.number+(r.variation?' · '+r.variation:'')+' → '+labels.impact[r.impact].toLowerCase()+' · '+r.transmission;}
 function briefHtml(print=false){
   const blocks=briefGroups();
-  const headline=print?'<header><span style="letter-spacing:.12em;font-size:9pt">OLÉA TERMINAL · VEILLE SOURCÉE</span><h1>'+e(state.exec?'Synthèse de direction':'Brief marché COMEX')+'</h1><p>Données au '+e(formatDate(asOf()))+' · '+e(periodLabel[state.comexWindow])+'</p></header>':'';
-  if(!blocks.length)return headline+empty('Aucun chiffre sourcé dans cette sélection.');
+  const headline=print?'<header><span style="letter-spacing:.12em;font-size:9pt">OLÉA TERMINAL · VEILLE SOURCÉE</span><h1>Brief marché COMEX</h1><p>Données au '+e(formatDate(calendarToday()))+' · '+e(newsWindowLabel())+'</p></header>':'';
+  if(!blocks.length)return headline+empty('Aucune actualité sourcée dans cette sélection.');
   return headline+blocks.map(g=>{
-    const content=g.rows.length?'<ul class="brief-list">'+g.rows.map(r=>'<li><strong>'+e(origins[r.origin]+' / '+r.title)+'</strong> · '+e(r.period+' · '+r.number+' · '+r.variation)+' → <span class="'+e(r.impact)+'">'+e(labels.impact[r.impact])+'</span> · '+e(r.transmission)+'<small>'+link(r.url,r.source)+' · '+e(formatDate(r.date)+' · '+labels.status[r.status]+' · '+labels.horizon[r.horizon])+'</small></li>').join('')+'</ul>':empty('Aucun chiffre sourcé dans cette fenêtre.');
-    const limited=g.total>0&&g.total<4&&!state.exec?'<p class="small">'+g.total+' éléments documentés sur cette fenêtre.</p>':'';
+    const content='<ul class="brief-list">'+g.rows.map(r=>'<li><strong>'+e(origins[r.origin]+' / '+r.title)+'</strong> · '+e(r.number+(r.variation?' · '+r.variation:''))+' → <span class="'+e(r.impact)+'">'+e(labels.impact[r.impact])+'</span> · '+e(r.transmission)+'<small>'+link(r.url,r.source)+' · '+e(formatDate(r.date)+' · '+labels.status[r.status]+' · '+labels.horizon[r.horizon])+'</small></li>').join('')+'</ul>';
+    const limited=g.total>g.rows.length?'<p class="small">'+g.total+' actualités · les '+g.rows.length+' plus fortes sont reprises.</p>':'';
     return print?'<section><h2>'+e(g.name)+'</h2>'+limited+content+'</section>':panel('<h2>'+e(g.name)+'</h2>'+limited+content);
   }).join('');
-}
-function renderComex(){
-  return head('Terminal · Synthèses','Brief COMEX','Transformez la veille en bullets courts, chiffrés et sourcés, avec une conséquence sur les prix.')+
-  '<div class="toolbar"><label>Fenêtre</label>'+select('comexWindow',{7:periodLabel[7],30:periodLabel[30],60:periodLabel[60],90:periodLabel[90]},state.comexWindow)+
-  '<label><input type="checkbox" data-control="exec" '+(state.exec?'checked':'')+'> Synthèse de direction</label>'+action('copy-brief',icon('copy')+' Copier','ghost')+action('pdf',icon('download')+' Export PDF','primary')+'</div>'+
-  '<div class="stack">'+briefHtml()+'</div>';
 }
 function renderSources(){
   const priceList=Object.keys(seedPrices).map(id=>{
@@ -1318,9 +1395,9 @@ function renderSources(){
 
 const energyUi={e,icon,chart,link,num,formatDate,colors,series,spreadPrices,spreadLegs};
 const pageRender={
-  overview:renderOverview,soy:()=>renderComplex('soy'),sun:()=>renderComplex('sun'),palm:()=>renderComplex('palm'),
-  publications:renderPublications,macro:()=>renderEnergyNews(energyUi),drivers:()=>renderFeed(false),news:()=>renderFeed(true),
-  balances:renderBalances,demand:renderDemand,cot:renderCot,cross:renderCross,'cbot-arg':renderCbotArg,biofuels:renderBiofuels,calendar:renderCalendar,reports:renderReports,comex:renderComex,sources:renderSources,
+  overview:renderMarket,soy:()=>renderComplex('soy'),sun:()=>renderComplex('sun'),palm:()=>renderComplex('palm'),
+  publications:renderPublications,macro:()=>renderEnergyNews(energyUi),
+  balances:renderBalances,demand:renderDemand,cot:renderCot,cross:renderCross,'cbot-arg':renderCbotArg,biofuels:renderBiofuels,calendar:renderCalendar,sources:renderSources,
 };
 function bindPageCharts(scope){
   scope.querySelectorAll('[data-chart]').forEach(wrap=>bindChart(wrap,chartModels[Number(wrap.dataset.chart)]));
@@ -1421,8 +1498,8 @@ const csvCell=val=>{
 };
 function csv(name,rows){download(name,'\ufeff'+rows.map(r=>r.map(csvCell).join(';')).join('\r\n'),'text/csv;charset=utf-8');}
 function exportFeed(){
-  csv('olea_facteurs.csv',[['Date','Heure','Produit','Origine','Période','Catégorie','Titre','Fait','Chiffre','Variation','Impact','Intensité','Horizon','Statut','Transmission','Conditions','Source','Lien'],
-    ...filteredFeed().map(r=>[r.date,r.time,products[r.product],origins[r.origin],r.period,labels.category[r.category],r.title,r.summary,r.number,r.variation,labels.impact[r.impact],labels.intensity[r.intensity],labels.horizon[r.horizon],labels.status[r.status],r.transmission,r.caveat,r.source,r.url])]);
+  csv('olea_actualites_'+calendarToday()+'.csv',[['Date','Heure','Complexe','Produit','Origine','Période','Catégorie','Titre','Fait','Chiffre','Variation','Impact','Intensité','Horizon','Statut','Transmission','Conditions','Source','Lien'],
+    ...newsRows().map(r=>[r.date,r.time,newsComplexes[complexOf(r)]?.name??'',products[r.product],origins[r.origin],r.period,labels.category[r.category],r.title,r.summary,r.number,r.variation,labels.impact[r.impact],labels.intensity[r.intensity],labels.horizon[r.horizon],labels.status[r.status],r.transmission,r.caveat,r.source,r.url])]);
 }
 function exportCross(){
   const {a,b,rows,common}=crossData();
@@ -1494,7 +1571,8 @@ const controlActions={
     const {key,value}=el.dataset;
     if(key==='sunOrigin'&&value!==state.sunOrigin)state.sunView='';
     state[key]=value;
-    if(key==='reportKind')state.reportEnd=value==='monthly'?addDays(asOf().slice(0,7)+'-01',-1):asOf();
+    if(key==='newsComplex')state.newsOrigin='';
+    if(key.startsWith('news'))state.newsLimit=60;
     render();
   },
   'season-year':el=>{
@@ -1571,12 +1649,16 @@ const controlActions={
     render();
     root.querySelector('[data-focus-form="'+spread.id+'"] button')?.focus({preventScroll:true});
   },
-  'export-report':()=>download('olea_rapport_'+memoryReport.end+'.txt',memoryReport.text,'text/plain;charset=utf-8'),
-  'save-report':()=>{
-    const {start,end,kind,title,text}=memoryReport;
-    const id=freshId();
-    if(save({...data,reports:[...data.reports,{id,start,end,kind,title,text}]})){state.reportView=id;render();toast('Rapport archivé.');}
+  'news-report':()=>{const r=getReport(calendarToday(),'weekly');download('olea_rapport_hebdo_'+r.end+'.txt',r.text,'text/plain;charset=utf-8');toast('Rapport hebdomadaire téléchargé.');},
+  'news-filter':el=>{
+    const complex=el.dataset.complex,origin=el.dataset.origin||'';
+    const same=state.newsComplex===complex&&state.newsOrigin===origin;
+    state.newsComplex=same?'all':complex;state.newsOrigin=same?'':origin;state.newsLimit=60;
+    render();
+    document.getElementById('news-feed')?.scrollIntoView({behavior:'smooth',block:'start'});
   },
+  'news-reset':()=>{Object.assign(state,{newsComplex:'all',newsOrigin:'',newsImpact:'',query:'',newsLimit:60});render();},
+  'news-more':()=>{state.newsLimit+=60;render();},
   backup:()=>download('olea_registre.json',JSON.stringify(data,null,2),'application/json'),
   'copy-brief':copyBrief,
   'sync-fx':syncFX,
@@ -1624,7 +1706,6 @@ root.addEventListener('change',event=>{
     state.originTab[state.page]=target.value;
     if(state.filters.origin)state.filters.origin=target.value;
   }else{
-    if(key==='reportEnd'&&!target.value){target.value=state.reportEnd;return;}
     if(target.form?.id==='feed-search')state.query=new FormData(target.form).get('search');
     state[key]=target.type==='checkbox'?target.checked:target.value;
   }
@@ -1633,8 +1714,9 @@ root.addEventListener('change',event=>{
 window.addEventListener('hashchange',()=>{state.page=readPage();state.mobile=false;render();window.scrollTo(0,0);});
 render();
 refreshCalendar();
+refreshNews();
 // Rapports et calendrier relus toutes les 30 minutes tant que la page est affichée.
-setInterval(()=>{if(document.visibilityState==='visible')refreshCalendar();},30*60*1000);
+setInterval(()=>{if(document.visibilityState==='visible'){refreshCalendar();refreshNews();}},30*60*1000);
 setInterval(()=>{if(document.visibilityState==='visible'&&state.page==='macro')refreshEnergyNews();},15*60*1000);
 if(loadError)toast(loadError);
 
