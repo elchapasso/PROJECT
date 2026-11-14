@@ -1,5 +1,5 @@
 
-import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scenarios,shockFields,horizonNotes,scoreWeights} from './data.js?v=20261111-market-close';
+import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,cards,metrics,periodTypes,pairs,scoreWeights} from './data.js?v=20261111-market-close';
 import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js?v=20261111-market-close';
 import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js?v=20261110-mpob';
 import {biofuelReleaseDate,biofuelSeries,biofuelNativeSeries} from './biofuels.js';
@@ -49,10 +49,9 @@ const iconPaths={
 };
 const icon=(name,size=17)=>'<svg class="ico" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="'+iconPaths[name]+'"/></svg>';
 const menu=[
-  ['Terminal',[['overview','Vue d’ensemble','grid'],['publications','Rapports & publications','report']]],
+  ['Terminal',[['overview','Vue d’ensemble','grid'],['publications','Rapports & publications','report'],['news','Fil d’actualité','news'],['calendar','Calendrier','calendar'],['reports','Rapports de marché','report'],['comex','Brief COMEX','brief']]],
   ['Complexes',[['soy','Soja & dérivés','leaf'],['sun','Tournesol','sun'],['palm','Palme','drop']]],
-  ['Analyse',[['drivers','Facteurs de marché','pulse'],['balances','Bilans offre / demande','table'],['demand','Demande','grain'],['cot','Rapport COT · CFTC','users'],['cross','Comparaisons & spreads','chart'],['cbot-arg','Simulateur CBOT – ARG','calc'],['macro','Énergie & géopolitique','bolt'],['biofuels','Biocarburants','drop'],['outlook','Perspectives & scénarios','target']]],
-  ['Veille & livrables',[['news','Fil d’actualité','news'],['calendar','Calendrier','calendar'],['reports','Rapports de marché','report'],['comex','Brief COMEX','brief']]],
+  ['Analyse',[['drivers','Facteurs de marché','pulse'],['balances','Bilans offre / demande','table'],['demand','Demande','grain'],['cot','Rapport COT · CFTC','users'],['cross','Comparaisons & spreads','chart'],['cbot-arg','Simulateur CBOT – ARG','calc'],['macro','Énergie & géopolitique','bolt'],['biofuels','Biocarburants','drop']]],
 ];
 const nav=Object.fromEntries(menu.flatMap(([,items])=>items.map(([id,title])=>[id,title])).concat([['sources','Sources & données']]));
 const FILTERS={product:'',origin:'',period:'',horizon:'',impact:'',source:'',status:''};
@@ -66,8 +65,8 @@ const state={
   indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
   soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',sunFamily:'sun',sunOrigin:'ukr',sunView:'',seasonYears:{},
   originTab:{},query:'',category:'',importance:'',start:'',end:'',
-  crossView:'spreads',crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',outProduct:'sbo',outHorizon:'short',
-  shocks:Object.fromEntries(shockFields.map(([k])=>[k,0])),reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:calendarToday().slice(0,7),editType:'events',
+  crossView:'spreads',crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',
+  reportKind:'weekly',reportEnd:AS_OF,reportView:'',exec:false,comexWindow:'60',month:calendarToday().slice(0,7),editType:'events',
 };
 try{if(localStorage.getItem('olea-theme')==='dark')state.theme='dark';}catch{}
 const readPage=()=>{const p=location.hash.slice(1).split('?')[0];return Object.hasOwn(nav,p)?p:'overview';};
@@ -438,7 +437,7 @@ function renderOverview(){
   const selected=scoped.filter(r=>r.date>=stamp(now,state.eventWindow)&&r.date<=now);
   const list=(rows,blank)=>rows.length?'<ul class="brief-list">'+rows.slice(0,3).map(r=>'<li>'+eventBtn(r)+'<small>'+e(r.number+' · '+r.variation)+'</small></li>').join('')+'</ul>':empty(blank);
   const near=selected.filter(r=>r.status==='consensus'||r.status==='estimate'||r.status==='pending'||['geo','logistics','weather'].includes(r.category));
-  const pers=panel('<h2>Perspectives</h2><p class="analysis-text"><strong>Court terme</strong> · '+e((ranked(scoped,'negative','short')[0]||ranked(scoped,'positive','short')[0])?.caveat||'Les prochains bilans et cotations aideront à préciser la tendance.')+'</p><p class="analysis-text"><strong>Moyen terme</strong> · '+e((ranked(scoped,'negative','medium')[0]||ranked(scoped,'positive','medium')[0])?.caveat||'À confirmer avec les révisions des bilans.')+'</p><a href="#outlook">Comparer les scénarios '+icon('arrow',14)+'</a>');
+  const pers=panel('<h2>Perspectives</h2><p class="analysis-text"><strong>Court terme</strong> · '+e((ranked(scoped,'negative','short')[0]||ranked(scoped,'positive','short')[0])?.caveat||'Les prochains bilans et cotations aideront à préciser la tendance.')+'</p><p class="analysis-text"><strong>Moyen terme</strong> · '+e((ranked(scoped,'negative','medium')[0]||ranked(scoped,'positive','medium')[0])?.caveat||'À confirmer avec les révisions des bilans.')+'</p>');
   return hero+'<div class="dashboard-grid">'+pricePanel+agenda+'</div>'+
     section('Marchés clés','Orientation issue des événements disponibles sur 90 jours','<a href="#balances">Bilans '+icon('arrow',14)+'</a>')+(marketCards.length?'<div class="market-grid">'+marketCards.join('')+'</div>':empty())+
     section('Ce qui a changé','Fenêtre relative au point de veille affiché en haut de page',btnSeg('eventWindow',{1:'24 h',7:'7 j',30:'30 j'},state.eventWindow))+panel(eventRows(selected.slice(0,7)))+
@@ -836,7 +835,7 @@ function renderFeed(isNews){
   const toolbar='<form id="feed-search" class="toolbar"><label class="sr" for="search">Rechercher</label><input id="search" name="search" placeholder="Rechercher un sujet…" value="'+e(state.query)+'"><button class="button" type="submit">'+icon('search')+' Rechercher</button>'+select('category',labels.category,state.category,'Toutes les catégories')+select('importance',labels.intensity,state.importance,'Toutes les intensités')+'<label>Du <input type="date" data-control="start" value="'+e(state.start)+'"></label><label>au <input type="date" data-control="end" value="'+e(state.end)+'"></label>'+action('export-feed',icon('download')+' CSV','ghost')+'</form>';
   if(!isNews)return head('Analyse fondamentale','Facteurs de marché','Les chiffres, la fiabilité et la transmission économique de chaque événement.')+toolbar+panel(eventRows(rows));
   const articles=arr=>arr.length?'<div class="grid2 flow">'+arr.map(r=>panel('<div class="spread-between">'+lineBadge(r)+'<span class="small">'+e(formatDate(r.date))+' · '+e(r.time||'Heure non disponible')+'</span></div><h3>'+eventBtn(r)+'</h3><p class="analysis-text">'+e(r.summary)+'</p><dl><dt>Chiffres clés</dt><dd>'+e(r.number+' · '+r.variation)+'</dd><dt>Marché</dt><dd>'+e(products[r.product]+' · '+origins[r.origin])+'</dd><dt>Horizon</dt><dd>'+e(labels.horizon[r.horizon])+'</dd><dt>Interprétation</dt><dd>'+e(r.transmission)+'</dd></dl><p class="small">'+link(r.url,r.source)+'</p>','article')).join('')+'</div>':empty();
-  return head('Veille','Fil d’actualité','Les publications confirmées sont séparées des projections, consensus et informations à confirmer.')+toolbar+section('Faits confirmés')+articles(rows.filter(r=>r.status==='confirmed'))+section('Anticipations et informations à confirmer')+articles(rows.filter(r=>r.status!=='confirmed'));
+  return head('Terminal','Fil d’actualité','Les publications confirmées sont séparées des projections, consensus et informations à confirmer.')+toolbar+section('Faits confirmés')+articles(rows.filter(r=>r.status==='confirmed'))+section('Anticipations et informations à confirmer')+articles(rows.filter(r=>r.status!=='confirmed'));
 }
 
 
@@ -1096,36 +1095,6 @@ function renderCross(){
   return head('Analyse intermarchés','Comparaisons & spreads','Suivez les spreads BOPO, BOHO et POGO, les marges de transformation et la comparaison de séries sur leurs observations communes.')+
     tabs+(view==='pairs'?'':priceStatusPanel())+crossViews[view][2]();
 }
-const horizonMultipliers={short:[.7,1.3,.9,1.1,1.2,1.15],medium:[1,1,1,1,1,1],long:[1.35,.75,1.25,.85,.8,.75]};
-const presets={up:[-5,-10,8,7,10,0],base:[0,0,0,0,0,0],down:[5,10,-8,-7,-10,0]};
-const scenarioProduct=()=>{
-  const p=state.filters.product||state.outProduct;
-  const group=Object.values(groups).find(g=>g.products.includes(p));
-  return {p,base:scenarios[p]||scenarios[group?.products[0]]||{up:'Disponibilité réduite ou demande accrue.',base:'Suivre l’équilibre entre disponibilité, demande et stocks.',down:'Offre plus abondante ou demande plus faible.',trigger:'Publications de production, de consommation et de stocks.'}};
-};
-function scenarioValue(values,horizon){
-  return shockFields.reduce((total,[k,,weight],i)=>total+(values[k]||0)*weight*horizonMultipliers[horizon][i],0);
-}
-const scenarioSign=v=>v>1?'positive':v< -1?'negative':'neutral';
-function renderOutlook(){
-  const {p,base}=scenarioProduct();
-  const h=state.filters.horizon||state.outHorizon;
-  const value=scenarioValue(state.shocks,h);
-  const names={up:['Haussier','positive'],base:['Central','neutral'],down:['Baissier','negative']};
-  return head('Analyse prospective','Perspectives & scénarios','Comparez des trajectoires conditionnelles à trois horizons et ajustez les chocs qui influencent les prix.')+
-    '<div class="toolbar"><label>Produit</label>'+select('outProduct',products,p)+'<label>Horizon</label>'+select('outHorizon',labels.horizon,h)+'<span class="small">'+e(horizonNotes[h])+'</span></div>'+
-    '<div class="grid3">'+Object.entries(names).map(([k,[name,cls]])=>{
-      const shocks=Object.fromEntries(shockFields.map(([id],i)=>[id,presets[k][i]]));
-      return panel('<span class="eyebrow '+cls+'">'+name+'</span><b class="num scenario-output '+cls+'">'+sign(scenarioValue(shocks,h))+' <small class="small">points</small></b><p class="analysis-text">'+e(base[k])+'</p><p class="small"><strong>À suivre</strong> · '+e(base.trigger)+'</p><div style="margin-top:10px">'+action('preset','Charger les hypothèses','ghost','data-value="'+k+'"')+'</div>');
-    }).join('')+'</div>'+
-    section('Sensibilités modifiables','Chocs en % par rapport au scénario central')+
-    '<div class="grid2 flow">'+panel(shockFields.map(([k,label,weight],i)=>'<div class="spread-between"><label for="shock-'+k+'">'+e(label)+'</label><output id="val-'+k+'" class="num">'+e(percent(state.shocks[k]))+'</output></div><input type="range" id="shock-'+k+'" data-shock="'+k+'" min="-30" max="30" step="1" value="'+state.shocks[k]+'"><p class="small" style="margin-bottom:9px">Coefficient '+e(sign(weight*horizonMultipliers[h][i],2))+' point / 1 %</p>').join(''))+
-    panel('<span class="eyebrow">Indice de pression simulé</span><strong class="num scenario-output '+scenarioSign(value)+'" id="scenario-value">'+e(sign(value))+' pts</strong><p class="analysis-text">Somme des variations d’hypothèses multipliées par les coefficients affichés. Coefficients illustratifs, ajustés par horizon. Le change mesure ici la pression sur la demande importatrice via le dollar.</p><div id="contrib">'+scenarioTable(h)+'</div>'+notice('L’indice exprime une sensibilité relative. Les coefficients illustratifs ne sont pas estimés à partir des prix, et le résultat ne fournit ni probabilité ni objectif de cours.')+
-    action('preset','Remettre à zéro','ghost','data-value="base"'))+'</div>';
-}
-function scenarioTable(h){
-  return table(['Hypothèse','Contribution'],shockFields.map(([k,label,w],i)=>[e(label),'<span class="num">'+e(sign(state.shocks[k]*w*horizonMultipliers[h][i],2))+' pts</span>']));
-}
 
 
 const liveCalendarFeed='https://raw.githubusercontent.com/elchapasso/PROJECT/calendar-live/docs/terminal/calendar-feed.json';
@@ -1227,7 +1196,7 @@ function renderCalendar(){
       .replace('title="'+e('Ouvrir la page officielle · '+r.source)+'"','title="'+e(r.title+' · '+(r.time?r.time+' ':'')+'· ouvrir la page officielle')+'"')).join('')+'</div>';
   });
   const renderRows=arr=>arr.length?arr.map(calMini).join(''):empty('Aucune publication dans cette sélection.');
-  return head('Veille','Calendrier des publications','Retrouvez les prochaines publications officielles, les précédents chiffres et les scénarios de réaction.')+
+  return head('Terminal','Calendrier des publications','Retrouvez les prochaines publications officielles, les précédents chiffres et les scénarios de réaction.')+
     panel('<div class="spread-between"><h2>'+e(displayPeriod(state.month,'month'))+'</h2><div class="actions">'+action('month',icon('left'),'icon','data-value="-1" aria-label="Mois précédent"')+action('month',icon('right'),'icon','data-value="1" aria-label="Mois suivant"')+'</div></div><div class="month" aria-label="Calendrier mensuel">'+['Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.','Dim.'].map(d=>'<span class="small">'+d+'</span>').join('')+tiles.join('')+'</div>')+
     calendarCoverage()+
     section('Publications programmées','Heures de Casablanca · un clic sur le titre ouvre la page officielle')+panel(renderRows(rows.filter(r=>r.date?.startsWith(state.month)&&r.date>=today)))+
@@ -1296,7 +1265,7 @@ function renderReports(){
   const active=data.reports.find(r=>r.id===state.reportView);
   const compared=data.reports.find(r=>r.id===state.reportOther&&r.id!==active?.id);
   const archive=[...data.reports].sort((a,b)=>b.end.localeCompare(a.end));
-  return head('Veille et synthèses','Rapports de marché','Les rapports sont assemblés à partir des données présentes. Archivez une version pour conserver la lecture et les sources à la date de génération.')+
+  return head('Terminal · Synthèses','Rapports de marché','Les rapports sont assemblés à partir des données présentes. Archivez une version pour conserver la lecture et les sources à la date de génération.')+
     '<div class="toolbar">'+btnSeg('reportKind',{weekly:'Hebdomadaire',monthly:'Mensuel'},state.reportKind)+'<label>Fin de période <input type="date" data-control="reportEnd" value="'+e(state.reportEnd)+'"></label>'+action('save-report',icon('plus')+' Archiver','primary')+action('export-report',icon('download')+' Texte','ghost')+'</div>'+
     panel('<p class="small">Aperçu calculé · '+memoryReport.events+' événements · '+memoryReport.priceCount+' séries de prix</p>'+reportHtml(memoryReport.text))+
     section('Archives','Versions sauvegardées dans ce navigateur')+panel(archive.length?'<div class="toolbar"><label>Rapport archivé</label>'+select('reportView',Object.fromEntries(archive.map(r=>[r.id,r.title+' · '+formatDate(r.end)])),state.reportView,'Choisir un rapport')+
@@ -1323,7 +1292,7 @@ function briefHtml(print=false){
   }).join('');
 }
 function renderComex(){
-  return head('Veille et synthèses','Brief COMEX','Transformez la veille en bullets courts, chiffrés et sourcés, avec une conséquence sur les prix.')+
+  return head('Terminal · Synthèses','Brief COMEX','Transformez la veille en bullets courts, chiffrés et sourcés, avec une conséquence sur les prix.')+
   '<div class="toolbar"><label>Fenêtre</label>'+select('comexWindow',{7:periodLabel[7],30:periodLabel[30],60:periodLabel[60],90:periodLabel[90]},state.comexWindow)+
   '<label><input type="checkbox" data-control="exec" '+(state.exec?'checked':'')+'> Synthèse de direction</label>'+action('copy-brief',icon('copy')+' Copier','ghost')+action('pdf',icon('download')+' Export PDF','primary')+'</div>'+
   '<div class="stack">'+briefHtml()+'</div>';
@@ -1346,7 +1315,7 @@ function renderSources(){
 const pageRender={
   overview:renderOverview,soy:()=>renderComplex('soy'),sun:()=>renderComplex('sun'),palm:()=>renderComplex('palm'),
   publications:renderPublications,macro:()=>renderComplex('macro'),drivers:()=>renderFeed(false),news:()=>renderFeed(true),
-  balances:renderBalances,demand:renderDemand,cot:renderCot,cross:renderCross,'cbot-arg':renderCbotArg,biofuels:renderBiofuels,outlook:renderOutlook,calendar:renderCalendar,reports:renderReports,comex:renderComex,sources:renderSources,
+  balances:renderBalances,demand:renderDemand,cot:renderCot,cross:renderCross,'cbot-arg':renderCbotArg,biofuels:renderBiofuels,calendar:renderCalendar,reports:renderReports,comex:renderComex,sources:renderSources,
 };
 function bindPageCharts(scope){
   scope.querySelectorAll('[data-chart]').forEach(wrap=>bindChart(wrap,chartModels[Number(wrap.dataset.chart)]));
@@ -1515,7 +1484,6 @@ const controlActions={
   event:el=>showEvent(fullEvents().find(r=>r.id===el.dataset.id)),
   cal:el=>showCalendar(fullCalendar().find(r=>r.id===el.dataset.id)),
   month:el=>{state.month=monthShift(state.month,Number(el.dataset.value));render();},
-  preset:el=>{state.shocks=Object.fromEntries(shockFields.map(([k],i)=>[k,presets[el.dataset.value][i]]));render();},
   seg:el=>{
     const {key,value}=el.dataset;
     if(key==='sunOrigin'&&value!==state.sunOrigin)state.sunView='';
@@ -1650,23 +1618,11 @@ root.addEventListener('change',event=>{
     state.originTab[state.page]=target.value;
     if(state.filters.origin)state.filters.origin=target.value;
   }else{
-    if(key==='outProduct'){if(state.filters.product)state.filters.product=target.value;}
-    if(key==='outHorizon'&&state.filters.horizon)state.filters.horizon=target.value;
     if(key==='reportEnd'&&!target.value){target.value=state.reportEnd;return;}
     if(target.form?.id==='feed-search')state.query=new FormData(target.form).get('search');
     state[key]=target.type==='checkbox'?target.checked:target.value;
   }
   render();
-});
-root.addEventListener('input',event=>{
-  const k=event.target.dataset.shock;
-  if(!k)return;
-  state.shocks[k]=Number(event.target.value);
-  const h=state.filters.horizon||state.outHorizon,v=scenarioValue(state.shocks,h);
-  const output=document.getElementById('scenario-value');
-  document.getElementById('val-'+k).textContent=percent(state.shocks[k]);
-  output.textContent=sign(v)+' pts';output.className='num scenario-output '+scenarioSign(v);
-  document.getElementById('contrib').innerHTML=scenarioTable(h);
 });
 window.addEventListener('hashchange',()=>{state.page=readPage();state.mobile=false;render();window.scrollTo(0,0);});
 render();
