@@ -1,0 +1,60 @@
+name: Actualiser la veille énergie et géopolitique
+
+on:
+  schedule:
+    - cron: '37 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-energy-news.yml'
+      - 'scripts/update-energy-news.py'
+      - 'docs/terminal/energy-news-seed.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: energy-news-live
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Préparer la branche de données
+        run: |
+          if git ls-remote --exit-code origin refs/heads/energy-news-live; then
+            git fetch --no-tags --depth=1 origin refs/heads/energy-news-live
+            git worktree add --detach "$RUNNER_TEMP/energy-news-live" FETCH_HEAD
+          else
+            status=$?
+            if [ "$status" -ne 2 ]; then exit "$status"; fi
+            git worktree add --detach "$RUNNER_TEMP/energy-news-live" HEAD
+          fi
+      - name: Relever les titres et les prix spot
+        id: collect
+        continue-on-error: true
+        env:
+          TRADING_ECONOMICS_API_KEY: ${{ secrets.TRADING_ECONOMICS_API_KEY }}
+        run: |
+          python scripts/update-energy-news.py \
+            "$RUNNER_TEMP/energy-news-live/docs/terminal/live/energy-news.json" \
+            docs/terminal/energy-news-seed.json
+      - name: Publier le dernier état du flux
+        run: |
+          cd "$RUNNER_TEMP/energy-news-live"
+          file=docs/terminal/live/energy-news.json
+          test -s "$file"
+          git add -- "$file"
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh energy and geopolitics news'
+          git push origin HEAD:refs/heads/energy-news-live
+      - name: Signaler un échec global de la collecte
+        if: steps.collect.outcome == 'failure'
+        run: exit 1
