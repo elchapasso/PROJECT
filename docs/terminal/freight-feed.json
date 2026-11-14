@@ -1,0 +1,225 @@
+{
+  "updatedAt": "2026-11-14T15:47:07.035Z",
+  "series": {
+    "vlsfo-gib": {
+      "points": [
+        {
+          "date": "2026-07-28",
+          "value": 709.5,
+          "source": "Ship & Bunker",
+          "url": "https://shipandbunker.com/prices/emea/medabs/gi-gib-gibraltar"
+        },
+        {
+          "date": "2026-07-29",
+          "value": 718,
+          "source": "Ship & Bunker",
+          "url": "https://shipandbunker.com/prices/emea/medabs/gi-gib-gibraltar"
+        },
+        {
+          "date": "2026-08-13",
+          "value": 690.5,
+          "source": "Ship & Bunker",
+          "url": "https://shipandbunker.com/prices/emea/gi/gib-gibraltar"
+        },
+        {
+          "date": "2026-08-14",
+          "value": 688.5,
+          "source": "Ship & Bunker",
+          "url": "https://shipandbunker.com/prices/emea/gi/gib-gibraltar"
+        },
+        {
+          "date": "2026-11-13",
+          "value": 827,
+          "source": "ENGINE",
+          "url": "https://www.engine.online/news/biofuel-bunker-snapshot-rotterdams-b30-vlsfo-price-jumps-as-singapores-slides-8411"
+        }
+      ]
+    },
+    "vlsfo-sgp": {
+      "points": [
+        {
+          "date": "2026-11-13",
+          "value": 882.5,
+          "source": "Ship & Bunker",
+          "url": "https://shipandbunker.com/prices"
+        }
+      ]
+    },
+    "tce-tc6": {
+      "points": [
+        {
+          "date": "2026-09-11",
+          "value": 12700,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-37.html"
+        },
+        {
+          "date": "2026-09-18",
+          "value": 9200,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-38.html"
+        },
+        {
+          "date": "2026-09-25",
+          "value": 29100,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-39.html"
+        },
+        {
+          "date": "2026-10-02",
+          "value": 57302,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-40.html"
+        },
+        {
+          "date": "2026-10-09",
+          "value": 59400,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-41.html"
+        },
+        {
+          "date": "2026-10-16",
+          "value": 82100,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-42.html"
+        },
+        {
+          "date": "2026-10-23",
+          "value": 109600,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-43.html"
+        },
+        {
+          "date": "2026-10-30",
+          "value": 108900,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-44.html"
+        },
+        {
+          "date": "2026-11-06",
+          "value": 88100,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-45.html"
+        },
+        {
+          "date": "2026-11-13",
+          "value": 65200,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-46.html"
+        }
+      ]
+    },
+    "tce-mr-atl": {
+      "points": [
+        {
+          "date": "2026-09-11",
+          "value": 21500,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-37.html"
+        },
+        {
+          "date": "2026-09-18",
+          "value": 27200,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-38.html"
+        },
+        {
+          "date": "2026-09-25",
+          "value": 34800,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-39.html"
+        },
+        {
+          "date": "2026-10-02",
+          "value": 66826,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-40.html"
+        },
+        {
+          "date": "2026-10-09",
+          "value": 46300,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-41.html"
+        },
+        {
+          "date": "2026-10-16",
+          "value": 62700,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-42.html"
+        },
+        {
+          "date": "2026-10-23",
+          "value": 65800,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-43.html"
+        },
+        {
+          "date": "2026-10-30",
+          "value": 85500,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-44.html"
+        },
+        {
+          "date": "2026-11-06",
+          "value": 72000,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-45.html"
+        },
+        {
+          "date": "2026-11-13",
+          "value": 67100,
+          "source": "Baltic Exchange",
+          "url": "https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/2026/tanker-report-week-46.html"
+        }
+      ]
+    }
+  },
+  "quotes": [
+    {
+      "id": "2026-05-11-argentine-inde",
+      "date": "2026-05-11",
+      "from": "Argentine",
+      "to": "Inde (Kandla, Mundra)",
+      "size": "n. d.",
+      "low": 140,
+      "high": 145,
+      "previous": "70-75 USD/t auparavant",
+      "source": "Whalesbook",
+      "url": "https://www.whalesbook.com/news/English/agriculture/India-Edible-Oil-Costs-Soar-Industry-Asks-for-Freight-Aid-Amid-Global-Tensions/6a021765e43db892c2595706"
+    },
+    {
+      "id": "2026-05-11-asie-inde",
+      "date": "2026-05-11",
+      "from": "Malaisie / Indonésie",
+      "to": "Inde",
+      "size": "n. d.",
+      "low": 55,
+      "previous": "40 USD/t auparavant",
+      "source": "Whalesbook",
+      "url": "https://www.whalesbook.com/news/English/agriculture/India-Edible-Oil-Costs-Soar-Industry-Asks-for-Freight-Aid-Amid-Global-Tensions/6a021765e43db892c2595706"
+    },
+    {
+      "id": "2026-05-11-russie-inde",
+      "date": "2026-05-11",
+      "from": "Russie",
+      "to": "Inde",
+      "size": "n. d.",
+      "low": 90,
+      "high": 95,
+      "previous": "≈ 55 USD/t auparavant",
+      "source": "Whalesbook",
+      "url": "https://www.whalesbook.com/news/English/agriculture/India-Edible-Oil-Costs-Soar-Industry-Asks-for-Freight-Aid-Amid-Global-Tensions/6a021765e43db892c2595706"
+    },
+    {
+      "id": "2026-04-14-detroits-rotterdam",
+      "date": "2026-04-14",
+      "from": "Détroits (Malaisie / Indonésie)",
+      "to": "Rotterdam",
+      "size": "40 kt",
+      "low": 95,
+      "previous": "80 USD/t avant le conflit au Moyen-Orient",
+      "source": "Vesper",
+      "url": "https://vespertool.com/news/vegetable-oils-slip-lower-on-ceasefire-optimism-and-weaker-crude/"
+    }
+  ]
+}

@@ -622,3 +622,98 @@
 @media(max-width:760px){.news-item{grid-template-columns:1fr;gap:9px}.news-when{display:flex;gap:8px;align-items:baseline}.news-when small{margin:0}.news-side{flex-direction:row;flex-wrap:wrap;align-items:center;border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:9px}.news-search{margin-left:0;width:100%}.news-search input{flex:1;width:auto}.tally-grid b{font-size:24px}}
 .impact-map tbody th{background:transparent;color:var(--text);font-size:12px}
 .impact-map thead th{white-space:nowrap}
+/* Fret · estimation vrac liquide vers Casablanca */
+.fret-hero{margin-bottom:14px}
+.fret-hero .actions{flex-wrap:wrap}
+.fret-inputs{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 15px;box-shadow:var(--shadow)}
+.fret-inputs ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:9px}
+.fret-inputs li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1px 10px;align-items:baseline;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.fret-inputs li:last-child{border-bottom:0;padding-bottom:0}
+.fret-inputs li>span{font-size:12px;font-weight:650}
+.fret-inputs li>span small{color:var(--sub);font-weight:500;margin-left:5px;font-size:10px}
+.fret-inputs li>b{font-size:16px}
+.fret-inputs li>small{grid-column:1/-1;font-size:10px;color:var(--sub)}
+.fret-up{color:var(--red)}.fret-down{color:var(--green)}
+.fret-switches{display:flex;gap:8px;flex-wrap:wrap}
+.fret-switches .seg{margin:0}
+.fret-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:12px}
+.fret-card{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);padding:14px 15px 11px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.fret-card header{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.fret-card h3{margin:0;font-size:16px;letter-spacing:-.03em}
+.fret-card header p{margin:2px 0 0;font-size:11px;color:var(--sub)}
+.fret-card header .market-code{white-space:nowrap;border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+.fret-value{margin:6px 0 0;display:flex;align-items:baseline;gap:6px}
+.fret-value b{font-size:30px;line-height:1;font-weight:700;letter-spacing:-.03em}
+.fret-value span{font-size:11px;color:var(--muted);font-weight:650}
+.fret-meta{margin:0;font-size:11px;color:var(--muted);line-height:1.45}
+.fret-card footer{margin-top:auto;border-top:1px solid var(--line);padding-top:8px;display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--sub);align-items:center}
+.fret-card footer .num{font-weight:700}
+.fret-cal{margin:2px 0 0;font-size:10px;color:var(--sub);line-height:1.4;padding:6px 8px;border-radius:7px;background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+.fret-cal b{color:var(--accent);font-size:12px}
+.fret-cal.old{background:color-mix(in srgb,var(--amber) 10%,var(--surface))}
+.fret-old{color:var(--amber)!important}
+.fret-table-panel{padding:12px 6px 6px}
+.fret-legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin:0 8px 10px;font-size:11px;color:var(--muted)}
+.fret-legend span{display:inline-flex;align-items:center;gap:5px}
+.fret-legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.fret-legend .small{margin:0 0 0 auto;font-weight:500}
+.fret-table th[scope=row]{font-weight:650;color:var(--text)}
+.fret-table th small{display:block;color:var(--sub);font-weight:500;font-size:10px;margin-top:3px}
+.fret-table tr.alt th[scope=row],.fret-table tr.alt td{color:var(--muted)}
+.fret-table tr.alt th[scope=row]{font-weight:500}
+.fret-size{display:inline-flex;flex-direction:column;align-items:flex-end;margin-left:12px}
+.fret-size:first-child{margin-left:0}
+.fret-size small{margin:0!important;font-size:9px}
+.fret-size b{font-size:13px}
+.fret-bar{display:flex;gap:1px;height:12px;min-width:180px;width:100%;border-radius:4px;overflow:hidden;background:var(--surface2);margin-top:4px}
+.fret-bar i{display:block;height:100%}
+.part-hire{background:var(--series-1)}.part-bunkers{background:var(--series-3)}.part-port{background:var(--series-6)}.part-canal{background:var(--series-2)}.part-war{background:var(--red)}
+.fret-plot h3,.fret-wire-panel h3{margin:0 0 4px;font-size:14px}
+.fret-chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.fret-news{margin-bottom:12px}
+.fret-wire{list-style:none;margin:10px 0 0;padding:0;display:grid}
+.fret-wire li{display:grid;grid-template-columns:118px minmax(0,1fr) auto;gap:4px 12px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px}
+.fret-wire li:last-child{border-bottom:0}
+.fret-wire time{font-size:10px;color:var(--sub);font-family:"Cascadia Mono","SFMono-Regular",Consolas,monospace}
+.fret-wire a{font-weight:600;color:var(--text)}
+.fret-wire a:hover{color:var(--accent)}
+.fret-wire small{color:var(--sub);font-size:10px;white-space:nowrap}
+.fret-note{margin-top:10px!important;font-weight:500!important}
+.fret-form{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:12px}
+.fret-form label,.fret-war label{display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);font-weight:650}
+.fret-form select{max-width:340px}
+.fret-form input{width:130px}
+.fret-params input{width:96px;padding:5px 7px}
+.fret-params input.changed,.fret-war input.changed{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--surface))}
+.fret-params th[scope=row] small{display:block;font-weight:500;color:var(--sub);font-size:10px;margin-top:2px}
+.fret-sub{font-size:13px;margin:16px 0 8px}
+.fret-war{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.fret-war span{display:flex;align-items:center;gap:6px;font-weight:500}
+.fret-war input{width:80px}
+.fret-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.fret-method-text p{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 8px;max-width:880px}
+#fret-method{scroll-margin-top:12px}
+@media(max-width:900px){.fret-chart-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.fret-wire li{grid-template-columns:minmax(0,1fr)}.fret-wire small{white-space:normal}.fret-value b{font-size:26px}.fret-form input,.fret-form select{width:100%;max-width:none;font-size:16px}.fret-form label{flex:1 1 140px}}
+.fret-table tbody th{background:transparent}
+.fret-arbitrage{background:color-mix(in srgb,var(--accent) 4%,var(--surface))}
+.fret-arbitrage ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:9px}
+.fret-arbitrage li{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:12px;font-weight:600;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.fret-arbitrage li:last-child{border-bottom:0;padding-bottom:0}
+.fret-arbitrage li small{display:block;font-weight:500;color:var(--sub);font-size:10px;margin-top:2px}
+.fret-arbitrage li b{font-size:17px;white-space:nowrap}
+.fret-params tbody th{background:transparent;color:var(--text)}
+@media(min-width:1180px){.fret-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.section-head:has(.fret-switches){flex-wrap:wrap}
+.fret-switches .seg{flex-wrap:nowrap}
+@media(max-width:600px){
+.section-head:has(.fret-switches){flex-direction:column;align-items:flex-start}
+.fret-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.fret-card{padding:11px 11px 9px}
+.fret-card h3{font-size:14px}
+.fret-card header{flex-direction:column;gap:4px}
+.fret-value b{font-size:22px}
+.fret-meta{font-size:10px}
+.fret-card footer{font-size:10px}
+.fret-arbitrage{grid-column:1/-1}
+}

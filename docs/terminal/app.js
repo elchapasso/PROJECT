@@ -27,6 +27,7 @@ import {feedEntries,toCasablanca,dateStatusLabels,FOREX_CALENDAR_URL,casablanca}
 import {publicationCards,publicationGroups,cardSpec,nextDates,latestFor,figureDigits} from './publications-model.mjs?v=20261114-publications';
 
 import {renderEnergyNews,bindEnergyNews,refreshEnergyNews} from './energy-news-view.mjs?v=20261114-v2';
+import {renderFreight,bindFreight,refreshFreight} from './freight-view.mjs?v=20261114-fret';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -44,14 +45,14 @@ const iconPaths={
   grid:'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',leaf:'M3 20c4-9 10-14 18-15-1 9-6 15-14 13m-4 2 12-10',
   sun:'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0-5v2m0 14v2M3 12h2m14 0h2M6 6l1 1m10 10 1 1m0-12-1 1M7 17l-1 1',drop:'M12 3C9 8 5 12 5 16a7 7 0 0 0 14 0c0-4-4-8-7-13z',grain:'M12 21V3m0 7C8 10 5 8 5 4c4 0 7 2 7 6zm0 5c4 0 7-2 7-6-4 0-7 2-7 6zm0 4c-4 0-7-2-7-6 4 0 7 2 7 6z',
   pulse:'M3 12h4l3-7 4 14 3-7h4',table:'M3 5h18v14H3zm0 5h18m-12 0v9m6-9v9',chart:'M3 3v18h18M6 16l5-6 4 3 5-7',bolt:'m13 2-9 12h7l-1 8 10-12h-7z',target:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zm0-4a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-5h.01',
-  news:'M5 3h13v18H5zm3 5h7m-7 4h7m-7 4h5',calendar:'M3 5h18v16H3zm0 5h18M8 3v4m8-4v4m-8 7h1m3 0h1m3 0h1',report:'M6 3h9l4 4v14H6zm9 0v5h4M9 12h7m-7 4h7',brief:'M3 7h18v13H3zm5 0V4h8v3m-13 6h18m-11 0v2h4v-2',
+  news:'M5 3h13v18H5zm3 5h7m-7 4h7m-7 4h5',ship:'M2 14h20l-3 5H5zM15 14V8h4v6M17 8V5M5 14v-2h8v2',calendar:'M3 5h18v16H3zm0 5h18M8 3v4m8-4v4m-8 7h1m3 0h1m3 0h1',report:'M6 3h9l4 4v14H6zm9 0v5h4M9 12h7m-7 4h7',brief:'M3 7h18v13H3zm5 0V4h8v3m-13 6h18m-11 0v2h4v-2',
   database:'M4 6c0-2 3.6-3 8-3s8 1 8 3-3.6 3-8 3-8-1-8-3zm0 0v6c0 2 3.6 3 8 3s8-1 8-3V6M4 12v6c0 2 3.6 3 8 3s8-1 8-3v-6',filter:'M4 5h16l-6 7v6l-4 2v-8z',plus:'M12 5v14M5 12h14',arrow:'M4 12h15m-6-6 6 6-6 6',left:'m15 5-7 7 7 7',right:'m9 5 7 7-7 7',moon:'M20 15a8 8 0 0 1-11-11A8 8 0 1 0 20 15z',menu:'M4 6h16M4 12h16M4 18h16',close:'m6 6 12 12M6 18 18 6',download:'M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4',copy:'M8 8h12v12H8zm-4 8V4h12',search:'M10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm4-2 6 6',refresh:'M20 7V3m0 4h-4M4 17v4m0-4h4m-3-5a7 7 0 0 1 12-5l3 2M4 15l3 2a7 7 0 0 0 12-5',
   calc:'M6 3h12v18H6zM9 7h6M9 11.5h.01m2.99 0h.01m2.99 0h.01M9 14.5h.01m2.99 0h.01m2.99 0h.01M9 17.5h.01m2.99 0h.01m2.99 0h.01',
   users:'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a7 7 0 0 1 14 0v1m0-10a3.5 3.5 0 1 0 0-7m3 17v-1a6 6 0 0 0-3-5.2',
 };
 const icon=(name,size=17)=>'<svg class="ico" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="'+iconPaths[name]+'"/></svg>';
 const menu=[
-  ['Terminal',[['overview','Marché & actualités','news'],['macro','Énergie & géopolitique','bolt'],['publications','Rapports & publications','report'],['calendar','Calendrier','calendar']]],
+  ['Terminal',[['overview','Marché & actualités','news'],['macro','Énergie & géopolitique','bolt'],['fret','Fret','ship'],['publications','Rapports & publications','report'],['calendar','Calendrier','calendar']]],
   ['Complexes',[['soy','Soja & dérivés','leaf'],['sun','Tournesol','sun'],['palm','Palme','drop']]],
   ['Analyse',[['balances','Bilans offre / demande','table'],['demand','Demande','grain'],['cot','Rapport COT · CFTC','users'],['cross','Comparaisons & spreads','chart'],['cbot-arg','Simulateur CBOT – ARG','calc'],['biofuels','Biocarburants','drop']]],
 ];
@@ -399,7 +400,7 @@ function shell(body){
     const change=pct(s.values[last],s.values[prev]);const direction=change>0?'positive':change<0?'negative':'muted';
     return '<div class="tick" title="'+e(last?displayPeriod(last,s.grain)+' · '+s.points[last].source+' · '+s.definition:'Série non disponible')+'"><span>'+e(s.name)+'</span><div><b class="num">'+num(s.values[last],2)+'</b><small class="'+direction+'">'+(change===null?e(last?s.unit:'Non dispo.'):e(percent(change)))+'</small></div></div>';
   }).join('');
-  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['overview','biofuels','demand','balances','cbot-arg','cot','publications','macro'].includes(state.page)||state.page==='cross'&&state.crossView!=='pairs'?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
+  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['overview','biofuels','demand','balances','cbot-arg','cot','publications','macro','fret'].includes(state.page)||state.page==='cross'&&state.crossView!=='pairs'?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
 }
 
 
@@ -1188,7 +1189,7 @@ function renderCross(){
 
 
 const liveNewsFeed='https://raw.githubusercontent.com/elchapasso/PROJECT/news-live/docs/terminal/news-feed.json';
-const newsPages=['overview','soy','sun','palm','sources'];
+const newsPages=['overview','soy','sun','palm','sources','fret'];
 async function refreshNews(){
   // La branche news-live porte la veille du jour ; la copie intégrée au site sert de secours. La plus récente l’emporte.
   const read=async url=>{
@@ -1394,9 +1395,11 @@ function renderSources(){
 
 
 const energyUi={e,icon,chart,link,num,formatDate,colors,series,spreadPrices,spreadLegs};
+const freightUi={e,icon,chart,link,num,formatDate,colors,section,panel,empty,csv,toast:text=>toast(text),newsItem,
+  freightEvents:()=>fullEvents().filter(r=>r.product==='freight'&&r.date>=addDays(newsToday(),-60)&&r.date<=newsToday()).sort(byRecent)};
 const pageRender={
   overview:renderMarket,soy:()=>renderComplex('soy'),sun:()=>renderComplex('sun'),palm:()=>renderComplex('palm'),
-  publications:renderPublications,macro:()=>renderEnergyNews(energyUi),
+  publications:renderPublications,macro:()=>renderEnergyNews(energyUi),fret:()=>renderFreight(freightUi),
   balances:renderBalances,demand:renderDemand,cot:renderCot,cross:renderCross,'cbot-arg':renderCbotArg,biofuels:renderBiofuels,calendar:renderCalendar,sources:renderSources,
 };
 function bindPageCharts(scope){
@@ -1415,6 +1418,7 @@ function render(){
   bindBiofuelPolicy(root,biofuelUi);
   bindPageCharts(root);
   bindEnergyNews(root,energyUi,render);
+  bindFreight(root,freightUi,render);
   if(focusFilter)root.querySelector('[data-filter="'+CSS.escape(focusFilter)+'"]')?.focus({preventScroll:true});
   if(focusControl)root.querySelector('[data-control="'+CSS.escape(focusControl)+'"]')?.focus({preventScroll:true});
 }
@@ -1718,5 +1722,6 @@ refreshNews();
 // Rapports et calendrier relus toutes les 30 minutes tant que la page est affichée.
 setInterval(()=>{if(document.visibilityState==='visible'){refreshCalendar();refreshNews();}},30*60*1000);
 setInterval(()=>{if(document.visibilityState==='visible'&&state.page==='macro')refreshEnergyNews();},15*60*1000);
+setInterval(()=>{if(document.visibilityState==='visible'&&state.page==='fret')refreshFreight();},15*60*1000);
 if(loadError)toast(loadError);
 
