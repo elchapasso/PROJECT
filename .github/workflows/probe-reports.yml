@@ -1,0 +1,27 @@
+name: Probe report sources (temporary)
+on:
+  push:
+    branches: [probe-reports]
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch
+        run: |
+          mkdir -p "$RUNNER_TEMP/out"
+          UA='Mozilla/5.0 (compatible; OleaTerminal-Calendar/2.0; +https://github.com/elchapasso/PROJECT)'
+          while read -r name url; do
+            [ -z "$name" ] && continue
+            code=$(curl -sSL -A "$UA" --max-time 40 -o "$RUNNER_TEMP/out/$name" -w '%{http_code} %{content_type} %{url_effective}' "$url" 2>&1 || true)
+            echo "$name | $code | $(wc -c < "$RUNNER_TEMP/out/$name" 2>/dev/null)" | tee -a "$RUNNER_TEMP/out/index.txt"
+          done < probe/urls.txt
+      - name: Publish
+        run: |
+          cd "$RUNNER_TEMP/out"
+          git init -q && git checkout -q -b probe-reports-out && git add -A
+          git -c user.name=probe -c user.email=probe@example.com commit -qm probe
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" HEAD:refs/heads/probe-reports-out
