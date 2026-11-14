@@ -9,6 +9,7 @@ on:
     paths:
       - '.github/workflows/update-calendar.yml'
       - 'scripts/update-calendar.py'
+      - 'scripts/calendar_lib.py'
 
 permissions:
   contents: write
@@ -20,22 +21,27 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Installer la lecture des calendriers PDF (NOPA, CONAB)
+        run: python -m pip install --quiet pypdf==5.4.0
       - name: Récupérer les calendriers publics
         id: refresh
         continue-on-error: true
         run: |
           git fetch --no-tags origin refs/heads/calendar-live
           git worktree add --detach "$RUNNER_TEMP/calendar-live" FETCH_HEAD
-          python3 scripts/update-calendar.py "$RUNNER_TEMP/calendar-live/docs/terminal/calendar-feed.json"
+          python scripts/update-calendar.py "$RUNNER_TEMP/calendar-live/docs/terminal/calendar-feed.json"
       - name: Publier les données actualisées
         run: |
           cd "$RUNNER_TEMP/calendar-live"
           git add docs/terminal/calendar-feed.json
           if git diff --cached --quiet; then exit 0; fi
-          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh NASS and Forex Factory calendar'
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh publication calendar'
           git push origin HEAD:refs/heads/calendar-live
       - name: Signaler une source indisponible
         if: steps.refresh.outcome == 'failure'

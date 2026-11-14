@@ -24,6 +24,7 @@ import {focusMargins} from './margin-focus.mjs?v=20261113-marges';
 import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261112-tournesol';
 import {renderCbotArgView,bindCbotArgView} from './cbot-arg-view.mjs?v=20261112-simulateur';
 import {renderCotView,bindCotView,cotCalendarEntries} from './cot-view.mjs?v=20261112-cot';
+import {feedEntries,toCasablanca,dateStatusLabels,FOREX_CALENDAR_URL} from './calendar-model.mjs?v=20261114-calendrier';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -49,7 +50,7 @@ const iconPaths={
 const icon=(name,size=17)=>'<svg class="ico" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="'+iconPaths[name]+'"/></svg>';
 const menu=[
   ['Terminal',[['overview','Vue d’ensemble','grid']]],
-  ['Complexes',[['soy','Soja & dérivés','leaf'],['sun','Tournesol','sun'],['palm','Palme','drop'],['rape','Colza & canola','grain']]],
+  ['Complexes',[['soy','Soja & dérivés','leaf'],['sun','Tournesol','sun'],['palm','Palme','drop']]],
   ['Analyse',[['drivers','Facteurs de marché','pulse'],['balances','Bilans offre / demande','table'],['demand','Demande','grain'],['cot','Rapport COT · CFTC','users'],['cross','Comparaisons & spreads','chart'],['cbot-arg','Simulateur CBOT – ARG','calc'],['macro','Énergie & géopolitique','bolt'],['biofuels','Biocarburants','drop'],['outlook','Perspectives & scénarios','target']]],
   ['Veille & livrables',[['news','Fil d’actualité','news'],['calendar','Calendrier','calendar'],['reports','Rapports de marché','report'],['comex','Brief COMEX','brief']]],
 ];
@@ -77,11 +78,14 @@ const fullEvents=()=>unique([...seedEvents,...data.events],eventKey).sort(byDate
 const fullBalances=()=>balancesWithRatios(unique([...seedBalances,...data.balances],balanceKey));
 let calendarFeed=null;
 let calendarFeedLoaded=false;
-const fullCalendar=()=>unique([...seedCalendar,...calendarEntries(calendarFeed),...cotCalendarEntries(),...data.calendar],r=>r.id)
+// Publications désormais lues automatiquement (calendar-feed.json) : les repères saisis à la main ne sont plus affichés.
+const automatedSeeds=new Set(['cal-mpob','cal-wasde','cal-nopa','cal-wasde-dec','watch-conab','watch-sea','watch-exports','watch-anec']);
+const fullCalendar=()=>unique([...seedCalendar.filter(r=>!automatedSeeds.has(r.id)),...feedEntries(calendarFeed),
+  ...cotCalendarEntries().map(r=>({...toCasablanca(r,'America/New_York','New York'),dateStatus:r.expected.includes('Date estimée')?'rule':'official'})),...data.calendar],r=>r.id)
   .sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')||(a.time??'').localeCompare(b.time??''));
 const asOf=()=>referenceDate(fullEvents());
 const eventCaps={status:true,impact:true,horizon:true,period:true};
-const allSources=()=>Object.fromEntries([...new Set([...Object.keys(sources),...data.events.map(r=>r.source),...data.balances.map(r=>r.source),...data.quotes.map(r=>r.source),...data.calendar.map(r=>r.source)])].sort((a,b)=>a.localeCompare(b,'fr')).map(s=>[s,s]));
+const allSources=()=>Object.fromEntries([...new Set([...Object.keys(sources),...data.events.map(r=>r.source),...data.balances.map(r=>r.source),...data.quotes.map(r=>r.source),...data.calendar.map(r=>r.source),...feedEntries(calendarFeed).map(r=>r.source)])].sort((a,b)=>a.localeCompare(b,'fr')).map(s=>[s,s]));
 const eventsFor=(filter=state.filters)=>fullEvents().filter(r=>allows(r,filter,asOf(),eventCaps));
 const balancesFor=(filter=state.filters)=>fullBalances().filter(r=>allows(r,filter,asOf(),{status:true,period:true}));
 const periodLabel={1:'24 dernières heures',7:'7 derniers jours',30:'30 derniers jours',60:'60 derniers jours',90:'90 derniers jours'};
@@ -350,8 +354,14 @@ const eventRows=rows=>table(['Publication','Marché / origine','Facteur','Chiffr
   lineBadge(r)+'<small>Intensité '+e(labels.intensity[r.intensity].toLowerCase())+'</small>',
   e(labels.horizon[r.horizon])+'<small>'+link(r.url,r.source)+'</small>',
 ]));
-const calendarFilter=(filter=state.filters)=>fullCalendar().filter(r=>allows(r,filter,asOf(),{})&&(!filter.status||filter.status===(r.date?'confirmed':'pending')));
-const calMini=r=>'<div class="calendar-mini"><div class="datebox">'+(r.date?'<strong>'+Number(r.date.slice(-2))+'</strong>'+e(smallMonth(r.date)):'À conf.')+'</div><div><button class="cell-link" data-action="cal" data-id="'+e(r.id)+'">'+e(r.title)+'</button><p>'+e(r.time?r.time+' · '+r.zone:r.date?'Heure à confirmer':r.source)+' · '+e(labels.intensity[r.importance])+'</p></div></div>';
+const calendarStatus=r=>!r.date?'pending':r.dateStatus==='usual'?'estimate':'confirmed';
+const calendarFilter=(filter=state.filters)=>fullCalendar().filter(r=>allows(r,filter,asOf(),{})&&(!filter.status||filter.status===calendarStatus(r)));
+// Lien vers la page officielle de la publication, dans un nouvel onglet.
+const officialLink=(r,label,klass='cell-link')=>/^https:\/\//.test(r.url??'')?'<a class="'+klass+'" href="'+e(r.url)+'" target="_blank" rel="noopener" title="'+e('Ouvrir la page officielle · '+r.source)+'">'+label+'</a>':'<span class="'+klass+'">'+label+'</span>';
+const calMini=r=>'<div class="calendar-mini"><div class="datebox">'+(r.date?'<strong>'+Number(r.date.slice(-2))+'</strong>'+e(smallMonth(r.date)):'À conf.')+'</div><div>'+
+  officialLink(r,e(r.title)+' '+icon('arrow',12))+'<p>'+e(r.time?r.time+' · '+r.zone:r.date?'Heure à confirmer':r.source)+' · '+e(labels.intensity[r.importance])+
+  (r.date&&r.dateStatus&&r.dateStatus!=='official'?' · '+e(r.dateStatus==='usual'?'Date habituelle':'Date selon la règle'):'')+
+  ' · <button type="button" class="link-button" data-action="cal" data-id="'+e(r.id)+'">Détails</button></p></div></div>';
 const checkedStatus=r=>['confirmed','estimate','projection','consensus'].includes(r.status);
 function ranked(rows,impact,horizon){
   return rows.filter(r=>r.impact===impact&&(!horizon||r.horizon===horizon)&&checkedStatus(r)).sort((a,b)=>b.intensity-a.intensity||byDate(a,b));
@@ -361,7 +371,7 @@ function renderOverview(){
   const {score,count,coverage,orientation,contributions}=sentimentData;
   const sentimentBox='<div class="gauge"><div class="spread-between"><span class="eyebrow">Sentiment de marché</span>'+badge(orientation)+'</div><div class="num score">'+sign(score,0)+' <span class="small">/ 100</span></div><div class="gaugebar">'+(score===null?'':'<i style="left:'+((score+100)/2)+'%"></i>')+'</div><div class="spread-between scale mono"><span>−100</span><span>0</span><span>+100</span></div><details><summary>'+coverage+'/6 piliers · '+count+' facteurs · méthode</summary><p>Sur 30 jours, moyenne signée de l’intensité et de la fiabilité dans chaque pilier, puis somme pondérée. Un pilier sans donnée contribue à 0. Cet indicateur résume les facteurs disponibles.</p><p>'+contributions.map(c=>e(labels.category[c.key])+' '+scoreWeights[c.key]+' % ('+sign(c.value,1)+')').join(' · ')+'</p><p>Fiabilité des données confirmées ×1, estimations/projections ×0,55, consensus ×0,45. Mixte et neutre valent 0. Seuils haussier/baissier ±12, neutre entre −3 et +3.</p></details></div>';
   const hero='<section class="hero"><div><span class="eyebrow">Marchés mondiaux · Huiles végétales</span><h1>Vue d’ensemble</h1><p>Suivez les prix de référence, les bilans et les facteurs qui influencent les marchés du soja, du tournesol, de la palme et du colza.</p><div class="actions">'+route('drivers',icon('pulse')+' Explorer les facteurs','primary')+route('comex',icon('brief')+' Préparer le COMEX','ghost')+'</div></div>'+sentimentBox+'</section>';
-  const marketCards=cards.filter(c=>(!state.filters.product||c.related.includes(state.filters.product))&&(!state.filters.origin||c.origins.includes(state.filters.origin))).map(c=>{
+  const marketCards=cards.filter(c=>Object.hasOwn(nav,c.group)&&(!state.filters.product||c.related.includes(state.filters.product))&&(!state.filters.origin||c.origins.includes(state.filters.origin))).map(c=>{
     const rows=scoped.filter(r=>c.related.includes(r.product)&&c.origins.includes(r.origin));
     const s=sentiment(rows,now,90), top=[...rows].sort((a,b)=>b.intensity-a.intensity||byDate(a,b));
     const drivers=[...new Set([...top.map(r=>r.title),...c.drivers])].slice(0,3);
@@ -370,7 +380,7 @@ function renderOverview(){
   });
   const chartIds=state.chart==='oils'?['wb-sbo','wb-palm']:state.chart==='grains'?['wb-soy','wb-sm']:['brent','wti'];
   const pricePanel=panel('<div class="spread-between"><div><h2>Historique des prix</h2><p class="small">Moyennes mensuelles</p></div>'+btnSeg('chart',{oils:'Huiles',grains:'Graines et tourteaux',energy:'Pétrole'},state.chart)+'</div>'+chart(linesFrom(chartIds),{unit:state.chart==='energy'?'USD/b':'USD/t'}));
-  const next=calendarFilter().filter(r=>r.date&&r.date>=now).slice(0,4);
+  const next=calendarFilter().filter(r=>r.date&&r.date>=calendarToday()&&r.importance>=2).slice(0,4);
   const agenda=panel('<div class="spread-between"><h2>À surveiller</h2><a class="small" href="#calendar">Calendrier '+icon('arrow',14)+'</a></div>'+(next.length?next.map(calMini).join(''):empty('Aucune publication datée dans la sélection.')));
   const selected=scoped.filter(r=>r.date>=stamp(now,state.eventWindow)&&r.date<=now);
   const list=(rows,blank)=>rows.length?'<ul class="brief-list">'+rows.slice(0,3).map(r=>'<li>'+eventBtn(r)+'<small>'+e(r.number+' · '+r.variation)+'</small></li>').join('')+'</ul>':empty(blank);
@@ -1053,30 +1063,14 @@ function scenarioTable(h){
 }
 
 
-const forexCalendarUrl='https://www.forexfactory.com/calendar';
 const liveCalendarFeed='https://raw.githubusercontent.com/elchapasso/PROJECT/calendar-live/docs/terminal/calendar-feed.json';
-function calendarEntries(feed){
-  if(!feed)return [];
-  const common={zone:'New York (ET)',importance:3};
-  const nass=feed.nass.map(({date,url})=>({...common,id:'nass-crop-progress-'+date.slice(0,10),
-    date:date.slice(0,10),time:date.slice(11,16),title:'USDA NASS · Crop Progress',short:'NASS · Crop Progress',
-    source:'USDA NASS',url,product:'soy',origin:'us',expected:'Avancement des semis et récoltes, stade et état des cultures selon la saison.',
-    previous:'Voir les rapports Crop Progress',consensus:'Non disponible',
-    impact:'Une surprise sur l’avancement ou l’état des cultures peut modifier les attentes d’offre américaine.'}));
-  const forex=feed.forex.map(({date,country,title,forecast,previous})=>({...common,id:'ff-'+country+'-'+date+'-'+title,
-    date:date.slice(0,10),time:date.slice(11,16),title:country+' · '+title,source:'Forex Factory',url:forexCalendarUrl,
-    product:'fx',origin:country==='USD'?'us':'eu',expected:'Annonce à fort impact · '+country,
-    consensus:forecast||'Non disponible',previous:previous||'Non disponible',
-    impact:'Un écart au consensus peut affecter le '+(country==='USD'?'dollar américain':'cours de l’euro')+'.'}));
-  return [...nass,...forex];
-}
 async function refreshCalendar(){
-  for(const url of [liveCalendarFeed,'./terminal/calendar-feed.json?v=20261110']){
+  for(const url of [liveCalendarFeed,'./terminal/calendar-feed.json?v=20261114-calendrier']){
     try{
       const response=await fetch(url,{cache:'no-cache',signal:AbortSignal.timeout(7000)});
       if(!response.ok)continue;
       const feed=await response.json();
-      if(!Array.isArray(feed.nass)||!Array.isArray(feed.forex))continue;
+      if(!Array.isArray(feed.forex)||!Array.isArray(feed.reports)&&!Array.isArray(feed.nass))continue;
       calendarFeed=feed;
       break;
     }catch{}
@@ -1085,13 +1079,21 @@ async function refreshCalendar(){
   if((state.page==='calendar'||state.page==='overview')&&!root.querySelector('dialog[open]'))render();
 }
 function calendarCoverage(){
-  const nass=link(sources['USDA NASS'].url,'USDA NASS');
-  const forex=link(forexCalendarUrl,'Forex Factory');
   const week=calendarFeed?.forexWeekStart?
     formatDate(calendarFeed.forexWeekStart)+' – '+formatDate(calendarFeed.forexWeekEnd):calendarFeedLoaded?'calendrier indisponible':'chargement du calendrier';
   const outdated=calendarFeed?.forexWeekEnd&&calendarFeed.forexWeekEnd<calendarToday();
-  return '<p class="small">'+nass+' · Crop Progress à 16 h ET, le premier jour ouvré d’avril à novembre. '+
-    forex+' · USD et EUR à fort impact · '+e(week)+(outdated?' · Dernière semaine disponible':'')+'.</p>';
+  const checked=calendarFeed?.reportsCheckedAt?' Dernière vérification des sources : '+formatDate(calendarFeed.reportsCheckedAt.slice(0,10))+'.':'';
+  return '<div class="notice calendar-coverage"><p><b>Actualisation automatique, trois fois par jour.</b> Rapports agricoles : '+
+    [['USDA WASDE','https://www.usda.gov/about-usda/general-information/staff-offices/office-chief-economist/commodity-markets/wasde-report'],
+     ['USDA NASS','https://www.nass.usda.gov/Publications/Calendar/'],['USDA FAS','https://www.fas.usda.gov/programs/export-sales-reporting-program'],
+     ['NOPA','https://www.nopa.org/resources/nopa-monthly-crush-report/'],['MPOB','https://bepi.mpob.gov.my/'],
+     ['CONAB','https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/safra-de-graos'],['SEA India','https://seaofindia.com/category/statistical-update/import-of-vegetable-oil/'],
+     ['ANEC','https://anec.com.br/'],['Bolsa de Cereales','https://www.bolsadecereales.com/estimaciones-informes'],['CFTC','https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm']]
+      .map(([name,url])=>link(url,name)).join(' · ')+'. '+
+    link(FOREX_CALENDAR_URL,'Forex Factory')+' : annonces à impact fort et moyen sur l’USD, l’EUR et le CNY, semaine du '+e(week)+(outdated?' (dernière semaine disponible)':'')+'.</p>'+
+    '<p>Heures à Casablanca. Un clic sur une publication ouvre sa page officielle ; « Détails » donne la lecture. '+
+    'Date officielle : publiée par la source. Date selon la règle : tirée du rythme annoncé par la source (FAS le jeudi, MPOB le 10…). '+
+    'Date habituelle : publication sans calendrier officiel (SEA, ANEC, Bolsa de Cereales, inspections).'+e(checked)+'</p></div>';
 }
 function renderCalendar(){
   const rows=calendarFilter();
@@ -1103,13 +1105,14 @@ function renderCalendar(){
     const d=i+1-offset;
     if(d<1||d>dayCount)return '<div class="day blank" aria-hidden="true"></div>';
     const k=state.month+'-'+String(d).padStart(2,'0');
-    return '<div class="day"><b>'+d+'</b>'+rows.filter(r=>r.date===k).map(r=>'<button type="button" title="'+e(r.title)+'" data-action="cal" data-id="'+e(r.id)+'">'+e(r.short||r.title)+'</button>').join('')+'</div>';
+    return '<div class="day'+(k===today?' today':'')+'"><b>'+d+'</b>'+rows.filter(r=>r.date===k).map(r=>officialLink(r,(r.time?'<time>'+e(r.time)+'</time> ':'')+e(r.short||r.title),'cal-item imp'+r.importance+(r.dateStatus==='usual'?' usual':''))
+      .replace('title="'+e('Ouvrir la page officielle · '+r.source)+'"','title="'+e(r.title+' · '+(r.time?r.time+' ':'')+'· ouvrir la page officielle')+'"')).join('')+'</div>';
   });
   const renderRows=arr=>arr.length?arr.map(calMini).join(''):empty('Aucune publication dans cette sélection.');
   return head('Veille','Calendrier des publications','Retrouvez les prochaines publications officielles, les précédents chiffres et les scénarios de réaction.')+
     panel('<div class="spread-between"><h2>'+e(displayPeriod(state.month,'month'))+'</h2><div class="actions">'+action('month',icon('left'),'icon','data-value="-1" aria-label="Mois précédent"')+action('month',icon('right'),'icon','data-value="1" aria-label="Mois suivant"')+'</div></div><div class="month" aria-label="Calendrier mensuel">'+['Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.','Dim.'].map(d=>'<span class="small">'+d+'</span>').join('')+tiles.join('')+'</div>')+
     calendarCoverage()+
-    section('Publications programmées','Heures indiquées dans le fuseau de la source')+panel(renderRows(rows.filter(r=>r.date?.startsWith(state.month)&&r.date>=today)))+
+    section('Publications programmées','Heures de Casablanca · un clic sur le titre ouvre la page officielle')+panel(renderRows(rows.filter(r=>r.date?.startsWith(state.month)&&r.date>=today)))+
     section('Dates à confirmer','Les annonces sans date restent dans la liste de veille')+panel(renderRows(rows.filter(r=>!r.date)));
 }
 const reportScope=(end=state.reportEnd,kind=state.reportKind)=>{
@@ -1224,7 +1227,7 @@ function renderSources(){
 
 const pageRender={
   overview:renderOverview,soy:()=>renderComplex('soy'),sun:()=>renderComplex('sun'),palm:()=>renderComplex('palm'),
-  rape:()=>renderComplex('rape'),macro:()=>renderComplex('macro'),drivers:()=>renderFeed(false),news:()=>renderFeed(true),
+  macro:()=>renderComplex('macro'),drivers:()=>renderFeed(false),news:()=>renderFeed(true),
   balances:renderBalances,demand:renderDemand,cot:renderCot,cross:renderCross,'cbot-arg':renderCbotArg,biofuels:renderBiofuels,outlook:renderOutlook,calendar:renderCalendar,reports:renderReports,comex:renderComex,sources:renderSources,
 };
 function bindPageCharts(scope){
@@ -1273,7 +1276,7 @@ function showEvent(r){
 }
 function showCalendar(r){
   if(!r)return;
-  showDialog('detail',r.title,'<div class="detail">'+dl([['Date attendue',e(formatDate(r.date))],['Heure et fuseau',e(r.time?r.time+' · '+r.zone:'À confirmer')],['Marché',e(products[r.product]+' · '+origins[r.origin])],['Données attendues',e(r.expected)],['Consensus',e(r.consensus)],['Précédente publication',e(r.previous)],['Importance',e(labels.intensity[r.importance])],['Réaction possible',e(r.impact)],['Source',link(r.url,r.source)]])+'</div>');
+  showDialog('detail',r.title,'<div class="detail">'+dl([['Date attendue',e(r.date?formatDate(r.date):'À confirmer')+(r.date&&r.dateStatus?'<small>'+e(dateStatusLabels[r.dateStatus]??'')+'</small>':'')],['Heure et fuseau',e(r.time?r.time+' · '+r.zone:'À confirmer')],['Marché',e(products[r.product]+' · '+origins[r.origin])],['Données attendues',e(r.expected)],['Consensus',e(r.consensus)],['Précédente publication',e(r.previous)],['Importance',e(labels.intensity[r.importance])],['Réaction possible',e(r.impact)],['Page officielle',link(r.url,r.source)]])+'</div>');
 }
 const field=(label,control,wide=false)=>'<label class="field'+(wide?' wide':'')+'">'+e(label)+control+'</label>';
 const input=(name,type='text',value='',extra='')=>'<input name="'+e(name)+'" type="'+e(type)+'" value="'+e(value)+'" '+extra+'>';

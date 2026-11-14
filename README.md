@@ -41,6 +41,28 @@ Mise à jour automatique :
 
 Pour lancer la mise à jour à la main : onglet **Actions** › **Actualiser le rapport COT** › **Run workflow**, ou `node scripts/update-cot.mjs` en local (Node 18 ou plus récent). Vérifier les calculs et le calendrier avec `node --test tests/cot-model.test.mjs`. Le calendrier officiel des publications 2026 est repris dans `cot-model.mjs` (`officialDelays`) ; au-delà, les reports fériés sont estimés. GitHub suspend les workflows planifiés d’un dépôt public après 60 jours sans activité : la page se complète alors depuis l’API de la CFTC, et le workflow se réactive depuis l’onglet **Actions**.
 
+## Calendrier des publications
+
+La vue [Calendrier](https://elchapasso.github.io/PROJECT/#calendar) réunit les annonces macroéconomiques de Forex Factory et les rapports agricoles du domaine. Chaque publication ouvre sa page officielle ; « Détails » donne la lecture de marché. Les heures sont affichées à Casablanca, avec l’heure de la source.
+
+Le workflow `.github/workflows/update-calendar.yml` exécute `scripts/update-calendar.py` trois fois par jour et publie `docs/terminal/calendar-feed.json` sur la branche `calendar-live`. Chaque date porte un niveau de certitude :
+
+| Publication | Source lue | Niveau |
+|---|---|---|
+| WASDE (12 h ET) | calendrier annuel du [WAOB](https://www.usda.gov/about-usda/general-information/staff-offices/office-chief-economist/commodity-markets/wasde-report) | officiel |
+| NASS : Crop Progress, Crop Production, Fats & Oils, Grain Stocks, Acreage, Prospective Plantings | [calendrier NASS](https://www.nass.usda.gov/Publications/Calendar/), quatre mois glissants | officiel |
+| NOPA (midi ET) | calendrier PDF de l’année, sinon le 15 ou le jour ouvré suivant | officiel ou règle |
+| MPOB (12 h 30, Kuala Lumpur) | date annoncée sur [bepi.mpob.gov.my](https://bepi.mpob.gov.my/), sinon le 10 | officiel ou règle |
+| CONAB : relevé des grains | calendrier PDF annuel | officiel |
+| CONAB : progrès des récoltes | chaque lundi à 19 h (Brasília), selon le même calendrier | règle |
+| FAS Weekly Export Sales | chaque jeudi 8 h 30 ET, vendredi après un jour férié fédéral | règle |
+| FAS Oilseeds: World Markets and Trade | jour du WASDE, 12 h 15 ET | règle |
+| ANEC | dernier relevé publié, puis une semaine plus tard | officiel puis habituel |
+| SEA India, Bolsa de Cereales (jeudi), inspections USDA (lundi 11 h ET) | jour habituel, sans calendrier officiel | habituel |
+| Forex Factory | flux de la semaine en cours : USD, EUR et CNY à impact fort ou moyen, jours fériés américains | officiel |
+
+Le COT de la CFTC est calculé par la page (voir ci-dessus). Une source indisponible garde ses dates connues et signale l’échec dans l’onglet **Actions**. Les PDF sont lus avec `pypdf`. Tests : `python3 -m unittest tests.test_calendar` et `node --test tests/calendar-model.test.mjs`.
+
 ## Données
 
 Les observations initiales sont datées. Conserver la période de référence, l’unité, la date de publication, le statut et le lien de provenance pour chaque ajout au jeu initial. Les données saisies dans le terminal et les rapports archivés sont propres au navigateur. La sauvegarde et l’import JSON se trouvent dans **Sources & données**.
