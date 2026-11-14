@@ -66,13 +66,17 @@ const sourceList = refs => refs.map(ref => typeof ref === 'string' ? sources[ref
 const seriesValues = years => Object.entries(years).flatMap(([year, numbers]) =>
   numbers.map((value, index) => [year + '-' + String(index + 1).padStart(2, '0'), value]));
 
-function chartCard(ui, id, title, caption, data, config, headings, rows, refs) {
+function chartCard(ui, id, title, caption, data, config, headings, rows, refs, reading) {
   const {section, panel, chart, table, e} = ui;
+  const monthly = config.periodType !== 'year';
+  const controls = {optionsOpen:true, quickRanges:true, movingAverage:monthly};
   return section(title, caption) + panel(
-    chart(data, {height:220, label:title, sourceLinks:sourceList(refs), ...config}) +
-    '<details><summary class="small">Voir les valeurs</summary>' +
+    chart(data, {height:220, label:title, sourceLinks:sourceList(refs), ...controls, ...config}) +
+    '<div class="bio-reading"><strong>Comment lire ce graphique</strong><p>'+e(reading)+'</p></div>' +
+    '<details class="bio-values"><summary>Voir les valeurs</summary>' +
     table(headings, rows.map(row => row.map(cell => e(cell)))) + '</details>' +
-    '<button type="button" class="button ghost bio-csv" data-bio-series="' + id + '">Exporter CSV</button>');
+    '<button type="button" class="button ghost bio-csv" aria-label="'+e('Exporter le CSV · '+title)+'" data-bio-series="' + id + '">Exporter CSV</button>',
+    'bio-chart-card');
 }
 
 function methodology(title, formula, explanation, refs, ui) {
@@ -88,7 +92,7 @@ function kpis(ui, items) {
 }
 
 function regulation(ui, register) {
-  const {section, panel, table, e, num, chartSources} = ui;
+  const {num} = ui;
   const annual = historicalGallons.map(([year, gallons]) => [String(year), gallons]);
   const hisRows = historicalGallons.map(([year, gallons]) => [year, gallons, sources.epaHistory[1]]);
   register('epa-historique', ['Année', 'Milliards de gallons de biodiesel', 'Source'], hisRows);
@@ -97,25 +101,26 @@ function regulation(ui, register) {
     return [year, label, row.base, row.adopted, row.extra, row.total, sources[key === 'adopted' ? 'epaFinal' : 'epaProposal'][1]];
   }));
   register('epa-regles', ['Année', 'Statut', 'Base M RIN', 'Réallocation adoptée M RIN', 'Supplément M RIN', 'Total M RIN', 'Source'], policyRows);
-  const bars = policyRows.map(([year, label, base, adopted, extra, total]) => {
-    const width = part => part / 10000 * 100 + '%';
-    return '<div class="bio-bar-row"><span>' + year + ' · ' + e(label) + '</span>' +
-      '<span class="bio-bar" aria-hidden="true"><i style="width:' + width(base) + '"></i><i style="width:' +
-      width(adopted) + '"></i><i style="width:' + width(extra) + '"></i></span>' +
-      '<strong>' + num(total / 1000, 2) + '</strong></div>';
-  }).join('');
+  const series = Object.entries(epaScenarios).map(([key,label], i) => ({
+    ...graphLine(label,i+1,years.map(year=>{
+      const {base,adopted,extra,total} = epaVolumes(year,key);
+      return {date:String(year),value:total/1000,base,adopted,extra};
+    })),
+    dashed:key!=='adopted',
+  }));
   return kpis(ui, years.map(year => ['Obligation BBD ' + year, num(epaVolumes(year,'adopted').total / 1000, 2) + ' Md RIN', 'Règle en vigueur · EPA'])) +
-    section('Obligation BBD · Base et réallocations', 'Millions de RIN dans le tableau · milliards de RIN dans le graphique') +
-    panel('<div class="bio-bars">' + bars + '</div><p class="small bio-legend"><span>Base</span><span>Réallocation adoptée</span><span>Supplément proposé</span></p>' +
-      chartSources(sourceList(['epaFinal','epaProposal'])) +
-      '<p class="small">La proposition d’octobre porte sur 770 M RIN pour l’obligation renouvelable totale, dont environ 180 M pour la catégorie biomass-based diesel (BBD). Les D4 peuvent également servir à honorer les obligations imbriquées de biocarburants avancés et renouvelables.</p>' +
-      '<details><summary class="small">Voir les valeurs</summary>' + table(['Année','Statut','Base','Réallocation adoptée','Supplément proposé','Total'],
-        policyRows.map(row => row.slice(0, 6).map((cell, index) => index > 1 ? num(cell, 0) : e(cell)))) + '</details>' +
-      '<button type="button" class="button ghost bio-csv" data-bio-series="epa-regles">Exporter CSV</button>') +
+    chartCard(ui, 'epa-regles', 'Obligation BBD · Base et réallocations',
+      'Obligation totale du biomass-based diesel (BBD) · règle en vigueur et propositions EPA',
+      series, {unit:'Md RIN', periodType:'year', tooltips:p=>num(p.value,2)+' Md RIN · base '+num(p.base,0)+' + adoptée '+num(p.adopted,0)+' + proposée '+num(p.extra,0)+' M RIN'},
+      ['Année','Scénario','Base (M RIN)','Réallocation adoptée (M RIN)','Supplément proposé (M RIN)','Total (M RIN)'],
+      policyRows.map(row=>row.slice(0,6).map((cell,i)=>i>1?num(cell,0):cell)),
+      ['epaFinal','epaProposal'],
+      'Total = mandat de base + réallocation déjà adoptée + éventuel supplément proposé. Les pointillés représentent les propositions. Sur les 770 M RIN proposés en octobre pour l’obligation renouvelable totale, environ 180 M relèvent du biomass-based diesel (BBD). Les RIN D4 peuvent aussi servir à honorer les obligations imbriquées de biocarburants avancés et renouvelables.') +
     chartCard(ui, 'epa-historique', 'Mandats historiques EPA · 2010–2025',
       'Gallons de biodiesel indiqués par l’EPA · la règle 2026–2027 est exprimée en RIN',
-      [graphLine('Mandat BBD', 1, annual.map(point))], {unit:'Md gal', periodType:'year', zeroLine:true},
-      ['Année','Md gal'], annual.map(([year, gallons]) => [year, num(gallons, 2)]), ['epaHistory']);
+      [graphLine('Mandat BBD', 1, annual.map(point))], {unit:'Md gal', periodType:'year', defaultScale:'zero'},
+      ['Année','Md gal'], annual.map(([year, gallons]) => [year, num(gallons, 2)]), ['epaHistory'],
+      'Chaque point indique l’obligation annuelle fixée pour le biodiesel à base de biomasse. Jusqu’en 2025, l’EPA la publiait en gallons de biodiesel. Pour comparer 2025 et 2026 dans une même unité, il faut expliciter le facteur RIN par gallon du carburant retenu.');
 }
 
 function soyOutput(ui) {
@@ -138,14 +143,15 @@ function soySimulator(ui) {
 }
 
 function usObservations(ui, totalSoy, canola, register) {
-  const {num, panel, chartSources} = ui;
+  const {num} = ui;
   const rins = cumulativeNetRins();
   const quotes = rins.map(({date, value, total}) => [date, value, total, sources.farmdoc[1], sources.epaGeneration[1]]);
   register('d4-generation', ['Mois','Génération nette (M RIN)','Cumul (M RIN)','Source série','Source primaire'], quotes);
   const dates = rins.map(({date}) => date);
   const net = chartCard(ui, 'd4-generation', 'D4 · Génération nette mensuelle', 'Janvier à septembre 2026 · série farmdoc issue de l’EPA, arrondie au million',
-    [graphLine('Génération nette',1,netD4.map(point))], {unit:'M RIN', zeroLine:true}, ['Mois','M RIN','Cumul M RIN'],
-    rins.map(({date,value,total}) => [date,num(value,0),num(total,0)]), ['farmdoc','epaGeneration']);
+    [graphLine('Génération nette',1,netD4.map(point))], {unit:'M RIN', defaultScale:'zero'}, ['Mois','M RIN','Cumul M RIN'],
+    rins.map(({date,value,total}) => [date,num(value,0),num(total,0)]), ['farmdoc','epaGeneration'],
+    'La courbe suit les nouveaux crédits D4 générés chaque mois, après corrections et autres usages retranchés par farmdoc. Le tableau donne aussi le cumul depuis janvier. Compare le rythme des derniers mois, en gardant à part le stock reportable et les obligations exprimées sur une année entière.');
   const eiaSeries = [seriesValues(soyByFacility.biodiesel), seriesValues(soyByFacility.renewableDiesel)];
   const byDate = new Map(eiaSeries[1]);
   const eiaRows = eiaSeries[0].map(([date, bd]) => [date, bd, byDate.get(date)]);
@@ -154,7 +160,8 @@ function usObservations(ui, totalSoy, canola, register) {
   const facility = chartCard(ui, 'eia-filiere', 'Huile de soja · Consommation par filière', 'EIA · janvier 2022 à août 2026 · séries publiées pour les deux catégories d’usines',
     eiaSeries.map((series,i)=>graphLine(['Biodiesel','Renewable diesel'][i],i+1,series.map(([date,n])=>({date,value:n*MILLION_LB_TO_MT})))), {unit:'Mt'},
     ['Mois','Biodiesel (Mlb)','Renewable diesel (Mlb)','Biodiesel (Mt)','Renewable diesel (Mt)'],
-    eiaRows.slice().reverse().map(([date,bd,rd])=>[date,num(bd,0),num(rd,0),num(bd*MILLION_LB_TO_MT,4),num(rd*MILLION_LB_TO_MT,4)]), ['eiaBd','eiaRd']);
+    eiaRows.slice().reverse().map(([date,bd,rd])=>[date,num(bd,0),num(rd,0),num(bd*MILLION_LB_TO_MT,4),num(rd*MILLION_LB_TO_MT,4)]), ['eiaBd','eiaRd'],
+    'Chaque série mesure le volume d’huile de soja utilisé par une catégorie d’usines. La pente indique quelle filière augmente ou réduit sa consommation. L’EIA publie les valeurs en millions de livres, converties ici en Mt avec le facteur 0,00045359237. Les séries et le total EIA sont arrondis séparément.');
   const recent = dates.slice(2,8);
   const comparisons = [['Huile de soja',totalSoy.slice(2,8)],['Huile de canola',canola.slice(2,8)],...substituteSeries];
   const compRows = recent.map((date,i)=>[date,...comparisons.map(([,list])=>value(list[i]))]);
@@ -166,13 +173,14 @@ function usObservations(ui, totalSoy, canola, register) {
     [
       graphLine('Estimation D4 + D5',2,bankEstimates.slice(0,-1).map(([year,value])=>({date:String(year),value}))),
       graphLine('Projection D4 + D5',3,[{date:'2027',value:bankEstimates.at(-1)[1]}]),
-    ],{unit:'M RIN',periodType:'year',zeroLine:true}, ['Début d’année','Stock estimé D4 + D5 (M RIN)','Statut'],
-    bankEstimates.map(([year,n])=>[year,num(n,0),year===2027?'Projection':'Estimation']),['farmdoc','epaAvailable']);
-  return net + bank + panel('<p class="small">Le stock farmdoc agrège les catégories D4 et D5. Pour isoler la disponibilité mensuelle du D4 par millésime, consulte le fichier officiel de l’EPA. Le champ de couverture du simulateur reste une hypothèse choisie par l’utilisateur.</p>' +
-    chartSources(sourceList(['epaAvailable']))) + facility +
+    ],{unit:'M RIN',periodType:'year',defaultScale:'zero'}, ['Début d’année','Stock estimé D4 + D5 (M RIN)','Statut'],
+    bankEstimates.map(([year,n])=>[year,num(n,0),year===2027?'Projection':'Estimation']),['farmdoc','epaAvailable'],
+    'Chaque point est une estimation du stock combiné D4 + D5 au début de l’année. Un stock plus élevé peut couvrir une partie des obligations et réduire le besoin de nouvelle génération. Le point 2027 est projeté. Le tableau officiel de l’EPA permet de consulter les D4 disponibles par millésime.');
+  return net + bank + facility +
     chartCard(ui, 'eia-matieres', 'Matières premières concurrentes', 'Comparaison des volumes consommés · mars à août 2026 · catégories EIA sélectionnées',
       comparisons.map(([label,list],i)=>graphLine(label,i+1,recent.map((date,m)=>({date,value:list[m]})))), {unit:'Mlb'},
-      ['Mois',...comparisons.map(([label])=>label)], compRows.map(([date,...list])=>[date,...list.map(n=>num(n,0))]),['eia']);
+      ['Mois',...comparisons.map(([label])=>label)], compRows.map(([date,...list])=>[date,...list.map(n=>num(n,0))]),['eia'],
+      'Compare les volumes de soja, canola, suif et yellow grease consommés au cours d’un même mois. Des évolutions opposées peuvent signaler un changement du mix. Les séries couvrent une sélection de matières premières et ne permettent pas de calculer leurs parts dans la consommation totale.');
 }
 
 function indonesiaObservations(ui, register) {
@@ -186,9 +194,10 @@ function indonesiaObservations(ui, register) {
       graphLine('Livraisons annuelles',1,indonesiaDeliveries.slice(0,-1).map(point)),
       graphLine('Livré en 2026 au 10 novembre',2,[point(latest)]),
       graphLine('Allocation 2026 annoncée en novembre',3,[{date:latest[0],value:latest[2]}]),
-    ], {unit:'Md l',periodType:'year',zeroLine:true}, ['Année','Livré (Md l)','Allocation (Md l)','Mélange / période'],
+    ], {unit:'Md l',periodType:'year',defaultScale:'zero'}, ['Année','Livré (Md l)','Allocation (Md l)','Mélange / période'],
     indonesiaDeliveries.map(([year,actual,allocation,status])=>[year,num(actual,2),num(allocation,2),status]),
-    ['idHistory','idRollout','idLatest','idDate']);
+    ['idHistory','idRollout','idLatest','idDate'],
+    'Les points 2021 à 2025 couvrent des années civiles complètes. En 2026, compare le cumul livré au 10 novembre à l’allocation de l’année. Le rapport entre les deux mesure l’avancement des livraisons, tandis que B40 et B50 désignent la proportion de biodiesel dans le mélange.');
   register('indonesie-palme', ['Mois','Consommation filière biodiesel kt','Source'], palmMonthly.map(([date,kt,source])=>[date,kt,sources[source][1]]));
   register('indonesie-palme-annuelle', ['Année','Consommation Mt','Statut','Source'], palmForecast.map(([date,mt,status,source])=>[date,mt,status,sources[source][1]]));
   return kpis(ui, [
@@ -200,14 +209,16 @@ function indonesiaObservations(ui, register) {
     chartSources(sourceList(['idAllocation','idRollout','idLatest']))) +
     chartCard(ui, 'indonesie-palme', 'Huile de palme absorbée · Historique mensuel', 'GAPKI · consommation de la filière biodiesel, janvier à août 2026',
       [graphLine('Consommation mensuelle',1,palmMonthly.map(([date,kt])=>({date,value:kt/1000})))], {unit:'Mt'},
-      ['Mois','Milliers de tonnes','Mt'], palmMonthly.map(([date,kt])=>[date,num(kt,0),num(kt/1000,3)]), ['gapkiFeb','gapkiApr','gapkiJun','gapkiAug','gapkiYtd']) +
+      ['Mois','Milliers de tonnes','Mt'], palmMonthly.map(([date,kt])=>[date,num(kt,0),num(kt/1000,3)]), ['gapkiFeb','gapkiApr','gapkiJun','gapkiAug','gapkiYtd'],
+      'Chaque point mesure la quantité d’huile de palme utilisée par la filière biodiesel pendant le mois. Une hausse indique que davantage de palme part vers cet usage domestique. Les chiffres sont publiés en milliers de tonnes par GAPKI et affichés en millions de tonnes.') +
     chartCard(ui, 'indonesie-palme-annuelle', 'Huile de palme absorbée · Annuel', 'Observations GAPKI, estimation 2026 et scénario 2027',
       [
         graphLine('Observé',1,palmForecast.slice(0,2).map(point)),
         graphLine('Estimation 2026',2,[point(palmForecast[2])]),
         graphLine('Scénario B50 2027',3,[point(palmForecast[3])]),
-      ], {unit:'Mt',periodType:'year',zeroLine:true}, ['Année','Mt','Statut'],
-      palmForecast.map(([year,mt,status])=>[year,num(mt,3),status]), ['gapkiYear','gapkiForecast']);
+      ], {unit:'Mt',periodType:'year',defaultScale:'zero'}, ['Année','Mt','Statut'],
+      palmForecast.map(([year,mt,status])=>[year,num(mt,3),status]), ['gapkiYear','gapkiForecast'],
+      'Les deux premières années sont observées. Le point 2026 est une estimation annuelle et celui de 2027 suppose douze mois de B50 selon GAPKI. L’écart entre ces deux points mesure une hausse de demande dans ce scénario. L’effet sur les exportations dépend aussi de la production et des stocks.');
 }
 
 function balanceInputs(balance) {
@@ -271,8 +282,9 @@ function hipCard(ui, priceData, register) {
       graphLine('HIP biodiesel hors fret',1,curve('hip')),
       graphLine('Gazole ICE converti',2,curve('proxy')),
       graphLine('Écart HIP − gazole',3,curve('gap')),
-    ], {unit:'Rp/l',zeroLine:true}, ['Mois','HIP Rp/l','Gazole Rp/l','Écart Rp/l','Séances','Dernière séance','Période'],
-    observations.slice().reverse().map(r=>[r.date,num(r.hip,0),num(r.proxy,0),num(r.gap,0),r.count,r.last,r.partial?'En cours':'Clos']), refs) +
+    ], {unit:'Rp/l',defaultScale:'zero'}, ['Mois','HIP Rp/l','Gazole Rp/l','Écart Rp/l','Séances','Dernière séance','Période'],
+    observations.slice().reverse().map(r=>[r.date,num(r.hip,0),num(r.proxy,0),num(r.gap,0),r.count,r.last,r.partial?'En cours':'Clos']), refs,
+    'Le HIP est le prix de référence du biodiesel indonésien hors fret. L’écart compare ce prix à un gazole ICE converti en roupies par litre. S’il augmente, le biodiesel devient plus coûteux face à ce repère. Le nombre de séances et la dernière date appariée figurent dans le tableau.') +
     panel(methodology('Formule et lecture', 'Écart (Rp/l) = HIP BBN hors fret − moyenne mensuelle de [gazole ICE (USD/t) × '+num(density,3)+' kg/l ÷ 1 000 kg/t × USD/IDR (Rp/USD)].',
       'La moyenne ne retient que les séances disposant des deux observations le même jour. Le point du mois en cours est partiel. Le gazole ICE est un proxy de marché, distinct de la référence diesel réglementaire indonésienne. Un écart positif mesure le surcoût par litre face au proxy et permet de suivre la pression sur le financement du mandat.', refs,ui));
 }
@@ -288,6 +300,7 @@ export function renderBiofuelPolicy(ui, {totalSoy, canola, balance, prices}) {
     '<button type="button" class="button ghost" data-bio-jump="bio-us">États-Unis · EPA</button>' +
     '<button type="button" class="button ghost" data-bio-jump="bio-id">Indonésie · B50</button>' +
     '<button type="button" class="button ghost" data-bio-jump="bio-eia">Graphiques saisonniers EIA</button></nav><p class="small">Statuts réglementaires vérifiés le '+ui.e(ui.formatDate(reviewedOn))+'.</p>' +
+    '<p class="small">La légende permet de choisir les séries. Les réglages contrôlent la période, la hauteur et l’échelle. Sur les séries mensuelles, la moyenne mobile s’affiche en pointillé et nécessite une fenêtre complète de données.</p>' +
     '<div id="bio-us" tabindex="-1">'+ui.section('États-Unis · Mandats EPA et demande de soja','RIN adoptés, propositions et demande physique simulée') +
     regulation(ui,register) + soySimulator(ui) + usObservations(ui,totalSoy,canola,register) +
     '</div><div id="bio-id" tabindex="-1">'+ui.section('Indonésie · B50 et demande de CPO','Déploiement, volumes livrés et impact sur le bilan palme') +
