@@ -10,15 +10,17 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet pypdf==5.4.0
+      - name: Run calendar update
         run: |
           mkdir -p "$RUNNER_TEMP/out"
-          UA='Mozilla/5.0 (compatible; OleaTerminal-Calendar/2.0; +https://github.com/elchapasso/PROJECT)'
-          while read -r name url; do
-            [ -z "$name" ] && continue
-            code=$(curl -sSL -A "$UA" --max-time 40 -o "$RUNNER_TEMP/out/$name" -w '%{http_code} %{content_type} %{url_effective}' "$url" 2>&1 || true)
-            echo "$name | $code | $(wc -c < "$RUNNER_TEMP/out/$name" 2>/dev/null)" | tee -a "$RUNNER_TEMP/out/index.txt"
-          done < probe/urls.txt
+          git fetch --no-tags origin refs/heads/calendar-live
+          git show FETCH_HEAD:docs/terminal/calendar-feed.json > "$RUNNER_TEMP/out/calendar-feed.json"
+          python scripts/update-calendar.py "$RUNNER_TEMP/out/calendar-feed.json" > "$RUNNER_TEMP/out/log.txt" 2>&1; echo "exit $?" >> "$RUNNER_TEMP/out/log.txt"
+          cat "$RUNNER_TEMP/out/log.txt"
       - name: Publish
         run: |
           cd "$RUNNER_TEMP/out"
