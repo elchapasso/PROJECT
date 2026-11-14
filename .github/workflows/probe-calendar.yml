@@ -1,0 +1,30 @@
+name: Probe calendar sources (temporary)
+on:
+  push:
+    branches: [probe-calendar]
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch
+        run: |
+          mkdir -p "$RUNNER_TEMP/out"
+          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'
+          while read -r name url; do
+            [ -z "$name" ] && continue
+            code=$(curl -sSL -A "$UA" --max-time 40 -o "$RUNNER_TEMP/out/$name" -w '%{http_code} %{content_type} %{url_effective}' "$url" 2>&1 || true)
+            echo "$name | $code | $(wc -c < "$RUNNER_TEMP/out/$name" 2>/dev/null)" | tee -a "$RUNNER_TEMP/out/index.txt"
+          done < probe/urls.txt
+          cd "$RUNNER_TEMP/out"
+          for f in conab2026 conab2027; do pdftotext -layout $f.pdf $f.txt 2>&1 | head -2 || echo "pdftotext failed $f"; done
+          which pdftotext >> index.txt || echo "no pdftotext" >> index.txt
+      - name: Publish
+        run: |
+          cd "$RUNNER_TEMP/out"
+          git init -q && git checkout -q -b probe-calendar-out && git add -A
+          git -c user.name=probe -c user.email=probe@example.com commit -qm probe
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" HEAD:refs/heads/probe-calendar-out
