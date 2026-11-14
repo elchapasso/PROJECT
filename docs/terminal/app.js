@@ -23,7 +23,8 @@ import {focusMargins} from './margin-focus.mjs?v=20261113-marges';
 import {renderBalanceView,bindBalanceView} from './balance-view.mjs?v=20261112-tournesol';
 import {renderCbotArgView,bindCbotArgView} from './cbot-arg-view.mjs?v=20261112-simulateur';
 import {renderCotView,bindCotView,cotCalendarEntries} from './cot-view.mjs?v=20261112-cot';
-import {feedEntries,toCasablanca,dateStatusLabels,FOREX_CALENDAR_URL} from './calendar-model.mjs?v=20261114-calendrier';
+import {feedEntries,toCasablanca,dateStatusLabels,FOREX_CALENDAR_URL,casablanca} from './calendar-model.mjs?v=20261114-calendrier';
+import {publicationCards,publicationGroups,cardSpec,nextDates,latestFor,figureDigits} from './publications-model.mjs?v=20261114-publications';
 
 const root=document.querySelector('#terminal');
 const dateFormat=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -48,7 +49,7 @@ const iconPaths={
 };
 const icon=(name,size=17)=>'<svg class="ico" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="'+iconPaths[name]+'"/></svg>';
 const menu=[
-  ['Terminal',[['overview','Vue d’ensemble','grid']]],
+  ['Terminal',[['overview','Vue d’ensemble','grid'],['publications','Rapports & publications','report']]],
   ['Complexes',[['soy','Soja & dérivés','leaf'],['sun','Tournesol','sun'],['palm','Palme','drop']]],
   ['Analyse',[['drivers','Facteurs de marché','pulse'],['balances','Bilans offre / demande','table'],['demand','Demande','grain'],['cot','Rapport COT · CFTC','users'],['cross','Comparaisons & spreads','chart'],['cbot-arg','Simulateur CBOT – ARG','calc'],['macro','Énergie & géopolitique','bolt'],['biofuels','Biocarburants','drop'],['outlook','Perspectives & scénarios','target']]],
   ['Veille & livrables',[['news','Fil d’actualité','news'],['calendar','Calendrier','calendar'],['reports','Rapports de marché','report'],['comex','Brief COMEX','brief']]],
@@ -61,7 +62,7 @@ let data=emptyStore();
 let loadError='';
 try{const raw=localStorage.getItem(localKey);if(raw)data=parseStore(raw);}catch{loadError='Les données locales n’ont pas pu être chargées.';}
 const state={
-  page:'overview',filters:{...FILTERS},theme:'light',mobile:false,eventWindow:'7',chart:'oils',
+  page:'overview',filters:{...FILTERS},theme:'light',mobile:false,eventWindow:'7',chart:'oils',pubGroup:'all',
   indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
   soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',sunFamily:'sun',sunOrigin:'ukr',sunView:'',seasonYears:{},
   originTab:{},query:'',category:'',importance:'',start:'',end:'',
@@ -393,7 +394,7 @@ function shell(body){
     const change=pct(s.values[last],s.values[prev]);const direction=change>0?'positive':change<0?'negative':'muted';
     return '<div class="tick" title="'+e(last?displayPeriod(last,s.grain)+' · '+s.points[last].source+' · '+s.definition:'Série non disponible')+'"><span>'+e(s.name)+'</span><div><b class="num">'+num(s.values[last],2)+'</b><small class="'+direction+'">'+(change===null?e(last?s.unit:'Non dispo.'):e(percent(change)))+'</small></div></div>';
   }).join('');
-  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['biofuels','demand','balances','cbot-arg','cot'].includes(state.page)||state.page==='cross'&&state.crossView!=='pairs'?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
+  return '<div class="shell'+(state.mobile?' nav-open':'')+'"><aside class="sidebar" aria-label="Navigation principale"><a class="brand" href="#overview"><img src="./favicon.svg?v=20261109-ui" alt=""><div><strong>Oléa Terminal</strong><small>Intelligence de marché</small></div></a><nav class="navlist">'+menu.map(([group,items])=>'<p class="navlabel">'+e(group)+'</p>'+items.map(([key,title,ico])=>'<a class="navlink '+(state.page===key?'active':'')+'" '+(state.page===key?'aria-current="page"':'')+' href="#'+key+'">'+icon(ico)+e(title)+'</a>').join('')).join('')+'</nav><div class="sidefoot"><a class="navlink '+(state.page==='sources'?'active':'')+'" href="#sources">'+icon('database')+' Sources & données</a><small>Casablanca · Veille de marché</small></div></aside><div class="workarea"><header class="topbar"><div class="topbar-left">'+action('menu',icon('menu'),'icon mobile-toggle','aria-label="Ouvrir le menu" aria-expanded="'+state.mobile+'"')+'<span class="crumb"><span>Terminal / </span><strong>'+e(nav[state.page])+'</strong></span></div><div class="actions"><span class="snapshot"><span class="dot"></span>Données au '+e(formatDate(asOf()))+'</span>'+action('theme',icon(state.theme==='dark'?'sun':'moon'),'icon','aria-label="Changer de thème" title="Changer de thème"')+action('add',icon('plus')+' <span>Ajouter une donnée</span>','primary','aria-label="Ajouter une donnée"')+'</div></header><div class="ticker" aria-label="Repères datés">'+ticks+'</div><main class="content" id="main">'+(['biofuels','demand','balances','cbot-arg','cot','publications'].includes(state.page)||state.page==='cross'&&state.crossView!=='pairs'?'':filters())+body+'<footer class="footer"><span>OLÉA TERMINAL · VEILLE SOURCÉE · AFRICA/CASABLANCA</span><span><a href="#sources">Sources et couverture</a> · Données datées</span></footer></main></div></div><dialog id="detail" class="dialog"></dialog><dialog id="entry" class="dialog"></dialog><div id="printout" class="printonly"></div><div id="toast" class="toast" role="status" hidden></div>';
 }
 
 
@@ -1129,28 +1130,32 @@ function scenarioTable(h){
 
 const liveCalendarFeed='https://raw.githubusercontent.com/elchapasso/PROJECT/calendar-live/docs/terminal/calendar-feed.json';
 async function refreshCalendar(){
-  let older=null;
-  for(const url of [liveCalendarFeed,'./terminal/calendar-feed.json?v=20261114-calendrier']){
+  // Flux complet = calendrier (reports) et dernières publications (latest). Le flux en ligne passe d’abord ;
+  // ce qui lui manque est repris de la copie intégrée au site.
+  const read=async url=>{
     try{
       const response=await fetch(url,{cache:'no-cache',signal:AbortSignal.timeout(7000)});
-      if(!response.ok)continue;
+      if(!response.ok)return null;
       const feed=await response.json();
-      if(!Array.isArray(feed.forex)||!Array.isArray(feed.reports)&&!Array.isArray(feed.nass))continue;
-      // Un flux à l’ancien format (Crop Progress seul) ne sert que si aucun flux complet n’est disponible.
-      if(Array.isArray(feed.reports)){calendarFeed=feed;break;}
-      older??=feed;
-    }catch{}
+      return Array.isArray(feed.forex)&&(Array.isArray(feed.reports)||Array.isArray(feed.nass))?feed:null;
+    }catch{return null;}
+  };
+  let feed=await read(liveCalendarFeed);
+  if(!Array.isArray(feed?.reports)||!feed.latest){
+    const bundled=await read('./terminal/calendar-feed.json?v=20261114-publications');
+    if(!Array.isArray(feed?.reports))feed=bundled??feed;
+    else if(bundled?.latest)feed={...feed,latest:bundled.latest,latestCheckedAt:bundled.latestCheckedAt};
   }
-  calendarFeed??=older;
+  if(feed)calendarFeed=feed;
   calendarFeedLoaded=true;
-  if((state.page==='calendar'||state.page==='overview')&&!root.querySelector('dialog[open]'))render();
+  if(['calendar','overview','publications'].includes(state.page)&&!root.querySelector('dialog[open]'))render();
 }
 function calendarCoverage(){
   const week=calendarFeed?.forexWeekStart?
     formatDate(calendarFeed.forexWeekStart)+' – '+formatDate(calendarFeed.forexWeekEnd):calendarFeedLoaded?'calendrier indisponible':'chargement du calendrier';
   const outdated=calendarFeed?.forexWeekEnd&&calendarFeed.forexWeekEnd<calendarToday();
   const checked=calendarFeed?.reportsCheckedAt?' Dernière vérification des sources : '+formatDate(calendarFeed.reportsCheckedAt.slice(0,10))+'.':'';
-  return '<div class="notice calendar-coverage"><p><b>Actualisation automatique, trois fois par jour.</b> Rapports agricoles : '+
+  return '<div class="notice calendar-coverage"><p><b>Actualisation automatique, toutes les deux heures.</b> Rapports agricoles : '+
     [['USDA WASDE','https://www.usda.gov/about-usda/general-information/staff-offices/office-chief-economist/commodity-markets/wasde-report'],
      ['USDA NASS','https://www.nass.usda.gov/Publications/Calendar/'],['USDA FAS','https://www.fas.usda.gov/programs/export-sales-reporting-program'],
      ['NOPA','https://www.nopa.org/resources/nopa-monthly-crush-report/'],['MPOB','https://bepi.mpob.gov.my/'],
@@ -1161,6 +1166,52 @@ function calendarCoverage(){
     '<p>Heures à Casablanca. Un clic sur une publication ouvre sa page officielle ; « Détails » donne la lecture. '+
     'Date officielle : publiée par la source. Date selon la règle : tirée du rythme annoncé par la source (FAS le jeudi, MPOB le 10…). '+
     'Date habituelle : publication sans calendrier officiel (SEA, ANEC, Bolsa de Cereales, inspections).'+e(checked)+'</p></div>';
+}
+// Rapports & publications : une fiche par rapport, avec sa dernière publication, ses chiffres clés et ses prochaines dates.
+const pubNow=()=>{const p=casablanca(new Date().toISOString());return p.date+'T'+p.time;};
+const pubWhen=r=>e(formatDate(r.date))+(r.time?' · '+e(r.time):'');
+const pubValue=(value,unit)=>num(value,figureDigits(unit,value))+' '+unit;
+function pubFigures(figures){
+  if(!figures?.length)return '';
+  return '<table class="pub-figures"><tbody>'+figures.map(f=>{
+    const change=Number.isFinite(f.previous)?f.value-f.previous:null;
+    // Écart en unité de la source (en points pour un pourcentage), sans couleur : une hausse n’est ni bonne ni mauvaise en soi.
+    const trend=change===null?'':'<small>'+(change===0?'inchangé':e(sign(change,figureDigits(f.unit,change))+' '+(f.unit==='%'?'pts':f.unit)))+' vs '+e(f.previousLabel)+'</small>';
+    return '<tr><th scope="row">'+e(f.label)+(f.note?'<small>'+e(f.note)+'</small>':'')+'</th><td><span class="num">'+e(pubValue(f.value,f.unit))+'</span>'+trend+'</td></tr>';
+  }).join('')+'</tbody></table>';
+}
+function pubCard(card,rows,latest,now){
+  const spec=cardSpec(card.kind),last=latestFor(card.kind,latest,rows,now),next=nextDates(rows,card.kind,now);
+  const docs=(last?.documents??[]).map(d=>link(d.url,d.label)).join(' · ');
+  const lastBlock=last?'<p class="pub-date">'+e(formatDate(last.date))+'</p>'+(last.title?'<p class="small">'+e(last.title)+'</p>':'')+
+    (docs?'<p class="pub-docs">'+docs+'</p>':last.url?'<p class="pub-docs">'+link(last.url,'Page de la publication')+'</p>':'')+
+    (last.read?'':'<p class="small muted">'+(last.usual?'Jour habituel, publication non vérifiée':'Date tirée du calendrier')+'</p>'):'<p class="small">Aucune publication récente connue.</p>';
+  const first=next[0];
+  const nextBlock=first?'<p class="pub-date">'+pubWhen(first)+'</p><p class="small">'+e(first.time?first.zone:'Heure non communiquée')+'</p>'+
+    '<p class="small">'+e(dateStatusLabels[first.dateStatus]??'Date officielle')+'</p>'+
+    (next.length>1?'<p class="small">Ensuite : '+next.slice(1).map(r=>e(formatDate(r.date))).join(' · ')+'</p>':''):
+    '<p class="small">Pas de date annoncée pour l’instant.</p>';
+  const archive=card.archive.startsWith('#')?'<a href="'+e(card.archive)+'">Analyse dans le terminal</a>':link(card.archive,'Archives');
+  return '<article class="pub-card'+(spec.importance>=3?' major':'')+'" id="pub-'+e(card.kind)+'">'+
+    '<header><span class="eyebrow">'+e(spec.source+' · '+card.frequency)+'</span><h3>'+officialLink({url:card.page,source:spec.source},e(spec.title)+' '+icon('arrow',12))+'</h3>'+
+    '<p class="small">'+e(spec.expected)+'</p></header>'+
+    '<div class="pub-cols"><div><h4>Dernière publication</h4>'+lastBlock+'</div><div><h4>Prochaine publication</h4>'+nextBlock+'</div></div>'+
+    pubFigures(last?.figures)+
+    '<footer class="pub-links">'+link(card.page,'Page officielle')+' · '+archive+' · <a href="#calendar">Calendrier</a></footer></article>';
+}
+function renderPublications(){
+  const rows=fullCalendar(),latest=calendarFeed?.latest??{},now=pubNow(),group=state.pubGroup in publicationGroups?state.pubGroup:'all';
+  const cards=publicationCards.filter(c=>group==='all'||c.group===group);
+  const weekEnd=addDays(now.slice(0,10),7);
+  const soon=rows.filter(r=>r.date&&(r.date+'T'+(r.time||'00:00'))>=now&&r.date<=weekEnd&&r.importance>=2).slice(0,8);
+  const checked=calendarFeed?.latestCheckedAt?'Dernière lecture des sources : '+formatDate(calendarFeed.latestCheckedAt.slice(0,10))+' à '+casablanca(calendarFeed.latestCheckedAt).time+' (Casablanca).':
+    calendarFeedLoaded?'Lecture des sources indisponible : dates du calendrier seulement.':'Chargement des publications…';
+  return head('Terminal','Rapports & publications','Les rapports officiels qui font bouger les huiles végétales : dernière publication, chiffres clés et prochaines dates. Mise à jour automatique.')+
+    panel('<div class="spread-between"><div><h2>Dans les 7 prochains jours</h2><p class="small">Publications d’importance forte ou modérée · heures de Casablanca</p></div><a class="small" href="#calendar">Calendrier '+icon('arrow',14)+'</a></div>'+
+      (soon.length?soon.map(calMini).join(''):empty('Aucune publication majeure dans les 7 prochains jours.')))+
+    '<div class="pub-toolbar">'+btnSeg('pubGroup',publicationGroups,group,'Région')+'<p class="small">'+e(checked)+'</p></div>'+
+    '<div class="pub-grid">'+cards.map(c=>pubCard(c,rows,latest,now)).join('')+'</div>'+
+    '<p class="small pub-note">Chiffres repris des fichiers officiels : USDA (ESMIS, Market News, API de la FAS), CONAB (tableur du relevé), CFTC. NOPA, MPOB et SEA ne publient pas leurs chiffres en accès libre exploitable : la fiche renvoie à leur publication. Les sources sont relues toutes les deux heures.</p>';
 }
 function renderCalendar(){
   const rows=calendarFilter();
@@ -1294,7 +1345,7 @@ function renderSources(){
 
 const pageRender={
   overview:renderOverview,soy:()=>renderComplex('soy'),sun:()=>renderComplex('sun'),palm:()=>renderComplex('palm'),
-  macro:()=>renderComplex('macro'),drivers:()=>renderFeed(false),news:()=>renderFeed(true),
+  publications:renderPublications,macro:()=>renderComplex('macro'),drivers:()=>renderFeed(false),news:()=>renderFeed(true),
   balances:renderBalances,demand:renderDemand,cot:renderCot,cross:renderCross,'cbot-arg':renderCbotArg,biofuels:renderBiofuels,outlook:renderOutlook,calendar:renderCalendar,reports:renderReports,comex:renderComex,sources:renderSources,
 };
 function bindPageCharts(scope){
@@ -1620,5 +1671,7 @@ root.addEventListener('input',event=>{
 window.addEventListener('hashchange',()=>{state.page=readPage();state.mobile=false;render();window.scrollTo(0,0);});
 render();
 refreshCalendar();
+// Rapports et calendrier relus toutes les 30 minutes tant que la page est affichée.
+setInterval(()=>{if(document.visibilityState==='visible')refreshCalendar();},30*60*1000);
 if(loadError)toast(loadError);
 

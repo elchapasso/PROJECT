@@ -1,0 +1,125 @@
+
+Crop Progress
+
+ISSN: 1948-3007
+
+Released November 9, 2026, by the National Agricultural Statistics Service 
+(NASS), Agricultural Statistics Board, United States Department of 
+Agriculture (USDA).
+
+Corn Harvested - Selected States
+[These 18 States harvested 93% of the 2025 corn acreage]
+------------------------------------------------------------------------
+                :               Week en
+Soybeans Harvested - Selected States
+[These 18 States harvested 96% of the 2025 soybean acreage]
+------------------------------------------------------------------------
+                :               Week ending               :             
+                :-----------------------------------------:             
+      State     : November 8, : November 1, : November 8, :  2021-2025  
+                :    2025     :    2026     :    2026     :   Average   
+------------------------------------------------------------------------
+                :                        percent                        
+                :                                                       
+Arkansas .......:    (NA)            94            96           93      
+Illinois .......:    (NA)            91            96           92      
+Indiana ........:    (NA)            87            93           89      
+Iowa ...........:    (NA)            90            93           95      
+Kansas .........:    (NA)            72            78           86      
+Kentucky .......:    (NA)            81            87           75      
+Louisiana ......:    (NA)           100           100           99      
+Michigan .......:    (NA)            81            86           82      
+Minnesota ......:    (NA)            97           100           99      
+Mississippi ....:    (NA)            99           100           96      
+Missouri .......:    (NA)            79            84           82      
+Nebraska .......:    (NA)            84            90           93      
+North Carolina .:    (NA)            49            62           53      
+North Dakota ...:    (NA)            96            98           95      
+Ohio ...........:    (NA)            83            92           90      
+South Dakota ...:    (NA)            94            96           96      
+Tennessee ......:    (NA)            88            93           79      
+Wisconsin ......:    (NA)            94            97           91      
+                :                                                       
+18 States ......:    (NA)            88            92           91      
+------------------------------------------------------------------------
+(NA) Not available.                                                     
+
+Cotton Bolls Opening - Selected States
+[These 15 States planted 99% of the 2025 cotton acreage]
+------------------------------------------------------------------------
+                :               Week ending               :             
+                :-----------------------------------------:             
+      State     : November 8, : November 1, : November 8, :  2021-2025  
+                :    2025     :    2026     :    2026     :   Average   
+------------------------------------------------------------------------
+                :                        percent                        
+                :                                                       
+Alabama ........:    (NA)            96            99            99     
+Arizona ........:    (NA)            99           100           100     
+Arkansas .......:    (NA)           100           100           100     
+California .....:    (NA)            97           100            98     
+Georgia ........:    (NA)            99           100            99     
+Kansas .........:    (NA)            97            99            92     
+Louisiana ......:    (NA)           100           100           100     
+Mississippi ....:    (NA)           100           100           100     
+Missouri .......:    (NA)           100           100           100     
+North Carolina .:    (NA)            95            98            99     
+Oklahoma .......:    (NA)            90            95           100     
+South Carolina .:    (NA)           100           100           100     
+Tennessee ......:    (NA)           100           100           100     
+Texas ..........:    (NA)            87            90            96     
+Virginia .......:    (NA)           100           100           100     
+                :                                                       
+15 States ......:    (NA)            92            94            98     
+------------------------------------------------------------------------
+(NA) Not available.                                                     
+
+Cotton Harvested - Selected States
+[These 15 States harvested 99% of the 2025 cotton acreage]
+------------------------------------------------------------------------
+                :               Week ending               :             
+                :-----------------------------------------:             
+      State     : November 8, : November 1, : November 8, :  2021-2025  
+                :    2025     :    2026     :    2026     :   Average   
+------------------------------------------------------------------------
+                :                        percent                        
+                :                                                       
+Alabama ........:    (NA)           62            68            68      
+Arizona ........:    (NA)           53            55            55      
+Arkansas .......:    (NA)           92            97            92      
+California .....:    (NA)           55            60            66      
+Georgia ........:    (NA)           47            59            56      
+Kansas .........:    (NA)           30            39            44      
+Louisiana ......:    (NA)           91            96            94      
+Mississippi ....:    (NA)           95            97            88      
+Missouri .......:    (NA)           87            93            85      
+North Carolina .:    (NA)           41            56            58      
+Oklahoma .......:    (NA)           32            51            51      
+South Carolina .:    (NA)           43            60            53      
+Tennessee ......:    (NA)           80            90            75      
+Texas ..........:    (NA)           61            65            55      
+Virginia .......:    (NA)           48            63            63      
+                :                                                       
+15 States ......:    (NA)           63            71            63      
+------------------------------------------------------------------------
+(NA) Not available.                                                     
+
+Sorghum Harvested - Selected States
+[These 6 States harvested 100% of the 2025 sorghum acreage]
+------------------------------------------------------------------------
+                :               Week ending               :             
+                :-----------------------------------------:             
+      State     : November 8, : November 1, : November 8, :  2021-2025  
+                :    2025     :    2026     :    2026     :   Average   
+------------------------------------------------------------------------
+                :                        percent                        
+                :                                                       
+Colorado .......:    (NA)           65            80            83      
+Kansas .........:    (NA)           49            57            80      
+Nebraska .......:    (NA)           42            54            79      
+Oklahoma .......:    (NA)           71            76            78      
+South Dakota ...:    (NA)           63            68            86      
+Texas ..........:    (NA)           97            99            99      
+                :                                                       
+6 States .......:    (NA)           64            70            85      
+------------------------------------------------------------------------

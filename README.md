@@ -41,11 +41,22 @@ Mise à jour automatique :
 
 Pour lancer la mise à jour à la main : onglet **Actions** › **Actualiser le rapport COT** › **Run workflow**, ou `node scripts/update-cot.mjs` en local (Node 18 ou plus récent). Vérifier les calculs et le calendrier avec `node --test tests/cot-model.test.mjs`. Le calendrier officiel des publications 2026 est repris dans `cot-model.mjs` (`officialDelays`) ; au-delà, les reports fériés sont estimés. GitHub suspend les workflows planifiés d’un dépôt public après 60 jours sans activité : la page se complète alors depuis l’API de la CFTC, et le workflow se réactive depuis l’onglet **Actions**.
 
+## Rapports & publications
+
+La vue [Rapports & publications](https://elchapasso.github.io/PROJECT/#publications), dans la rubrique **Terminal**, donne une fiche par rapport suivi au calendrier : dernière publication (date et fichiers officiels), chiffres clés quand la source les publie en accès libre, prochaine date (heure de Casablanca, niveau de certitude) et les deux suivantes, liens vers la page officielle et les archives.
+
+Le même workflow que le calendrier (`update-calendar.yml`, toutes les deux heures) lit les dernières publications avec `scripts/reports_lib.py` et les écrit dans `calendar-feed.json` (clé `latest`) :
+
+- USDA : WASDE et rapports NASS sur [ESMIS](https://esmis.nal.usda.gov/) (fichier texte de la dernière publication) ; ventes à l’exportation sur l’API ouverte de la FAS (`api.fas.usda.gov`, clé `DEMO_KEY` ou secret `FAS_API_KEY` du dépôt, clé gratuite sur api.data.gov) ; inspections sur USDA Market News ;
+- CONAB : tableur du dernier relevé (production de soja) ; SEA India : dernière circulaire des importations ; ANEC : dernier relevé hebdomadaire ; CFTC : positions des fonds lues sur la branche `cot-live`.
+
+NOPA (données payantes), MPOB et la Bolsa de Cereales ne publient pas de chiffres exploitables en accès libre : leur fiche donne la date et le lien de la publication. Un fichier déjà lu n’est pas relu ; une source en panne garde sa dernière lecture. La page se relit toutes les 30 minutes tant qu’elle reste ouverte. Tests : `python3 -m unittest tests.test_reports` et `node --test tests/publications-model.test.mjs`.
+
 ## Calendrier des publications
 
 La vue [Calendrier](https://elchapasso.github.io/PROJECT/#calendar) réunit les annonces macroéconomiques de Forex Factory et les rapports agricoles du domaine. Chaque publication ouvre sa page officielle ; « Détails » donne la lecture de marché. Les heures sont affichées à Casablanca, avec l’heure de la source.
 
-Le workflow `.github/workflows/update-calendar.yml` exécute `scripts/update-calendar.py` trois fois par jour et publie `docs/terminal/calendar-feed.json` sur la branche `calendar-live`. Chaque date porte un niveau de certitude :
+Le workflow `.github/workflows/update-calendar.yml` exécute `scripts/update-calendar.py` toutes les deux heures et publie `docs/terminal/calendar-feed.json` sur la branche `calendar-live`. Chaque date porte un niveau de certitude :
 
 | Publication | Source lue | Niveau |
 |---|---|---|
