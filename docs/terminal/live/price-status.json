@@ -1,57 +1,52 @@
 {
  "schema": 1,
- "checkedAt": "2026-11-14T01:28:58Z",
+ "checkedAt": "2026-11-15T01:05:49Z",
  "dataChangedAt": "2026-11-14T01:28:58Z",
- "today": "2026-11-14",
+ "today": "2026-11-15",
  "sources": {
   "ecb": {
    "name": "BCE · EXR",
    "ok": true,
-   "seconds": 56.9,
-   "lastSuccess": "2026-11-14T01:28:58Z"
+   "seconds": 59.6,
+   "lastSuccess": "2026-11-15T01:05:49Z"
   },
   "fred": {
    "name": "FRED (EIA, FMI)",
    "ok": true,
    "seconds": 1.7,
-   "lastSuccess": "2026-11-14T01:28:58Z"
+   "lastSuccess": "2026-11-15T01:05:49Z"
   },
   "mpob": {
    "name": "MPOB",
    "ok": true,
-   "seconds": 1.4,
-   "lastSuccess": "2026-11-14T01:28:58Z"
+   "seconds": 3.1,
+   "lastSuccess": "2026-11-15T01:05:49Z"
   },
   "iposs": {
    "name": "IPOSS Data",
    "ok": true,
    "seconds": 0.5,
-   "lastSuccess": "2026-11-14T01:28:58Z"
+   "lastSuccess": "2026-11-15T01:05:49Z"
   },
   "anp": {
    "name": "ANP · Brésil",
    "ok": true,
-   "seconds": 4.7,
-   "lastSuccess": "2026-11-14T01:28:58Z"
+   "seconds": 3.7,
+   "lastSuccess": "2026-11-15T01:05:49Z"
   },
   "magyp": {
    "name": "Secretaría de Agricultura · MAGyP",
    "ok": true,
-   "seconds": 20.4,
-   "lastSuccess": "2026-11-14T01:28:58Z"
+   "seconds": 116.6,
+   "lastSuccess": "2026-11-15T01:05:49Z"
   }
  },
  "series": {
   "arSoyOil": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-13",
-     1191
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -62,13 +57,8 @@
   "arSoyMeal": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-13",
-     389
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -79,13 +69,8 @@
   "arSoySeed": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-13",
-     487
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -96,13 +81,8 @@
   "arSunOil": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-13",
-     1334
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -113,13 +93,8 @@
   "arSunMeal": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-13",
-     193
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -130,13 +105,8 @@
   "arSunSeed": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-13",
-     606
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -267,13 +237,8 @@
   "b100": {
    "source": "anp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-08",
-     5.68469
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
