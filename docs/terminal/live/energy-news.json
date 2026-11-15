@@ -1,8 +1,38 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-15T11:26:25Z",
-  "collectedAt": "2026-11-15T11:26:25Z",
+  "checkedAt": "2026-11-15T17:57:29Z",
+  "collectedAt": "2026-11-15T17:57:29Z",
   "articles": [
+    {
+      "title": "Saudi-Backed Forces in Yemen Retreat From Red Sea as Houthis Advance",
+      "url": "https://www.nytimes.com/2026/11/15/world/middleeast/saudi-houthis-yemen-red-sea.html",
+      "publishedAt": "2026-11-15T15:42:25Z",
+      "source": "The New York Times",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Iran Strikes Bahrain Base, Repeats Path to US Deal Remains Open",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPTXpxVVpLejY0TU5TcHFqQUFIY1YtTThlNkc3MFJ2OVkwM2JZZHcyeHF5WVkzVzdXX1IwZHlWeDBPcnkyeXdtQXkyWHpKdlU4aGl6SnA4cmVfMmxUWEhBMlR4MjluNkNUNUJieUxhSDlZZzVRYkxKdUxYY0RGNTJGWXB6NlpPb09jcWhOYS0wOE40QjdnZWRzTFNPOTZ1dEpuTERPWFcyZkxqcmwwcF80V2VfNA",
+      "publishedAt": "2026-11-15T14:29:06Z",
+      "source": "Bloomberg",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Three ships struck by drones in Black Sea near Romanian shipping canal, PM says",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOWEpyZzYwM3Y0YzMtU0h3LXZXb1RBQ00yS3lLZklVczJEOUVtcFU0MWYzRlNIMWxKN1RlMkZrSXZ3eFJkdjV4cTJuQVJBbVZob3JfYjdEbFotQ21iQzFQSHJYUE5VNUJDRDA0aV9OYy1qQTRVQ0EtOXJlSWQzWDV2VnpCRXdkQUpWSEhzUHVFWGstd2t4anhiMnZ4RHdVOHl4UjkxYjdWVmI0LTF3b2x1UTZJdGotUGU5bXkwVUF6N2IwY3g4S2lxbVNvM0kyZVBoTmR5YQ",
+      "publishedAt": "2026-11-15T12:49:16Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
     {
       "title": "Sunseed prices in russia decouple from global markets amid Black Sea export restrictions",
       "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPS2J4RkUtT1lqUUd2U0VlV1paRndzeVYyazVZY3pUOERtclBGUGpCMkdxQlpyRVNHMHRFVHhFb0FvdUVQQWVmUEhHaC1qeExjU0pXQ3E0SzdYZnFtQWdUZEpxa0FyZVNnbXpDcGdPN1VrOEhEU3h4V2lHSzlleXUtY2VYM1hQd3dBZUxzTnNwc0JUcVlQenpFQjg3UjExSWFMVVZiUDk3c0MxUVl6MG1FQWxHOWJkcG9XaWdsMXdsei1NZw",
@@ -200,6 +230,16 @@
         "shipping"
       ],
       "via": "rss"
+    },
+    {
+      "title": "Russia says Europeans can join Ukraine peace talks if they show 'readiness to contribute'",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNeUZLZHJfVTJLQ0YwVGJBUmRIOXFKNW5VTU90Ni02a1EyWmc0NlZzX3NEay1fcE9INk1tdzYtYzF3Z2xWTU44NV8zRHRoRnR1U2hJM0xXWVllcFhyZDc5TldPbXUtaXVlX0Z5V0syOXBsb0s1QnpOMl9UYktfM2JHejl3dmVmd3ItcVp5Q0I5VTZGakVJaXU2Z1JTb1RqNktScGxEVEV0ZWpjeVBJZDZQVEFSMkNyRWpLY292Q0ticw",
+      "publishedAt": "2026-11-13T13:11:45Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
     },
     {
       "title": "World oil market is returning to surplus as Gulf exports recover, IEA says",
@@ -518,7 +558,7 @@
     {
       "title": "Palm Oil Climbs as El Niño Threatens Indonesia’s 2027 Supplies",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNX1huR0FLNlV5eGpFM0c3azZPZE9yOVlKODZhRWJRSXp2MWtqRnpEdGwyU1BaUG83SFBpLXJPWEdVZFd0VDF1bWlNazNyYllqMXl2ZlhBeGhuZ3JxWEpXWlNsb1VxNEVRb2d4d3NyMDBWTjBLMUhnLWZLeGJNX1BHbmpYUEYtWnRfV2ZhUG5pMFRoZVBCQXNNZ0NCenplQWlXX0w2VzUxTzJiT2tOSjI0c2piUQ",
-      "publishedAt": "2026-11-12T04:07:00Z",
+      "publishedAt": "2026-11-12T04:07:35Z",
       "source": "Bloomberg",
       "topics": [
         "oils"
@@ -1102,16 +1142,6 @@
       "via": "google"
     },
     {
-      "title": "Trump says he is highly unlikely to order Iran strikes if talks progress",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxONWFPcDhpSjcwTEozRGRNdHFnWWpzb1pCYXIzdnVOUWhJQ3JvaGVTcjItLWNwNktieTVDcTk0WlpKbDRiMHB3Tkl0R19Mb1NUckllcVYwenlvNUV2QTBLcjlNdGtZdFI2NEJxbnhVbmZieXg2SnNTUXNPTFZVZjFnX2o3Q3lBbC1kRzlWcnNNU3VXdFNYNW5YTTJ4SFdBaDVfai1CRU50cm1VMHBkeWd4Zkc0Q2UxTlBJcmZ6TnJR",
-      "publishedAt": "2026-11-08T14:20:00Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "European wheat prices rise on weaker euro and Black Sea concerns",
       "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOVG4xNnpnUzlPTjNhMjJEaUtNUkozYjhtQVltaUZkTWZJcFhfVThqYUNkZjYtaERUd1F3dmJiOFJMOEVUcFZVRGo4bjdsRFBXMk1LWGE0Y1JpOHdTaGtpV1NhLWdBYVd6MFB5MG5tTHhSWTJEcG9xcmp0OXNoNHo5MDQ1RkJNQlZ2X0ZMMzVYN0szWEpDZ1ZKT0M4T1Z1eWctU0E",
       "publishedAt": "2026-11-08T06:27:10Z",
@@ -1487,7 +1517,7 @@
       "channels": [
         "google"
       ],
-      "articles": 34
+      "articles": 35
     },
     {
       "name": "Bloomberg",
@@ -1497,7 +1527,7 @@
         "google",
         "rss"
       ],
-      "articles": 24
+      "articles": 25
     },
     {
       "name": "The New York Times",
@@ -1507,7 +1537,7 @@
         "google",
         "rss"
       ],
-      "articles": 4
+      "articles": 5
     },
     {
       "name": "UkrAgroConsult",
