@@ -1,8 +1,9 @@
 """Actualise le calendrier des publications (Forex Factory et rapports agricoles) sans modifier les fichiers du site.
 
 Usage : python3 scripts/update-calendar.py chemin/vers/calendar-feed.json
-Chaque source est lue séparément : une source indisponible garde ses dates déjà connues et fait échouer le passage
-pour alerte, sans bloquer les autres. Les dates tirées d’une règle de publication sont recalculées à chaque passage.
+Chaque source est lue séparément : une source indisponible garde ses dates déjà connues sans bloquer les autres.
+Une panne passagère est signalée en avertissement ; le passage n’échoue, pour alerte, que si la source reste
+indisponible plus de ALERT_AFTER_HOURS heures. Les dates tirées d’une règle de publication sont recalculées à chaque passage.
 """
 import argparse
 import re
@@ -21,6 +22,8 @@ import os  # noqa: E402
 PAST_DAYS = 45
 AHEAD_DAYS = 150
 KEEP_DAYS = 100
+# Une source n’alerte (passage en échec, courriel GitHub) que si elle reste indisponible plus longtemps que ce délai.
+ALERT_AFTER_HOURS = 12
 
 
 def months(today):
@@ -214,6 +217,26 @@ def update_latest(current, today, fetch, reports):
     return latest, errors
 
 
+def source_name(error: str) -> str:
+    """Nom de la source d’un message « Source: détail » (« Forex Factory », « Rapports · wasde »…)."""
+    return error.split(": ", 1)[0]
+
+
+def failing_sources(known: dict, errors: list[str], now: str):
+    """Début de l’échec en cours pour chaque source en panne, et sources en panne depuis ALERT_AFTER_HOURS.
+
+    Une source qui répond de nouveau sort de la liste ; une panne passagère (limite de débit, serveur surchargé)
+    est signalée sans faire échouer le passage, puisque les dates déjà connues restent affichées."""
+    since = {}
+    for error in errors:
+        name = source_name(error)
+        since[name] = known.get(name, now)
+    limit = timedelta(hours=ALERT_AFTER_HOURS)
+    persistent = sorted(name for name, start in since.items()
+                        if datetime.fromisoformat(now) - datetime.fromisoformat(start) >= limit)
+    return since, persistent
+
+
 def main():
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument("snapshot", type=Path)
@@ -225,12 +248,17 @@ def main():
     result["latest"], latest_errors = update_latest(previous.get("latest", {}), today, lib.get, result["reports"])
     result["latestCheckedAt"] = now.isoformat(timespec="seconds")
     errors += latest_errors
+    result["failingSince"], persistent = failing_sources(previous.get("failingSince", {}), errors, result["latestCheckedAt"])
     for error in errors:
-        print(error)
+        name = source_name(error)
+        if name in persistent:
+            print(f"::error::{error} (indisponible depuis {result['failingSince'][name]})")
+        else:
+            print(f"::warning::{error} (passager : nouvel essai au prochain passage)")
     if not result.get("forexWeekStart") or not any(r["status"] == "official" for r in result["reports"]):
         raise SystemExit("Les sources du calendrier n’ont produit aucune donnée exploitable")
     args.snapshot.write_text(json.dumps(result, indent=1, ensure_ascii=False) + "\n")
-    if errors:
+    if persistent:
         raise SystemExit(1)
 
 
