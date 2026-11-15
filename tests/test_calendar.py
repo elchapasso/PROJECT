@@ -1,5 +1,6 @@
 """Tests du calendrier des publications : python3 -m unittest discover -s tests -p 'test_*.py'"""
 import importlib.util
+import io
 import json
 import sys
 import unittest
@@ -144,6 +145,70 @@ class Update(unittest.TestCase):
         result, errors = update_calendar.update(known, date(2026, 11, 13), "2026-11-13T12:00:00+00:00", self.fetcher())
         self.assertTrue(any(e.startswith("CONAB") for e in errors))
         self.assertIn("conab-2026-12-15", [r["id"] for r in result["reports"]])
+
+
+class Alerts(unittest.TestCase):
+    NOW = "2026-11-15T15:42:52+00:00"
+
+    def test_new_failure_is_only_a_warning(self):
+        since, persistent = update_calendar.failing_sources({}, ["Forex Factory: HTTP Error 429: Too Many Requests"], self.NOW)
+        self.assertEqual(since, {"Forex Factory": self.NOW})
+        self.assertEqual(persistent, [])
+
+    def test_long_failure_raises_an_alert(self):
+        known = {"Forex Factory": "2026-11-15T03:00:00+00:00", "NOPA": "2026-11-15T10:00:00+00:00"}
+        errors = ["Forex Factory: HTTP Error 429: Too Many Requests", "NOPA: HTTP Error 503", "Rapports · wasde: timed out"]
+        since, persistent = update_calendar.failing_sources(known, errors, self.NOW)
+        self.assertEqual(since["Forex Factory"], "2026-11-15T03:00:00+00:00")  # début de la panne conservé
+        self.assertEqual(since["Rapports · wasde"], self.NOW)
+        self.assertEqual(persistent, ["Forex Factory"])
+
+    def test_recovered_source_leaves_the_list(self):
+        since, persistent = update_calendar.failing_sources({"Forex Factory": "2026-11-14T00:00:00+00:00"}, [], self.NOW)
+        self.assertEqual((since, persistent), ({}, []))
+
+
+class Download(unittest.TestCase):
+    def setUp(self):
+        self.calls, self.waits = [], []
+        self.saved = lib.urlopen, lib.clock.sleep
+        lib.clock.sleep = self.waits.append
+
+    def tearDown(self):
+        lib.urlopen, lib.clock.sleep = self.saved
+
+    def answers(self, *codes):
+        class Response(io.BytesIO):
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *exc):
+                return False
+
+        def urlopen(request, timeout):
+            code = codes[len(self.calls)]
+            self.calls.append(request.full_url)
+            if code != 200:
+                raise HTTPError(request.full_url, code, "erreur", {"Retry-After": "5"} if code == 429 else {}, None)
+            return Response(b"[]")
+        lib.urlopen = urlopen
+
+    def test_rate_limit_is_retried(self):
+        self.answers(429, 200)
+        self.assertEqual(lib.get(lib.FOREX_JSON), "[]")
+        self.assertEqual((len(self.calls), self.waits), (2, [5.0]))
+
+    def test_gives_up_after_three_attempts(self):
+        self.answers(503, 503, 503)
+        with self.assertRaises(HTTPError):
+            lib.get(lib.FOREX_JSON)
+        self.assertEqual(self.waits, [15, 30])
+
+    def test_missing_page_is_not_retried(self):
+        self.answers(404)
+        with self.assertRaises(HTTPError):
+            lib.get(lib.FOREX_JSON)
+        self.assertEqual(len(self.calls), 1)
 
 
 if __name__ == "__main__":

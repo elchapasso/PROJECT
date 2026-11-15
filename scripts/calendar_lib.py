@@ -12,9 +12,11 @@ from __future__ import annotations
 import io
 import json
 import re
+import time as clock
 from datetime import date, datetime, time, timedelta
 from html import unescape
 from html.parser import HTMLParser
+from urllib.error import HTTPError
 from urllib.parse import urljoin
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree
@@ -59,10 +61,29 @@ MONTHS_EN = {m: i for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun
 MONTHS_PT = {m: i for i, m in enumerate(["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"], 1)}
 
 
+# Réponses passagères (limite de débit, serveur surchargé) : la lecture est retentée avant d’abandonner.
+TRANSIENT_STATUS = {429, 500, 502, 503, 504}
+ATTEMPTS = 3
+MAX_WAIT = 60
+
+
+def retry_wait(error: HTTPError, attempt: int) -> float:
+    """Délai avant la tentative suivante : Retry-After s’il est donné en secondes, sinon 15 s puis 30 s."""
+    header = (error.headers.get("Retry-After") if error.headers else None) or ""
+    return min(float(header) if header.strip().isdigit() else 15 * attempt, MAX_WAIT)
+
+
 def get(url: str, binary: bool = False):
     request = Request(url, headers={"User-Agent": USER_AGENT, "Accept-Language": "en,fr;q=0.8"})
-    with urlopen(request, timeout=30) as response:
-        data = response.read()
+    for attempt in range(1, ATTEMPTS + 1):
+        try:
+            with urlopen(request, timeout=30) as response:
+                data = response.read()
+            break
+        except HTTPError as error:
+            if error.code not in TRANSIENT_STATUS or attempt == ATTEMPTS:
+                raise
+            clock.sleep(retry_wait(error, attempt))
     return data if binary else data.decode("utf-8", errors="replace")
 
 
