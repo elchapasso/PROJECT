@@ -1,7 +1,7 @@
 {
- "forexWeekStart": "2026-11-08",
- "forexWeekEnd": "2026-11-14",
- "forexCheckedAt": "2026-11-14T22:32:39+00:00",
+ "forexWeekStart": "2026-11-15",
+ "forexWeekEnd": "2026-11-21",
+ "forexCheckedAt": "2026-11-15T06:47:43+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -83,6 +83,123 @@
    "forecast": "0.4%",
    "previous": "1.3%",
    "url": "https://www.forexfactory.com/calendar/86-us-ppi-mm"
+  },
+  {
+   "title": "Fed Chairman Warsh Speaks",
+   "country": "USD",
+   "date": "2026-11-16T12:00:00-05:00",
+   "impact": "High",
+   "forecast": "",
+   "previous": "",
+   "url": "https://www.forexfactory.com/calendar/129-us-fed-chairman-warsh-speaks"
+  },
+  {
+   "title": "Core Retail Sales m/m",
+   "country": "USD",
+   "date": "2026-11-17T08:30:00-05:00",
+   "impact": "High",
+   "forecast": "0.4%",
+   "previous": "0.9%",
+   "url": "https://www.forexfactory.com/calendar/112-us-core-retail-sales-mm"
+  },
+  {
+   "title": "Retail Sales m/m",
+   "country": "USD",
+   "date": "2026-11-17T08:30:00-05:00",
+   "impact": "High",
+   "forecast": "0.2%",
+   "previous": "0.8%",
+   "url": "https://www.forexfactory.com/calendar/102-us-retail-sales-mm"
+  },
+  {
+   "title": "ECB Financial Stability Review",
+   "country": "EUR",
+   "date": "2026-11-18T04:00:00-05:00",
+   "impact": "Medium",
+   "forecast": "",
+   "previous": "",
+   "url": "https://www.forexfactory.com/calendar/616-ez-ecb-financial-stability-review"
+  },
+  {
+   "title": "ECB President Lagarde Speaks",
+   "country": "EUR",
+   "date": "2026-11-18T09:25:00-05:00",
+   "impact": "Medium",
+   "forecast": "",
+   "previous": "",
+   "url": "https://www.forexfactory.com/calendar/832-ez-ecb-president-lagarde-speaks"
+  },
+  {
+   "title": "FOMC Meeting Minutes",
+   "country": "USD",
+   "date": "2026-11-18T14:00:00-05:00",
+   "impact": "High",
+   "forecast": "",
+   "previous": "",
+   "url": "https://www.forexfactory.com/calendar/304-us-fomc-meeting-minutes"
+  },
+  {
+   "title": "ECB President Lagarde Speaks",
+   "country": "EUR",
+   "date": "2026-11-19T08:30:00-05:00",
+   "impact": "Medium",
+   "forecast": "",
+   "previous": "",
+   "url": "https://www.forexfactory.com/calendar/832-ez-ecb-president-lagarde-speaks"
+  },
+  {
+   "title": "Philly Fed Manufacturing Index",
+   "country": "USD",
+   "date": "2026-11-19T08:30:00-05:00",
+   "impact": "Medium",
+   "forecast": "19.2",
+   "previous": "20.9",
+   "url": "https://www.forexfactory.com/calendar/325-us-philly-fed-manufacturing-index"
+  },
+  {
+   "title": "Unemployment Claims",
+   "country": "USD",
+   "date": "2026-11-19T08:30:00-05:00",
+   "impact": "Medium",
+   "forecast": "199K",
+   "previous": "200K",
+   "url": "https://www.forexfactory.com/calendar/11-us-unemployment-claims"
+  },
+  {
+   "title": "ECB President Lagarde Speaks",
+   "country": "EUR",
+   "date": "2026-11-20T03:15:00-05:00",
+   "impact": "Medium",
+   "forecast": "",
+   "previous": "",
+   "url": "https://www.forexfactory.com/calendar/832-ez-ecb-president-lagarde-speaks"
+  },
+  {
+   "title": "FOMC Member Waller Speaks",
+   "country": "USD",
+   "date": "2026-11-20T08:25:00-05:00",
+   "impact": "Medium",
+   "forecast": "",
+   "previous": "",
+   "url": "https://www.forexfactory.com/calendar/839-us-fomc-member-waller-speaks"
+  },
+  {
+   "title": "Revised UoM Consumer Sentiment",
+   "country": "USD",
+   "date": "2026-11-20T10:00:00-05:00",
+   "impact": "Medium",
+   "forecast": "52.1",
+   "previous": "51.0",
+   "url": "https://www.forexfactory.com/calendar/54-us-revised-uom-consumer-sentiment"
+  },
+  {
+   "title": "Revised UoM Inflation Expectations",
+   "country": "USD",
+   "date": "2026-11-20T10:00:00-05:00",
+   "impact": "Medium",
+   "forecast": "",
+   "previous": "4.3%",
+   "url": "https://www.forexfactory.com/calendar/238-us-revised-uom-inflation-expectations"
   }
  ],
  "nass": [
@@ -1754,7 +1871,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-14T22:32:39+00:00",
+ "reportsCheckedAt": "2026-11-15T06:47:43+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2144,5 +2261,5 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-14T22:32:39+00:00"
+ "latestCheckedAt": "2026-11-15T06:47:43+00:00"
 }
