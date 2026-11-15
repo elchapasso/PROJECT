@@ -1,8 +1,28 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-15T17:57:29Z",
-  "collectedAt": "2026-11-15T17:57:29Z",
+  "checkedAt": "2026-11-15T23:07:52Z",
+  "collectedAt": "2026-11-15T23:07:52Z",
   "articles": [
+    {
+      "title": "Anti-Houthi forces retreat in Yemen as Iran strikes Bahrain",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOdTFBcWR1YzJhai1UdGgzMHpvdm40VExxeXFqM0NtbU9YVmNSNXpNeDlXTGllRXFtczhIUzVsaFFWdVV5TGxESWdneGlXbER1Qlg2b2VhQ2lqMmxVaEd4U01nZmNXcFY2bmNhSTdIN0VycE84MWJDRXdZOGxMRGo0U1k1UjhiamFNQ1JIQmp1MUdxNlZGRm1UanBvaENxR3V2N25NdFVOaWpXX1E",
+      "publishedAt": "2026-11-15T18:59:19Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Three Ships Struck By Drones In Black Sea Near Romanian Shipping Canal",
+      "url": "https://gcaptain.com/three-ships-struck-by-drones-in-black-sea-near-romanian-shipping-canal/",
+      "publishedAt": "2026-11-15T17:31:34Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
     {
       "title": "Saudi-Backed Forces in Yemen Retreat From Red Sea as Houthis Advance",
       "url": "https://www.nytimes.com/2026/11/15/world/middleeast/saudi-houthis-yemen-red-sea.html",
@@ -19,6 +39,17 @@
       "publishedAt": "2026-11-15T14:29:06Z",
       "source": "Bloomberg",
       "topics": [
+        "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Gulf bourses slide as Hormuz tensions and houthi strikes rattle traders",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPZ1U5SnRYV0N6dE01QU1sOFNRWHR0WndCRG05bDl3UEhURE1jR01ZZ2p4dmFpb1llajB6QzdpRmp3WUZYSkhRRmhHT0tKY2hfWjN1b0U3UzJuUkZ3N3ZpWlU1Sk1pOWJvZ3cxcVVRVmhycW9ON2R1Um5nR3ZSQUtzTHE5aHlMb28wM2xyMzQtdnZHNUFfMWR4ZVZwN2pfc2RmcTRMTEtfY0NHbEh0dUo4N0g5UHNGTGJ3c1E",
+      "publishedAt": "2026-11-15T13:31:43Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping",
         "policy"
       ],
       "via": "google"
@@ -546,6 +577,16 @@
       "via": "google"
     },
     {
+      "title": "Ukraine could regain global leadership in sunflower oil exports",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPbVRLN1dTLWhETGdIOG5ZMm5jMGlBX0NCTEtTR08xR3lST0w1UGd6NkJ3bkZGYTNmaEo5U0ptR29TeXE0MmM2TDhuWXB5ZHM4ZEZXdjE0dndaRkMtM2xOWnhkRzEzU0p4bGc4ZV9Sb05IaG4taXVLemkzVndMakRBaS1hT05DOVVSb1BXakpiQklvM2swYlZLU01VaVJqRmpu",
+      "publishedAt": "2026-11-12T09:44:31Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Wizz Air’s Profit Tumbles by 67% on Rising Jet Fuel Prices",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQSFN2RHFmNHFVTzd5dzFjc3kxY05wdWRZMWpzeGM3ZEtSYnFRenR6RFBRcmg0TXFOU2FwUWlPbU40bU44WF9FVHBGYWJhdk5GeVpDZDBBWl8xWlNfMWgyTHlteDZsZE9KTUh1ZHBEMHRaaDM2aTlXb0FYQ0tNV2FiZHh4dUwwbndxQlBsX215RVkwX3pfa2c5dWt1QmkyNE1sdzJNeWpMb0o3SWFT",
       "publishedAt": "2026-11-12T08:50:48Z",
@@ -848,6 +889,16 @@
       "via": "google"
     },
     {
+      "title": "Adnoc Gas Sees LNG Exports Up This Quarter as Hormuz Flows Rise",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPSW9jbHgtbVdTOUxMeUQ0c1Nab0NsTWhPQ2s5azN3ZElhUGlDTXFUUTJ0Y3ktaXktR1A2Ri05YTV4RkRhMWN1ZWZhdjNvWEdYZDJXc0F6cFhDMDViazR5QnlPMXJVWXJZcWFYTWJlOUx2UDFCeUUwQlM3eUtHZUU5U1NVU3g1aE1SMi00a2pIQ25uOUpTT3JNSUUxdHdCdllxNzNYMFh5LXVKbnhQSExXRWthUVo",
+      "publishedAt": "2026-11-10T14:36:50Z",
+      "source": "Bloomberg",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Italy says EU nations failed to commit to Red Sea security",
       "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQWXhYTjBLNXBVeWw2Y051RklaUDRGYVNpNmM4cUE4VnR2WkFpZnhrZnItNjVYcXhuTEtrWHJ4YndHV1YtRUdpZENDTnRqOVZuWWU4dU1xYUxlNWRYOXRhbmZ1eUNONnJrN1dfbjlJTThxQlpfODBSOS1wbzRjUFhFUFhLdThyQ1k1VDRWMHZJNWlDeUFoS2VCcTV3",
       "publishedAt": "2026-11-10T14:31:43Z",
@@ -1111,31 +1162,10 @@
       "via": "google"
     },
     {
-      "title": "Iraq has reached understandings with US to allow oil exports through Hormuz, minister says",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQcVp2dDBwekFJVEtlai1lemtaZVNTb2FaallsZHhyT2FHTlZHdmpwY3B0SU9HRUpQV2JQQ3E0NWo0VEJpS3B4N1JCTGhkTUhJTHFYUUY3ZkttWmc2RUl1V2dicHdLODBaUEFQSmdySXdHcTJ2VGpIeUlOTlZZd05LZ29wYVdWajhrMzVYa1ZJQl9FTnNjZjFQRmNGc1FoV1dmOFZyOWYzTE1pRndvaGxzSTg1S1B1Z1lxSDZNM3hZWEZmZw",
-      "publishedAt": "2026-11-08T19:26:09Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping",
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Joint Maritime Information Center Update 112 to JMIC Advisory Note: 01 March – 08 November 2026",
       "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQeE0yWXMwRzBmQ1Vod29SWDFqODltRGV4LWZ6TS1paFdFWUVHeFVVNGV0RDJEZHBqSTRGUnotRmY0emNReFVtSWVvZERMcDYzMl9ZUXl6RmRwaDVTRHpvZ1Nzb1FiVlBjYXZMT1MwNzBEd2ZlTnZ1Z3BoTXhPUy1xZ0dEd3k2a0k",
       "publishedAt": "2026-11-08T17:12:46Z",
       "source": "UKMTO",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Russia says hit power substations in Ukraine and three ships in Black Sea",
-      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPN3I3aVRlN2tQellIUkRxQVR6VFhUWkRfZlJQUWsyR3g0S0w2Wlg1cUt6SW9fc081c1hfcTdPSTJwZzJIWUVtQXN1SVJiRm9zTWJKYjM2RTV3TWVBa001Y1RmeVhEOHVnb3pCSUt5T3BxU19VeDhXNGdmNkg0SlNHUWszcHI3X1hsbjJiWFN5MXlEcHdVM21wNTJrRHlVeTFQZl9CYlRwMmY",
-      "publishedAt": "2026-11-08T16:02:52Z",
-      "source": "Reuters",
       "topics": [
         "shipping"
       ],
@@ -1408,17 +1438,6 @@
       "via": "google"
     },
     {
-      "title": "Global sunflower oil exports to decline amid Black Sea supply disruptions",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPb3NpZ3g0ZFRuN080a1dEVzRKNFptNWpHY0RPR0lJX1E4Z3VjYVlqU3lydldXOU1Xc2thellqY1ZLV3hYZXNSMGh5OFU1bnBkWnoyN3FSSXhKVEdoX1U2dXFxMGdDc1ZlcjJ3YjgzdFE0eVo5d3E3M0lFSHZEQXNCclEwRVc0Q00xZW9oc2pidEtrWXd6SE03TDMtTFVmTjdSaDdqTXd4RHZKem11MEE",
-      "publishedAt": "2026-10-24T07:00:00Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "shipping",
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Joint Maritime Information Center Update 108 to JMIC Advisory Note: 01 March – 25 October 2026",
       "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOd0pGWnRiaUlubkhaYkVkWVFVRkQ2UWpadGtrSlBmM1BENXdDZUdsZkUxOXFJX0lQOUdrQ25JV2I2U2JzMmUyck94SFlibHQzYjhhSmd1OThaZUdTWjY0YzZJdTdVUnM4UVpRWGtVUDdCckxHT1BLVFJ5VTlHMFUybS0zV1doUkJULTFLaWNn",
       "publishedAt": "2026-10-23T07:00:00Z",
@@ -1489,20 +1508,20 @@
       "via": "google"
     },
     {
-      "title": "Joint Maritime Information Center Update 106 to JMIC Advisory Note: 01 March – 18 October 2026",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNbUI0UXZiMjBXWnZmemZ4UUhRVVpla05OTG1IcGdRWEVhR2RmY1NBeS0yZVdxVDNmbGdfcGxBT0RONkNvY0k4ZHNYVGJ3aTFOdnU4LVVHNnN6aG9rc2NTbmRxUmhQT0JLS09kV0ltZnVyQ1ZwUnY5UFhtMk5LbmlxNGRudzVNdzNqVEY4Y1lyYUw1dmJhM3lGSjNiLUVSeHRrcGhKaWcyaS1uN3JDRTdSN1RSQUZRZlpXTzAtdmxvaVdXTlNE",
+      "title": "Iran Urges US To Accept Proposal To Reopen Strait Of Hormuz",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQSVd6ZUhmNnpsS1RJQkRodVhMNDhNQUpjUkVZeU5YeHpSWHBjNHdpUWU5ak5kY0c1Z2dYQkt3Q01SSXVjOTdUNGJhOFg2aFlOSnBOTGozbDFNaGFwWW9za3ktLVRKc09mcHNUT0xINFNsbkptQ1VZMnVRZUJGZ3FWV2tnNG1ZLUhD",
       "publishedAt": "2026-10-18T07:00:00Z",
-      "source": "UKMTO",
+      "source": "gCaptain",
       "topics": [
         "shipping"
       ],
       "via": "google"
     },
     {
-      "title": "The Strait of Hormuz crisis and the Middle East",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPQktaRFNObzQtc3lyQU9NcVMtZlU1c2MydlpieGwyc185b216UEZ3WHNZRklSM1g2Y3N4dWV2VDdqWG11djNEM0RCcC14blRJcS04eUlHTVBzQzJlUUcyRXlZWmxNOHpVeXBqNnNlTkRVYjNTWm5TR0RoWU1wUXV4VmZ1bjB6QVNwV284eFMwajFwVTRJMzl3ZDB3",
-      "publishedAt": "2026-10-16T19:45:22Z",
-      "source": "AIE",
+      "title": "Joint Maritime Information Center Update 106 to JMIC Advisory Note: 01 March – 18 October 2026",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNbUI0UXZiMjBXWnZmemZ4UUhRVVpla05OTG1IcGdRWEVhR2RmY1NBeS0yZVdxVDNmbGdfcGxBT0RONkNvY0k4ZHNYVGJ3aTFOdnU4LVVHNnN6aG9rc2NTbmRxUmhQT0JLS09kV0ltZnVyQ1ZwUnY5UFhtMk5LbmlxNGRudzVNdzNqVEY4Y1lyYUw1dmJhM3lGSjNiLUVSeHRrcGhKaWcyaS1uN3JDRTdSN1RSQUZRZlpXTzAtdmxvaVdXTlNE",
+      "publishedAt": "2026-10-18T07:00:00Z",
+      "source": "UKMTO",
       "topics": [
         "shipping"
       ],
@@ -1527,7 +1546,7 @@
         "google",
         "rss"
       ],
-      "articles": 25
+      "articles": 26
     },
     {
       "name": "The New York Times",
@@ -1574,7 +1593,7 @@
       "channels": [
         "google"
       ],
-      "articles": 2
+      "articles": 1
     },
     {
       "name": "gCaptain",
@@ -1584,7 +1603,7 @@
         "google",
         "rss"
       ],
-      "articles": 22
+      "articles": 24
     },
     {
       "name": "UKMTO",
