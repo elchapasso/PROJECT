@@ -1,8 +1,99 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-16T11:59:13Z",
-  "collectedAt": "2026-11-16T11:59:13Z",
+  "checkedAt": "2026-11-16T22:28:26Z",
+  "collectedAt": "2026-11-16T22:28:26Z",
   "articles": [
+    {
+      "title": "Hedge Funds Slash Bullish Bets on US Diesel to January Low",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-16/hedge-funds-slash-bullish-bets-on-us-diesel-to-january-low",
+      "publishedAt": "2026-11-16T21:37:49Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Winter Nightmare Looms Early in Ukraine as Russia Strikes Relentlessly",
+      "url": "https://www.nytimes.com/2026/11/16/world/europe/russia-ukraine-winter-campaign.html",
+      "publishedAt": "2026-11-16T19:43:53Z",
+      "source": "The New York Times",
+      "topics": [
+        "policy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Armed Skiff Approaches Tanker Far Out in Arabian Sea",
+      "url": "https://gcaptain.com/armed-skiff-approaches-tanker-far-out-in-arabian-sea/",
+      "publishedAt": "2026-11-16T19:05:57Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "The Oil Market Is Brimming With Crude Despite Tanker Attacks",
+      "url": "https://gcaptain.com/the-oil-market-is-brimming-with-crude-despite-tanker-attacks/",
+      "publishedAt": "2026-11-16T18:45:55Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping",
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Suez Canal Return Won’t Resolve Global Shipping Congestion, DHL Warns",
+      "url": "https://gcaptain.com/suez-canal-return-wont-resolve-global-shipping-congestion-dhl-warns/",
+      "publishedAt": "2026-11-16T18:42:24Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "OPEC officials meet to discuss oil production capacity review",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQVFlINkNORzd1R3llMVkzOVBmZWhsZEUwU0tjSDFXd2tNMWdBTzRiaFM4VnI2alRwYmxFS3Q3SjRUeG4yc3FkeUIweXBQTjZreHZka1E0eUhQZVhyOFBsZkRhU2xRMk9yVVB6ZHh1TmxlRmhQWGIxWVFTblJtV3hxUktRc3V3Tm9aNkVlTm90Qm0yQUZwbjQ0NlRHcFNvQ2I5RDdReHphcGRWNXFpaTJz",
+      "publishedAt": "2026-11-16T17:14:13Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Drone strike behind sinking of cargo ship off Bulgaria's coast, maritime security sources say",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNUUs2NE56Z2hUTXR1OHUtM3RLaUFRdkYzeS1IdkZaV1BfbkM2N29XamhOa2lhUkM2TUxNTkdNY0JyQWQ1LVJ1SlhnbEZHZ1RxSjZOeGp3WXljM0xkd3VyekJHUldSYmd2YlY3NUJjWHpFUkRDc3ZrRXpwN3hha1RrbFRVMjBMdHZVeVJVdzVUdWg4OThDWjJYSXFCUWdsclFLWHVCZFJTSnlEODg",
+      "publishedAt": "2026-11-16T16:12:19Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Maersk, Hapag-Lloyd Expand Suez Canal Return With Three More Gemini Services",
+      "url": "https://gcaptain.com/maersk-hapag-lloyd-expand-suez-canal-return-with-three-more-gemini-services/",
+      "publishedAt": "2026-11-16T15:45:05Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Malaysian palm oil prices fall on high inventories despite expected production decline",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQa1FNVExYdUQyR1NzQ2I0TG94SUxEWEsyQXdseHhnV2FtZVZpbWNab3NhWDkyY2FjdkI2UDVtNmdmUEZWcjItQVlRSWJ1Z05oUjlXeEI4ZVdjbi1IanVrTFRoQUpiZUFRc05jd2ZxMktnMjBuVkdlR2d3NnlERTBlVFA4RnBHT2hIZWNwVmZSMmRxRUdwVHFZRGZyQ1hoX3Y5aW1UTXpXZHNwX3N3TmIxZWNobDZhdlZScEpacUxFQQ",
+      "publishedAt": "2026-11-16T13:36:16Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
     {
       "title": "Goldman Warns Oil Market Faces ‘Sizable’ 2027 Surplus",
       "url": "https://www.bloomberg.com/news/videos/2026-11-16/goldman-warns-oil-market-faces-sizable-2027-surplus-video",
@@ -20,16 +111,6 @@
       "source": "UkrAgroConsult",
       "topics": [
         "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Cargo ship sinking in Black Sea off Bulgaria, says transport ministry",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNUUs2NE56Z2hUTXR1OHUtM3RLaUFRdkYzeS1IdkZaV1BfbkM2N29XamhOa2lhUkM2TUxNTkdNY0JyQWQ1LVJ1SlhnbEZHZ1RxSjZOeGp3WXljM0xkd3VyekJHUldSYmd2YlY3NUJjWHpFUkRDc3ZrRXpwN3hha1RrbFRVMjBMdHZVeVJVdzVUdWg4OThDWjJYSXFCUWdsclFLWHVCZFJTSnlEODg",
-      "publishedAt": "2026-11-16T10:13:29Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
       ],
       "via": "google"
     },
@@ -203,17 +284,6 @@
       "source": "gCaptain",
       "topics": [
         "shipping"
-      ],
-      "via": "rss"
-    },
-    {
-      "title": "The Oil Market Is Brimming With Crude Despite Tanker Attacks",
-      "url": "https://www.bloomberg.com/news/articles/2026-11-14/the-oil-market-is-brimming-with-crude-despite-tanker-attacks",
-      "publishedAt": "2026-11-14T08:30:00Z",
-      "source": "Bloomberg",
-      "topics": [
-        "shipping",
-        "energy"
       ],
       "via": "rss"
     },
@@ -433,6 +503,16 @@
       "via": "google"
     },
     {
+      "title": "Joint Maritime Information Center Update 114 to JMIC Advisory Note: 01 March – 15 November 2026",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPSlNkNEtaR2hrSEFicG4xV3FGd3VwSlQwS0o3SXRnaWdJZG9VX1AxaER4T1FWZ2hqRWI1enoyZTEzd3A0anB4aFplaUtRSUx3VjFGS3Jzcm1uRTVYUC15OVBta0N5RVNVRmFTWlFQemhaU0toY3FaNXUxREhBRktnOE45M1JhV1U",
+      "publishedAt": "2026-11-13T08:00:00Z",
+      "source": "UKMTO",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Le pétrole termine une deuxième semaine de baisse sur fond d’excédent d’offre",
       "originalTitle": "Oil prices set for second straight weekly drop on signs of growing supply surplus",
       "source": "Reuters",
@@ -583,6 +663,16 @@
       "source": "UkrAgroConsult",
       "topics": [
         "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "UK sanctions Russia's Slavneft in latest move against oil producers",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPcFM0cE41cGZrNzlMNjVpS25GaTZmNURHUHFDeXVocjd4NFI5OVU5N2dzS3NwdWdiTG54QkFlVGgzVTFBSUlpVGZhLXVqTnlUUllCSnVuN2M3VmJnTXhUTEx3YzYwQVhfb3FGX01leTRpdFM4azV5ZEtEVnpXb1NpT3NEbzROb2FoUjlvZnlPWU1wNnl3WUtYRUtLNnQ5TFd4TmRTV0taRmUyOFV5M2N3VndRSHVOQQ",
+      "publishedAt": "2026-11-12T14:29:24Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
       ],
       "via": "google"
     },
@@ -1149,16 +1239,6 @@
       "via": "google"
     },
     {
-      "title": "Occidental beats profit estimates as higher oil prices offset output decline",
-      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNS3d3eDJFNXE0T2pOMy1XYWt4VEF3NXdJVzNRQXZvWnZKeUU3Z21WNld4YS05dDhTX0tnSUhaRHVyY3dZaXBJdVlBazJMekE2ekRHVDB2SS16a0pPVFV3cVVQWmJ5cnI2QlBfQndnaDFuam1MVVpaZFdpMElYWWwzeFVINm1wQi1PdDRqaXFCYmprQVVPN09hTlVySThLS183RGVhdzRQdUQ",
-      "publishedAt": "2026-11-09T22:50:44Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Oil Tanker Rates Drop, Making Long-Haul Crude Trades Attractive",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQNHFBSy16dTJJcEdyTURSdjJxcnJYVnFGcVNLYXQ0SzBhZW5HVFAzZlRyOElFX3hiNE9IMWFkc3hlakN4NWNYU1BWNFAyLXZ5YUdxWUE5Q0xGQ01PaEVlSmJESzZ3Y2kyOGxmY2N3TDhUOU1iUlJsRWpuVWlzaWh4bnJ1dU5KRnM5REJiUXJtdUdiRzVaZDZJdTVwV3RHbWVtcHp3akRtcVIzMDF3OE1sRDNYRQ",
       "publishedAt": "2026-11-09T21:07:17Z",
@@ -1187,16 +1267,6 @@
       "topics": [
         "oils",
         "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Trump says he will hold off on fresh Iran strikes for now",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOX0pwQmJtMVdmZDY2NVhWalgxSHZ0d0NvUzJ4cldzTHFQUmdHSERzZENUOXljYldMbFpRa3J5d0VhbkNtZGJVM1paVkFWZ1ZHZTFOQlNkNm5xZ2tkc0FYQkxvQkU3RHc5cm9lcjFXSzdCNlE5QjNXNnRoZktjUHhGRTRGOXZYbWZtUXlTaFBXN096VFZrTDBQQll5ZDJaZDlPdUlueEtHaGMyQ1ZnWHdxQll3UWI3WHdYZmc",
-      "publishedAt": "2026-11-09T11:16:00Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
       ],
       "via": "google"
     },
@@ -1353,20 +1423,20 @@
       "via": "rss"
     },
     {
-      "title": "Iran Says It Would Reopen Strait of Hormuz in 2 Days as Part of U.S. Deal",
-      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQVGZTblZsbjZNdDJDekcwZEpYeXN6V0k5dnl2RnRzNzJuQkNsb2UwYzlyRUFzbXpTX01VREdNRnVGcG5UNDBzeE1VRWdTUkhJTFF3dWlzZjBFZVNHLThzQ08zRmVGVnB5Qkt0V084UzUtbzc0SC1QbmNuV09UaTgwQmVMUlJGTlFka2Yw",
+      "title": "Joint Maritime Information Center Update 111 to JMIC Advisory Note: 01 March – 05 November 2026",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNNDZWd0lZWGtjb0dKSmdvWUhBMWNTVnI0ZmZwQnVwY3BQMGsxQ2dSa0k0ZEJuMkpsLXVfSFRjbXZKbUF3R01VMXpUM2dLdnA0QXhTejdCTUxKSS00ZlBMUURvaDRWc2ljOTJWRlMxbHRKVHNXZ2pyajBSUVdrdUVtOGNrZkZMR2ZpNTg3bFM1S0paQWUzZXlMbTYzSDFLOW1QWTJ5VDdGeUVoeHZ6eGllQzhkZWZ2dWhq",
       "publishedAt": "2026-11-03T08:00:00Z",
-      "source": "The New York Times",
+      "source": "UKMTO",
       "topics": [
         "shipping"
       ],
       "via": "google"
     },
     {
-      "title": "Joint Maritime Information Center Update 111 to JMIC Advisory Note: 01 March – 05 November 2026",
-      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNNDZWd0lZWGtjb0dKSmdvWUhBMWNTVnI0ZmZwQnVwY3BQMGsxQ2dSa0k0ZEJuMkpsLXVfSFRjbXZKbUF3R01VMXpUM2dLdnA0QXhTejdCTUxKSS00ZlBMUURvaDRWc2ljOTJWRlMxbHRKVHNXZ2pyajBSUVdrdUVtOGNrZkZMR2ZpNTg3bFM1S0paQWUzZXlMbTYzSDFLOW1QWTJ5VDdGeUVoeHZ6eGllQzhkZWZ2dWhq",
+      "title": "Iran Says It Would Reopen Strait of Hormuz in 2 Days as Part of U.S. Deal",
+      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQVGZTblZsbjZNdDJDekcwZEpYeXN6V0k5dnl2RnRzNzJuQkNsb2UwYzlyRUFzbXpTX01VREdNRnVGcG5UNDBzeE1VRWdTUkhJTFF3dWlzZjBFZVNHLThzQ08zRmVGVnB5Qkt0V084UzUtbzc0SC1QbmNuV09UaTgwQmVMUlJGTlFka2Yw",
       "publishedAt": "2026-11-03T08:00:00Z",
-      "source": "UKMTO",
+      "source": "The New York Times",
       "topics": [
         "shipping"
       ],
@@ -1421,18 +1491,6 @@
       "source": "UkrAgroConsult",
       "topics": [
         "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Malaysia considers temporary suspension of crude palm oil export duty amid record stocks",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxONDFZNjYyd3otdjdodGQ3WlNCT0VyeEh0dGFtU1UtMGV0SmNOa2FIMXhZSjVLMjdnRmJneVFQQkxkcy1PRzNtQVZ6M2JoRGNVRlBrMHEyQUJzSWcydkp0ZWJ5MC1samRyMUJyOTRXOG41LXpDRUNXd3hIWFhhTVJBMlpTY3o2Q2JKdEtJcEFPakp3S3lRLXFyS0w1OVRaWUxaRUtCYXRjM1RVb0pzZkpxc2NCZWxGU0VSUnZLNG5hQ1JlQQ",
-      "publishedAt": "2026-10-29T07:00:00Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "oils",
-        "energy",
-        "policy"
       ],
       "via": "google"
     },
@@ -1600,9 +1658,8 @@
     {
       "name": "Bloomberg",
       "available": true,
-      "partial": false,
+      "partial": true,
       "channels": [
-        "google",
         "rss"
       ],
       "articles": 31
@@ -1610,12 +1667,11 @@
     {
       "name": "The New York Times",
       "available": true,
-      "partial": false,
+      "partial": true,
       "channels": [
-        "google",
         "rss"
       ],
-      "articles": 5
+      "articles": 6
     },
     {
       "name": "UkrAgroConsult",
@@ -1662,7 +1718,7 @@
         "google",
         "rss"
       ],
-      "articles": 25
+      "articles": 29
     },
     {
       "name": "UKMTO",
@@ -1671,7 +1727,7 @@
       "channels": [
         "google"
       ],
-      "articles": 9
+      "articles": 10
     },
     {
       "name": "Fed",
