@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T15:47:07.035Z",
+  "updatedAt": "2026-11-16T07:09:48.869Z",
   "series": {
     "vlsfo-gib": {
       "points": [
@@ -42,6 +42,12 @@
           "value": 882.5,
           "source": "Ship & Bunker",
           "url": "https://shipandbunker.com/prices"
+        },
+        {
+          "date": "2026-11-16",
+          "value": 839,
+          "source": "ENGINE",
+          "url": "https://www.engine.online/news/singapores-hsfo-price-falls-sharply-vlsfo-b30-vlsfo-and-lsmgo-dip-over-the-weekend-8413"
         }
       ]
     },
@@ -175,6 +181,66 @@
     }
   },
   "quotes": [
+    {
+      "id": "2026-10-28-amsud-inde-ouest-42kt",
+      "date": "2026-10-28",
+      "from": "Amérique du Sud (côte est), huile de soja",
+      "to": "Inde (côte ouest)",
+      "size": "42 kt",
+      "low": 89,
+      "high": 93,
+      "previous": "inchangé vs semaine 41 ; lot de 32 kt 5-6 USD/t plus cher",
+      "source": "ETI (Energy Transit Intelligence)",
+      "url": "https://etint.substack.com/p/eti-votwo-week-43-2026"
+    },
+    {
+      "id": "2026-10-28-detroits-inde-est",
+      "date": "2026-10-28",
+      "from": "Détroits (Malaisie / Indonésie)",
+      "to": "Inde (côte est)",
+      "size": "n. d.",
+      "low": 48,
+      "high": 50,
+      "previous": "+2 USD/t vs semaine 41",
+      "source": "ETI (Energy Transit Intelligence)",
+      "url": "https://etint.substack.com/p/eti-votwo-week-43-2026"
+    },
+    {
+      "id": "2026-10-28-detroits-inde-ouest-pakistan",
+      "date": "2026-10-28",
+      "from": "Détroits (Malaisie / Indonésie)",
+      "to": "Inde (côte ouest) et Pakistan",
+      "size": "n. d.",
+      "low": 62,
+      "high": 64,
+      "previous": "+2 USD/t vs semaine 41",
+      "source": "ETI (Energy Transit Intelligence)",
+      "url": "https://etint.substack.com/p/eti-votwo-week-43-2026"
+    },
+    {
+      "id": "2026-10-28-detroits-rotterdam-10kt",
+      "date": "2026-10-28",
+      "from": "Détroits (Malaisie / Indonésie)",
+      "to": "Rotterdam",
+      "size": "10 kt",
+      "low": 145,
+      "high": 150,
+      "previous": "inchangé vs semaine 41",
+      "source": "ETI (Energy Transit Intelligence)",
+      "url": "https://etint.substack.com/p/eti-votwo-week-43-2026"
+    },
+    {
+      "id": "2026-10-28-detroits-rotterdam-40kt",
+      "date": "2026-10-28",
+      "from": "Détroits (Malaisie / Indonésie)",
+      "to": "Rotterdam",
+      "size": "40 kt",
+      "low": 107,
+      "high": 112,
+      "previous": "inchangé vs semaine 41",
+      "source": "ETI (Energy Transit Intelligence)",
+      "url": "https://etint.substack.com/p/eti-votwo-week-43-2026"
+    },
     {
       "id": "2026-05-11-argentine-inde",
       "date": "2026-05-11",
