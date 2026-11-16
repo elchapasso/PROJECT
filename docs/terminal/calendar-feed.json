@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-15",
  "forexWeekEnd": "2026-11-21",
- "forexCheckedAt": "2026-11-15T21:05:55+00:00",
+ "forexCheckedAt": "2026-11-16T02:14:50+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -173,15 +173,6 @@
    "forecast": "",
    "previous": "",
    "url": "https://www.forexfactory.com/calendar/832-ez-ecb-president-lagarde-speaks"
-  },
-  {
-   "title": "FOMC Member Waller Speaks",
-   "country": "USD",
-   "date": "2026-11-20T08:25:00-05:00",
-   "impact": "Medium",
-   "forecast": "",
-   "previous": "",
-   "url": "https://www.forexfactory.com/calendar/839-us-fomc-member-waller-speaks"
   },
   {
    "title": "Revised UoM Consumer Sentiment",
@@ -1871,7 +1862,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-15T21:05:55+00:00",
+ "reportsCheckedAt": "2026-11-16T02:14:50+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2261,6 +2252,6 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-15T21:05:55+00:00",
+ "latestCheckedAt": "2026-11-16T02:14:50+00:00",
  "failingSince": {}
 }
