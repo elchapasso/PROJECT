@@ -1,8 +1,78 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-16T03:01:42Z",
-  "collectedAt": "2026-11-16T03:01:42Z",
+  "checkedAt": "2026-11-16T11:59:13Z",
+  "collectedAt": "2026-11-16T11:59:13Z",
   "articles": [
+    {
+      "title": "Goldman Warns Oil Market Faces ‘Sizable’ 2027 Surplus",
+      "url": "https://www.bloomberg.com/news/videos/2026-11-16/goldman-warns-oil-market-faces-sizable-2027-surplus-video",
+      "publishedAt": "2026-11-16T11:23:24Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Palm oil prices in China fall 2.2% despite sharp drop in Malaysian production",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNSlBldmRvNEJpYnNpTndxbExDcVJiMUVJUzdRTC1zVG1fUjdBM1BwYVdwaVFrM2t4Q0dwa3BhUFdwU01jaExmQ2VYXzN1Z1MxYktHYmZzSGx0TXJYOHZPUVhua3hlelIxZG1NSWJzTExZVjI2Z3dmR243RUhtTHRSSnNLMlgtRFU0NmhJdm1UMGhsQkhFUFl2bWF1cVktZ1RHWk9ZMkVlelV1ZWNuVW9BR2x3",
+      "publishedAt": "2026-11-16T10:26:04Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Cargo ship sinking in Black Sea off Bulgaria, says transport ministry",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNUUs2NE56Z2hUTXR1OHUtM3RLaUFRdkYzeS1IdkZaV1BfbkM2N29XamhOa2lhUkM2TUxNTkdNY0JyQWQ1LVJ1SlhnbEZHZ1RxSjZOeGp3WXljM0xkd3VyekJHUldSYmd2YlY3NUJjWHpFUkRDc3ZrRXpwN3hha1RrbFRVMjBMdHZVeVJVdzVUdWg4OThDWjJYSXFCUWdsclFLWHVCZFJTSnlEODg",
+      "publishedAt": "2026-11-16T10:13:29Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Diesel Falls Below $6 a Gallon, Easing Key Inflationary Pressure",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPTXVZTFNXYWhOWE1yWF9QVjBNMUlCU3ZTNTVqUjUzaXNYTVh2TnFrQUN2MXk1UHZReDFTa3lfSTlseXJNNTNfV2NCSjlRVXpKTDY5NDFXZjhvbTB0OHBtajhQSDdhY3dSSW1kdzJvcG85ZTdUWFhQRDU2c0IyLVQ3NmtFMUFONVRVanF1dTVJWmJIb3dlaUY2dm4zSkd1NDVCaGxnaUNBM1k1dUlLVUdYR2NEQQ",
+      "publishedAt": "2026-11-16T09:17:11Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Brazil raises soybean oil export forecast by 29% to 1.8 mln tons",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPSDJVby1wM09EZGpUQ21maHczR0MxTmZaSVpfaW1zV09SM3pDdFdrLXJvMGpxclRIa2lPaG1HRWNfaVg3OV93YllRLU1yUEVtc2NwMW4yTWFNdXlZQzllVkNidGp2Q0FJTjk5eHdMVWhuWXFXWGc0eHN6dHBNVUZaZ2VRaUQ2SzdQcF9ZOHl5bkwtU3JpdlozZXZabnJ0RWp3",
+      "publishedAt": "2026-11-16T09:01:18Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Goldman Sachs Predicts ‘Sizeable Surplus’ for Oil Market in 2027",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOcGlrVWdaUnhwcDBydlg3aUV4Vk4zQk9BelRKUC1tajFKVkV1VFhYbGF1aFNvT0Q1bXRYQXRJTFJXckVveTgyRWp3bllkUXpyMXpyX2RUYUt3aWpRN002Q0hvUnBNSHBBQXFxXy01X3ZyUEVLQnhEbFdSZHNQUTFQMWRaYU5PTzNpcml2RHJ1WDNaNzd1NWVCSVduZjlVaFBKYTRWcXJPYmxRZGNaQlB0NG5LUQ",
+      "publishedAt": "2026-11-16T07:45:00Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "India's wholesale inflation accelerates to 12.29% in October on fuel price surge",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPOTZCYmwwajlmSXIyWWx2WXhZaE81VjdHTS1vc0wtdUpBNG01WnFDdVF1bXlmNXNwalQ2N2lKT1hXODMydGtUY25fcDgxQW5jVnFTVUNXQ09NN2twb1hiNE9kVHowRUZhenVIY2dDUzhPTkFaTzBqaUF5emNlaHdLc3JEcWhrTlBuemFxR01HNUNJV1FjVnlxYTJ0bWpIcks0YUFv",
+      "publishedAt": "2026-11-16T06:37:00Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
     {
       "title": "Steering Problem On Tanker Caused Collision In New Orleans",
       "url": "https://gcaptain.com/steering-problem-on-tanker-caused-collision-in-new-orleans/",
@@ -22,6 +92,16 @@
         "energy"
       ],
       "via": "rss"
+    },
+    {
+      "title": "Steering problem on tanker caused collision in New Orleans, NTSB says",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPbXBEMnhoWXdETmQ4d2JPM3Q2OUw0MDByaUV2di1Nc3ZVcmJHaGJ6bnNLN1lsc3gzeG5hSGlEYnBKaHJOajU2SzlrRXp4UUZtdU5Dc0I1TlNmYlFxWThaUFZvRk11UVJSY2YyakpJSFFGNWlVbmZrMDNXTXkyLXM2MWlydzN1YWwydGc5dmM3WVZjeFVVZDlIVGR2aGFEMzZrUkE3QnRXU1hibDlpU2RWQkkwTkRyZw",
+      "publishedAt": "2026-11-15T21:23:00Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
     },
     {
       "title": "Anti-Houthi forces retreat in Yemen as Iran strikes Bahrain",
@@ -1121,36 +1201,6 @@
       "via": "google"
     },
     {
-      "title": "Iran defends two-day proposal for peace talks after US rejects conditions",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQQTF0eFRFOUtERE9BUEU4Sy13ZnpyT0pVdUo1aHRYY3ctUThfVzFOTlFmdlJvS1NYOExsalBydmhoQkpVOXRaVC1TTjZ0cDFVRWtnS2x1MGthR2RiQnQ3WC10emY1ck8yTUxZVU5LVHVmUmdkM2k0S2NEbWdKOEk5QnE3WGhBazc3aEpZaFdBMS1jVUJoOE81QXJHLU1HbGJMLXROZUlXa245Z0NIS05FSA",
-      "publishedAt": "2026-11-09T09:19:43Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "COMMENTARY: Middle East oil price war heralds post-conflict glut",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOWWdUbTZOMkxOdnRzOHBPdHRWSFBmNG1jZnFISWQ0MVFaWEc1MUlkTjRuNlhSQzdMQWQxaXQzYTBOTGtBd0NkYnRNTFNHaDlNZ0xwVU1JODVSMFdLZnREeGttWWlEdmE3ZnJwODdnMG5iQnJwRlZBbDZvOEU5UjczRC1UcGo5S0p4U01KZWMzcVBjNEdnWW42clRaR1U5QXpoMHh1bnE0T2phU1I1OEpUVFJJUHN2LThoMFd3WGJR",
-      "publishedAt": "2026-11-09T09:04:24Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Iran says no unauthorised vessels transited Strait of Hormuz overnight after navigation aids destroyed",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPNFkyaVpFU2VKQUVYc0xKQ1NmMFhuUmhEZXpCRFF5Ym5HaVpwSENiYk9QaWJhd1BtcU9sSEVyeGVoZ1RxUS1UamJHbEJOTUJwQjhzWUhrYko5RmZCMXJZQ04wZ2tyeFJZTGNFdUotNURHOXpDQTdGdXlMMEpaU3pWT0lvVzNPVkV1aHRIdjVYTE5yM2dwdVpDM0pQdV9TTDhTLXRQTlgxRkVlVFZtU0haT29fdEpyZw",
-      "publishedAt": "2026-11-09T04:23:00Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Russia Says It Hit Three Cargo Ships In Black Sea",
       "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE5mVHAzOXkyRzZyTm01bG95bkp4d1ljeDFaVkNMNjR0VDR2SzkweWRnQ29fM3R0NjJxbEZXV0VKdDdUZVhrOUw1QkczOTNjZTh6M09BbEVnSTVoTGxZU3JraXFlbnRnLW8yLXpZckE2QTQzZGg0RmRZWF9HUQ",
       "publishedAt": "2026-11-09T03:48:47Z",
@@ -1355,6 +1405,16 @@
       "via": "google"
     },
     {
+      "title": "DP World CEO Warns Hormuz Rerouting Will Feed Through to Prices",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOUXRUNndHWTFtcHlTcVFrR3ZpMGVvQURFRF9XUmxIb0cwRHFRdzNPcFRTVUhyXzc4NzYwd3lITEUySU1Ld1pvSUxFbnNhY3FxNzNSX1NnVm9JdzZ4cENoeFNXYkFkbGpVYVdPN2RBeUFUbVVPUk03NWpGSG9Ob2drTkZLUmNLSFRkQXBxTkVXNjYyc0VOVENndmJKSU9SczNvMndjNkMzanVBMnA5aWFuYWlWbFE",
+      "publishedAt": "2026-10-30T07:00:00Z",
+      "source": "Bloomberg",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Brazil’s soybean oil production could reach 13.5 mln tons, while exports decline",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOSXFERDhaeUh4UnZrV01hMTNFNGF2cm4wcmtmR2ZCVHVhdzRiY19Tcl94REtmTlFoejc3dUNoaTlmVVJpRktkeE9XTEtiY21Fd1lBaFIwSHczaFdYZXJ0WTdETW9aaU9ELWFiUmRzRElkRTZDM0duN21xMWlFeTYteHFhNmNTRG1acnhZR0Y2NGExZjJYYmhvX2wtN2ZEdkFhWE52b1dHbWVlRWEzc0lxZDhXLWE",
       "publishedAt": "2026-10-29T14:24:24Z",
@@ -1385,16 +1445,6 @@
         "fx"
       ],
       "via": "rss"
-    },
-    {
-      "title": "Malaysian palm oil futures fall for third consecutive session despite strong exports",
-      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNclk0RnpxQ21LbGFMUGtna3VMOWZnTG5sQmEzN1k1S05VNEh0bWJpd3g2RDFZbkFzMEtqb01mLUcyaEJlUi1QeDJ1OUNCODV6aHg2VkJWV29kU0pJcy0tM2Z2VUc3Rm94TkcwX0ZMaTd6ZmdXTzYyR2o3OEJHUjNCVDRPOTdBNDdpQUw2Z3JjaFVDWHd2R3NZRjVkM0E0blJUNjd0ZmNNTVpIcDdBdUNjeFIycTFHMzlBZjVWeg",
-      "publishedAt": "2026-10-28T12:32:02Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
     },
     {
       "title": "Joint Maritime Information Center JMIC Advisory Note: 016-26 | October 28, 2026",
@@ -1443,17 +1493,6 @@
       "source": "Trading Economics",
       "topics": [
         "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Palm oil prices rise on strong Malaysian exports and higher crude oil prices",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNOUkxLUM5Wm1Mc3ZBb3ZFOUFnOG5CeGlSdTlKOWZuMTNvSHZZZWw5T2VFMEdtdDh5TkZMZEM1Q21XdVNPRU5IdEg1YmpUWTJsamVxaTMzbmxzWkZSYzVSXzNlY1BEQXJlMkFiak1lckFJY3FqaUJuVHAzMXdrdnlYc29BTlhGVmNpcTB0YW96cWVhdktTR3lzWHUtenVYaXhJTDBzOUdBVnExcjlxZ0lrVHJR",
-      "publishedAt": "2026-10-24T13:59:16Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "oils",
-        "energy"
       ],
       "via": "google"
     },
@@ -1566,7 +1605,7 @@
         "google",
         "rss"
       ],
-      "articles": 27
+      "articles": 31
     },
     {
       "name": "The New York Times",
