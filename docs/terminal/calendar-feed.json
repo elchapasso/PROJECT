@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-15",
  "forexWeekEnd": "2026-11-21",
- "forexCheckedAt": "2026-11-16T09:53:43+00:00",
+ "forexCheckedAt": "2026-11-16T20:33:46+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -1871,7 +1871,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-16T09:53:43+00:00",
+ "reportsCheckedAt": "2026-11-16T20:33:46+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2158,8 +2158,8 @@
    ]
   },
   "usda-inspections": {
-   "date": "2026-11-09",
-   "title": "Semaine close le 05/11",
+   "date": "2026-11-16",
+   "title": "Semaine close le 12/11",
    "url": "https://www.ams.usda.gov/mnreports/wa_gr101.txt",
    "documents": [
     {
@@ -2169,12 +2169,12 @@
    ],
    "figures": [
     {
-     "label": "Soja inspecté · semaine au 05/11",
-     "value": 1896.151,
+     "label": "Soja inspecté · semaine au 12/11",
+     "value": 1708.296,
      "unit": "kt",
-     "previous": 2511.973,
+     "previous": 1914.145,
      "previousLabel": "semaine précédente",
-     "note": "campagne : 14,15 Mt"
+     "note": "campagne : 15,87 Mt"
     }
    ]
   },
@@ -2209,13 +2209,13 @@
    ]
   },
   "sea": {
-   "date": "2026-10-15",
-   "title": "Vegetable Oil Imports – Nov.’25 – Sept.’ 26",
+   "date": "2026-11-16",
+   "title": "Vegetable Oil Imports – Nov.’25 – Oct.’ 26",
    "url": "https://seaofindia.com/import-of-veg-oils-november-2025/",
    "documents": [
     {
      "label": "Circulaire (PDF)",
-     "url": "https://seaofindia.com/wp-content/uploads/2026/09/EC-162-dt.-15.10.2026-Import-of-Veg-Oil-Nov.25-Sept.26.pdf"
+     "url": "https://seaofindia.com/wp-content/uploads/2026/10/EC-187-dt.-16.11.2026-Import-of-Veg.-Oils-Nov.25-Oct.26.pdf"
     }
    ],
    "figures": []
@@ -2261,8 +2261,6 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-16T09:53:43+00:00",
- "failingSince": {
-  "WASDE": "2026-11-16T09:53:43+00:00"
- }
+ "latestCheckedAt": "2026-11-16T20:33:46+00:00",
+ "failingSince": {}
 }
