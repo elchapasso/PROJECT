@@ -1,8 +1,28 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-15T23:07:52Z",
-  "collectedAt": "2026-11-15T23:07:52Z",
+  "checkedAt": "2026-11-16T03:01:42Z",
+  "collectedAt": "2026-11-16T03:01:42Z",
   "articles": [
+    {
+      "title": "Steering Problem On Tanker Caused Collision In New Orleans",
+      "url": "https://gcaptain.com/steering-problem-on-tanker-caused-collision-in-new-orleans/",
+      "publishedAt": "2026-11-16T00:26:49Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Latest Oil Market News and Analysis for Nov. 16",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-15/latest-oil-market-news-and-analysis-for-nov-16",
+      "publishedAt": "2026-11-15T23:03:50Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
     {
       "title": "Anti-Houthi forces retreat in Yemen as Iran strikes Bahrain",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOdTFBcWR1YzJhai1UdGgzMHpvdm40VExxeXFqM0NtbU9YVmNSNXpNeDlXTGllRXFtczhIUzVsaFFWdVV5TGxESWdneGlXbER1Qlg2b2VhQ2lqMmxVaEd4U01nZmNXcFY2bmNhSTdIN0VycE84MWJDRXdZOGxMRGo0U1k1UjhiamFNQ1JIQmp1MUdxNlZGRm1UanBvaENxR3V2N25NdFVOaWpXX1E",
@@ -1546,7 +1566,7 @@
         "google",
         "rss"
       ],
-      "articles": 26
+      "articles": 27
     },
     {
       "name": "The New York Times",
@@ -1603,7 +1623,7 @@
         "google",
         "rss"
       ],
-      "articles": 24
+      "articles": 25
     },
     {
       "name": "UKMTO",
