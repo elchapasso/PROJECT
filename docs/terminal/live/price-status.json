@@ -1,44 +1,44 @@
 {
  "schema": 1,
- "checkedAt": "2026-11-15T01:05:49Z",
+ "checkedAt": "2026-11-16T01:06:20Z",
  "dataChangedAt": "2026-11-14T01:28:58Z",
- "today": "2026-11-15",
+ "today": "2026-11-16",
  "sources": {
   "ecb": {
    "name": "BCE · EXR",
    "ok": true,
-   "seconds": 59.6,
-   "lastSuccess": "2026-11-15T01:05:49Z"
+   "seconds": 8.9,
+   "lastSuccess": "2026-11-16T01:06:20Z"
   },
   "fred": {
    "name": "FRED (EIA, FMI)",
    "ok": true,
-   "seconds": 1.7,
-   "lastSuccess": "2026-11-15T01:05:49Z"
+   "seconds": 1.8,
+   "lastSuccess": "2026-11-16T01:06:20Z"
   },
   "mpob": {
    "name": "MPOB",
    "ok": true,
-   "seconds": 3.1,
-   "lastSuccess": "2026-11-15T01:05:49Z"
+   "seconds": 1.4,
+   "lastSuccess": "2026-11-16T01:06:20Z"
   },
   "iposs": {
    "name": "IPOSS Data",
    "ok": true,
-   "seconds": 0.5,
-   "lastSuccess": "2026-11-15T01:05:49Z"
+   "seconds": 0.3,
+   "lastSuccess": "2026-11-16T01:06:20Z"
   },
   "anp": {
    "name": "ANP · Brésil",
    "ok": true,
-   "seconds": 3.7,
-   "lastSuccess": "2026-11-15T01:05:49Z"
+   "seconds": 5.4,
+   "lastSuccess": "2026-11-16T01:06:20Z"
   },
   "magyp": {
    "name": "Secretaría de Agricultura · MAGyP",
    "ok": true,
-   "seconds": 116.6,
-   "lastSuccess": "2026-11-15T01:05:49Z"
+   "seconds": 17.4,
+   "lastSuccess": "2026-11-16T01:06:20Z"
   }
  },
  "series": {
