@@ -57,6 +57,15 @@ Le flux est rédigé chaque matin et publié sur la branche `news-live` (`docs/t
 
 La page [Fret](https://elchapasso.github.io/PROJECT/#fret) (rubrique **Terminal**) estime le fret vrac liquide vers Casablanca depuis l’Argentine (18-24 kt), l’Ukraine, la Russie et la Bulgarie (6-8 kt), la Colombie, l’Indonésie et la Malaisie (4 kt, via Suez ou le Cap). L’estimation se recalcule avec les relevés publics des soutes VLSFO et des indices tankers Baltic, mis à jour chaque jour sur la branche `news-live` (`docs/terminal/freight-feed.json`). La page montre aussi la décomposition du coût, l’historique, les cotations publiques, les actualités du fret et les dépêches maritimes, et permet de caler le modèle avec ses propres cotations courtier (enregistrées dans le navigateur seulement). Méthode, format et procédure : [FRET.md](FRET.md). Contrôle : `node scripts/update-freight.mjs <fichier>` et `node --test tests/freight-model.test.mjs`.
 
+## Palme
+
+La page [Palme](https://elchapasso.github.io/PROJECT/#palm) ne garde que les bilans mensuels officiels :
+
+- Malaisie · MPOB : stocks, production de CPO et exportations depuis janvier 2024 (`mpobHistory`) ;
+- Indonésie · GAPKI : production CPO et PKO, consommation intérieure (alimentaire, oléochimie, biodiesel), exportations et stocks depuis janvier 2024 (`gapkiHistory`), avec export CSV.
+
+Les deux séries sont dans `docs/terminal/palm-history.js`, en tonnes pour le MPOB et en milliers de tonnes pour GAPKI. GAPKI publie environ deux mois après la fin du mois ; chaque ligne retient la dernière révision publiée et renvoie au communiqué du mois. GAPKI n’a pas publié de bilan mensuel pour novembre et décembre 2025 : ces mois restent vides et la page affiche leur cumul tiré du bilan annuel (`gapkiAnnual`). Pour ajouter un mois, reprendre le communiqué sur [gapki.id](https://gapki.id/en/news/category/press-release/), corriger le mois précédent s’il a été révisé, et mettre à jour `gapkiRelease`.
+
 ## Rapports & publications
 
 La vue [Rapports & publications](https://elchapasso.github.io/PROJECT/#publications), dans la rubrique **Terminal**, donne une fiche par rapport suivi au calendrier : dernière publication (date et fichiers officiels), chiffres clés quand la source les publie en accès libre, prochaine date (heure de Casablanca, niveau de certitude) et les deux suivantes, liens vers la page officielle et les archives.

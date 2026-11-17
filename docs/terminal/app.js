@@ -1,7 +1,7 @@
 
 import {AS_OF,labels,products,origins,groups,sources,seedEvents,seedCalendar,seedBalances,seedPrices,metrics,periodTypes,pairs,scoreWeights} from './data.js?v=20261114-news';
 import {emptyStore,byDate,unique,eventKey,balanceKey,quoteKey,pct,addDays,monthShift,stamp,allows,sentiment,align,corrReturns,balancesWithRatios,safeURL,validEvent,validBalance,validQuote,validCalendar,parseStore,previousPeriod,referenceDate} from './model.js?v=20261114-news';
-import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources} from './palm-history.js?v=20261110-mpob';
+import {mpobHistory,mpobHistorySources,seaHistory,seaHistorySources,gapkiHistory,gapkiAnnual,gapkiRelease,gapkiHistorySources} from './palm-history.js?v=20261117-gapki';
 import {biofuelReleaseDate,biofuelSeries,biofuelNativeSeries} from './biofuels.js';
 import {renderBiofuelPolicy,bindBiofuelPolicy} from './biofuel-policy-view.mjs?v=20261114-biofuel-observations-v2';
 import {chinaSoybeanImports,chinaSoybeanSources} from './demand-history.js?v=20261111-market-close';
@@ -563,6 +563,56 @@ function mpobHistoryPanel(){
     monthlyHistory('Malaisie · Historique MPOB',mpobHistory,names,
     mpobHistorySources);
 }
+// Indonésie · bilans mensuels GAPKI (milliers de tonnes). null = chiffre non publié par GAPKI.
+const gapkiRows=()=>gapkiHistory.map(([date,cpo,pko,food,oleo,biodiesel,consumption,exports,stock,url])=>
+  ({date,cpo,pko,production:Number.isFinite(cpo)&&Number.isFinite(pko)?cpo+pko:null,food,oleo,biodiesel,consumption,exports,stock,url}));
+const gapkiColumns=[['cpo','Production CPO'],['pko','Production PKO'],['production','Production CPO + PKO'],['food','Consommation alimentaire'],
+  ['oleo','Oléochimie'],['biodiesel','Biodiesel'],['consumption','Consommation intérieure'],['exports','Exportations'],['stock','Stocks fin de mois']];
+function gapkiMissingMonths(rows,year){
+  // Mois sans bilan publié : cumul tiré du bilan annuel moins les mois publiés.
+  const annual=gapkiAnnual[year],months=rows.filter(r=>r.date.startsWith(year));
+  const gaps=months.filter(r=>!Number.isFinite(r.exports));
+  if(!annual||!gaps.length)return null;
+  const rest=key=>annual[key]-months.reduce((sum,r)=>sum+(r[key]??0),0);
+  return {months:gaps.map(r=>r.date),production:rest('cpo')+rest('pko'),consumption:rest('consumption'),exports:rest('exports'),stock:annual.stock};
+}
+function gapkiHistoryPanel(){
+  const rows=gapkiRows(),latest=rows.at(-1),previous=rows.at(-2);
+  const cards=[['stock','Stocks fin de mois'],['production','Production CPO + PKO'],['exports','Exportations'],['consumption','Consommation intérieure']];
+  const change=key=>{
+    if(Number.isFinite(previous[key]))return sign(pct(latest[key],previous[key]),2)+' % m/m';
+    const base=rows.slice(0,-1).findLast(r=>Number.isFinite(r[key]));
+    return base?sign(pct(latest[key],base[key]),2)+' % vs '+displayPeriod(base.date,'month')+' · '+displayPeriod(previous.date,'month')+' non publié':'';
+  };
+  const extra={consumption:'dont biodiesel '+num(latest.biodiesel/1000,3)+' Mt'};
+  const line=(key,label,color)=>({label,color,points:rows.map(r=>({date:r.date,value:r[key]}))});
+  const tooltips=p=>num(p.value,0)+' kt';
+  const period=displayPeriod(rows[0].date,'month')+' – '+displayPeriod(latest.date,'month');
+  const gap=gapkiMissingMonths(rows,'2025');
+  const gapNote=gap?' GAPKI n’a pas publié de bilan mensuel pour '+gap.months.map(d=>displayPeriod(d,'month')).join(' et ')+
+    ' : le bilan annuel donne pour ces deux mois une production cumulée de '+num(gap.production,0)+' kt, une consommation de '+num(gap.consumption,0)+
+    ' kt, des exportations de '+num(gap.exports,0)+' kt et un stock de fin d’année de '+num(gap.stock,0)+' kt.':'';
+  const missingStocks=rows.filter(r=>!Number.isFinite(r.stock)&&Number.isFinite(r.exports)).map(r=>displayPeriod(r.date,'month'));
+  const stockNote=missingStocks.length?' Stock de fin de mois non publié pour '+missingStocks.join(' et ')+'.':'';
+  const tableRows=rows.slice().reverse().map(r=>[e(displayPeriod(r.date,'month')),...gapkiColumns.map(([key])=>valueCell(r[key],'',0)),link(r.url,'GAPKI')]);
+  return section('Indonésie · Bilan GAPKI · '+displayPeriod(gapkiRelease.period,'month'),'Publié le '+formatDate(gapkiRelease.published)+' · association indonésienne des producteurs d’huile de palme')+
+    '<div class="grid4">'+cards.map(([key,name])=>panel('<h3>'+e(name)+'</h3><p>'+num(latest[key]/1000,3)+' Mt</p><p class="small">'+e(change(key))+'</p>'+
+      (extra[key]?'<p class="small">'+e(extra[key])+'</p>':''))).join('')+'</div>'+
+    section('Indonésie · Historique GAPKI',period+' · '+rows.length+' mois · milliers de tonnes',action('export-gapki-history',icon('download')+' Télécharger le CSV','ghost'))+
+    panel(chart([line('stock','Stocks fin de mois',colors[0]),line('production','Production CPO + PKO',colors[1]),line('exports','Exportations',colors[2]),line('consumption','Consommation intérieure',colors[3])],
+      {unit:'kt',height:222,label:'Indonésie · Historique GAPKI en milliers de tonnes',tooltips,sourceLinks:gapkiHistorySources})+
+      '<h3>Consommation intérieure par usage</h3>'+
+      chart([line('biodiesel','Biodiesel',colors[0]),line('food','Alimentaire',colors[1]),line('oleo','Oléochimie',colors[2])],
+      {unit:'kt',height:180,label:'Indonésie · Consommation intérieure par usage en milliers de tonnes',tooltips,sourceLinks:gapkiHistorySources})+
+      '<p class="analysis-text">'+e('GAPKI publie son bilan environ deux mois après la fin du mois. Les chiffres reprennent la dernière révision publiée (communiqué du mois suivant ou bilan annuel). '+
+        'Production : huile de palme brute (CPO) et huile de palmiste (PKO). Exportations : CPO, produits raffinés, palmiste, oléochimie et biodiesel.'+gapNote+stockNote)+'</p>'+
+      '<details><summary class="small">Voir les chiffres mensuels en milliers de tonnes</summary>'+
+      table(['Mois',...gapkiColumns.map(([,label])=>label),'Communiqué'],tableRows)+'</details>');
+}
+function renderPalm(){
+  return head('Complexes de marché','Huile de palme','Bilans mensuels officiels de la Malaisie (MPOB) et de l’Indonésie (GAPKI) : production, exportations, consommation et stocks.')+
+    mpobHistoryPanel()+gapkiHistoryPanel();
+}
 const seasonalColors=colors.slice(1);
 function seasonalHistory(title,years,sourceLinks,note='',digits=4,chartOptions={}){
   const latest=years.at(-1);
@@ -919,7 +969,6 @@ function renderComplex(key){
       '<div class="toolbar">'+btnSeg('sunOrigin',sunOrigins,origin,'Origine du tournesol')+'</div>'+sunHistoryPanels():
       '<div class="toolbar"><label>Origine analysée</label>'+select('originTab',Object.fromEntries(group.origins.map(k=>[k,origins[k]])),origin,'Toutes les origines')+' <span class="small">'+e(selectedOrigin)+'</span></div>')+
     '<div class="grid4">'+group.channels.map(([title,desc])=>panel('<span class="eyebrow">'+e(title)+'</span><p class="analysis-text">'+e(desc)+'</p>')).join('')+'</div>'+
-    (key==='palm'?mpobHistoryPanel():'')+
     section('Lecture pour les prix','Données liées au périmètre sélectionné')+panel(events.length?'<p class="analysis-text">'+e(events[0].transmission)+'</p><p class="small">'+e(events[0].caveat)+'</p>':empty('Impact à confirmer. Aucun événement sourcé dans cette sélection.'))+
     section('Fondamentaux','Dernière publication disponible par indicateur')+panel(table(['Produit / origine','Indicateur','Période de référence','Valeur','Source / statut'],last.slice(0,28).map(r=>[e(products[r.product])+'<small>'+e(origins[r.origin])+'</small>',e(metrics[r.metric]),e(displayPeriod(r.period,r.periodType))+'<small>'+e(periodTypes[r.periodType])+'</small>',valueCell(r.value,r.unit,3),link(r.url,r.source)+'<small>'+e(formatDate(r.date)+' · '+labels.status[r.status])+'</small>'])))+
     section('Prix et repères','Cours datés. Une série manquante reste indiquée comme non disponible.')+panel(table(['Série','Dernier repère','Variation','Source'],marketSeries.map(id=>{
@@ -1189,7 +1238,7 @@ function renderCross(){
 
 
 const liveNewsFeed='https://raw.githubusercontent.com/elchapasso/PROJECT/news-live/docs/terminal/news-feed.json';
-const newsPages=['overview','soy','sun','palm','sources','fret'];
+const newsPages=['overview','soy','sun','sources','fret'];
 async function refreshNews(){
   // La branche news-live porte la veille du jour ; la copie intégrée au site sert de secours. La plus récente l’emporte.
   const read=async url=>{
@@ -1398,7 +1447,7 @@ const energyUi={e,icon,chart,link,num,formatDate,colors,series,spreadPrices,spre
 const freightUi={e,icon,chart,link,num,formatDate,colors,section,panel,empty,csv,toast:text=>toast(text),newsItem,
   freightEvents:()=>fullEvents().filter(r=>r.product==='freight'&&r.date>=addDays(newsToday(),-60)&&r.date<=newsToday()).sort(byRecent)};
 const pageRender={
-  overview:renderMarket,soy:()=>renderComplex('soy'),sun:()=>renderComplex('sun'),palm:()=>renderComplex('palm'),
+  overview:renderMarket,soy:()=>renderComplex('soy'),sun:()=>renderComplex('sun'),palm:renderPalm,
   publications:renderPublications,macro:()=>renderEnergyNews(energyUi),fret:()=>renderFreight(freightUi),
   balances:renderBalances,demand:renderDemand,cot:renderCot,cross:renderCross,'cbot-arg':renderCbotArg,biofuels:renderBiofuels,calendar:renderCalendar,sources:renderSources,
 };
@@ -1616,6 +1665,10 @@ const controlActions={
         [forecast&&date>=forecast?'Prévision USDA':'',note].filter(Boolean).join(' · ')]));
     csv('olea_tournesol_'+state.sunFamily+'_'+state.sunOrigin+'_'+view+'.csv',
       [['Période','Indicateur','Volume','Unité','Source','URL','Périmètre / statut'],...rows]);
+  },
+  'export-gapki-history':()=>{
+    csv('olea_palme_gapki_indonesie.csv',[['Mois',...gapkiColumns.map(([,label])=>label+' (kt)'),'Source'],
+      ...gapkiRows().map(r=>[r.date,...gapkiColumns.map(([key])=>Number.isFinite(r[key])?String(r[key]):''),r.url])]);
   },
   'export-eia-biofuel':el=>{
     const oil=el.dataset.oil,ref=eiaBiofuelCharts[oil];

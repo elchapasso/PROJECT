@@ -85,3 +85,60 @@ export const seaHistorySources=[
   ['SEA India EC-162','https://seaofindia.com/wp-content/uploads/2026/09/EC-162-dt.-15.10.2026-Import-of-Veg-Oil-Nov.25-Sept.26.pdf'],
 ];
 
+
+// Indonésie · bilans mensuels GAPKI, en milliers de tonnes (ribu ton), dernière révision publiée.
+// Colonnes : mois, production CPO, production PKO, consommation alimentaire, oléochimie, biodiesel,
+// consommation intérieure totale, exportations totales, stock fin de mois, communiqué du mois.
+// null : chiffre non publié. GAPKI n’a pas diffusé de bilan mensuel pour novembre et décembre 2025
+// (seul le bilan annuel donne le stock de fin 2025), ni le stock de fin janvier et de fin juillet 2026.
+const gapkiNews='https://gapki.id/news/';
+export const gapkiHistory=[
+  ["2024-01",4232,402,800,187,957,1942,2810,3032,gapkiNews+'2024/04/01/ekspor-tertinggi-ke-uni-eropa-naik-1463-persen-pada-januari-2024/'],
+  ["2024-02",3883,369,769,175,920,1864,2166,3264,gapkiNews+'2024/05/01/produksi-ekspor-turun-stok-naik/'],
+  ["2024-03",4102,391,827,187,884,1898,2560,3300,gapkiNews+'2024/05/29/produksi-ekspor-hingga-konsumsi-cpo-meningkat-begini-kata-gapki/'],
+  ["2024-04",4115,393,862,188,842,1893,2178,3741,gapkiNews+'2024/06/24/ekspor-turun-stok-meningkat/'],
+  ["2024-05",3885,368,849,187,907,1943,1966,4092,gapkiNews+'2024/07/30/produksi-ekspor-turun-stok-meningkat/'],
+  ["2024-06",3691,354,850,192,898,1940,3385,2818,gapkiNews+'2024/08/29/ekspor-melonjak-stok-turun/'],
+  ["2024-07",3617,344,810,185,1035,2030,2241,2513,gapkiNews+'2024/09/25/produksi-turun-stok-kembali-turun/'],
+  ["2024-08",3986,391,898,183,979,2060,2384,2450,gapkiNews+'2024/10/22/produksi-ekspor-naik-stok-berkurang/'],
+  ["2024-09",4021,394,865,190,934,1989,2260,2622,gapkiNews+'2024/11/21/ekspor-menurun-stok-bertambah/'],
+  ["2024-10",4423,420,845,186,1052,2083,2888,2502,gapkiNews+'2024/12/24/produksi-dan-ekspor-naik-stok-berkurang/'],
+  ["2024-11",4333,412,869,167,994,2030,2637,2583,gapkiNews+'2025/01/24/produksi-dan-ekspor-turun-stok-meningkat/'],
+  ["2024-12",3876,361,961,180,1046,2187,2060,2577,'https://gapki.id/en/news/2025/03/07/production-drops-indonesian-market-shrinks/'],
+  ["2025-01",3828,356,758,197,916,1871,1960,2936,gapkiNews+'2025/03/27/konsumsi-ekspor-turun-stok-naik/'],
+  ["2025-02",3789,354,854,175,1003,2032,2803,2249,gapkiNews+'2025/04/30/sawit-februari-2025-produksi-turun-ekspor-melejit/'],
+  ["2025-03",4391,417,889,182,1097,2168,2876,2017,gapkiNews+'2025/05/31/stok-cpo-turun-produksi-dan-konsumsi-dalam-negeri-naik-tajam-di-maret-2025/'],
+  ["2025-04",4479,425,871,183,1046,2100,1779,3046,gapkiNews+'2025/06/24/produksi-cpo-naik-ekspor-anjlok/'],
+  ["2025-05",4165,396,803,187,1039,2029,2664,2916,gapkiNews+'2025/07/23/produksi-cpo-turun-di-mei-2025-tapi-ekspor-sawit-indonesia-naik-4975-tembus-us-282-miliar/'],
+  ["2025-06",4823,465,800,192,1080,2072,3606,2530,gapkiNews+'2025/08/21/ekspor-sawit-indonesia-juni-2025-meroket-35/'],
+  ["2025-07",5113,493,798,185,1051,2034,3537,2568,gapkiNews+'2025/09/24/produksi-bertahan-tinggi-ekspor-turun/'],
+  ["2025-08",5062,481,806,183,1111,2100,3473,2543,gapkiNews+'2025/10/29/konsumsi-meningkat-ekspor-turun/'],
+  ["2025-09",3932,366,793,190,1070,2053,2200,2592,gapkiNews+'2025/11/27/harga-naik-ekspor-sawit-merosot-analisis-kinerja-september-2025/'],
+  ["2025-10",4352,405,835,192,1200,2227,2796,2333,gapkiNews+'2025/12/19/produksi-cpo-naik-10-ekspor-sawit-capai-us-329-miliar-di-oktober-2025/'],
+  ["2025-11",null,null,null,null,null,null,null,null,gapkiNews+'2026/03/13/kinerja-sawit-2025-menguat-produksi-naik-ekspor-tembus-rp590-triliun/'],
+  ["2025-12",null,null,null,null,null,null,null,2068,gapkiNews+'2026/03/13/kinerja-sawit-2025-menguat-produksi-naik-ekspor-tembus-rp590-triliun/'],
+  ["2026-01",4778,458,846,190,1068,2104,3081,null,gapkiNews+'2026/04/21/kinerja-sawit-februari-2026-melesat-produksi-konsumsi-ekspor-naik-stok-menipis/'],
+  ["2026-02",5015,485,986,175,1144,2305,3297,2026,gapkiNews+'2026/04/21/kinerja-sawit-februari-2026-melesat-produksi-konsumsi-ekspor-naik-stok-menipis/'],
+  ["2026-03",4403,418,897,162,1056,2115,2168,2568,gapkiNews+'2026/05/25/anjlok-serentak-produksi-konsumsi-dan-ekspor-sawit-turun-di-maret-2026-apa-penyebabnya/'],
+  ["2026-04",4479,424,831,173,1137,2141,2777,2558,gapkiNews+'2026/06/29/kinerja-industri-sawit-indonesia-april-2026-menguat-produksi-dan-ekspor-naik-signifikan/'],
+  ["2026-05",4165,387,856,187,1035,2078,1996,3042,gapkiNews+'2026/07/15/ekspor-sawit-turun-28-stok-cpo-nasional-capai-304-juta-ton/'],
+  ["2026-06",4823,449,878,192,1131,2201,3275,2844,gapkiNews+'2026/08/26/ekspor-sawit-indonesia-melonjak-64-pada-juni-2026-produksi-dan-konsumsi-ikut-naik/'],
+  ["2026-07",4904,466,805,185,1285,2275,3188,null,gapkiNews+'2026/10/10/ekspor-sawit-agustus-2026-naik-1256-stok-turun/'],
+  ["2026-08",4880,464,775,180,1350,2304,3588,2214,gapkiNews+'2026/10/10/ekspor-sawit-agustus-2026-naik-1256-stok-turun/'],
+];
+
+// Bilans annuels GAPKI (milliers de tonnes) : contrôle des cumuls mensuels.
+export const gapkiAnnual={
+  2024:{cpo:48164,pko:4598,food:10205,oleo:2207,biodiesel:11447,consumption:23859,exports:29535,stock:2577,
+    url:'https://gapki.id/en/news/2025/03/07/production-drops-indonesian-market-shrinks/'},
+  2025:{cpo:51660,pko:4893,food:9834,oleo:2234,biodiesel:12704,consumption:24772,exports:32343,stock:2068,
+    url:gapkiNews+'2026/03/13/kinerja-sawit-2025-menguat-produksi-naik-ekspor-tembus-rp590-triliun/'},
+};
+
+export const gapkiRelease={period:'2026-08',published:'2026-10-09',url:gapkiNews+'2026/10/10/ekspor-sawit-agustus-2026-naik-1256-stok-turun/'};
+
+export const gapkiHistorySources=[
+  ['GAPKI · Communiqués mensuels','https://gapki.id/en/news/category/press-release/'],
+  ['GAPKI · Bilan 2025','https://gapki.id/news/2026/03/13/kinerja-sawit-2025-menguat-produksi-naik-ekspor-tembus-rp590-triliun/'],
+  ['GAPKI · Août 2026','https://gapki.id/news/2026/10/10/ekspor-sawit-agustus-2026-naik-1256-stok-turun/'],
+];
