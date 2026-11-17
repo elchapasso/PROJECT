@@ -1,17 +1,17 @@
 {
  "schema": 1,
- "checkedAt": "2026-11-14T05:53:33Z",
- "dataChangedAt": "2026-11-14T05:53:33Z",
- "today": "2026-11-14",
+ "checkedAt": "2026-11-17T05:54:02Z",
+ "dataChangedAt": "2026-11-17T05:54:02Z",
+ "today": "2026-11-17",
  "window": [
-  20261023,
-  20261113
+  20261026,
+  20261116
  ],
  "sources": {
   "tradingview": {
    "name": "TradingView",
    "ok": true,
-   "lastSuccess": "2026-11-14T05:53:33Z"
+   "lastSuccess": "2026-11-17T05:54:02Z"
   }
  },
  "series": {
@@ -21,16 +21,16 @@
    "status": "ok",
    "added": [
     [
-     "2026-11-13",
-     63.77
+     "2026-11-16",
+     62.19
     ]
    ],
    "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 470,
-   "last": "2026-11-13",
-   "lastValue": 63.77
+   "count": 471,
+   "last": "2026-11-16",
+   "lastValue": 62.19
   },
   "zs": {
    "source": "tradingview",
@@ -38,16 +38,16 @@
    "status": "ok",
    "added": [
     [
-     "2026-11-13",
-     1231.5
+     "2026-11-16",
+     1229
     ]
    ],
    "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 470,
-   "last": "2026-11-13",
-   "lastValue": 1231.5
+   "count": 471,
+   "last": "2026-11-16",
+   "lastValue": 1229
   },
   "zm": {
    "source": "tradingview",
@@ -55,16 +55,16 @@
    "status": "ok",
    "added": [
     [
-     "2026-11-13",
-     329.8
+     "2026-11-16",
+     332.4
     ]
    ],
    "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 470,
-   "last": "2026-11-13",
-   "lastValue": 329.8
+   "count": 471,
+   "last": "2026-11-16",
+   "lastValue": 332.4
   },
   "ho": {
    "source": "tradingview",
@@ -72,16 +72,16 @@
    "status": "ok",
    "added": [
     [
-     "2026-11-13",
-     4.1663
+     "2026-11-16",
+     3.9995
     ]
    ],
    "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 470,
-   "last": "2026-11-13",
-   "lastValue": 4.1663
+   "count": 471,
+   "last": "2026-11-16",
+   "lastValue": 3.9995
   },
   "gasoil": {
    "source": "tradingview",
@@ -89,16 +89,16 @@
    "status": "ok",
    "added": [
     [
-     "2026-11-13",
-     1287.5
+     "2026-11-16",
+     1246.75
     ]
    ],
    "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 483,
-   "last": "2026-11-13",
-   "lastValue": 1287.5
+   "count": 484,
+   "last": "2026-11-16",
+   "lastValue": 1246.75
   },
   "fcpo": {
    "source": "tradingview",
@@ -106,16 +106,16 @@
    "status": "ok",
    "added": [
     [
-     "2026-11-13",
-     4462
+     "2026-11-16",
+     4547
     ]
    ],
    "addedCount": 1,
    "revised": [],
    "confirmed": [],
-   "count": 456,
-   "last": "2026-11-13",
-   "lastValue": 4462
+   "count": 457,
+   "last": "2026-11-16",
+   "lastValue": 4547
   }
  },
  "held": []
