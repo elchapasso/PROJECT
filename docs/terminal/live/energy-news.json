@@ -1,15 +1,116 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-17T04:45:19Z",
-  "collectedAt": "2026-11-17T04:45:19Z",
+  "checkedAt": "2026-11-17T14:51:57Z",
+  "collectedAt": "2026-11-17T14:51:57Z",
   "articles": [
     {
-      "title": "US dollar hits 19-month peak on Fed hike bets; Aussie dips",
+      "title": "Russia's Oil Exports Hit Their Highest Since July as Drones Hit Refineries",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-17/russia-s-oil-exports-hit-their-highest-since-july-as-drones-hit-refineries",
+      "publishedAt": "2026-11-17T13:47:28Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "LPG Tanker Reported to Have Sunk Off Bulgaria’s Black Sea Coast",
+      "url": "https://gcaptain.com/lpg-tanker-reported-to-have-sunk-off-bulgarias-black-sea-coast/",
+      "publishedAt": "2026-11-17T13:37:26Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Turkey continues talks on restoring grain shipments in the Black Sea",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOSHdKS0liT29qdDVZeUlPbE1nQmo2ZUZXVnpoeDAxSlpxdVI3NjdFTVoxLXU0RW5TWTVBZEttb210YmRjeHVPOWVXcUVJd3d1aXlydjZIMHFaVGlBRXBmTmdaRzYyS29RcTlCaFlQdjY5NFR2X2gwbm1hM3ZMdGpxZWRfX2Y5NTdWeE93ZVZ4WFk4dzRnVGRUcExJOG5tUzdIZ2paZUhpTQ",
+      "publishedAt": "2026-11-17T12:56:53Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Iraq resumes crude oil pumping for export purposes via pipeline to Turkey, oil minister says",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNOEZmQVphZVUyV05SUmZOazhJeVRrUGZneGhyX2xTT0g5SkM0eEQwS2ZjVE1YUjQyR1l4WDAxMURzV19QeUk5dFRVU0R3eVF0TjZRZTlJUDk4TGVXMHJmOWVUVEJjX1k3UnF0b0hzemRLZGtQaFRCTXJoNFA3bVZVZjhPZndwYzRxQlpvcDVFRDZ5ZWhRX21FN2FWQzVSckZoYl8xWWJ6anVsd092eFRZVno5ZWJvVmJKRmJ4THJXREt0ZEF6WlFYQjFVTQ",
+      "publishedAt": "2026-11-17T10:34:06Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Crew of tanker unaccounted for after second attack north of Oman's Khasab, UKMTO says",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQYW55RnRFY2o3QVQ5M0ZRRElNUGhWUlhPaDkyODFYbEprTWw5NHhyTUFKSDQ5RE1TOWZWaElmSkY0UnZZeGUyMnFRbXpaOHo2SkxyaTFDUEowd3ZVUS1VaG9TRF9aTmNldHJyUGZtNnFuc2E2NGd0c0NNeDB5ai1rUTVQXzhZNzA5QUlUcTFINUJBZEYzMVRtREg5TTdCWjA2aEFXdWoydENMbTJyTlo3MDJxSHJTTnhlSm53YjJaTmFrRHV3ZEE",
+      "publishedAt": "2026-11-17T09:47:48Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Malaysia’s Palm Oil Industry Wants Swift Decision on Tax Waiver",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNaVgyM2VYV3lMQ3lyRDJkZlZVbVRSNlhyVVB3T2sxOU9sU2RMQ0pUbVZJQlZ1ZEVHMGVCbHpkUlEwZjUzZ2RUYWR6SkwyRU9hVVR5LW9YUjNKcGxZcWd6VExxeFRvN0xhc2VneFhDQmFSa29XRkRLYlA2a2hRNk12TXhleFBUQnVhQ1hOaTVCamd6b0RaamN3YTU5VDMtMjFkR1FjcHhINEI3bTZwRkIwM2w4eHI",
+      "publishedAt": "2026-11-17T07:58:00Z",
+      "source": "Bloomberg",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Ukraine’s edible oil supply unaffected by temporary shutdowns of crushing plants — Ukroliyaprom",
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQTk5nQk82bTN6Z3hBR1RjTlNUblFJVUlIVEVwS05ZVG03RVB5S0JxVUlMbWlCeUNQWGRjTm5yT2otZ3ZyRHlQTk5ldzFibVVKZVlITW5PLTV2UDNVZmJWXzNqWnVHN2hpQW5uaFpGWXZOUklRaXdLNXI1bDFsa0NHQ3hJQVZwTjZlU0R2SkxJa0JCZDg4enJsVnRXd1B6aTB0Q1R3YjA5UTFxaTNUMGFGOHlMa3VrdjZSR0FMa3JWRjB6VWtYdWs0",
+      "publishedAt": "2026-11-17T06:08:51Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "China could set record soybean oil exports in 2026/27",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPVnBZWEhKVTQyZWhINHNkRkdsMk1JT0QxVUpHRTk2N1Z4U2Y4QmF5V0Q2SlVwNkliTzRYbXY2UGlaY0tCallGMXgzWXc3VWRJRFlJMXpialhFTTk2T1hXMEZ0ZWRuTjFzanlINzB6MGNyekg1UW1qOVFnaUFEMlRCSHRTTlBxSG1yaGRoMTVTNXVhMnM",
+      "publishedAt": "2026-11-17T06:02:08Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Palm Oil Retreats as Profit-Taking and Weak Exports Weigh",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE45aEwyWlBlV2hDcTlpdkpmWU5NbkRFRUREcUl4Q3FhMDRoUmxrNnBDeVMxOHliOVkweERyYjZreUpjVERsNElUaGFib0tkRXNxSUU1dnMtbXBBRWg0b0FRUk1Kbk9qWlpWWUdn",
+      "publishedAt": "2026-11-17T03:45:19Z",
+      "source": "Trading Economics",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Dollar steadies after five-day rally, NZ dollar at lowest since 2020",
       "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPb0Z6TDRSbVp3QXhMLUlLR3Vaam5aam1wVW9LV2tGSmJPZVFaU2dCNnhzVjJSY25lNWR3N1lmOFVPeno3UWpkamE2SDVxOVVfcUxUY0RxYTd5cm8wYzg0M1FVZTdrVXU2RXJzbXFmNElPb0ZqVVJ2WUxhS1B5WXVhRFFobUJPb2FaNzdsdlFkNmludUtnSXY3eUJoZ0J5UXFJdTlQUVhR",
       "publishedAt": "2026-11-17T01:42:00Z",
       "source": "Reuters",
       "topics": [
         "fx"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Oil prices caught between tanker attacks and rising Mideast exports",
+      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPQm40d1ZiR2k1S1RxaFdvQzJVYmRJUE1rcnNLZkEyRkZzbk5KZjlqWl9sZW9MUFB2OHpwdGZzT3duNzVnMnNaMEJMYkFKWndKTWE1OWNtd0hLcWRtSmVVYU5JaTBlNXZuT2t0V1AzVHdXVEhPMWt5QnhXakxpWkxiQk50ZEt0UGtXT3RpeXdiNEY0UXBqeXk2RGVHYURMNzJzNm13Zldtbm8tQQ",
+      "publishedAt": "2026-11-17T01:37:00Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping",
+        "energy"
       ],
       "via": "google"
     },
@@ -136,6 +237,26 @@
       "via": "google"
     },
     {
+      "title": "Canadian Natural to Buy Advantage Energy Amid Oil Price Boom",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNOERZdVVqQi1Zd1dUUDNmcmRLc2ZfejV1S2ZZUW1Pb2U4RmV3QW1ISjhyTUtBVldwZVJFMmYwVE5yQ2MyRDk2ZUNCWHZhLU15WDVNT3pMOHg2bTU4Y2lKdGViS3had3RPN3JKMzFtV01CTmlEekNYRDMxZFNydEpfWm92S0lJYnZjZXhudFNmUXpoeS1NdnUxeGJsSUpYQTRfcHdDNzJ4eWk4cG5sRjRaUTB6bw",
+      "publishedAt": "2026-11-16T17:08:26Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Diesel Falls Below $6 a Gallon, Easing Key Inflationary Pressure",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPTXVZTFNXYWhOWE1yWF9QVjBNMUlCU3ZTNTVqUjUzaXNYTVh2TnFrQUN2MXk1UHZReDFTa3lfSTlseXJNNTNfV2NCSjlRVXpKTDY5NDFXZjhvbTB0OHBtajhQSDdhY3dSSW1kdzJvcG85ZTdUWFhQRDU2c0IyLVQ3NmtFMUFONVRVanF1dTVJWmJIb3dlaUY2dm4zSkd1NDVCaGxnaUNBM1k1dUlLVUdYR2NEQQ",
+      "publishedAt": "2026-11-16T16:59:37Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Drone strike behind sinking of cargo ship off Bulgaria's coast, maritime security sources say",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNUUs2NE56Z2hUTXR1OHUtM3RLaUFRdkYzeS1IdkZaV1BfbkM2N29XamhOa2lhUkM2TUxNTkdNY0JyQWQ1LVJ1SlhnbEZHZ1RxSjZOeGp3WXljM0xkd3VyekJHUldSYmd2YlY3NUJjWHpFUkRDc3ZrRXpwN3hha1RrbFRVMjBMdHZVeVJVdzVUdWg4OThDWjJYSXFCUWdsclFLWHVCZFJTSnlEODg",
       "publishedAt": "2026-11-16T16:12:19Z",
@@ -166,6 +287,26 @@
       "via": "google"
     },
     {
+      "title": "EU adds Russian online retailer Wildberries' CEO to Russia sanctions list",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNMDViUTRuRmxGQmI1RjhrV3pjZTdZS0NLMXZDQkFXX3RSNU1CLW03WjlwSVhRaDhvbFl1MlFPblV3YjJ4WFZoaDBRRzVKdThBYjFTWEpVMWdiaFJsTGVKa1pCeXVtZE42Mk1mWmdpd2FhaC1kVzduR01OdHByd2dnTUNmeFpRNFI5dC1MWDg5QWQwV253dTZzMFd6dUZfcGtzWlFjN2xzeTFjaG9FcUx3eg",
+      "publishedAt": "2026-11-16T13:11:19Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Wheat Falls on Optimism Trilateral Talks Will Free Up Black Sea",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPelFYbGZob1hJMXFjS2pkSk5namd5YW5WX3ZxcXk0MWJGZFd3WmJOVWRVM1FDMGdFZ29obzhuQm9QYXViaVM3Z1JSak45aE5Fd21fZ2RmXzJyVmNPNmpCbTEzV0x1Q0dCS1J3cEpyNkdkcmplczZjd2J2NS1Xbll3Y3lGNDVuVk9CVjFBU3dVZnJoRkRwd0M3cFMzeVYteEozcmlscjVtSV9iMmF6cjh1aUZ5dDU",
+      "publishedAt": "2026-11-16T13:00:24Z",
+      "source": "Bloomberg",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Goldman Warns Oil Market Faces ‘Sizable’ 2027 Surplus",
       "url": "https://www.bloomberg.com/news/videos/2026-11-16/goldman-warns-oil-market-faces-sizable-2027-surplus-video",
       "publishedAt": "2026-11-16T11:23:24Z",
@@ -186,16 +327,6 @@
       "via": "google"
     },
     {
-      "title": "Diesel Falls Below $6 a Gallon, Easing Key Inflationary Pressure",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPTXVZTFNXYWhOWE1yWF9QVjBNMUlCU3ZTNTVqUjUzaXNYTVh2TnFrQUN2MXk1UHZReDFTa3lfSTlseXJNNTNfV2NCSjlRVXpKTDY5NDFXZjhvbTB0OHBtajhQSDdhY3dSSW1kdzJvcG85ZTdUWFhQRDU2c0IyLVQ3NmtFMUFONVRVanF1dTVJWmJIb3dlaUY2dm4zSkd1NDVCaGxnaUNBM1k1dUlLVUdYR2NEQQ",
-      "publishedAt": "2026-11-16T09:17:11Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Brazil raises soybean oil export forecast by 29% to 1.8 mln tons",
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPSDJVby1wM09EZGpUQ21maHczR0MxTmZaSVpfaW1zV09SM3pDdFdrLXJvMGpxclRIa2lPaG1HRWNfaVg3OV93YllRLU1yUEVtc2NwMW4yTWFNdXlZQzllVkNidGp2Q0FJTjk5eHdMVWhuWXFXWGc0eHN6dHBNVUZaZ2VRaUQ2SzdQcF9ZOHl5bkwtU3JpdlozZXZabnJ0RWp3",
       "publishedAt": "2026-11-16T09:01:18Z",
@@ -206,7 +337,7 @@
       "via": "google"
     },
     {
-      "title": "Goldman Sachs Predicts ‘Sizeable Surplus’ for Oil Market in 2027",
+      "title": "Goldman Sachs Warns of ‘Sizable’ Oil Market Surplus in 2027",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOcGlrVWdaUnhwcDBydlg3aUV4Vk4zQk9BelRKUC1tajFKVkV1VFhYbGF1aFNvT0Q1bXRYQXRJTFJXckVveTgyRWp3bllkUXpyMXpyX2RUYUt3aWpRN002Q0hvUnBNSHBBQXFxXy01X3ZyUEVLQnhEbFdSZHNQUTFQMWRaYU5PTzNpcml2RHJ1WDNaNzd1NWVCSVduZjlVaFBKYTRWcXJPYmxRZGNaQlB0NG5LUQ",
       "publishedAt": "2026-11-16T07:45:00Z",
       "source": "Bloomberg",
@@ -1109,17 +1240,6 @@
       "via": "google"
     },
     {
-      "title": "Oil prices ease to two-month lows as US downplays further Iran strikes",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQYWIxdHFYZXdDLUkyNjhxSklldE1kTVJUMXBHOENVUUF0YWVXRmhpbGhvSDdJSUtSUG9ZUk5FVGxZdExQa0c0WmJFZDd2QXFNUnJUV0ZuZ0x3eHZCTFBiVXY3b0lVMVA0RkVaVllFRHJHSjJaUmlpSjNOQThxOGhoN05LelBtdjE4Qk5PbnRoTThFVWc3NE91WlE2WHJKbG5kWEVkeF9SS20wSGs",
-      "publishedAt": "2026-11-10T19:49:59Z",
-      "source": "Reuters",
-      "topics": [
-        "energy",
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "US Raises Forecasts for 2027 Gasoline and Diesel Prices",
       "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNa3hQQ3lEMTBoVW5ZYnkxWlF3T05UWUVYY256UzZmVDRmTDU4UmZIN0tOTkc0QnU5eVoxMnlJZkFtOTBwbnNwbTZ5RTJyUTVSMTdBT2dMZnI0QWdnVm1vM0gyeWFQSjc5Q1g1U2E4WUc2U1l5Y3VwMWdGUW4xMm5wNm5iakhjal9mN19VM0pvTDBXOFp4Sm1MeEF6VHV3NU9JNDhSUWVYaFNQQQ",
       "publishedAt": "2026-11-10T18:46:41Z",
@@ -1136,16 +1256,6 @@
       "source": "gCaptain",
       "topics": [
         "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Dollar gains after US inflation data reinforces Fed rate-hike bets",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPT3JzaUt6cC05eXdxeTNvcFBPX2JGZmFka29UbGZvQzQyTFVTc2dUM3dyX0FUVkk5SngyWGs1SW80ckQ1Qk5Pb0laLU11MDM1MUtsOEptTmJiSERHdEdsR2tVanR1em5scXpGb1NuQzg2NmU3V0tXWm82aWlkeXpDQmZaMkQzQnl0eHc3WkFMZGNWdlZwblp0V0drdG9xQQ",
-      "publishedAt": "2026-11-10T16:08:36Z",
-      "source": "Reuters",
-      "topics": [
-        "fx"
       ],
       "via": "google"
     },
@@ -1170,16 +1280,6 @@
       "via": "google"
     },
     {
-      "title": "Italy says EU nations failed to commit to Red Sea security",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQWXhYTjBLNXBVeWw2Y051RklaUDRGYVNpNmM4cUE4VnR2WkFpZnhrZnItNjVYcXhuTEtrWHJ4YndHV1YtRUdpZENDTnRqOVZuWWU4dU1xYUxlNWRYOXRhbmZ1eUNONnJrN1dfbjlJTThxQlpfODBSOS1wbzRjUFhFUFhLdThyQ1k1VDRWMHZJNWlDeUFoS2VCcTV3",
-      "publishedAt": "2026-11-10T14:31:43Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Oil Prices Have Tumbled in November. Here’s Why.",
       "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOWnVPMUkyVDh0dXExZGJiZlNYOWZvd2E0MGxKcTRUbDlSaUN2dlg5OWljUWlKeVpCMjVKem9LYmdDSGtzaml3X1hCR1MySzhsbjd1ZWUzRzUzYnRrMFBROVdxQ1FWVm1JcTk4Mzk3bm5TdE5PbDFhU3gxek9yN09GV2xPWjNOSWtlcTI2UlBtYmRVb3p0LVh3",
       "publishedAt": "2026-11-10T14:04:40Z",
@@ -1196,16 +1296,6 @@
       "source": "UkrAgroConsult",
       "topics": [
         "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "EU's von der Leyen pledges €50 million to speed up security hub in the Black Sea",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQZEtSSjBndmJ6M0ZsY1E3aG9FdTBJRzVsM3FEVG1HMU0xUTBBMDZGMFgxME9mYWVjYmhJaGYwcjhXbno2MVhCYXdHMTdFUlhPWjRQbTRlbzBxUzNwcy1GMzNvSGVpTTFxMDc4bW5BSENFaURxclpOQmszU2lSdVU3eHZpT0owcVFBX0Y4cC02UFZhYzZUOXdmMEI3dW5zMGE1TU81TEluOEJua2tCZElB",
-      "publishedAt": "2026-11-10T13:03:43Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
       ],
       "via": "google"
     },
@@ -1444,26 +1534,6 @@
       "via": "rss"
     },
     {
-      "title": "Brazil faces poultry export restrictions in key markets",
-      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQLUZBd0Zjb3Y4cDh6a1YzSjhaaGU1RWswcTQwb05WMUxhR0tKbGJYTUVwaEtSSkNFMFNqellKdWhQbUtsS0N1cWFqOTFlc0lRTjZxeGJJX2ZjOXVKbDRzTEJaV2t6eFhVR01GYkFBZm9INnlNVS04SlBSV3JPeFg1ZGw1dXNLYXVxMUZwT2tmX09zX3lMY3c",
-      "publishedAt": "2026-11-05T10:15:23Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Panama Canal records growth in vessel transits and tonnage in 2026",
-      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOUzhXck4yOXMxdENvNFV2MjNZc1dBTVNHeHFtcVNBZFNPLVhMOUtlSUhvV3NVRWVhRjFlcmVWa0hsSFV0TU9vemswVWYyM25mS1U0dXo0V1k2NEhmRkhmQ2s2NmFJQnZZemF0MkdkdktTV214Vmh5aWFKN3hGNFVvd1pEdmp2SDFhU29kVUVpOTJlNVlXUzBwTWJfTDUwVHp6dUE1LQ",
-      "publishedAt": "2026-11-04T07:45:27Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Global refinery inputs fell sharply in the second quarter of 2026 before modest recovery",
       "url": "https://www.eia.gov/todayinenergy/detail.php?id=68404",
       "publishedAt": "2026-11-03T14:00:00Z",
@@ -1472,16 +1542,6 @@
         "energy"
       ],
       "via": "rss"
-    },
-    {
-      "title": "Joint Maritime Information Center Update 111 to JMIC Advisory Note: 01 March – 05 November 2026",
-      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNNDZWd0lZWGtjb0dKSmdvWUhBMWNTVnI0ZmZwQnVwY3BQMGsxQ2dSa0k0ZEJuMkpsLXVfSFRjbXZKbUF3R01VMXpUM2dLdnA0QXhTejdCTUxKSS00ZlBMUURvaDRWc2ljOTJWRlMxbHRKVHNXZ2pyajBSUVdrdUVtOGNrZkZMR2ZpNTg3bFM1S0paQWUzZXlMbTYzSDFLOW1QWTJ5VDdGeUVoeHZ6eGllQzhkZWZ2dWhq",
-      "publishedAt": "2026-11-03T08:00:00Z",
-      "source": "UKMTO",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
     },
     {
       "title": "Iran Says It Would Reopen Strait of Hormuz in 2 Days as Part of U.S. Deal",
@@ -1494,14 +1554,12 @@
       "via": "google"
     },
     {
-      "title": "Indonesia cuts crude palm oil export duty for November",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNTUJVcFBlemVscTJfNHFESXJmR0VxenE5ZXVsOHF2blV2WHdHaUtBWVd1Y1J1ZFZQbzZDVEhEeW5kMFhuWmlPbjBpOG5yT29WSk5zOGtVVGc5bEdLbmhpMGE4a29ra1hmeHR0MEtINnpMUWtpREpSeGxDcm5sZWlGR2x2VXk4UWkyVjNPX0JxYk9nSmtZ",
-      "publishedAt": "2026-11-02T08:00:00Z",
-      "source": "UkrAgroConsult",
+      "title": "Joint Maritime Information Center Update 111 to JMIC Advisory Note: 01 March – 05 November 2026",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNNDZWd0lZWGtjb0dKSmdvWUhBMWNTVnI0ZmZwQnVwY3BQMGsxQ2dSa0k0ZEJuMkpsLXVfSFRjbXZKbUF3R01VMXpUM2dLdnA0QXhTejdCTUxKSS00ZlBMUURvaDRWc2ljOTJWRlMxbHRKVHNXZ2pyajBSUVdrdUVtOGNrZkZMR2ZpNTg3bFM1S0paQWUzZXlMbTYzSDFLOW1QWTJ5VDdGeUVoeHZ6eGllQzhkZWZ2dWhq",
+      "publishedAt": "2026-11-03T08:00:00Z",
+      "source": "UKMTO",
       "topics": [
-        "oils",
-        "energy",
-        "policy"
+        "shipping"
       ],
       "via": "google"
     },
@@ -1520,16 +1578,6 @@
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNYURxT1U3eS1weU43YUhSRWdDOFl4c3ZjUlUxV1hKLUJhZDY4MloyQnVvS3V4Ylh5dHlLMUQxRVR6WGlVcm9lZEJ5NVZXMXNHZFplODl1UUhNTTZCSlA3VXBIbnRkbWI3R0c3bnU2NVR5SF9qNUN3emhlMjlLSnBsNXM2Mm1mZFc5Z1lZdXBZTm0zZXcyT0lKWTZWdzBJNHdCMkxkYWpIX1JSZnhCNGZ6dE5vOTVMbEZTVnpn",
       "publishedAt": "2026-10-31T07:00:00Z",
       "source": "UKMTO",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "DP World CEO Warns Hormuz Rerouting Will Feed Through to Prices",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOUXRUNndHWTFtcHlTcVFrR3ZpMGVvQURFRF9XUmxIb0cwRHFRdzNPcFRTVUhyXzc4NzYwd3lITEUySU1Ld1pvSUxFbnNhY3FxNzNSX1NnVm9JdzZ4cENoeFNXYkFkbGpVYVdPN2RBeUFUbVVPUk03NWpGSG9Ob2drTkZLUmNLSFRkQXBxTkVXNjYyc0VOVENndmJKSU9SczNvMndjNkMzanVBMnA5aWFuYWlWbFE",
-      "publishedAt": "2026-10-30T07:00:00Z",
-      "source": "Bloomberg",
       "topics": [
         "shipping"
       ],
@@ -1616,22 +1664,22 @@
       "via": "rss"
     },
     {
-      "title": "Middle East Oil Flows Near Prewar Levels Defy Hormuz Attacks",
-      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQdTBrYjNkSzNrVUdaZFpRWDZnZlViT3c1VUIwakNfQ3lRaUNVdUkwbnFfVWRReXUzTWczMF9QamJVT01xbTMyNVVzbnh2RlVHSTNhYThFaUpFdTltVkJiZnk5Um1FRmVHUVB6al80b1VtQWQzVkpSYzU4TnNYUFh4VFdLT0ZmeTYtZXc",
-      "publishedAt": "2026-10-21T07:00:00Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Palm Oil Edges Higher as Export Demand Offsets Ample Supply",
       "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1XNElkaDRlWnlGaGZGcUFNR0lBZ0d6dGI1MFQ4ckNzZWxocDY2TW42bDhQYll6bnhmX0xnOGxIY3JoSjZFYWhwWFg4Vm5PbjJqUXVoNmwyZ25NaWNDQ2piWmpkTzJBR3Q2MHpr",
       "publishedAt": "2026-10-21T07:00:00Z",
       "source": "Trading Economics",
       "topics": [
         "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Middle East Oil Flows Near Prewar Levels Defy Hormuz Attacks",
+      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQdTBrYjNkSzNrVUdaZFpRWDZnZlViT3c1VUIwakNfQ3lRaUNVdUkwbnFfVWRReXUzTWczMF9QamJVT01xbTMyNVVzbnh2RlVHSTNhYThFaUpFdTltVkJiZnk5Um1FRmVHUVB6al80b1VtQWQzVkpSYzU4TnNYUFh4VFdLT0ZmeTYtZXc",
+      "publishedAt": "2026-10-21T07:00:00Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
       ],
       "via": "google"
     },
@@ -1654,36 +1702,6 @@
         "oils"
       ],
       "via": "google"
-    },
-    {
-      "title": "Iran Urges US To Accept Proposal To Reopen Strait Of Hormuz",
-      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQSVd6ZUhmNnpsS1RJQkRodVhMNDhNQUpjUkVZeU5YeHpSWHBjNHdpUWU5ak5kY0c1Z2dYQkt3Q01SSXVjOTdUNGJhOFg2aFlOSnBOTGozbDFNaGFwWW9za3ktLVRKc09mcHNUT0xINFNsbkptQ1VZMnVRZUJGZ3FWV2tnNG1ZLUhD",
-      "publishedAt": "2026-10-18T07:00:00Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Palm OIl Stays at 3-Week High on Export Strength",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE8ybjVxdEZETEhJR3ZEaHJvWUF3ZFBYUXMwcTVfSEpSTlRFOFFpV0xTaHNUem1BQThEeW1LbFdlX0pPd2t3WE5ZOGpSZzFycjZ4UEZwT0I4cTg3d3NnUjFCWUg3OFlzQUgtRzg0",
-      "publishedAt": "2026-10-18T07:00:00Z",
-      "source": "Trading Economics",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Joint Maritime Information Center Update 106 to JMIC Advisory Note: 01 March – 18 October 2026",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNbUI0UXZiMjBXWnZmemZ4UUhRVVpla05OTG1IcGdRWEVhR2RmY1NBeS0yZVdxVDNmbGdfcGxBT0RONkNvY0k4ZHNYVGJ3aTFOdnU4LVVHNnN6aG9rc2NTbmRxUmhQT0JLS09kV0ltZnVyQ1ZwUnY5UFhtMk5LbmlxNGRudzVNdzNqVEY4Y1lyYUw1dmJhM3lGSjNiLUVSeHRrcGhKaWcyaS1uN3JDRTdSN1RSQUZRZlpXTzAtdmxvaVdXTlNE",
-      "publishedAt": "2026-10-18T07:00:00Z",
-      "source": "UKMTO",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
     }
   ],
   "providers": [
@@ -1699,17 +1717,19 @@
     {
       "name": "Bloomberg",
       "available": true,
-      "partial": true,
+      "partial": false,
       "channels": [
+        "google",
         "rss"
       ],
-      "articles": 32
+      "articles": 35
     },
     {
       "name": "The New York Times",
       "available": true,
-      "partial": true,
+      "partial": false,
       "channels": [
+        "google",
         "rss"
       ],
       "articles": 6
@@ -1726,9 +1746,11 @@
     },
     {
       "name": "Trading Economics",
-      "available": false,
+      "available": true,
       "partial": false,
-      "channels": [],
+      "channels": [
+        "google"
+      ],
       "articles": 6
     },
     {
@@ -1742,9 +1764,11 @@
     },
     {
       "name": "AIE",
-      "available": false,
+      "available": true,
       "partial": false,
-      "channels": [],
+      "channels": [
+        "google"
+      ],
       "articles": 1
     },
     {
@@ -1759,10 +1783,12 @@
     },
     {
       "name": "UKMTO",
-      "available": false,
+      "available": true,
       "partial": false,
-      "channels": [],
-      "articles": 10
+      "channels": [
+        "google"
+      ],
+      "articles": 9
     },
     {
       "name": "Fed",
