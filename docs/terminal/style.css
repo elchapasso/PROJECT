@@ -717,3 +717,6 @@
 .fret-card footer{font-size:10px}
 .fret-arbitrage{grid-column:1/-1}
 }
+
+/* Palme · état du flux GAPKI */
+.gapki-status{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:-4px 0 12px}

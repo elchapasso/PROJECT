@@ -61,10 +61,10 @@ La page [Fret](https://elchapasso.github.io/PROJECT/#fret) (rubrique **Terminal*
 
 La page [Palme](https://elchapasso.github.io/PROJECT/#palm) ne garde que les bilans mensuels officiels :
 
-- Malaisie · MPOB : stocks, production de CPO et exportations depuis janvier 2024 (`mpobHistory`) ;
-- Indonésie · GAPKI : production CPO et PKO, consommation intérieure (alimentaire, oléochimie, biodiesel), exportations et stocks depuis janvier 2024 (`gapkiHistory`), avec export CSV.
+- Malaisie · MPOB : stocks, production de CPO et exportations depuis janvier 2024 (`mpobHistory` dans `docs/terminal/palm-history.js`, en tonnes) ;
+- Indonésie · GAPKI : production CPO et PKO, consommation intérieure (alimentaire, oléochimie, biodiesel), exportations et stocks depuis janvier 2024, en milliers de tonnes, avec export CSV ; puis les bilans annuels, le cumul de l’année en cours et les estimations de GAPKI (IPOC), avec le rythme mensuel qu’impliquent ces estimations.
 
-Les deux séries sont dans `docs/terminal/palm-history.js`, en tonnes pour le MPOB et en milliers de tonnes pour GAPKI. GAPKI publie environ deux mois après la fin du mois ; chaque ligne retient la dernière révision publiée et renvoie au communiqué du mois. GAPKI n’a pas publié de bilan mensuel pour novembre et décembre 2025 : ces mois restent vides et la page affiche leur cumul tiré du bilan annuel (`gapkiAnnual`). Pour ajouter un mois, reprendre le communiqué sur [gapki.id](https://gapki.id/en/news/category/press-release/), corriger le mois précédent s’il a été révisé, et mettre à jour `gapkiRelease`.
+Le flux GAPKI est tenu à jour automatiquement : une tâche planifiée vérifie deux fois par semaine les communiqués de GAPKI et publie `docs/terminal/live/gapki-feed.json` sur la branche `gapki-live`, que la page lit au chargement ; `docs/terminal/gapki-data.mjs` sert de copie de secours. Chaque mois retient la dernière révision publiée et renvoie à son communiqué ; GAPKI n’a pas publié de bilan mensuel pour novembre et décembre 2025, la page affiche leur cumul tiré du bilan annuel. Format, contrôles et marche à suivre : [GAPKI.md](GAPKI.md).
 
 ## Rapports & publications
 
