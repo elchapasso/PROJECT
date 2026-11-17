@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-15",
  "forexWeekEnd": "2026-11-21",
- "forexCheckedAt": "2026-11-16T20:33:46+00:00",
+ "forexCheckedAt": "2026-11-17T04:35:47+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -107,7 +107,7 @@
    "country": "USD",
    "date": "2026-11-17T08:30:00-05:00",
    "impact": "High",
-   "forecast": "0.2%",
+   "forecast": "0.1%",
    "previous": "0.8%",
    "url": "https://www.forexfactory.com/calendar/102-us-retail-sales-mm"
   },
@@ -1871,7 +1871,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-16T20:33:46+00:00",
+ "reportsCheckedAt": "2026-11-17T04:35:47+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -1935,31 +1935,31 @@
    "title": "Campagne 2026/27"
   },
   "nass-progress": {
-   "date": "2026-11-09",
+   "date": "2026-11-16",
    "url": "https://esmis.nal.usda.gov/publication/crop-progress",
    "documents": [
     {
      "label": "PDF",
-     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796141/prog4526.pdf"
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796149/prog4626.pdf"
     },
     {
      "label": "Texte",
-     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796141/prog4526.txt"
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796149/prog4626.txt"
     },
     {
      "label": "Tableaux (zip)",
-     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796141/prog4526.zip"
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796149/prog4626.zip"
     }
    ],
-   "source": "https://esmis.nal.usda.gov/sites/default/release-files/796141/prog4526.txt",
+   "source": "https://esmis.nal.usda.gov/sites/default/release-files/796149/prog4626.txt",
    "figures": [
     {
      "label": "Soja récolté",
-     "value": 92.0,
+     "value": 96.0,
      "unit": "%",
-     "previous": 88.0,
+     "previous": 92.0,
      "previousLabel": "semaine précédente",
-     "note": "moyenne 5 ans 91 %"
+     "note": "moyenne 5 ans 95 %"
     }
    ],
    "title": ""
@@ -2233,25 +2233,25 @@
    "figures": []
   },
   "cftc-cot": {
-   "title": "Positions au 03/11/2026",
-   "asOf": "2026-11-03",
+   "title": "Positions au 10/11/2026",
+   "asOf": "2026-11-10",
    "figures": [
     {
      "label": "Huile de soja (ZL) · position nette des fonds",
-     "value": 47413,
+     "value": 19562,
      "unit": "contrats",
-     "previous": 60331,
+     "previous": 47413,
      "previousLabel": "semaine précédente"
     },
     {
      "label": "Graines de soja (ZS) · position nette des fonds",
-     "value": 142727,
+     "value": 117586,
      "unit": "contrats",
-     "previous": 193781,
+     "previous": 142727,
      "previousLabel": "semaine précédente"
     }
    ],
-   "date": "2026-11-06",
+   "date": "2026-11-16",
    "url": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm",
    "documents": [
     {
@@ -2261,6 +2261,6 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-16T20:33:46+00:00",
+ "latestCheckedAt": "2026-11-17T04:35:47+00:00",
  "failingSince": {}
 }
