@@ -1,8 +1,69 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-16T22:28:26Z",
-  "collectedAt": "2026-11-16T22:28:26Z",
+  "checkedAt": "2026-11-17T04:45:19Z",
+  "collectedAt": "2026-11-17T04:45:19Z",
   "articles": [
+    {
+      "title": "US dollar hits 19-month peak on Fed hike bets; Aussie dips",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPb0Z6TDRSbVp3QXhMLUlLR3Vaam5aam1wVW9LV2tGSmJPZVFaU2dCNnhzVjJSY25lNWR3N1lmOFVPeno3UWpkamE2SDVxOVVfcUxUY0RxYTd5cm8wYzg0M1FVZTdrVXU2RXJzbXFmNElPb0ZqVVJ2WUxhS1B5WXVhRFFobUJPb2FaNzdsdlFkNmludUtnSXY3eUJoZ0J5UXFJdTlQUVhR",
+      "publishedAt": "2026-11-17T01:42:00Z",
+      "source": "Reuters",
+      "topics": [
+        "fx"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Russian strikes hit two bridges in Kyiv, cause water, power cuts, mayor says",
+      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNeEEyb1UxS0hVQ1J2dDRzdTMxMFUwaXFhV1lNclI1bml5Q2VMbUZWU0pFaW1FNTh6WllSaE1RSzFDa0cwQUZzSDlUSmh1QnZyVFl5MWRyMUNySnZjOFloMDRNRXc3X2lqcEEzenp5Z05jd2hxX3R1bHBZVGl6UThrMzNrVXpjVGtnWXlvOVkwU3BMNnQ3bUxHNDVBbzA2bVdVRjdhZEhNNlVFR2E3akdzUVAzMHBxUHlnby1xQmln",
+      "publishedAt": "2026-11-16T23:41:23Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "EU Targets Shadow Fleet Shipowners, Managers and Insurers in New Russia Sanctions",
+      "url": "https://gcaptain.com/eu-targets-shadow-fleet-shipowners-managers-and-insurers-in-new-russia-sanctions/",
+      "publishedAt": "2026-11-16T23:20:40Z",
+      "source": "gCaptain",
+      "topics": [
+        "policy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Latest Oil Market News and Analysis for Nov. 17",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-16/latest-oil-market-news-and-analysis-for-nov-17",
+      "publishedAt": "2026-11-16T23:02:55Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "UKMTO Reports Two Tanker Attacks in Strait of Hormuz",
+      "url": "https://gcaptain.com/ukmto-reports-two-tanker-attacks-in-strait-of-hormuz/",
+      "publishedAt": "2026-11-16T22:30:41Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Platts shifts sunflower oil price assessment basis from Greater Odesa ports to the Danube",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNeGJ3amJwdWk2bEFrVEdmdVQxM3dZc2hQUmVRQUdkNWlBWWJVTnctdG95QjlfREs1dUtINUF5NHlEZVVESnIzcFNwWEVOclV6OW5UdEVXWlZjcHgyd0otazhVSUxPZlJOWnpIYnZFQm05NWZMcmhnX2NCbVRrV1lVeTZ3c1I5MXhaWlRwcHZpVThVNmRHaDBqTEROaUQtc3otTDBhWmJOd2t0RWQya1FXa29HRU5TcjJ0VmRKSTFZRnNUT3M",
+      "publishedAt": "2026-11-16T22:28:50Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "shipping",
+        "oils"
+      ],
+      "via": "google"
+    },
     {
       "title": "Hedge Funds Slash Bullish Bets on US Diesel to January Low",
       "url": "https://www.bloomberg.com/news/articles/2026-11-16/hedge-funds-slash-bullish-bets-on-us-diesel-to-january-low",
@@ -16,7 +77,7 @@
     {
       "title": "Winter Nightmare Looms Early in Ukraine as Russia Strikes Relentlessly",
       "url": "https://www.nytimes.com/2026/11/16/world/europe/russia-ukraine-winter-campaign.html",
-      "publishedAt": "2026-11-16T19:43:53Z",
+      "publishedAt": "2026-11-16T19:43:54Z",
       "source": "The New York Times",
       "topics": [
         "policy"
@@ -53,6 +114,16 @@
         "shipping"
       ],
       "via": "rss"
+    },
+    {
+      "title": "India raises diesel, jet fuel export levies as inflation stays elevated",
+      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNQUR1T3FvYTAxZENpTnZnX0FmZlZsRUE1SjVHMWsxSjhhUHhRTFBkVFBiVVdiTUlzUE5jVW5Xbng5azJHRHF0aWdZUk5YUVJzbVdRQTFWMGtYb3JaZXZiX0tPWlR3RGd5RVRuUGJxSTJOaHlDZ01aS0ZrRFMxVkE5di11QkRTZTNuT0tIcVJDdzB1WmJFLThwTFV1NVZ2NG5CQ3dsUEdfbkdubk1tMUcwbTkxZHVmRXkzMWMw",
+      "publishedAt": "2026-11-16T18:15:43Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
     },
     {
       "title": "OPEC officials meet to discuss oil production capacity review",
@@ -998,6 +1069,16 @@
       "via": "google"
     },
     {
+      "title": "strait of hormuz Archives – Page 50 of 50",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE80RmkwQW85RGNJc1IzUkRzTXBHRWZUa1FOLXZUMllZUVFjTkhHdDlnTGVGcnN6UUNyU2JMaDdabUk5dnJOZTlqR2NuUVM2Ylczcy1RaDN4cWtfVk9OZlc0",
+      "publishedAt": "2026-11-10T21:32:51Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Strathcona, CN to Partner on Crude-by-Rail Project to BC",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxONlZ6MVdxZlRfNXM0bHRnVWk5SHdRRVg3VUNCcmpPaFU2dkJyVUxvZ09TWXl4VUR1bE1GZTNGWlZhTFpFXzVyNDFPS1h1bG5IdzdmdGc3WFZZMjdhY2UxZUdWVkN6RWstaTVLRVlLMk9GXzh4OFROYUgtcGthMUszX3JzeEtPV2JsdkpUM0ExTVQzS2lzSkg3SlhpWmtHaEt5cHl2TDdKRGgwel9RcjNuZ1ln",
       "publishedAt": "2026-11-10T20:51:54Z",
@@ -1169,32 +1250,12 @@
       "via": "google"
     },
     {
-      "title": "COMMENTARY: China's crude oil imports recover, fuel exports not so much",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPazhScG1vNWotRURNakQ0YTRxZ2JXY180M3hPQ2VpdDF3UnBRXy1RSHcxSWRvOFJqTERXSDMteGZuSGVOYzI5Y0x3c1VPQlZpSDBJN255X3UxdGQybXFPNWw2N1BfR2l3azB4ang1Z29LMzU4MXo5RVNrMFR2XzRndDdqU3BfOHNWZ0xfNGhJOXZPV3ROXzBJWW9XSUtfWW9ja1VrU0RZQ2ZKVG9Pa0Frc0lSbnoxUkYwTFhLTnBfc05sTUxm",
-      "publishedAt": "2026-11-10T09:25:35Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Trump Signals New Iran Strikes Unnecessary After Qatar Meeting",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPLTNJaWJFc2NkclNIRXg3Z2lyVjRVYjh1aTFrRWozeFlGVWtfcEl3a291Y0MtSUh0bllRNTU3OEIwVnYyS2Q1by0tSEZYNzNUS1JHbUhDdUdOTjdETnkxdngybENWcmxzeUFJQmFhREZDUmdrSHhpWDhqakx3RlNtdXR0YnJBbjRHX0VIMnFoZWlnT2NwUDY3NUZ1aGdMamZUOWMtZjYtQUc0cTlWSjlNMVFtNA",
       "publishedAt": "2026-11-10T08:03:39Z",
       "source": "Bloomberg",
       "topics": [
         "policy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "ADNOC Gas studying potential new export routes amid Hormuz disruption",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNbTVGS2RyTXNjdkZfWVhDVzdLSEZ6Z3RvMDVvM3laaTU3c3ZhRUZnb2lZVl92UjBiQWJjbjlVaFFjbXVFMnlrVjBIZzFxM2VsNzVXVmhVdzNCcS0xeDJPYng0YWpUMVZOWmU2dTlSaXFlTWU5d2oydzRyQ1htVHpKSVV1c3NKbUZWWWc2QUd5UmR4RTIzNDdsOTZTdkpfWjFfTDRhTUM4VjFkalEtNE55elJMenBjUUVST0RnV3pn",
-      "publishedAt": "2026-11-10T07:11:00Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
       ],
       "via": "google"
     },
@@ -1215,16 +1276,6 @@
       "source": "UkrAgroConsult",
       "topics": [
         "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Hormuz LNG traffic hits highest in October since Iran war began",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNMXRIOWVQTmcwYVdhbURkcUR6RGNkUHA1QVZhb0Jvc2xVa0RIQnVSdlRXQTZ5RFFhemxFYkY4bndDWHUyM0NUSTRVbzN6Z3NnOWIyRTBQazhYLXRmZUlMcnhUMDgydGJCdlp6cUc4ZUNUb3o3YWVXT1hxOFY5VFFIcUhrU3RlZFlSMnJGYWRfdGhXU2RVWlg2ZUl3TXg4VktPQWl2SThTcTZmTlc3MENKWWxB",
-      "publishedAt": "2026-11-10T04:26:00Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
       ],
       "via": "google"
     },
@@ -1485,16 +1536,6 @@
       "via": "google"
     },
     {
-      "title": "Brazil’s soybean oil production could reach 13.5 mln tons, while exports decline",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOSXFERDhaeUh4UnZrV01hMTNFNGF2cm4wcmtmR2ZCVHVhdzRiY19Tcl94REtmTlFoejc3dUNoaTlmVVJpRktkeE9XTEtiY21Fd1lBaFIwSHczaFdYZXJ0WTdETW9aaU9ELWFiUmRzRElkRTZDM0duN21xMWlFeTYteHFhNmNTRG1acnhZR0Y2NGExZjJYYmhvX2wtN2ZEdkFhWE52b1dHbWVlRWEzc0lxZDhXLWE",
-      "publishedAt": "2026-10-29T14:24:24Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Federal Reserve issues FOMC statement",
       "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
       "publishedAt": "2026-10-28T18:00:00Z",
@@ -1575,22 +1616,22 @@
       "via": "rss"
     },
     {
-      "title": "Palm Oil Edges Higher as Export Demand Offsets Ample Supply",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1XNElkaDRlWnlGaGZGcUFNR0lBZ0d6dGI1MFQ4ckNzZWxocDY2TW42bDhQYll6bnhmX0xnOGxIY3JoSjZFYWhwWFg4Vm5PbjJqUXVoNmwyZ25NaWNDQ2piWmpkTzJBR3Q2MHpr",
-      "publishedAt": "2026-10-21T07:00:00Z",
-      "source": "Trading Economics",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Middle East Oil Flows Near Prewar Levels Defy Hormuz Attacks",
       "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQdTBrYjNkSzNrVUdaZFpRWDZnZlViT3c1VUIwakNfQ3lRaUNVdUkwbnFfVWRReXUzTWczMF9QamJVT01xbTMyNVVzbnh2RlVHSTNhYThFaUpFdTltVkJiZnk5Um1FRmVHUVB6al80b1VtQWQzVkpSYzU4TnNYUFh4VFdLT0ZmeTYtZXc",
       "publishedAt": "2026-10-21T07:00:00Z",
       "source": "gCaptain",
       "topics": [
         "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Palm Oil Edges Higher as Export Demand Offsets Ample Supply",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1XNElkaDRlWnlGaGZGcUFNR0lBZ0d6dGI1MFQ4ckNzZWxocDY2TW42bDhQYll6bnhmX0xnOGxIY3JoSjZFYWhwWFg4Vm5PbjJqUXVoNmwyZ25NaWNDQ2piWmpkTzJBR3Q2MHpr",
+      "publishedAt": "2026-10-21T07:00:00Z",
+      "source": "Trading Economics",
+      "topics": [
+        "oils"
       ],
       "via": "google"
     },
@@ -1615,22 +1656,22 @@
       "via": "google"
     },
     {
-      "title": "Palm OIl Stays at 3-Week High on Export Strength",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE8ybjVxdEZETEhJR3ZEaHJvWUF3ZFBYUXMwcTVfSEpSTlRFOFFpV0xTaHNUem1BQThEeW1LbFdlX0pPd2t3WE5ZOGpSZzFycjZ4UEZwT0I4cTg3d3NnUjFCWUg3OFlzQUgtRzg0",
-      "publishedAt": "2026-10-18T07:00:00Z",
-      "source": "Trading Economics",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Iran Urges US To Accept Proposal To Reopen Strait Of Hormuz",
       "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQSVd6ZUhmNnpsS1RJQkRodVhMNDhNQUpjUkVZeU5YeHpSWHBjNHdpUWU5ak5kY0c1Z2dYQkt3Q01SSXVjOTdUNGJhOFg2aFlOSnBOTGozbDFNaGFwWW9za3ktLVRKc09mcHNUT0xINFNsbkptQ1VZMnVRZUJGZ3FWV2tnNG1ZLUhD",
       "publishedAt": "2026-10-18T07:00:00Z",
       "source": "gCaptain",
       "topics": [
         "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Palm OIl Stays at 3-Week High on Export Strength",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE8ybjVxdEZETEhJR3ZEaHJvWUF3ZFBYUXMwcTVfSEpSTlRFOFFpV0xTaHNUem1BQThEeW1LbFdlX0pPd2t3WE5ZOGpSZzFycjZ4UEZwT0I4cTg3d3NnUjFCWUg3OFlzQUgtRzg0",
+      "publishedAt": "2026-10-18T07:00:00Z",
+      "source": "Trading Economics",
+      "topics": [
+        "oils"
       ],
       "via": "google"
     },
@@ -1662,7 +1703,7 @@
       "channels": [
         "rss"
       ],
-      "articles": 31
+      "articles": 32
     },
     {
       "name": "The New York Times",
@@ -1685,11 +1726,9 @@
     },
     {
       "name": "Trading Economics",
-      "available": true,
+      "available": false,
       "partial": false,
-      "channels": [
-        "google"
-      ],
+      "channels": [],
       "articles": 6
     },
     {
@@ -1703,11 +1742,9 @@
     },
     {
       "name": "AIE",
-      "available": true,
+      "available": false,
       "partial": false,
-      "channels": [
-        "google"
-      ],
+      "channels": [],
       "articles": 1
     },
     {
@@ -1718,15 +1755,13 @@
         "google",
         "rss"
       ],
-      "articles": 29
+      "articles": 32
     },
     {
       "name": "UKMTO",
-      "available": true,
+      "available": false,
       "partial": false,
-      "channels": [
-        "google"
-      ],
+      "channels": [],
       "articles": 10
     },
     {
