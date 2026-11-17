@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-15",
  "forexWeekEnd": "2026-11-21",
- "forexCheckedAt": "2026-11-17T16:13:50+00:00",
+ "forexCheckedAt": "2026-11-17T23:33:34+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -152,7 +152,7 @@
    "country": "USD",
    "date": "2026-11-19T08:30:00-05:00",
    "impact": "Medium",
-   "forecast": "19.2",
+   "forecast": "20.6",
    "previous": "20.9",
    "url": "https://www.forexfactory.com/calendar/325-us-philly-fed-manufacturing-index"
   },
@@ -161,7 +161,7 @@
    "country": "USD",
    "date": "2026-11-19T08:30:00-05:00",
    "impact": "Medium",
-   "forecast": "199K",
+   "forecast": "198K",
    "previous": "200K",
    "url": "https://www.forexfactory.com/calendar/11-us-unemployment-claims"
   },
@@ -179,7 +179,7 @@
    "country": "USD",
    "date": "2026-11-20T10:00:00-05:00",
    "impact": "Medium",
-   "forecast": "52.1",
+   "forecast": "51.7",
    "previous": "51.0",
    "url": "https://www.forexfactory.com/calendar/54-us-revised-uom-consumer-sentiment"
   },
@@ -1871,7 +1871,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-17T16:13:50+00:00",
+ "reportsCheckedAt": "2026-11-17T23:33:34+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2261,6 +2261,9 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-17T16:13:50+00:00",
- "failingSince": {}
+ "latestCheckedAt": "2026-11-17T23:33:34+00:00",
+ "failingSince": {
+  "ANEC": "2026-11-17T23:33:34+00:00",
+  "Rapports · anec": "2026-11-17T23:33:34+00:00"
+ }
 }
