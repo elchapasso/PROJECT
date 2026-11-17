@@ -1,129 +1,154 @@
 {
  "schema": 1,
- "checkedAt": "2026-11-16T19:37:38Z",
- "dataChangedAt": "2026-11-16T19:37:38Z",
- "today": "2026-11-16",
+ "checkedAt": "2026-11-17T03:57:36Z",
+ "dataChangedAt": "2026-11-17T03:57:36Z",
+ "today": "2026-11-17",
  "sources": {
   "ecb": {
    "name": "BCE · EXR",
    "ok": true,
-   "seconds": 4.5,
-   "lastSuccess": "2026-11-16T19:37:38Z"
+   "seconds": 10.8,
+   "lastSuccess": "2026-11-17T03:57:36Z"
   },
   "fred": {
    "name": "FRED (EIA, FMI)",
    "ok": true,
-   "seconds": 1.6,
-   "lastSuccess": "2026-11-16T19:37:38Z"
+   "seconds": 1.9,
+   "lastSuccess": "2026-11-17T03:57:36Z"
   },
   "mpob": {
    "name": "MPOB",
    "ok": true,
-   "seconds": 1.6,
-   "lastSuccess": "2026-11-16T19:37:38Z"
+   "seconds": 1.4,
+   "lastSuccess": "2026-11-17T03:57:36Z"
   },
   "iposs": {
    "name": "IPOSS Data",
    "ok": true,
-   "seconds": 0.4,
-   "lastSuccess": "2026-11-16T19:37:38Z"
+   "seconds": 0.6,
+   "lastSuccess": "2026-11-17T03:57:36Z"
   },
   "anp": {
    "name": "ANP · Brésil",
    "ok": true,
-   "seconds": 3.8,
-   "lastSuccess": "2026-11-16T19:37:38Z"
+   "seconds": 5.6,
+   "lastSuccess": "2026-11-17T03:57:36Z"
   },
   "magyp": {
    "name": "Secretaría de Agricultura · MAGyP",
    "ok": true,
-   "seconds": 17.0,
-   "lastSuccess": "2026-11-16T19:37:38Z"
+   "seconds": 17.4,
+   "lastSuccess": "2026-11-17T03:57:36Z"
   }
  },
  "series": {
   "arSoyOil": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
-   "revised": [],
-   "confirmed": [],
-   "rejected": [],
-   "count": 266,
-   "last": "2026-11-13",
-   "lastValue": 1191
-  },
-  "arSoyMeal": {
-   "source": "magyp",
-   "status": "ok",
-   "added": [],
-   "addedCount": 0,
-   "revised": [],
-   "confirmed": [],
-   "rejected": [],
-   "count": 266,
-   "last": "2026-11-13",
-   "lastValue": 389
-  },
-  "arSoySeed": {
-   "source": "magyp",
-   "status": "ok",
-   "added": [],
-   "addedCount": 0,
-   "revised": [],
-   "confirmed": [],
-   "rejected": [],
-   "count": 266,
-   "last": "2026-11-13",
-   "lastValue": 487
-  },
-  "arSunOil": {
-   "source": "magyp",
-   "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-16",
+     1177
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
    "count": 267,
-   "last": "2026-11-13",
-   "lastValue": 1334
+   "last": "2026-11-16",
+   "lastValue": 1177
+  },
+  "arSoyMeal": {
+   "source": "magyp",
+   "status": "ok",
+   "added": [
+    [
+     "2026-11-16",
+     393
+    ]
+   ],
+   "addedCount": 1,
+   "revised": [],
+   "confirmed": [],
+   "rejected": [],
+   "count": 267,
+   "last": "2026-11-16",
+   "lastValue": 393
+  },
+  "arSoySeed": {
+   "source": "magyp",
+   "status": "ok",
+   "added": [
+    [
+     "2026-11-16",
+     482
+    ]
+   ],
+   "addedCount": 1,
+   "revised": [],
+   "confirmed": [],
+   "rejected": [],
+   "count": 267,
+   "last": "2026-11-16",
+   "lastValue": 482
+  },
+  "arSunOil": {
+   "source": "magyp",
+   "status": "ok",
+   "added": [
+    [
+     "2026-11-16",
+     1333
+    ]
+   ],
+   "addedCount": 1,
+   "revised": [],
+   "confirmed": [],
+   "rejected": [],
+   "count": 268,
+   "last": "2026-11-16",
+   "lastValue": 1333
   },
   "arSunMeal": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-16",
+     193
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 279,
-   "last": "2026-11-13",
+   "count": 280,
+   "last": "2026-11-16",
    "lastValue": 193
   },
   "arSunSeed": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-16",
+     606
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 279,
-   "last": "2026-11-13",
+   "count": 280,
+   "last": "2026-11-16",
    "lastValue": 606
   },
   "eurUsd": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-16",
-     1.1014
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -134,13 +159,8 @@
   "eurMyr": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-16",
-     4.5102
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -151,13 +171,8 @@
   "eurIdr": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-16",
-     20110.0
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -216,13 +231,8 @@
   "mpobCpo": {
    "source": "mpob",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-13",
-     4169
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -235,40 +245,23 @@
    "status": "ok",
    "added": [
     [
-     "2026-11-14",
-     1115
-    ],
-    [
-     "2026-11-16",
-     1115
+     "2026-11-13",
+     1112
     ]
    ],
-   "addedCount": 2,
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 8,
+   "count": 9,
    "last": "2026-11-16",
    "lastValue": 1115
   },
   "myPalmFob": {
    "source": "iposs",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-13",
-     1029
-    ],
-    [
-     "2026-11-14",
-     1028
-    ],
-    [
-     "2026-11-16",
-     1039
-    ]
-   ],
-   "addedCount": 3,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
