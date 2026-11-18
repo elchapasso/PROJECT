@@ -1,6 +1,94 @@
 {
-  "updatedAt": "2026-11-17T06:55:37.080Z",
+  "updatedAt": "2026-11-18T00:24:21.450Z",
   "items": [
+    {
+      "id": "2026-11-17-world-brent-golfe",
+      "date": "2026-11-17",
+      "time": "Règlement Londres",
+      "product": "energy",
+      "origin": "world",
+      "category": "energy",
+      "title": "Brent : +0,8 % à 93,14 USD/b, les attaques dans le Golfe compensent la crainte d’excédent",
+      "summary": "Le Brent de janvier a gagné 0,8 % mardi, à 93,14 USD le baril, et le WTI de décembre 0,3 %, à 86,01 USD, après une séance dans une fourchette d’environ 3 USD. Les combats dans le Golfe ont contrebalancé les prévisions d’un marché pétrolier de plus en plus excédentaire.",
+      "number": "93,14 USD/b",
+      "variation": "+0,8 % sur la séance",
+      "period": "Séance du 17 nov. 2026",
+      "impact": "positive",
+      "intensity": 1,
+      "horizon": "short",
+      "status": "confirmed",
+      "transmission": "Un pétrole qui se stabilise après la chute de lundi soutient légèrement la valeur des huiles comme matière première du biodiesel.",
+      "caveat": "La confirmation d’un excédent pétrolier au premier trimestre ferait repartir le brut, et les huiles, à la baisse.",
+      "morocco": "Les soutes, donc le fret vers Casablanca, suivent le brut : la stabilisation freine la baisse récente du fret.",
+      "source": "Bloomberg (via Rigzone)",
+      "url": "https://www.rigzone.com/news/wire/oil_prices_swing_as_gulf_attacks_continue-17-nov-2026-185107-article/"
+    },
+    {
+      "id": "2026-11-17-mys-fcpo-recul-2-4",
+      "date": "2026-11-17",
+      "time": "Clôture Kuala Lumpur",
+      "product": "palm",
+      "origin": "mys",
+      "category": "trade",
+      "title": "FCPO février perd 111 MYR à 4 436 MYR/t, le CPO physique du sud de la Malaisie à 4 230 MYR/t",
+      "summary": "Le contrat de février a terminé mardi à 4 436 ringgits la tonne (−111) et l’échéance de décembre à 4 224 (−112), entraînés par le recul de l’huile de soja, du pétrole et des huiles de Dalian, et par des craintes sur la demande à l’export. Le CPO physique livrable en novembre dans le sud de la Malaisie a perdu 100 MYR, à 4 230 MYR/t. Le volume est monté à 136 280 lots, contre 105 227 lundi.",
+      "number": "4 436 MYR/t",
+      "variation": "−111 MYR/t (−2,4 %) sur la séance",
+      "period": "Séance du 17 nov. 2026",
+      "impact": "negative",
+      "intensity": 3,
+      "horizon": "short",
+      "status": "confirmed",
+      "transmission": "Des stocks malaisiens élevés, des exportations qui ralentissent et des huiles concurrentes en repli poussent la palme à la baisse ; les opérateurs placent le premier support vers 4 400 MYR/t.",
+      "caveat": "Une baisse saisonnière de la production plus marquée en novembre, ou un rebond de l’huile de soja et du pétrole, ramènerait les acheteurs.",
+      "morocco": "Pour la palme et l’oléine d’Asie, la baisse du FCPO creuse l’écart avec l’huile de tournesol de la mer Noire, renchérie par les arrêts d’usines en Ukraine.",
+      "source": "Bernama",
+      "url": "https://www.bernama.com/en/market/news.php?id=2635799"
+    },
+    {
+      "id": "2026-11-17-us-cbot-seance-recolte-96",
+      "date": "2026-11-17",
+      "time": "Clôture Chicago",
+      "product": "sbo",
+      "origin": "us",
+      "category": "trade",
+      "title": "CBOT : l’huile de soja quasi stable à 62,13 ¢/lb, le soja recule ; récolte américaine à 96 %",
+      "summary": "Mardi, l’huile de soja de décembre a fini à 62,13 cents la livre (−0,06), le soja de janvier à 12,255 USD le boisseau (−3,5 cents) et le tourteau de décembre à 335,20 USD la short ton (+0,60). La veille, l’USDA indiquait que 96 % du soja américain était récolté au 15 novembre, contre 92 % une semaine plus tôt et 95 % en moyenne sur cinq ans.",
+      "number": "62,13 ¢/lb",
+      "variation": "−0,06 ¢ sur la séance ; soja −3,5 ¢",
+      "period": "Séance du 17 nov. 2026",
+      "impact": "negative",
+      "intensity": 1,
+      "horizon": "short",
+      "status": "confirmed",
+      "transmission": "Avec une récolte presque terminée et une trituration record en octobre, l’offre d’huile de soja américaine reste abondante, ce qui freine le CBOT et les prix FOB argentins qui s’y réfèrent.",
+      "caveat": "Une décision favorable de l’EPA sur les volumes de biocarburants ou une reprise nette du pétrole relancerait la demande d’huile de soja.",
+      "morocco": "Pour l’huile de soja argentine, un CBOT stable laisse le coût rendu Casablanca surtout dépendre de la prime FOB Up River et du fret.",
+      "source": "Brownfield Ag News",
+      "url": "https://brownfieldagnews.com/news/closing-grain-and-livestock-futures-november-17-2026/"
+    },
+    {
+      "id": "2026-11-17-ukr-graine-tournesol-danube",
+      "date": "2026-11-17",
+      "time": "16:12 Kyiv",
+      "product": "sun",
+      "origin": "ukr",
+      "category": "trade",
+      "title": "Ukraine : la graine de tournesol perd 1 500 UAH/t en une semaine et part vers les ports du Danube",
+      "summary": "Après les frappes, presque tous les grands triturateurs ont cessé de transformer et d’acheter de la graine, selon UkrAgroConsult. Du 6 au 13 novembre, le prix a reculé de 1 500 UAH/t, à 13 500 UAH/t, soit environ 297 USD/t. Les ventes vers les ports du Danube s’accélèrent, avec des acheteurs turcs, roumains et désormais bulgares ; le risque de stocks de graines encore plus lourds augmente.",
+      "number": "13 500 UAH/t",
+      "variation": "−1 500 UAH/t du 6 au 13 nov.",
+      "period": "Semaine du 6 au 13 nov. 2026",
+      "impact": "negative",
+      "intensity": 2,
+      "horizon": "short",
+      "status": "confirmed",
+      "transmission": "Sans triturateurs pour l’acheter, la graine ukrainienne baisse et cherche preneur à l’export, ce qui alimente à bas prix les usines turques, roumaines et bulgares.",
+      "caveat": "Un redémarrage rapide des usines ukrainiennes ou une limite aux exportations de graines relancerait la demande intérieure.",
+      "morocco": "Les triturateurs bulgares et roumains, approvisionnés en graine ukrainienne bon marché, peuvent proposer de l’huile plus compétitive vers Casablanca que l’origine ukrainienne.",
+      "source": "UkrAgroConsult",
+      "url": "https://ukragroconsult.com/en/news/ukraine-sunflower-prices-declined-amid-attacks-on-processing-plants/"
+    },
     {
       "id": "2026-11-17-ukr-ukroliyaprom-arrets-usines",
       "date": "2026-11-17",
@@ -19,8 +107,31 @@
       "status": "confirmed",
       "transmission": "L’Ukraine exporte l’essentiel de son huile de tournesol : chaque usine arrêtée réduit l’offre exportable et soutient les prix FOB mer Noire et les cotations européennes.",
       "caveat": "Les arrêts sont présentés comme temporaires ; une reprise rapide des usines une fois la situation stabilisée effacerait la prime.",
+      "morocco": "Moins d’huile ukrainienne disponible : demander rapidement les offres décembre-janvier et comparer avec les origines russe, bulgare et roumaine.",
       "source": "UkrAgroConsult (Ukroliyaprom)",
       "url": "https://ukragroconsult.com/en/news/ukraines-edible-oil-supply-unaffected-by-temporary-shutdowns-of-crushing-plants-ukroliyaprom/"
+    },
+    {
+      "id": "2026-11-17-bgr-gas-husky-varna",
+      "date": "2026-11-17",
+      "time": "",
+      "product": "freight",
+      "origin": "bgr",
+      "category": "geo",
+      "title": "Mer Noire : le gazier Gas Husky coulé à 55 milles de Varna, au lendemain du Betul 8",
+      "summary": "Le Gas Husky, gazier GPL sous pavillon libérien qui allait d’Alexandrie vers la Roumanie, a été coulé mardi à environ 55 milles nautiques de Varna, selon The Maritime Executive. Il s’ajoute au Betul 8, coulé la veille avec du blé, et à quatre autres navires touchés depuis début novembre dans les eaux roumaines et bulgares. Le média souligne que ces attaques visent à couler les navires, avec des victimes dans la plupart des cas.",
+      "number": "6 navires touchés en novembre",
+      "variation": "Dont 2 coulés les 16 et 17 nov.",
+      "period": "17 nov. 2026",
+      "impact": "positive",
+      "intensity": 2,
+      "horizon": "short",
+      "status": "confirmed",
+      "transmission": "Les attaques se rapprochent des routes de Constanța et de Varna, d’où part l’huile de tournesol roumaine et bulgare : primes de risque de guerre et réticence des armateurs peuvent renchérir le fret.",
+      "caveat": "Une escorte navale renforcée ou un accord de navigation sûre en mer Noire ferait retomber les primes.",
+      "morocco": "Le fret des petits tankers d’huile de Constanța et de Varna vers Casablanca peut intégrer une surprime de guerre : vérifier la clause de risque de guerre des offres CFR.",
+      "source": "The Maritime Executive",
+      "url": "https://maritime-executive.com/article/russia-deepens-its-attacks-on-black-sea-shipping"
     },
     {
       "id": "2026-11-16-world-brent-excedent",
@@ -40,6 +151,7 @@
       "status": "confirmed",
       "transmission": "Un pétrole moins cher réduit la rentabilité du biodiesel et du diesel renouvelable, donc la demande d’huiles de soja et de palme comme matières premières ; la palme et l’huile de soja ont reculé avec le brut.",
       "caveat": "Les attaques de navires près d’Ormuz se poursuivent ; une escalade avec l’Iran ferait rapidement remonter le brut.",
+      "morocco": "Un brut plus bas allège les soutes, donc le fret vers Casablanca, et retire un soutien aux prix de la palme et de l’huile de soja.",
       "source": "Bloomberg (via Rigzone)",
       "url": "https://www.rigzone.com/news/wire/oil_retreats_as_traders_weigh_supply_glut-16-nov-2026-185096-article/"
     },
@@ -61,6 +173,7 @@
       "status": "confirmed",
       "transmission": "Des exportations en léger recul alors que les stocks sont jugés élevés retardent le déstockage malaisien et pèsent sur les prix de la palme.",
       "caveat": "La production entre dans sa baisse saisonnière ; une demande indienne soutenue ou la crainte d’El Niño peut vite relancer les cours.",
+      "morocco": "Des vendeurs malaisiens chargés en stocks peuvent consentir des primes plus basses sur la palme et l’oléine à embarquer en décembre.",
       "source": "Business Recorder (Reuters)",
       "url": "https://www.brecorder.com/news/40449183/palm-falls-on-high-stockpiles-lower-output-expectations-caps-decline"
     },
@@ -82,6 +195,7 @@
       "status": "confirmed",
       "transmission": "Une trituration record et des stocks d’huile nettement supérieurs aux attentes signalent une offre américaine d’huile de soja plus abondante que prévu, ce qui pèse sur le contrat CBOT et sur les prix FOB sud-américains qui s’y réfèrent.",
       "caveat": "Les stocks restent inférieurs de 10 % à leur niveau d’il y a un an : une demande soutenue des usines de biodiesel pourrait vite résorber l’écart.",
+      "morocco": "Une huile de soja abondante aux États-Unis limite la hausse des prix FOB argentins, référence de nos achats d’huile de soja.",
       "source": "Total Farm Marketing (NOPA)",
       "url": "https://www.totalfarmmarketing.com/tfm-daily-market-summary-11-16-2026/"
     },
@@ -103,6 +217,7 @@
       "status": "confirmed",
       "transmission": "Les tankers chargeant en mer Noire ou en Argentine pour Casablanca soutent souvent à Gibraltar : un VLSFO moins cher allège la composante soutes du fret, d’autant que le brut a encore chuté lundi après-midi.",
       "caveat": "Le prix absolu n’est pas publié dans cette mise à jour ; un rebond du brut ou une tension sur l’approvisionnement en Méditerranée effacerait la baisse.",
+      "morocco": "Les soutes moins chères à Gibraltar réduisent directement le coût du fret des tankers d’huile qui viennent de la mer Noire ou d’Argentine.",
       "source": "ENGINE",
       "url": "https://www.engine.online/news/europe-and-africa-market-update-16-nov-841d"
     },
@@ -124,6 +239,7 @@
       "status": "confirmed",
       "transmission": "Les attaques gagnent les eaux bulgares, près de Varna, port de chargement de l’huile de tournesol bulgare, et la route de Constanța. Assureurs et armateurs peuvent relever surprimes de guerre et taux des petits tankers vers Casablanca.",
       "caveat": "L’auteur n’est pas identifié et aucune hausse chiffrée de surprime n’est encore publiée ; une accalmie des frappes limiterait l’effet.",
+      "morocco": "Les offres CFR au départ de Varna et de Constanța peuvent intégrer une surprime de risque de guerre : vérifier la clause avant de comparer les origines.",
       "source": "Al Jazeera",
       "url": "https://www.aljazeera.com/news/2026/11/16/cargo-ship-capsizes-off-bulgarias-black-sea-coast"
     },
@@ -145,6 +261,7 @@
       "status": "confirmed",
       "transmission": "Un semis rapide et bien arrosé améliore les chances d’une récolte brésilienne abondante début 2027, ce qui pèse sur les prix mondiaux du soja et de ses dérivés.",
       "caveat": "La récolte reste exposée à la météo de décembre-janvier : une sécheresse dans le Centre-Ouest ou des excès de pluie dans le Sud inverseraient la lecture.",
+      "morocco": "Une grosse récolte brésilienne au premier trimestre 2027 promet davantage d’huile de soja sud-américaine et des prix plus détendus au printemps.",
       "source": "Reuters (via Investing.com)",
       "url": "https://br.investing.com/news/commodities-news/plantio-de-soja-2627-do-brasil-alcanca-78-aponta-agrural-2128077"
     },
@@ -166,6 +283,7 @@
       "status": "rumor",
       "transmission": "Des contrôles plus longs à l’arrivée renchérissent les surestaries et peuvent freiner les achats chinois, ce qui pèse sur la demande adressée aux exportateurs de soja.",
       "caveat": "Information non confirmée ; un démenti de Pékin ou une détente commerciale avec Washington effacerait cet effet.",
+      "morocco": "Un ralentissement des achats chinois de graines laisse plus de soja à triturer en Amérique du Sud, donc plus d’huile disponible à l’export.",
       "source": "Red River Farm Network",
       "url": "https://www.rrfn.com/2026/11/16/slow-walking-soybean-inspections/"
     },
@@ -187,6 +305,7 @@
       "status": "confirmed",
       "transmission": "Le premier importateur mondial a acheté davantage de palme, ce qui soutient la demande adressée à l’Indonésie et à la Malaisie. Mais des stocks en hausse de 0,23 Mt au 1er novembre peuvent ralentir les achats des prochaines semaines.",
       "caveat": "Un écart de prix défavorable à la palme face aux huiles de soja et de tournesol ramènerait les acheteurs indiens vers les huiles douces.",
+      "morocco": "L’Inde reste le premier concurrent à l’achat de palme et d’huiles douces : des stocks indiens plus hauts peuvent alléger la concurrence sur les cargaisons des prochaines semaines.",
       "source": "Business Standard (SEA)",
       "url": "https://www.business-standard.com/amp/economy/news/india-s-edible-oil-import-bill-rises-24-to-record-2-trillion-in-2025-26-126111601382_1.html"
     },
@@ -208,8 +327,31 @@
       "status": "confirmed",
       "transmission": "Des triturateurs russes qui paient la graine plus cher relèvent leur prix de revient et limitent la baisse des offres d’huile russe à l’export, principal concurrent de l’huile ukrainienne en Méditerranée.",
       "caveat": "La récolte russe reste abondante ; un afflux de livraisons des agriculteurs ferait repartir la graine à la baisse.",
+      "morocco": "Une graine plus chère en Russie limite la baisse des offres d’huile de tournesol russe, principale alternative à l’origine ukrainienne vers Casablanca.",
       "source": "SovEcon (via Reuters / The Moscow Times)",
       "url": "https://ru.themoscowtimes.com/2026/11/16/eksportnye-tseny-na-pshenitsu-rf-vnov-upali-na-proshloy-nedele-a211436"
+    },
+    {
+      "id": "2026-11-16-ukr-bunge-dnipro-40pct",
+      "date": "2026-11-16",
+      "time": "",
+      "product": "sfo",
+      "origin": "ukr",
+      "category": "supply",
+      "title": "Ukraine : l’usine Oleina de Bunge à Dnipro frappée, 40 % de la trituration de tournesol serait à l’arrêt",
+      "summary": "Une frappe russe a incendié lundi en fin de matinée une usine agroalimentaire de Dnipro, identifiée localement comme l’usine d’huile de tournesol Oleina, que la presse ukrainienne attribue à Bunge ; c’est au moins la troisième attaque contre ce site cette année. Le média Liga estime qu’environ 40 % des capacités ukrainiennes de trituration de tournesol sont désormais à l’arrêt, après la suspension de toutes les usines de Kernel vers le 12 novembre.",
+      "number": "≈ 40 % des capacités",
+      "variation": "Estimation Liga, après l’arrêt des usines de Kernel",
+      "period": "16 nov. 2026",
+      "impact": "positive",
+      "intensity": 2,
+      "horizon": "short",
+      "status": "estimate",
+      "transmission": "Moins d’usines en marche, c’est moins d’huile ukrainienne à exporter dans les prochaines semaines : l’offre FOB mer Noire se raréfie alors que la graine s’accumule chez les producteurs.",
+      "caveat": "Une reprise rapide des usines, ou un fort détournement de la graine vers les triturateurs de Bulgarie, de Roumanie et de Turquie, compenserait une partie du manque d’huile.",
+      "morocco": "Pour l’huile de tournesol ukrainienne vers Casablanca, les offres décembre-janvier risquent d’être rares et plus chères ; les origines russe, bulgare et roumaine prennent le relais.",
+      "source": "Euromaidan Press",
+      "url": "https://euromaidanpress.com/2026/11/16/russia-hits-dnipro-oil-plant-reportedly-owned-by-us-based-bunge-as-its-strikes-idle-an-estimated-40-of-ukraines-sunflower-processing/"
     },
     {
       "id": "2026-11-16-us-inspections-soja",
@@ -229,6 +371,7 @@
       "status": "confirmed",
       "transmission": "Des chargements nettement supérieurs à ceux de l’an dernier confirment une demande export soutenue pour le soja américain, ce qui soutient la graine à Chicago et le prix de revient de la trituration.",
       "caveat": "Le rythme ralentit d’une semaine sur l’autre ; un tassement des achats chinois ferait vite retomber ce soutien.",
+      "morocco": "Des exportations de graines américaines solides ne changent pas l’offre d’huile à court terme ; effet limité sur nos achats.",
       "source": "USDA AMS",
       "url": "https://www.ams.usda.gov/mnreports/wa_gr101.txt"
     },
@@ -1177,5 +1320,55 @@
       "source": "La Tribuna (BCH)",
       "url": "https://www.latribuna.hn/2026/09/21/261-6-millones-en-divisas-ha-dejado-el-aceite-de-palma/"
     }
-  ]
+  ],
+  "brief": {
+    "date": "2026-11-18",
+    "headline": "Tournesol sous tension en mer Noire, palme et soja en repli : l’écart de prix entre les huiles se creuse.",
+    "points": [
+      {
+        "complex": "sun",
+        "impact": "positive",
+        "text": "Après Kernel, l’usine de Bunge à Dnipro a été frappée : environ 40 % de la trituration ukrainienne serait à l’arrêt. L’huile se raréfie (+60 à 65 USD/t aux six ports européens le 13 novembre) pendant que la graine baisse et part vers le Danube.",
+        "ids": [
+          "2026-11-16-ukr-bunge-dnipro-40pct",
+          "2026-11-14-eu-sfo-six-ports-hausse",
+          "2026-11-17-ukr-graine-tournesol-danube"
+        ]
+      },
+      {
+        "complex": "palm",
+        "impact": "negative",
+        "text": "Le FCPO février a perdu 2,4 % mardi, à 4 436 MYR/t : stocks malaisiens élevés, exportations en léger recul du 1er au 15 novembre (−1 à −3,9 %) et huiles concurrentes plus faibles.",
+        "ids": [
+          "2026-11-17-mys-fcpo-recul-2-4",
+          "2026-11-16-mys-fcpo-exports-1-15-nov"
+        ]
+      },
+      {
+        "complex": "soy",
+        "impact": "negative",
+        "text": "Trituration NOPA record en octobre et récolte américaine à 96 % : l’huile de soja reste lourde à Chicago, à 62,13 ¢/lb, sans nouveau relais de demande.",
+        "ids": [
+          "2026-11-17-us-cbot-seance-recolte-96",
+          "2026-11-16-us-nopa-octobre-record"
+        ]
+      },
+      {
+        "complex": "macro",
+        "impact": "mixed",
+        "text": "Le Brent se stabilise vers 93 USD/b après sa chute de lundi. En mer Noire, six navires ont été touchés en novembre, dont deux coulés au large de la Bulgarie : risque de surprime sur le fret depuis Constanța et Varna.",
+        "ids": [
+          "2026-11-17-world-brent-golfe",
+          "2026-11-17-bgr-gas-husky-varna",
+          "2026-11-16-bgr-betul8-naufrage"
+        ]
+      }
+    ],
+    "watch": [
+      "Exportations malaisiennes du 1er au 20 novembre (ITS, AmSpec), vendredi 20 novembre.",
+      "Ventes à l’export hebdomadaires de l’USDA, jeudi 19 novembre.",
+      "Ukraine : durée des arrêts d’usines et nouvelles frappes contre les triturateurs.",
+      "Indonésie : prix de référence du CPO pour décembre, attendu en fin de mois."
+    ]
+  }
 }
