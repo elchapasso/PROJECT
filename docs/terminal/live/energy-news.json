@@ -1,8 +1,28 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-17T23:07:44Z",
-  "collectedAt": "2026-11-17T23:07:44Z",
+  "checkedAt": "2026-11-18T04:41:17Z",
+  "collectedAt": "2026-11-18T04:41:17Z",
   "articles": [
+    {
+      "title": "Oil prices fall as higher US crude stocks temper supply risks",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQbmp3REJQam1xdjkyMkpCN1JlSkotTnJNM0JEWDVFNmJqZ2FHbmNIN2E0V2twa2N3djBLTXlNNVJvcDJmZVNXMlBlQnk2VG1FTThnX0hQbVRqS2dKbVVBdXl6MWR5ZHo0S2VneWt2bUdwVjE4TnNxaHFLN0hHNU9IUVljVnNXLWJTeHdORFFJX3BfQXhPTThEbGFYQXhYaGNneHRHcVRGS2NyOFhxTzVN",
+      "publishedAt": "2026-11-18T02:16:00Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Latest Oil Market News and Analysis for Nov. 18",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-17/latest-oil-market-news-and-analysis-for-nov-18",
+      "publishedAt": "2026-11-17T23:01:33Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
     {
       "title": "U.S. Military Strikes Iranian Missile Site Near Strait of Hormuz",
       "url": "https://gcaptain.com/u-s-military-strikes-iranian-missile-site-near-strait-of-hormuz/",
@@ -398,20 +418,20 @@
       "via": "google"
     },
     {
-      "title": "Goldman Sachs Warns of ‘Sizable’ Oil Market Surplus in 2027",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOcGlrVWdaUnhwcDBydlg3aUV4Vk4zQk9BelRKUC1tajFKVkV1VFhYbGF1aFNvT0Q1bXRYQXRJTFJXckVveTgyRWp3bllkUXpyMXpyX2RUYUt3aWpRN002Q0hvUnBNSHBBQXFxXy01X3ZyUEVLQnhEbFdSZHNQUTFQMWRaYU5PTzNpcml2RHJ1WDNaNzd1NWVCSVduZjlVaFBKYTRWcXJPYmxRZGNaQlB0NG5LUQ",
-      "publishedAt": "2026-11-16T07:45:00Z",
-      "source": "Bloomberg",
+      "title": "India's wholesale inflation accelerates to 12.29% in October on fuel price surge",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPOTZCYmwwajlmSXIyWWx2WXhZaE81VjdHTS1vc0wtdUpBNG01WnFDdVF1bXlmNXNwalQ2N2lKT1hXODMydGtUY25fcDgxQW5jVnFTVUNXQ09NN2twb1hiNE9kVHowRUZhenVIY2dDUzhPTkFaTzBqaUF5emNlaHdLc3JEcWhrTlBuemFxR01HNUNJV1FjVnlxYTJ0bWpIcks0YUFv",
+      "publishedAt": "2026-11-16T08:16:40Z",
+      "source": "Reuters",
       "topics": [
         "energy"
       ],
       "via": "google"
     },
     {
-      "title": "India's wholesale inflation accelerates to 12.29% in October on fuel price surge",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPOTZCYmwwajlmSXIyWWx2WXhZaE81VjdHTS1vc0wtdUpBNG01WnFDdVF1bXlmNXNwalQ2N2lKT1hXODMydGtUY25fcDgxQW5jVnFTVUNXQ09NN2twb1hiNE9kVHowRUZhenVIY2dDUzhPTkFaTzBqaUF5emNlaHdLc3JEcWhrTlBuemFxR01HNUNJV1FjVnlxYTJ0bWpIcks0YUFv",
-      "publishedAt": "2026-11-16T06:37:00Z",
-      "source": "Reuters",
+      "title": "Goldman Sachs Warns of ‘Sizable’ Oil Market Surplus in 2027",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOcGlrVWdaUnhwcDBydlg3aUV4Vk4zQk9BelRKUC1tajFKVkV1VFhYbGF1aFNvT0Q1bXRYQXRJTFJXckVveTgyRWp3bllkUXpyMXpyX2RUYUt3aWpRN002Q0hvUnBNSHBBQXFxXy01X3ZyUEVLQnhEbFdSZHNQUTFQMWRaYU5PTzNpcml2RHJ1WDNaNzd1NWVCSVduZjlVaFBKYTRWcXJPYmxRZGNaQlB0NG5LUQ",
+      "publishedAt": "2026-11-16T07:45:00Z",
+      "source": "Bloomberg",
       "topics": [
         "energy"
       ],
@@ -1050,6 +1070,16 @@
       "via": "google"
     },
     {
+      "title": "Ukraine plans to deploy maritime and aerial drones to protect ships in the Black Sea",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNWkxObmp4cThnNk1VYnRwUXVoeHFWMUJBaXNRLXUwSEU4ajg1SE5BSElzN0NJZjA5dkFLa1RFVWZYVHRha2RpN1ZzV0dPczBidllUMTRlQlZzUERxTDNKaTZNTkFSZWVJU2VZWnR6NVZTOU1BWXFrRzZ4UXBmWnpqN09hdkhEc0dHWWhPZEs1RHNxV1dqdGhZcTF6YkhnVFY1ZzhhM2o2dkJZY1RoUDZ3ejczYjUxR3JGemRHMA",
+      "publishedAt": "2026-11-12T06:44:24Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Palm Oil Climbs as El Niño Threatens Indonesia’s 2027 Supplies",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNX1huR0FLNlV5eGpFM0c3azZPZE9yOVlKODZhRWJRSXp2MWtqRnpEdGwyU1BaUG83SFBpLXJPWEdVZFd0VDF1bWlNazNyYllqMXl2ZlhBeGhuZ3JxWEpXWlNsb1VxNEVRb2d4d3NyMDBWTjBLMUhnLWZLeGJNX1BHbmpYUEYtWnRfV2ZhUG5pMFRoZVBCQXNNZ0NCenplQWlXX0w2VzUxTzJiT2tOSjI0c2piUQ",
       "publishedAt": "2026-11-12T04:07:35Z",
@@ -1180,16 +1210,6 @@
       "source": "The New York Times",
       "topics": [
         "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "COMMENTARY: Trump’s Iran war pause is as costly as new strikes",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQYXNuaEJXU0pFb0oxRlkzenJYREJId21QY2pxclZ3bnBDWEFwZXFhZkJCLTJEUWJELTRKeExPZDdYWmZUY25UZnNJYXZ5NGNUYXpUSHkwZUJyYU9wWmp0aWVHTUQ1ZFVlQ3dOZnE3azBSNm9KZVRMWnJEWXExR3VrektGaXU2RlNySG5GX01LbHR2M2xxMF92RzcwZWV0REJ6T3ZIV0dvQkM0c1pQU1hzQlVB",
-      "publishedAt": "2026-11-11T07:57:11Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
       ],
       "via": "google"
     },
@@ -1473,16 +1493,6 @@
       "via": "google"
     },
     {
-      "title": "Rubio Sees No Iran Breakthrough as Trump Downplays Strikes",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQZzA3VUJ1UWpnaXNfMkt1RFJGUWxuRG5EX3VsRWJBVngwNVJETXBfS1dUUGFZel9lMEJIdi10dFNlZWduc1ZSOU50bTBfbXVyLUpaQ2EzSmpXSWZGM2pNcFJJaFExVWhDTmxVSnc0TWozMTc5T1lhSHIwU2hTVU1XSzdYU3dDQldWZ2dRS012TUpsSFRBSmJjcEtRbkFIU09NMkFORGpxanpXaXhIVF81TzZoSTE",
-      "publishedAt": "2026-11-09T01:27:00Z",
-      "source": "Bloomberg",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Iraq Has Reached Understandings With US To Allow Oil Exports Through Hormuz",
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOQlJwZW9qVWozVExBTWZZa0JEVTNvQ3cycjJ2TjA0VUExNWZsSkcxeFBpTjRReWFqbklWQ3F0MGYxNU9rcGtMeDZLa3VxeGoyQWFzamtPbHRqaXRTSmV3b1FRWF90TUVZS21PUmFZQWRZREYtZUx4WThvb19sT1BPdkNYSFBiWTNfdVVmUk5RNXFtYjctOThkZWVDdTliZw",
       "publishedAt": "2026-11-08T22:30:33Z",
@@ -1543,16 +1553,6 @@
         "energy"
       ],
       "via": "rss"
-    },
-    {
-      "title": "Malaysian palm oil prices plunge 9% in a week, steepest drop in nearly two years",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPVlg5ZW90aGVpQVhZRlJIUHdBMjdxalE1RGphaDA3clZxWUQ4SzZnalR3NVFPWlZwZFlwcW12LUFucGt0VkNzUTVfbnRMWWRFNGFkd1pURkJaeXlfdDJOdVdZNlp5SnVrQnNvYkdfRWVidzg4TkFoN0MzQ0E4VDc4U2xnTHdNa1pKQWlzUFFveVQtOW1ydlBSZTZ0RGplTEhCcVpKc29XR201NldwUjZBMzNTSmU",
-      "publishedAt": "2026-11-06T13:06:23Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
     },
     {
       "title": "Refineries have shifted production away from gasoline to middle distillates",
