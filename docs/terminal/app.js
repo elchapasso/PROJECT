@@ -18,6 +18,7 @@ import {sunflowerHistory,sunflowerSources} from './sunflower-history.js?v=202611
 import {GASOIL_KG_PER_LITRE,spreadLegPoints} from './spread-model.mjs?v=20261113-marges';
 import {eurUsdSource,spreadLegs} from './spread-definitions.mjs?v=20261113-marges';
 import {spreadPrices,priceFeed} from './spread-live.mjs?v=20261113-marges';
+import {importance,topStories,sentimentSeries,priceReaction,marketReading,oilUsdSeries,sparkline} from './news-insights.mjs?v=20261118-actu';
 import {sourceAlerts} from './price-feed.mjs?v=20261113-futures';
 import {focusSpreads,focusRows,focusStats,focusWindow,focusAverage,focusInputs,checkFocusParams} from './spread-focus.mjs?v=20261113-marges';
 import {focusMargins} from './margin-focus.mjs?v=20261113-marges';
@@ -66,20 +67,29 @@ let data=emptyStore();
 let loadError='';
 try{const raw=localStorage.getItem(localKey);if(raw)data=parseStore(raw);}catch{loadError='Les données locales n’ont pas pu être chargées.';}
 const state={
-  page:'overview',filters:{...FILTERS},theme:'light',mobile:false,chart:'oils',pubGroup:'all',
+  page:'overview',filters:{...FILTERS},theme:'light',mobile:false,chart:'daily',pubGroup:'all',
   indiaOriginPeriod:Object.keys(indiaOrigins).at(-1),indiaOriginMode:'volume',
   soyFamily:'soy',soyOrigin:'us',brazilSoyView:'monthly',sunFamily:'sun',sunOrigin:'ukr',sunView:'',seasonYears:{},
-  originTab:{},query:'',newsComplex:'all',newsOrigin:'',newsImpact:'',newsWindow:'30',newsLimit:60,
+  originTab:{},query:'',newsComplex:'all',newsOrigin:'',newsImpact:'',newsWindow:'30',newsLimit:60,newsSort:'recent',newsView:'full',newsSeen:'',
   crossView:'spreads',crossPair:'0',crossRange:'8',crossMode:'index',crossA:'wb-sbo',crossB:'wb-palm',
   month:calendarToday().slice(0,7),editType:'events',
 };
 try{if(localStorage.getItem('olea-theme')==='dark')state.theme='dark';}catch{}
+// Préférences de lecture du flux d’actualités (tri et vue), gardées dans ce navigateur.
+try{const prefs=JSON.parse(localStorage.getItem('olea-news-prefs')||'{}');if(['recent','important'].includes(prefs.sort))state.newsSort=prefs.sort;if(['full','compact'].includes(prefs.view))state.newsView=prefs.view;}catch{}
 const readPage=()=>{const p=location.hash.slice(1).split('?')[0];return Object.hasOwn(nav,p)?p:'overview';};
 state.page=readPage();
 let toastTimer;
 // Veille quotidienne (news-feed.json) : rédigée chaque matin et publiée sur la branche news-live.
-let newsFeed={updatedAt:'',items:[]};
+let newsFeed={updatedAt:'',items:[],brief:null};
 let newsFeedLoaded=false;
+// « Nouveau » = fiche absente lors de la visite précédente (identifiants gardés dans ce navigateur).
+const newsSeenKey='olea-news-seen';
+const readSeen=()=>{try{const raw=JSON.parse(localStorage.getItem(newsSeenKey)||'null');return Array.isArray(raw)?new Set(raw):null;}catch{return null;}};
+const newsSeenBefore=readSeen();
+const newsReadNow=new Set();
+const isNewsNew=r=>newsSeenBefore!==null&&!newsSeenBefore.has(r.id)&&!newsReadNow.has(r.id);
+function rememberSeen(ids){try{localStorage.setItem(newsSeenKey,JSON.stringify([...new Set([...(readSeen()||[]),...ids])].slice(-4000)));}catch{}}
 const fullEvents=()=>unique([...seedEvents,...newsFeed.items,...data.events],eventKey).sort(byDate);
 const fullBalances=()=>balancesWithRatios(unique([...seedBalances,...data.balances],balanceKey));
 let calendarFeed=null;
@@ -450,10 +460,16 @@ function newsMatches(r){
   const q=String(state.query||'').trim().toLocaleLowerCase('fr');
   return !q||[r.title,r.summary,r.source,r.transmission,r.number,products[r.product],origins[r.origin]].some(v=>String(v??'').toLocaleLowerCase('fr').includes(q));
 }
-const newsRows=()=>newsBase().filter(newsMatches).sort(byRecent);
+const newsRows=()=>{
+  const today=newsToday();
+  let rows=newsBase().filter(newsMatches);
+  if(state.newsSeen==='unread')rows=rows.filter(isNewsNew);
+  return state.newsSort==='important'?rows.sort((a,b)=>importance(b,today)-importance(a,today)||byRecent(a,b)):rows.sort(byRecent);
+};
 const tally=rows=>Object.fromEntries(['positive','negative','mixed'].map(k=>[k,rows.filter(r=>r.impact===k).length]));
 const impactPill=r=>'<span class="impact-pill" data-impact="'+e(r.impact)+'">'+impactMarks[r.impact]+' '+e(labels.impact[r.impact])+'</span>';
 const intensityDots=n=>'<span class="intensity" title="Intensité '+e(labels.intensity[n].toLowerCase())+'">'+[1,2,3].map(i=>'<i class="'+(i<=n?'on':'')+'"></i>').join('')+'<span>'+e(labels.intensity[n])+'</span></span>';
+const intensityCompact=n=>'<span class="intensity compact" title="Intensité '+e(labels.intensity[n].toLowerCase())+'">'+[1,2,3].map(i=>'<i class="'+(i<=n?'on':'')+'"></i>').join('')+'</span>';
 const tallyBar=t=>'<div class="tally-bar" aria-hidden="true">'+['positive','negative','mixed'].map(k=>t[k]?'<i class="'+k+'" style="flex:'+t[k]+'"></i>':'').join('')+'</div>';
 const tallyText=t=>'<span class="tally num"><b class="positive" title="Haussier">▲ '+t.positive+'</b><b class="negative" title="Baissier">▼ '+t.negative+'</b><b class="mixed" title="Mixte">◆ '+t.mixed+'</b></span>';
 const newsWindowLabel=()=>'les '+state.newsWindow+' derniers jours';
@@ -463,33 +479,63 @@ function dayLabel(d){
   return (d===t?'Aujourd’hui · ':d===addDays(t,-1)?'Hier · ':'')+label.charAt(0).toUpperCase()+label.slice(1);
 }
 const newsSourceLink=r=>safeURL(r.url)?'<a class="news-source" href="'+e(safeURL(r.url))+'" target="_blank" rel="noopener noreferrer" title="Ouvrir la source">'+e(r.source)+' '+icon('arrow',12)+'</a>':'<span class="small">'+e(r.source)+'</span>';
+const newsShortDate=r=>formatDate(r.date).replace(/ \d{4}$/,'');
+const complexShort=r=>newsComplexes[complexOf(r)]?.short??(groups.rape.products.includes(r.product)?'Colza':'Autre');
+const newBadge=r=>isNewsNew(r)?'<span class="news-new">Nouveau</span>':'';
 function newsItem(r){
-  const c=newsComplexes[complexOf(r)];
-  return '<article class="news-item" data-impact="'+e(r.impact)+'">'+
-    '<div class="news-when"><b class="num">'+e(formatDate(r.date).replace(/ \d{4}$/,''))+'</b><small>'+e(r.time||'Heure n. d.')+'</small></div>'+
-    '<div class="news-body"><div class="news-tags"><span class="news-tag">'+e(c?.short??(groups.rape.products.includes(r.product)?'Colza':'Autre'))+'</span><span>'+e(products[r.product])+'</span><span>'+e(origins[r.origin])+'</span>'+(labels.category[r.category]!==products[r.product]?'<span>'+e(labels.category[r.category])+'</span>':'')+'<span>'+e(labels.status[r.status])+'</span></div>'+
+  const uncertain=['rumor','pending'].includes(r.status);
+  return '<article class="news-item'+(isNewsNew(r)?' is-new':'')+(uncertain?' uncertain':'')+'" data-impact="'+e(r.impact)+'">'+
+    '<div class="news-when"><b class="num">'+e(newsShortDate(r))+'</b>'+(r.time?'<small>'+e(r.time)+'</small>':'')+'</div>'+
+    '<div class="news-body"><div class="news-tags">'+newBadge(r)+'<span class="news-tag">'+e(complexShort(r))+'</span><span>'+e(products[r.product])+'</span><span>'+e(origins[r.origin])+'</span>'+(labels.category[r.category]!==products[r.product]?'<span>'+e(labels.category[r.category])+'</span>':'')+'<span'+(uncertain?' class="status-warn"':'')+'>'+e(labels.status[r.status])+'</span></div>'+
     '<h4>'+eventBtn(r)+'</h4><p class="news-summary">'+e(r.summary)+'</p>'+
     '<p class="news-figure"><b class="num">'+e(r.number)+'</b>'+(r.variation?'<span>'+e(r.variation)+'</span>':'')+'<span>'+e(r.period)+'</span></p>'+
-    '<p class="news-why"><strong>Pourquoi '+e(labels.impact[r.impact].toLowerCase())+'</strong> · '+e(r.transmission)+'</p></div>'+
-    '<div class="news-side">'+impactPill(r)+intensityDots(r.intensity)+'<span class="small">'+e(labels.horizon[r.horizon])+'</span>'+newsSourceLink(r)+'</div></article>';
+    '<p class="news-why"><strong>Pourquoi '+e(labels.impact[r.impact].toLowerCase())+'</strong> · '+e(r.transmission)+'</p>'+
+    (r.morocco?'<p class="news-morocco"><strong>Pour nos achats</strong> · '+e(r.morocco)+'</p>':'')+
+    '<p class="news-caveat"><strong>Ce qui inverserait la lecture</strong> · '+e(r.caveat)+'</p></div>'+
+    '<div class="news-side">'+impactPill(r)+intensityDots(r.intensity)+'<span class="small">'+e(labels.horizon[r.horizon])+'</span>'+newsSourceLink(r)+
+    '<button type="button" class="link-button news-copy" data-action="news-copy" data-id="'+e(r.id)+'" title="Copier la fiche pour la partager">'+icon('copy',12)+' Copier</button></div></article>';
 }
+function newsRow(r){
+  return '<li class="news-row'+(isNewsNew(r)?' is-new':'')+'" data-impact="'+e(r.impact)+'"><span class="num news-row-date">'+e(newsShortDate(r))+'</span>'+
+    '<span class="mark '+e(r.impact)+'" title="'+e(labels.impact[r.impact])+'">'+impactMarks[r.impact]+'</span>'+
+    '<span class="news-row-tags"><span class="news-tag">'+e(complexShort(r))+'</span>'+e(origins[r.origin])+'</span>'+
+    '<span class="news-row-title">'+newBadge(r)+eventBtn(r)+'<small>'+e(r.number+(r.variation?' · '+r.variation:''))+(r.morocco?' · Maroc : '+e(r.morocco):'')+'</small></span>'+
+    intensityCompact(r.intensity)+newsSourceLink(r)+'</li>';
+}
+const newsList=items=>state.newsView==='compact'?'<ol class="news-rows">'+items.map(newsRow).join('')+'</ol>':'<div class="news-list">'+items.map(newsItem).join('')+'</div>';
 function newsFeedHtml(rows){
-  if(!rows.length)return empty('Aucune actualité pour ces filtres sur '+newsWindowLabel()+'.');
+  if(!rows.length)return empty(state.newsSeen==='unread'?'Aucune nouvelle fiche depuis votre dernière visite pour ces filtres.':'Aucune actualité pour ces filtres sur '+newsWindowLabel()+'.');
   const shown=rows.slice(0,state.newsLimit);
+  const more=rows.length>shown.length?'<div class="news-more">'+action('news-more','Afficher '+Math.min(60,rows.length-shown.length)+' actualités de plus','ghost')+'</div>':'';
+  if(state.newsSort==='important')return '<section class="news-day"><h3><span>Classées par importance · intensité, fiabilité et fraîcheur</span>'+tallyText(tally(shown))+'</h3>'+newsList(shown)+'</section>'+more;
   const days=[...new Set(shown.map(r=>r.date))];
   return days.map(d=>{
     const items=shown.filter(r=>r.date===d);
-    return '<section class="news-day"><h3><span>'+e(dayLabel(d))+'</span>'+tallyText(tally(items))+'</h3><div class="news-list">'+items.map(newsItem).join('')+'</div></section>';
-  }).join('')+(rows.length>shown.length?'<div class="news-more">'+action('news-more','Afficher '+Math.min(60,rows.length-shown.length)+' actualités de plus','ghost')+'</div>':'');
+    return '<section class="news-day"><h3><span>'+e(dayLabel(d))+'</span>'+tallyText(tally(items))+'</h3>'+newsList(items)+'</section>';
+  }).join('')+more;
 }
+// Référence de prix de chaque complexe, pour confronter le sens des actualités au marché.
+const newsBenchmarks={
+  soy:{id:'zl',name:'Huile de soja · CBOT',unit:'¢/lb',digits:2},
+  sun:{id:'arSunOil',name:'Huile de tournesol · FOB Argentine',unit:'USD/t',digits:0},
+  palm:{id:'fcpo',name:'Huile de palme · FCPO',unit:'MYR/t',digits:0},
+};
+const benchmarkPoints=id=>(spreadPrices[id]||[]).map(([date,value])=>({date,value}));
 function complexCard(key,base){
   const c=newsComplexes[key],rows=base.filter(r=>complexOf(r)===key),t=tally(rows);
   const s=sentiment(rows,newsToday(),Number(state.newsWindow));
   const top=[...rows].sort((a,b)=>b.intensity-a.intensity||byRecent(a,b)).slice(0,3);
   const active=state.newsComplex===key&&!state.newsOrigin;
+  const b=newsBenchmarks[key];
+  const reaction=b?priceReaction(benchmarkPoints(b.id),{today:newsToday(),days:Number(state.newsWindow)}):null;
+  const reading=reaction?marketReading(s.orientation,reaction.change):null;
+  const price=reaction?'<div class="card-price"><div><small>'+e(b.name)+'</small><b class="num">'+num(reaction.last.value,b.digits)+' '+e(b.unit)+'</b>'+
+    '<span class="num '+(reaction.change>0?'positive':reaction.change<0?'negative':'')+'">'+sign(reaction.change,1)+' % sur '+e(state.newsWindow)+' j</span>'+
+    '<small>Dernière cotation : '+e(formatDate(reaction.last.date))+(reaction.stale?' · ancienne':'')+'</small></div>'+sparkline(reaction.points)+'</div>'+
+    '<p class="card-reading '+e(reading.tone)+'">'+e(reading.text)+'</p>':'';
   return '<article class="complex-card'+(active?' active':'')+'"><div class="spread-between"><span class="market-code">'+e(c.code)+'</span>'+
-    badge(s.orientation,s.score===null?'Sans signal':labels.impact[s.orientation]+' '+sign(s.score,0)+' / 100')+'</div><h3>'+e(c.name)+'</h3>'+tallyText(t)+tallyBar(t)+
-    '<ul>'+(top.length?top.map(r=>'<li><span class="mark '+e(r.impact)+'">'+impactMarks[r.impact]+'</span><div>'+eventBtn(r)+'<small>'+e(origins[r.origin]+' · '+formatDate(r.date)+' · '+r.source)+'</small></div></li>').join(''):'<li class="small">Aucune actualité sur '+e(newsWindowLabel())+'.</li>')+'</ul>'+
+    badge(s.orientation,s.score===null?'Sans signal':labels.impact[s.orientation]+' '+sign(s.score,0)+' / 100')+'</div><h3>'+e(c.name)+'</h3>'+tallyText(t)+tallyBar(t)+price+
+    '<ul>'+(top.length?top.map(r=>'<li><span class="mark '+e(r.impact)+'">'+impactMarks[r.impact]+'</span><div>'+newBadge(r)+eventBtn(r)+'<small>'+e(origins[r.origin]+' · '+formatDate(r.date)+' · '+r.source)+'</small></div></li>').join(''):'<li class="small">Aucune actualité sur '+e(newsWindowLabel())+'.</li>')+'</ul>'+
     '<footer><span>'+e(c.origins.map(o=>origins[o]).join(' · '))+'</span><button type="button" class="link-button" data-action="news-filter" data-complex="'+key+'" data-origin="">'+(active?'Tout afficher':'Voir le flux')+'</button></footer></article>';
 }
 function impactMap(base){
@@ -508,14 +554,46 @@ function impactMap(base){
   }).join('');
   return '<div class="scroll"><table class="table impact-map"><thead><tr><th>Origine</th><th class="num">▲ Haussier</th><th class="num">▼ Baissier</th><th class="num">◆ Mixte</th><th>Solde</th><th>Dernière actualité</th></tr></thead><tbody>'+body+'</tbody></table></div>';
 }
+const briefComplexNames={soy:'Soja & huile de soja',sun:'Tournesol',palm:'Huile de palme',macro:'Énergie, fret & devises'};
+function newsEssentials(){
+  const brief=newsFeed.brief,today=newsToday(),events=fullEvents();
+  const known=new Set(events.map(r=>r.id));
+  const top=topStories(events,today,{limit:6,days:7});
+  const briefPanel=brief?panel('<span class="eyebrow">Synthèse de la veille · '+e(formatDate(brief.date))+(brief.date<addDays(today,-2)?' · ancienne':'')+'</span>'+
+    '<p class="brief-headline">'+e(brief.headline)+'</p>'+
+    '<ul class="brief-points">'+brief.points.map(p=>{
+      const n=(p.ids||[]).filter(id=>known.has(id)).length;
+      return '<li data-impact="'+e(p.impact)+'">'+impactPill(p)+'<div><b>'+e(briefComplexNames[p.complex]||p.complex)+'</b><span>'+e(p.text)+'</span>'+
+        (n&&newsComplexes[p.complex]?'<button type="button" class="link-button" data-action="news-filter" data-complex="'+e(p.complex)+'" data-origin="">Voir les fiches ('+n+')</button>':'')+'</div></li>';
+    }).join('')+'</ul>'+
+    (brief.watch?.length?'<div class="brief-watch"><h4>À surveiller</h4><ul>'+brief.watch.map(w=>'<li>'+e(w)+'</li>').join('')+'</ul></div>':''),'brief-panel'):'';
+  const topPanel=panel('<h3>À la une · 7 jours</h3><p class="small">Les fiches les plus fortes, classées par intensité, fiabilité et fraîcheur.</p><ol class="top-stories">'+
+    (top.length?top.map(r=>'<li><span class="mark '+e(r.impact)+'" title="'+e(labels.impact[r.impact])+'">'+impactMarks[r.impact]+'</span><div>'+newBadge(r)+eventBtn(r)+
+      '<small>'+e([complexShort(r),origins[r.origin],newsShortDate(r),r.source].join(' · '))+'</small></div>'+intensityCompact(r.intensity)+'</li>').join(''):'<li class="small">Aucune actualité sur 7 jours.</li>')+'</ol>','top-panel');
+  return section('L’essentiel du jour',brief?'Synthèse de la veille et fiches les plus fortes de la semaine':'Fiches les plus fortes de la semaine')+
+    '<div class="essentials'+(brief?'':' single')+'">'+briefPanel+topPanel+'</div>';
+}
+function sentimentPanel(){
+  const today=newsToday(),events=fullEvents();
+  const first=events.map(r=>r.date).sort()[0]||today;
+  const from=[addDays(today,1-Math.max(60,Number(state.newsWindow))),first].sort().at(-1);
+  const keys=['soy','sun','palm'];
+  const series=sentimentSeries(events,complexOf,keys,{from,to:today,window:7});
+  const lines=keys.map((k,i)=>({label:newsComplexes[k].name,color:colors[i],points:series[k]}));
+  return section('Évolution du sentiment','Solde pondéré des actualités sur 7 jours glissants, depuis le '+formatDate(from))+
+    panel(chart(lines,{unit:'pts',periodType:'day',height:200,zeroLine:true,label:'Solde pondéré des actualités sur 7 jours glissants',tooltips:p=>sign(p.value,1)+' pts'})+
+      '<p class="small">Chaque fiche compte son intensité (1 à 3) multipliée par sa fiabilité (1 si publiée, 0,7 pour une estimation, 0,3 pour une rumeur), en positif si elle est haussière, en négatif si elle est baissière. Au-dessus de zéro, les nouvelles de la semaine poussent les prix à la hausse.</p>');
+}
 function newsHeader(base){
-  const t=tally(base);
+  const t=tally(base),unseen=fullEvents().filter(isNewsNew).length;
   const at=newsFeed.updatedAt;
   const stale=!!at&&at.slice(0,10)<addDays(newsToday(),-2);
   const status=!newsFeedLoaded?'Chargement de la veille…':at?'Veille mise à jour le '+formatDate(at.slice(0,10))+' à '+casablanca(at).time+' (Casablanca)':'Veille quotidienne indisponible : seules les données intégrées au site sont affichées';
   return '<section class="hero news-hero"><div><span class="eyebrow">Terminal · Veille quotidienne</span><h1>Marché & actualités</h1>'+
     '<p>Les nouvelles qui font bouger le soja, le tournesol et la palme, origine par origine. Chaque fiche donne sa date, sa source et son impact attendu sur les prix.</p>'+
     '<p class="news-status'+(stale||!at?' stale':'')+'"><span class="dot"></span>'+e(status)+(stale?' · plus de deux jours sans mise à jour':'')+'</p>'+
+    (unseen?'<p class="news-unseen"><b class="num">'+unseen+'</b> nouvelle'+(unseen>1?'s':'')+' fiche'+(unseen>1?'s':'')+' depuis votre dernière visite '+
+      '<button type="button" class="link-button" data-action="seg" data-key="newsSeen" data-value="unread">Les voir</button> · <button type="button" class="link-button" data-action="news-mark-read">Marquer comme lues</button></p>':'')+
     '<div class="actions">'+action('pdf',icon('download')+' Brief COMEX (PDF)','primary')+action('news-report',icon('report')+' Rapport hebdo','ghost')+action('copy-brief',icon('copy')+' Copier le brief','ghost')+action('export-feed',icon('table')+' CSV','ghost')+'</div></div>'+
     '<div class="news-tally"><span class="eyebrow">Sur '+e(newsWindowLabel())+'</span><div class="tally-grid"><div><b class="num positive">'+t.positive+'</b><span>▲ Haussier</span></div><div><b class="num negative">'+t.negative+'</b><span>▼ Baissier</span></div><div><b class="num mixed">'+t.mixed+'</b><span>◆ Mixte</span></div></div>'+tallyBar(t)+
     '<p class="small"><span>'+base.length+' actualité'+(base.length>1?'s':'')+' · '+new Set(base.map(r=>r.source)).size+' sources</span>'+btnSeg('newsWindow',newsWindows,state.newsWindow,'Période')+'</p></div></section>';
@@ -523,16 +601,31 @@ function newsHeader(base){
 function newsToolbar(){
   const c=newsComplexes[state.newsComplex];
   const originChoices=c?.origins.length?Object.fromEntries([...c.origins.map(o=>[o,origins[o]]),['other','Demande & autres origines']]):null;
-  const active=state.newsComplex!=='all'||state.newsOrigin||state.newsImpact||state.query;
+  const active=state.newsComplex!=='all'||state.newsOrigin||state.newsImpact||state.query||state.newsSeen;
   return '<div class="news-toolbar">'+btnSeg('newsComplex',{all:'Tous',soy:'Soja',sun:'Tournesol',palm:'Palme',macro:'Transversal'},state.newsComplex,'Complexe')+
     (originChoices?select('newsOrigin',originChoices,state.newsOrigin,'Toutes les origines'):'')+
     btnSeg('newsImpact',{'':'Tous impacts',positive:'▲ Haussier',negative:'▼ Baissier',mixed:'◆ Mixte'},state.newsImpact,'Impact')+
     '<form id="feed-search" class="news-search" role="search"><label class="sr" for="search">Rechercher</label><input id="search" name="search" type="search" placeholder="MPOB, taxe, B50, WASDE…" value="'+e(state.query)+'"><button class="button" type="submit" aria-label="Rechercher">'+icon('search')+'</button></form>'+
-    (active?action('news-reset','Réinitialiser','ghost'):'')+'</div>';
+    (active?action('news-reset','Réinitialiser','ghost'):'')+'</div>'+
+    '<div class="news-toolbar news-toolbar-view">'+btnSeg('newsSort',{recent:'Plus récentes',important:'Plus importantes'},state.newsSort,'Tri')+
+    btnSeg('newsView',{full:'Détaillée',compact:'Compacte'},state.newsView,'Vue')+
+    btnSeg('newsSeen',{'':'Toutes les fiches',unread:'Nouvelles seulement'},state.newsSeen,'Fiches lues')+'</div>';
 }
 function marketPrices(){
-  const chartIds=state.chart==='oils'?['wb-sbo','wb-palm']:state.chart==='grains'?['wb-soy','wb-sm']:['brent','wti'];
-  const pricePanel=panel('<div class="spread-between"><div><h2>Historique des prix</h2><p class="small">Moyennes mensuelles</p></div>'+btnSeg('chart',{oils:'Huiles',grains:'Graines et tourteaux',energy:'Pétrole'},state.chart)+'</div>'+chart(linesFrom(chartIds),{unit:state.chart==='energy'?'USD/b':'USD/t'}));
+  const today=newsToday();
+  let pricePanel;
+  const choices={daily:'Huiles · quotidien',oils:'Huiles · mensuel',grains:'Graines et tourteaux',energy:'Pétrole'};
+  if(state.chart==='daily'){
+    const usd=oilUsdSeries(spreadPrices),start=addDays(today,-183);
+    const lines=[['zl','Huile de soja · CBOT'],['arSoyOil','Huile de soja · FOB Argentine'],['arSunOil','Huile de tournesol · FOB Argentine'],['fcpo','Huile de palme · FCPO']]
+      .map(([id,label],i)=>({label,color:colors[i],points:usd[id].filter(p=>p.date>=start&&p.date<=today)}));
+    pricePanel=panel('<div class="spread-between"><div><h2>Prix des huiles</h2><p class="small">Cotations quotidiennes converties en USD/t, 6 derniers mois</p></div>'+btnSeg('chart',choices,state.chart)+'</div>'+
+      chart(lines,{unit:'USD/t',periodType:'day',startDate:start,maxGapDays:10,height:230,label:'Prix quotidiens des huiles en USD/t',tooltips:p=>num(p.value,0)+' USD/t',quickRanges:true})+
+      '<p class="small">CBOT converti à 2 204,6 livres la tonne ; FCPO converti au cours BCE USD/MYR du jour ; FOB Argentine : prix officiels du ministère argentin de l’Agriculture. Sources et actualisation : rubrique Comparaisons & spreads.</p>');
+  }else{
+    const chartIds=state.chart==='oils'?['wb-sbo','wb-palm']:state.chart==='grains'?['wb-soy','wb-sm']:['brent','wti'];
+    pricePanel=panel('<div class="spread-between"><div><h2>Historique des prix</h2><p class="small">Moyennes mensuelles</p></div>'+btnSeg('chart',choices,state.chart)+'</div>'+chart(linesFrom(chartIds),{unit:state.chart==='energy'?'USD/b':'USD/t'}));
+  }
   const next=calendarFilter({...FILTERS}).filter(r=>r.date&&r.date>=calendarToday()&&r.importance>=2).slice(0,5);
   const agenda=panel('<div class="spread-between"><h2>À surveiller</h2><a class="small" href="#calendar">Calendrier '+icon('arrow',14)+'</a></div>'+(next.length?next.map(calMini).join(''):empty('Aucune publication datée à venir.')));
   return '<div class="dashboard-grid">'+pricePanel+agenda+'</div>';
@@ -541,11 +634,13 @@ function renderMarket(){
   const base=newsBase(),rows=newsRows();
   const c=newsComplexes[state.newsComplex];
   const scope=[c?c.name:'Tous les complexes',state.newsOrigin?(state.newsOrigin==='other'?'Demande & autres origines':origins[state.newsOrigin]):'',state.newsImpact?labels.impact[state.newsImpact]:''].filter(Boolean).join(' · ');
-  return newsHeader(base)+
+  return newsHeader(base)+newsEssentials()+
+    section('Baromètre par complexe','Sens des actualités sur '+newsWindowLabel()+', confronté au prix de référence de chaque huile · tournesol : FOB Argentine, seule cotation quotidienne publique')+
     '<div class="complex-grid">'+['soy','sun','palm'].map(k=>complexCard(k,base)).join('')+'</div>'+
     section('Carte des impacts','Actualités par origine et par sens d’impact sur '+newsWindowLabel()+' · un clic sur une origine filtre le flux')+panel(impactMap(base),'map-panel')+
+    sentimentPanel()+
     '<div id="news-feed">'+section('Flux d’actualités',rows.length+' actualité'+(rows.length>1?'s':'')+' · '+scope)+newsToolbar()+newsFeedHtml(rows)+'</div>'+
-    section('Prix et agenda','Repères mensuels et prochaines publications')+marketPrices();
+    section('Prix et agenda','Prix des huiles et prochaines publications')+marketPrices();
 }
 function monthlyHistory(title,rows,names,sourceLinks,note){
   const period=displayPeriod(rows[0][0],'month')+' – '+displayPeriod(rows.at(-1)[0],'month');
@@ -1277,6 +1372,7 @@ function renderCross(){
 }
 
 
+const validBrief=b=>!!b&&typeof b.headline==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(b.date??'')&&Array.isArray(b.points)&&b.points.every(p=>typeof p?.text==='string'&&Object.hasOwn(labels.impact,p.impact));
 const liveNewsFeed='https://raw.githubusercontent.com/elchapasso/PROJECT/news-live/docs/terminal/news-feed.json';
 const newsPages=['overview','soy','sun','sources','fret'];
 async function refreshNews(){
@@ -1292,8 +1388,9 @@ async function refreshNews(){
   const feeds=(await Promise.all([read(liveNewsFeed),read('./terminal/news-feed.json')])).filter(Boolean);
   const feed=feeds.sort((a,b)=>String(b.updatedAt??'').localeCompare(String(a.updatedAt??'')))[0];
   const changed=!newsFeedLoaded||(feed&&feed.updatedAt!==newsFeed.updatedAt);
-  if(feed)newsFeed={updatedAt:String(feed.updatedAt??''),items:feed.items.filter(validEvent)};
+  if(feed)newsFeed={updatedAt:String(feed.updatedAt??''),items:feed.items.filter(validEvent),brief:validBrief(feed.brief)?feed.brief:null};
   newsFeedLoaded=true;
+  rememberSeen(fullEvents().map(r=>r.id));
   if(changed&&newsPages.includes(state.page)&&!root.querySelector('dialog[open]'))render();
 }
 const liveCalendarFeed='https://raw.githubusercontent.com/elchapasso/PROJECT/calendar-live/docs/terminal/calendar-feed.json';
@@ -1461,8 +1558,12 @@ function briefLine(r){return origins[r.origin]+' / '+r.title+' · '+r.number+(r.
 function briefHtml(print=false){
   const blocks=briefGroups();
   const headline=print?'<header><span style="letter-spacing:.12em;font-size:9pt">OLÉA TERMINAL · VEILLE SOURCÉE</span><h1>Brief marché COMEX</h1><p>Données au '+e(formatDate(calendarToday()))+' · '+e(newsWindowLabel())+'</p></header>':'';
-  if(!blocks.length)return headline+empty('Aucune actualité sourcée dans cette sélection.');
-  return headline+blocks.map(g=>{
+  const b=newsFeed.brief;
+  const synthesis=b?(print?'<section>':'<section class="panel">')+'<h2>Synthèse du '+e(formatDate(b.date))+'</h2><p><strong>'+e(b.headline)+'</strong></p><ul class="brief-list">'+
+    b.points.map(p=>'<li><strong>'+e(briefComplexNames[p.complex]||p.complex)+'</strong> · <span class="'+e(p.impact)+'">'+e(labels.impact[p.impact])+'</span> · '+e(p.text)+'</li>').join('')+'</ul>'+
+    (b.watch?.length?'<p><strong>À surveiller</strong> · '+e(b.watch.join(' ; '))+'</p>':'')+'</section>':'';
+  if(!blocks.length)return headline+synthesis+empty('Aucune actualité sourcée dans cette sélection.');
+  return headline+synthesis+blocks.map(g=>{
     const content='<ul class="brief-list">'+g.rows.map(r=>'<li><strong>'+e(origins[r.origin]+' / '+r.title)+'</strong> · '+e(r.number+(r.variation?' · '+r.variation:''))+' → <span class="'+e(r.impact)+'">'+e(labels.impact[r.impact])+'</span> · '+e(r.transmission)+'<small>'+link(r.url,r.source)+' · '+e(formatDate(r.date)+' · '+labels.status[r.status]+' · '+labels.horizon[r.horizon])+'</small></li>').join('')+'</ul>';
     const limited=g.total>g.rows.length?'<p class="small">'+g.total+' actualités · les '+g.rows.length+' plus fortes sont reprises.</p>':'';
     return print?'<section><h2>'+e(g.name)+'</h2>'+limited+content+'</section>':panel('<h2>'+e(g.name)+'</h2>'+limited+content);
@@ -1599,8 +1700,24 @@ function exportCross(){
   csv('olea_spreads.csv',[['Date',a.name+' '+a.unit,b.name+' '+b.unit,'Spread '+(common?a.unit:''),'Source A','Source B'],
     ...rows.map(r=>[r.date,r.a,r.b,common?r.a-r.b:null,a.points[r.date]?.url,b.points[r.date]?.url])]);
 }
+function briefSynthesisText(){
+  const b=newsFeed.brief;
+  if(!b)return '';
+  return ['Synthèse du '+formatDate(b.date)+' : '+b.headline,...b.points.map(p=>'• '+(briefComplexNames[p.complex]||p.complex)+' ('+labels.impact[p.impact].toLowerCase()+') : '+p.text),
+    ...(b.watch?.length?['À surveiller : '+b.watch.join(' ; ')]:[])].join('\n')+'\n\n';
+}
+function newsShareText(r){
+  return [r.title,r.summary,'Lecture : '+labels.impact[r.impact].toLowerCase()+' · '+r.transmission,r.morocco?'Pour nos achats : '+r.morocco:'',
+    'Source : '+r.source+' · '+formatDate(r.date)+' · '+r.url].filter(Boolean).join('\n');
+}
+async function copyNewsItem(el){
+  const r=fullEvents().find(item=>item.id===el.dataset.id);
+  if(!r)return;
+  try{await navigator.clipboard.writeText(newsShareText(r));toast('Fiche copiée : prête à coller dans un message.');}
+  catch{download('olea_fiche_'+r.id+'.txt',newsShareText(r),'text/plain;charset=utf-8');toast('Fiche téléchargée en texte.');}
+}
 async function copyBrief(){
-  const text=briefGroups().map(g=>g.name+'\n'+g.rows.map(r=>'• '+briefLine(r)+' ['+r.source+' · '+formatDate(r.date)+'] '+r.url).join('\n')).join('\n\n');
+  const text=briefSynthesisText()+briefGroups().map(g=>g.name+'\n'+g.rows.map(r=>'• '+briefLine(r)+' ['+r.source+' · '+formatDate(r.date)+'] '+r.url).join('\n')).join('\n\n');
   try{await navigator.clipboard.writeText(text);toast('Brief copié dans le presse-papiers.');}
   catch{download('olea_brief_comex.txt',text,'text/plain;charset=utf-8');toast('Brief téléchargé en texte.');}
 }
@@ -1666,6 +1783,7 @@ const controlActions={
     state[key]=value;
     if(key==='newsComplex')state.newsOrigin='';
     if(key.startsWith('news'))state.newsLimit=60;
+    if(key==='newsSort'||key==='newsView')try{localStorage.setItem('olea-news-prefs',JSON.stringify({sort:state.newsSort,view:state.newsView}));}catch{}
     render();
   },
   'season-year':el=>{
@@ -1754,7 +1872,9 @@ const controlActions={
     render();
     document.getElementById('news-feed')?.scrollIntoView({behavior:'smooth',block:'start'});
   },
-  'news-reset':()=>{Object.assign(state,{newsComplex:'all',newsOrigin:'',newsImpact:'',query:'',newsLimit:60});render();},
+  'news-reset':()=>{Object.assign(state,{newsComplex:'all',newsOrigin:'',newsImpact:'',query:'',newsSeen:'',newsLimit:60});render();},
+  'news-mark-read':()=>{for(const r of fullEvents())newsReadNow.add(r.id);state.newsSeen='';render();toast('Toutes les fiches sont marquées comme lues.');},
+  'news-copy':copyNewsItem,
   'news-more':()=>{state.newsLimit+=60;render();},
   backup:()=>download('olea_registre.json',JSON.stringify(data,null,2),'application/json'),
   'copy-brief':copyBrief,

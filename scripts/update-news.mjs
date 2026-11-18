@@ -28,6 +28,12 @@ if (errors.length) {
 }
 if (flag !== '--check') writeFileSync(file, JSON.stringify(feed, null, 2) + '\n');
 console.log(`${feed.items.length} fiches valides · mise à jour ${feed.updatedAt}`);
+if (feed.brief) console.log(`Synthèse du ${feed.brief.date} · ${feed.brief.headline} · ${feed.brief.points.length} points, ${feed.brief.watch.length} à surveiller`);
+else console.warn('Avertissement · pas de synthèse du jour (brief) : voir NEWS.md');
+if (feed.brief && feed.brief.date < today) console.warn(`Avertissement · la synthèse date du ${feed.brief.date} : la réécrire pour aujourd’hui`);
+const recent = feed.items.filter(item => item.date >= new Date(Date.parse(today + 'T12:00:00Z') - 2 * 86400000).toISOString().slice(0, 10));
+const withoutMorocco = recent.filter(item => !item.morocco).length;
+if (withoutMorocco) console.warn(`Avertissement · ${withoutMorocco} fiche(s) des 3 derniers jours sans lecture « morocco »`);
 for (const block of coverage(feed, today)) {
   const gaps = block.origins.filter(o => !o.count).map(o => o.name);
   console.log(`${block.name} · ${block.total} sur 7 jours · ` + block.origins.map(o => `${o.name} ${o.count}`).join(', ') + (gaps.length ? ` · sans actualité : ${gaps.join(', ')}` : ''));
