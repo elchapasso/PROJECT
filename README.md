@@ -45,13 +45,15 @@ Pour lancer la mise à jour à la main : onglet **Actions** › **Actualiser le 
 
 La vue [Marché & actualités](https://elchapasso.github.io/PROJECT/#overview), page d’accueil de la rubrique **Terminal**, remplace la vue d’ensemble, le fil d’actualité, les rapports de marché, le brief COMEX et les facteurs de marché, qui lisaient les mêmes événements. Elle réunit :
 
-- la lecture par complexe (soja & huile de soja, tournesol, palme) : nombre d’actualités haussières, baissières et mixtes et orientation sur la période ;
+- **L’essentiel du jour** : la synthèse rédigée avec la veille (message du jour, sens net par complexe, rendez-vous à surveiller) et le classement « À la une » des fiches les plus fortes de la semaine (intensité × fiabilité × fraîcheur) ;
+- le **baromètre par complexe** : actualités haussières, baissières et mixtes, orientation, et confrontation au prix de référence de chaque huile (CBOT pour l’huile de soja, FOB Argentine pour le tournesol, FCPO pour la palme) avec sa variation sur la période : le marché confirme-t-il les nouvelles, ou diverge-t-il ?
 - la carte des impacts par origine (États-Unis, Argentine, Brésil ; Russie, Ukraine, UE, Bulgarie, Roumanie, Argentine ; Indonésie, Malaisie, Thaïlande, Colombie, Amérique latine), qui filtre le flux d’un clic ;
-- le flux d’actualités daté, avec lien vers la source, impact (haussier, baissier, mixte), intensité, horizon et mécanisme ;
-- les exports : brief COMEX en PDF, rapport hebdomadaire en texte, copie du brief et CSV du flux filtré ;
-- l’historique des prix et l’agenda des prochaines publications.
+- l’**évolution du sentiment** : solde pondéré des actualités sur 7 jours glissants, par complexe ;
+- le flux d’actualités daté, avec lien vers la source, impact, intensité, horizon, mécanisme, lecture « Pour nos achats » (effet pour un importateur vers Casablanca) et condition d’inversion ; tri par date ou par importance, vue détaillée ou compacte, repérage des fiches nouvelles depuis la dernière visite, copie d’une fiche pour la partager ;
+- les exports : brief COMEX en PDF et copie du brief (avec la synthèse du jour), rapport hebdomadaire en texte et CSV du flux filtré ;
+- les prix quotidiens des huiles en USD/t (CBOT, FOB Argentine, FCPO), l’historique mensuel et l’agenda des prochaines publications.
 
-Le flux est rédigé chaque matin et publié sur la branche `news-live` (`docs/terminal/news-feed.json`). Format, règles de rédaction et procédure : [NEWS.md](NEWS.md). Contrôle : `node scripts/update-news.mjs <fichier>` et `node --test tests/news-feed.test.mjs`.
+Le flux est rédigé chaque matin et publié sur la branche `news-live` (`docs/terminal/news-feed.json`). Format, règles de rédaction et procédure : [NEWS.md](NEWS.md). Contrôle : `node scripts/update-news.mjs <fichier>`, `node --test tests/news-feed.test.mjs` et `node --test tests/news-insights.test.mjs`.
 
 ## Fret
 

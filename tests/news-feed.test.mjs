@@ -62,3 +62,22 @@ test('coverage counts the last seven days by complex and origin', () => {
   assert.equal(complexOf({product: 'sm'}), 'soy');
   assert.equal(complexOf({product: 'energy'}), 'other');
 });
+
+test('the Morocco reading and the daily brief are kept and checked', () => {
+  const {feed, errors, warnings} = normalizeFeed({items: [{...base, morocco: 'Pour les achats vers Casablanca : rien ne change.'}],
+    brief: {date: '2026-11-14', headline: 'Palme soutenue', points: [
+      {complex: 'palm', impact: 'positive', text: 'Stocks MPOB en hausse mais exportations solides.', ids: ['test-1', 'absent']},
+      {complex: 'soy', impact: 'negative', text: 'Trituration record aux États-Unis.'}],
+    watch: ['MPOB le 10 décembre']}}, {today});
+  assert.deepEqual(errors, []);
+  assert.equal(feed.items[0].morocco, 'Pour les achats vers Casablanca : rien ne change.');
+  assert.deepEqual(feed.brief.points[0].ids, ['test-1']);
+  assert.match(warnings.join('\n'), /absent/);
+  const bad = normalizeFeed({items: [base], brief: {date: '2026-11-20', headline: '', points: [{complex: 'rice', impact: 'up', text: ''}]}}, {today});
+  assert.ok(bad.errors.some(e => /date future/.test(e)));
+  assert.ok(bad.errors.some(e => /2 à 6 points/.test(e)));
+  assert.ok(bad.errors.some(e => /complex attendu/.test(e)));
+  const noBrief = normalizeFeed({items: [base]}, {today});
+  assert.equal(noBrief.feed.brief, undefined);
+  assert.equal('morocco' in noBrief.feed.items[0], false);
+});
