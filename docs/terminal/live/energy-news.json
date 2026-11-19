@@ -1,8 +1,38 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-18T22:17:11Z",
-  "collectedAt": "2026-11-18T22:17:11Z",
+  "checkedAt": "2026-11-19T03:49:01Z",
+  "collectedAt": "2026-11-19T03:49:01Z",
   "articles": [
+    {
+      "title": "US dollar hovers near 19-month high, Aussie falls after soft jobs data",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQQ0NIbEViM181TUJsZHFhV2J5d0lLbkVXVlBRYVJlb3YtMC1wVTlyc1NBV0RMQ0dBTXZlcHFvdnkzQm1SUWo3NFl3eGZ0SzgwTXhxTVQ3Y2VYSHg5LXZtRG9vUUp3eVlEQktJMk9JSllaQ1hRRjRuWmx0WGNJSFBLTHRpUS1tTVFoakw2dHlVRExKTU1jWE9McGswRWc5V05CYU4zR3JDdm9Jam4wTDlyNTlXRno0cXc4NVE",
+      "publishedAt": "2026-11-19T02:01:00Z",
+      "source": "Reuters",
+      "topics": [
+        "fx"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "LNG Exports Through Hormuz Appear to Slow After More Attacks",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-19/lng-exports-through-hormuz-appear-to-slow-after-more-attacks",
+      "publishedAt": "2026-11-19T01:23:23Z",
+      "source": "Bloomberg",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Latest Oil Market News and Analysis for Nov. 19",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-18/latest-oil-market-news-and-analysis-for-nov-19",
+      "publishedAt": "2026-11-18T23:03:35Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
     {
       "title": "US tightens Iran blockade with curbs on oil transfers at sea, advisory shows",
       "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNS21BSEJXWHdIUGpZcWRtZm0tT084cTd5WFpvbFZUeE9wdHkyelI4Y2pFamp5YmY3S09BRm9zMWQ3VE5NcHVnSGZNM20yZ3B5NE1mXzZ4VVg3NUZ5RTVuQ2owQzE4MkxpaTBIcEhCNng4MDE1ZnpyTUVOMUVHVFdzcm14Mkl2TlNGZmNuVFQ1NFMwdGFOT1JSTEFURDNOQ005cWVaUG5ybmtyNWQyTW1QMG82SHhGQXNmb3VMTUtB",
@@ -10,6 +40,16 @@
       "source": "Reuters",
       "topics": [
         "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Joint Maritime Information Center JMIC Advisory: 017-26 | November 18, 2026",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNY3FuNkdHdEtfdXVoVExUNzMwNWsyRVVPMmRQaUk4NV8xYkQybXhSVGRYRFR4cVBDVWNxOEh2Z1NWRGo0blVsMnZTeS00N0tNMUJXeDNPZGVueEtYMzVZTnlLNVFzX21GckxHX1VBNVppS193OXFyTkgzdS15cmYxYlZHZ0tkZmFjUEx5MDcxTm1VQXZ2dUJoT2VBY0tJMXczcTBncmYtSXdYNVhtZ2dpSkZmVEF6X0hVWDhFYW9tbFNmZW1Q",
+      "publishedAt": "2026-11-18T19:30:30Z",
+      "source": "UKMTO",
+      "topics": [
+        "shipping"
       ],
       "via": "google"
     },
@@ -489,7 +529,7 @@
       "via": "google"
     },
     {
-      "title": "Diesel Falls Below $6 a Gallon, Easing Key Inflationary Pressure",
+      "title": "Diesel Falls Below $6 a Gallon, Easing Inflationary Pressure",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPTXVZTFNXYWhOWE1yWF9QVjBNMUlCU3ZTNTVqUjUzaXNYTVh2TnFrQUN2MXk1UHZReDFTa3lfSTlseXJNNTNfV2NCSjlRVXpKTDY5NDFXZjhvbTB0OHBtajhQSDdhY3dSSW1kdzJvcG85ZTdUWFhQRDU2c0IyLVQ3NmtFMUFONVRVanF1dTVJWmJIb3dlaUY2dm4zSkd1NDVCaGxnaUNBM1k1dUlLVUdYR2NEQQ",
       "publishedAt": "2026-11-16T16:59:37Z",
       "source": "Bloomberg",
@@ -605,6 +645,16 @@
       "source": "Bloomberg",
       "topics": [
         "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Palm Oil Hits Near 2-Week High on Seasonal Supply Concerns",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE52al9zT1RsOHVIUVRncVB4X0RNZzJ5S2FvdXlBUVZVcTROSHBpdHZQbWp2SXBxazhjaGJXeVVyMl82WlFOMGxVMWY3XzRTNHFQYzRYOXIzbW9PaGFWU05ROXZVc1B3ZUFSWHdJ",
+      "publishedAt": "2026-11-16T04:44:58Z",
+      "source": "Trading Economics",
+      "topics": [
+        "oils"
       ],
       "via": "google"
     },
@@ -1151,16 +1201,6 @@
       "via": "google"
     },
     {
-      "title": "Oman monitors handling of oil tanker run aground off its coast",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOajlqak9wTzJCY2RvLTg2YTV6MFZDX3hSMUMxVUVEM3BDQXBVWG10dDM3SDJ0S2pzWmd5NU1BNTZYbTFPVHluME43UTZ0QTVTcllRcDhUdTJienpEcFZ4MmZucnlYRHFCWlMtVG5EUGU1N2pwZl9DTWl1M2lDZFBwRFNwWUtBbVJyWWc3LWZsYlNuYWk3WFRnR1M4cDVVTWZXRnZhMjVrT2h3TXl2d2FPNlR0UQ",
-      "publishedAt": "2026-11-12T13:00:09Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Biofuel mandate rollback could pressure US soybean prices and crushing industry",
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNWFJPdGFnR0U1TV9tMDg0UzkxUWlUanJxQnF1ZHJNY2FCUURkMjhZS2kzekFpcHJ4dW13X3dTOFZQU1huOWJUYThlOEwweUZjWFNNd3hJMW5pZXVPa0czeUhQSHFpUEc4NFIxRXM2MUZsVlNlU3FqYjFZWTdib2EtOERvR2sxWVgzQ1Y0TjQ2MHBsc1NwSktCVkx4Y1lHelY1Mjd2VGdoem9sV2JrR0U2Ti03TmROZw",
       "publishedAt": "2026-11-12T11:09:39Z",
@@ -1521,26 +1561,6 @@
       "via": "google"
     },
     {
-      "title": "Saudi Oil Tanker Firm Crossing Hormuz With US Coordination",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPQVNZUmQwREVGTDdab2NHQlprcktlUUN4MV8xN1pMenlGVU5kT2pkOHlXc1B4R3BaOEJOT0Q2YXNzNllMdERKNXpvcnAxNXR4NjA0THFFS3p0RUp1R2tGQkFtcnlVY0x3N0ZHeUZrRDlSQ3FJZGlLT05NeTM4aWVNRGJwRUg5eVMxekI1RVpzcjFWM3ZfZG1LRFVuNWljbFFyMEc0R1l2RzB0TEExQlE",
-      "publishedAt": "2026-11-10T06:35:00Z",
-      "source": "Bloomberg",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "India Speaks With Russia, Ukraine Ahead of US-Led Peace Talks",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNeVM2aGpVS3l3dTlfODBMWlZWX1pfazNLcmZQbUllMG5VbWNHTjRqNW8wRERSNmoxNHlIVEFvWmExYUFPUnRrRTlmSXJzVXNkYnhwbjFIX0cwMzk0Tk1uZkVLQlZGNWgyOGVhZ29yWDd4dXY5ekZHQ3pyV3dKU0FpYTNQY2NwNzFvaDQ1WHVhOXRsajJTTW5LUmRqN00temhxdlRld2Y2ajBvajBpZWNGcQ",
-      "publishedAt": "2026-11-10T01:42:00Z",
-      "source": "Bloomberg",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Russia Says It Hit Three Cargo Ships In Black Sea",
       "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE5mVHAzOXkyRzZyTm01bG95bkp4d1ljeDFaVkNMNjR0VDR2SzkweWRnQ29fM3R0NjJxbEZXV0VKdDdUZVhrOUw1QkczOTNjZTh6M09BbEVnSTVoTGxZU3JraXFlbnRnLW8yLXpZckE2QTQzZGg0RmRZWF9HUQ",
       "publishedAt": "2026-11-09T03:48:47Z",
@@ -1780,7 +1800,7 @@
       "channels": [
         "google"
       ],
-      "articles": 5
+      "articles": 6
     },
     {
       "name": "EIA",
@@ -1817,7 +1837,7 @@
       "channels": [
         "google"
       ],
-      "articles": 9
+      "articles": 10
     },
     {
       "name": "Fed",
