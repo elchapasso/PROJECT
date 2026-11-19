@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-15",
  "forexWeekEnd": "2026-11-21",
- "forexCheckedAt": "2026-11-19T10:29:10+00:00",
+ "forexCheckedAt": "2026-11-19T20:46:47+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -1871,7 +1871,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-19T10:29:10+00:00",
+ "reportsCheckedAt": "2026-11-19T20:46:47+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2116,35 +2116,35 @@
    "title": ""
   },
   "fas-export-sales": {
-   "date": "2026-11-13",
-   "title": "Semaine close le 05/11",
+   "date": "2026-11-19",
+   "title": "Semaine close le 12/11",
    "figures": [
     {
      "label": "Graines de soja · ventes nettes",
-     "value": 1154.772,
+     "value": 1500.958,
      "unit": "kt",
-     "previous": 1456.12,
+     "previous": 1154.772,
      "previousLabel": "semaine précédente",
-     "note": "expéditions 1 882 kt"
+     "note": "expéditions 1 839 kt"
     },
     {
      "label": "Tourteau de soja · ventes nettes",
-     "value": 360.944,
+     "value": 198.051,
      "unit": "kt",
-     "previous": 390.381,
+     "previous": 360.944,
      "previousLabel": "semaine précédente",
-     "note": "expéditions 387 kt"
+     "note": "expéditions 280 kt"
     },
     {
      "label": "Huile de soja · ventes nettes",
-     "value": 1.694,
+     "value": 0.877,
      "unit": "kt",
-     "previous": 1.523,
+     "previous": 1.694,
      "previousLabel": "semaine précédente",
-     "note": "expéditions 2 kt"
+     "note": "expéditions 1 kt"
     }
    ],
-   "stamp": "2026-11-13T08:30:22.49",
+   "stamp": "2026-11-19T08:30:06.083",
    "url": "https://www.fas.usda.gov/programs/export-sales-reporting-program",
    "documents": [
     {
@@ -2261,7 +2261,7 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-19T10:29:10+00:00",
+ "latestCheckedAt": "2026-11-19T20:46:47+00:00",
  "failingSince": {
   "ANEC": "2026-11-17T23:33:34+00:00",
   "Rapports · anec": "2026-11-17T23:33:34+00:00"
