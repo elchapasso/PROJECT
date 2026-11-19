@@ -1691,6 +1691,10 @@ const controlActions={
     csv('olea_'+(family==='soy'?'graines_soja':'huile_soja')+'_bresil_'+view+'.csv',
       [[monthly?'Mois':'Année',...names.map(name=>name+' (Mt)'),'Périmètre du bilan'],...values]);
   },
+  'export-gapki-history':()=>{
+    csv('olea_palme_gapki_indonesie.csv',[['Mois',...gapkiColumns.map(key=>gapkiLabels[key]+' (kt)'),'Source'],
+      ...gapkiRows(gapkiFeed).map(r=>[r.date,...gapkiColumns.map(key=>Number.isFinite(r[key])?String(r[key]):''),r.source])]);
+  },
   'export-eia-biofuel':el=>{
     const oil=el.dataset.oil,ref=eiaBiofuelCharts[oil];
     if(!ref)return;
