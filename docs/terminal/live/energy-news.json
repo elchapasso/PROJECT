@@ -1,8 +1,108 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-20T13:32:07Z",
-  "collectedAt": "2026-11-20T13:32:07Z",
+  "checkedAt": "2026-11-20T21:29:46Z",
+  "collectedAt": "2026-11-20T21:29:46Z",
   "articles": [
+    {
+      "title": "Hedge Funds Slash Bullish Bets on European Diesel To Wartime Low",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-20/hedge-funds-slash-bullish-bets-on-european-diesel-to-wartime-low",
+      "publishedAt": "2026-11-20T21:03:51Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Iran War Oil Premium Evaporates as Global Crude Supplies Surge",
+      "url": "https://gcaptain.com/iran-war-oil-premium-evaporates-as-global-crude-supplies-surge/",
+      "publishedAt": "2026-11-20T19:35:22Z",
+      "source": "gCaptain",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "black sea Archives – Page 12 of 12",
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1DLV9PckdZdUFDdFRKNEQ2Ykl0ZWtSTGZTM1IyaklDSlFaREtZLTdGVFM0Qmd1T2ZxY1hOSkI2clg1N29jWnRtMWFmU0RuazdmeDNnc1R3",
+      "publishedAt": "2026-11-20T18:03:14Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "At APEC Summit, U.S., China and Russia Vow to Increase Oil Supply Amid Global Energy Transition",
+      "url": "https://www.nytimes.com/2026/11/19/world/asia/russia-china-united-states-oil-joint-statement.html",
+      "publishedAt": "2026-11-20T17:45:55Z",
+      "source": "The New York Times",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Another Tanker Hit in Strait of Hormuz as Maritime Attacks Surge Worldwide",
+      "url": "https://gcaptain.com/another-tanker-hit-in-strait-of-hormuz-as-maritime-attacks-surge-worldwide/",
+      "publishedAt": "2026-11-20T17:43:53Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Houthis Order Ships to Leave Saudi Red Sea Ports After Hodeidah Airstrikes",
+      "url": "https://gcaptain.com/houthis-order-ships-to-leave-saudi-red-sea-ports-after-hodeidah-airstrikes/",
+      "publishedAt": "2026-11-20T17:19:31Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "US Treasury Presses Singapore and Malaysia on Iran Sanctions Compliance",
+      "url": "https://gcaptain.com/us-treasury-presses-singapore-and-malaysia-on-iran-sanctions-compliance/",
+      "publishedAt": "2026-11-20T17:12:46Z",
+      "source": "gCaptain",
+      "topics": [
+        "policy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Tanker catches fire after projectile strike near Strait of Hormuz, UKMTO says",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPUFlEbXRhcG1QdzdPMU5DZTludFpwQllURVktV0I4cC1pX2g4V1k1dEhTWFVibXk4Wm9IUWFNYjZLRTlCZHBnM044cGo3amFOdTQ2SWdZWkVBUG9LaERYQ3pUQTdvd1loNVlxN0VPTUJTS29tcWsxWlIydFcxRGp4N2xlTUUyMDk1Y1VfLTVfXzYxZGZnVVFEUWpxaW05bS1MTlNQRGZpYUMwQ2xMY3MyMDRFUm1PM1JjaXc",
+      "publishedAt": "2026-11-20T17:05:12Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Iranian Oil Transferred Between Tankers as US Widens Blockade",
+      "url": "https://gcaptain.com/iranian-oil-transferred-between-tankers-as-us-widens-blockade/",
+      "publishedAt": "2026-11-20T13:57:02Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Indian Refiners Race to Secure Oil Tankers as Freight Costs Rise",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPMzlfYUx6YmpabGNHbnFqUUd6aUQzbnhtcFAwZldEY19VUFRjdzM5MUJPc0EzZERPa1VlR2lKT0pxWlB3d2JSenJ3bzhrWmZUc3Vtd0NVR1J3am5HXzlnZktmdlpaanBhaVRWaUtXTVBKUjc0dmVBYzAtQjBQT2x4QVplZ0U1Nk9TVl9aTHpCQm5fTDRsVjEyc3pIS2tvdmRMNUM0TC03RS1yRUJWMm9ZZmZfQkpMQQ",
+      "publishedAt": "2026-11-20T10:34:25Z",
+      "source": "Bloomberg",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
     {
       "title": "Saudis Make Deal With Japan to Replenish Depleted Oil Stocks",
       "url": "https://www.bloomberg.com/news/articles/2026-11-20/saudis-make-deal-with-japan-to-replenish-depleted-oil-stockpiles",
@@ -54,6 +154,26 @@
       "via": "google"
     },
     {
+      "title": "US Sour Crude’s War Premium Vanishes as Supply Surges",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQT0E4SzBJeVR5Zm9EdEI5Uk5GNTB5cGFDblVvTGxPeUtTME9wRVVtT05wZExkNkR4X000QUdNdTVVNVFIS1ZLbTZjcFZrLVZmRGt6WGJ1cEt5RVJSTkozeEVsb3lSSHlGQmJMTVF4TkxhR1dMV3RBcGJ4Y2gtN0Eybkl4djVTOVBDVkVzLW5GeFh1dWs4c1ZfRmpXRE9wWDlza0xlYk9HSQ",
+      "publishedAt": "2026-11-20T01:56:00Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Dollar falls as Fed-fueled rally stalls; lower US yields help yen",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSWwtcmZqemtkQmd4OWJQUHN1OXZLZTgxM1FtVk5JTlAtNndPYzRndHkxbEZ2MEdNZGtRdWUwMUxlblhtLThfQ0NoRHYtZ1lzd2VkSHc4N0U3UlFjUGFubjBkOFc4bDhpR3lELUoxalJBN1lkUUtUYk1NSk9sanNaeUZrZVVXTWlDV2Zja1FFQ3lPaXNUN2FXb3BST0dmZHd3",
+      "publishedAt": "2026-11-20T01:47:00Z",
+      "source": "Reuters",
+      "topics": [
+        "fx"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Latest Oil Market News and Analysis for Nov. 20",
       "url": "https://www.bloomberg.com/news/articles/2026-11-19/latest-oil-market-news-and-analysis-for-nov-20",
       "publishedAt": "2026-11-19T23:05:51Z",
@@ -85,16 +205,6 @@
       "via": "rss"
     },
     {
-      "title": "At APEC Summit, U.S., China and Russia Vow to Increase Oil Supply Amid Global Energy Transition",
-      "url": "https://www.nytimes.com/2026/11/19/world/asia/russia-china-united-states-oil-joint-statement.html",
-      "publishedAt": "2026-11-19T17:25:17Z",
-      "source": "The New York Times",
-      "topics": [
-        "energy"
-      ],
-      "via": "rss"
-    },
-    {
       "title": "Hanwha Philly Shipyard Begins Construction of First of Four Jones Act Tankers",
       "url": "https://gcaptain.com/hanwha-philly-shipyard-begins-construction-of-first-of-four-jones-act-tankers/",
       "publishedAt": "2026-11-19T17:07:50Z",
@@ -113,16 +223,6 @@
         "energy"
       ],
       "via": "rss"
-    },
-    {
-      "title": "US Sour Crude’s War Premium Vanishes as Supply Surges",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQT0E4SzBJeVR5Zm9EdEI5Uk5GNTB5cGFDblVvTGxPeUtTME9wRVVtT05wZExkNkR4X000QUdNdTVVNVFIS1ZLbTZjcFZrLVZmRGt6WGJ1cEt5RVJSTkozeEVsb3lSSHlGQmJMTVF4TkxhR1dMV3RBcGJ4Y2gtN0Eybkl4djVTOVBDVkVzLW5GeFh1dWs4c1ZfRmpXRE9wWDlza0xlYk9HSQ",
-      "publishedAt": "2026-11-19T16:45:06Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
     },
     {
       "title": "Major Powers Vow to Increase Oil Supply Amid Global Energy Transition",
@@ -348,6 +448,16 @@
       "via": "rss"
     },
     {
+      "title": "Oil prices settle lower as traders weigh surplus supply outlook",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQbmp3REJQam1xdjkyMkpCN1JlSkotTnJNM0JEWDVFNmJqZ2FHbmNIN2E0V2twa2N3djBLTXlNNVJvcDJmZVNXMlBlQnk2VG1FTThnX0hQbVRqS2dKbVVBdXl6MWR5ZHo0S2VneWt2bUdwVjE4TnNxaHFLN0hHNU9IUVljVnNXLWJTeHdORFFJX3BfQXhPTThEbGFYQXhYaGNneHRHcVRGS2NyOFhxTzVN",
+      "publishedAt": "2026-11-18T19:52:29Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "US tightens Iran blockade with curbs on oil transfers at sea, advisory shows",
       "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNS21BSEJXWHdIUGpZcWRtZm0tT084cTd5WFpvbFZUeE9wdHkyelI4Y2pFamp5YmY3S09BRm9zMWQ3VE5NcHVnSGZNM20yZ3B5NE1mXzZ4VVg3NUZ5RTVuQ2owQzE4MkxpaTBIcEhCNng4MDE1ZnpyTUVOMUVHVFdzcm14Mkl2TlNGZmNuVFQ1NFMwdGFOT1JSTEFURDNOQ005cWVaUG5ybmtyNWQyTW1QMG82SHhGQXNmb3VMTUtB",
       "publishedAt": "2026-11-18T19:32:18Z",
@@ -438,6 +548,16 @@
       "via": "google"
     },
     {
+      "title": "Iran fires at Kuwait after US strike on Iranian island",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNMEJSYmJOTF9ISXdkYWVNd0Z3RnJvQnRjSlhEVWJ4bWo1UVVvblNOUnczc0FtOUlSODM5UzRNOUF5T3lIYTNrRVZKNEZTaVFQcnMwaG9JSWdnNkJmRVVtcTluWmFEU1k0dFVVVDJ4SWlEcUNpWEo1aktKYzFGblgxTldZSGVNRjV3N3VyMVNFelYxQ1d4Zlo3LXdQN2E4RUFuNjB4UWdYX1FxQ3pERUdCenJ3",
+      "publishedAt": "2026-11-18T13:41:25Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Edible oil prices stabilize but remain influenced by the sunflower oil market",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNOC1FUS1zN0ljMjBmcGlybnhvZXBoanpEcWpmQ2tTLVRKalRTUC1YMThJVlhKSDFQZnJUWm92RUtXWXF4TXZ0RHNEZWp4YzB5Um05a3B5LVJ4SnVBSEdvYU9tZnd0Q183VzAzeHlKTFBpeDRfZlFUaDVGSWFGRG9CNnpFNUpQVlNlSFQxZE92STMyTUR6VHRVOG1sTmw5WUp5NXdzYTNhbkhoMkNGUkVOLTkzRQ",
       "publishedAt": "2026-11-18T13:32:45Z",
@@ -520,32 +640,12 @@
       "via": "google"
     },
     {
-      "title": "Oil prices settle lower as traders weigh surplus supply outlook",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQbmp3REJQam1xdjkyMkpCN1JlSkotTnJNM0JEWDVFNmJqZ2FHbmNIN2E0V2twa2N3djBLTXlNNVJvcDJmZVNXMlBlQnk2VG1FTThnX0hQbVRqS2dKbVVBdXl6MWR5ZHo0S2VneWt2bUdwVjE4TnNxaHFLN0hHNU9IUVljVnNXLWJTeHdORFFJX3BfQXhPTThEbGFYQXhYaGNneHRHcVRGS2NyOFhxTzVN",
-      "publishedAt": "2026-11-18T02:16:00Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Stocks slip with eyes on Anthropic and Nvidia, oil prices slide",
       "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFB6allzaTc1SU8zUmVIeXRZRkU2dE9reVo1MXBLSllnX0lsb1FmemdwR2RnNzZvQ0tqSzR6cTgzVHI2bGlYWWxxLTJWY3V4OXBrczR5OXF5ZkdNQnBfak1tYUs1NlVOQVVSLTdacXdnaEt0Y2VHVmM4NEN2WQ",
       "publishedAt": "2026-11-18T01:46:00Z",
       "source": "Reuters",
       "topics": [
         "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Iran fires at Kuwait after US strike on Iranian island",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNMEJSYmJOTF9ISXdkYWVNd0Z3RnJvQnRjSlhEVWJ4bWo1UVVvblNOUnczc0FtOUlSODM5UzRNOUF5T3lIYTNrRVZKNEZTaVFQcnMwaG9JSWdnNkJmRVVtcTluWmFEU1k0dFVVVDJ4SWlEcUNpWEo1aktKYzFGblgxTldZSGVNRjV3N3VyMVNFelYxQ1d4Zlo3LXdQN2E4RUFuNjB4UWdYX1FxQ3pERUdCenJ3",
-      "publishedAt": "2026-11-17T23:15:00Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
       ],
       "via": "google"
     },
@@ -1179,17 +1279,6 @@
       "summary": "Bloomberg, repris par Rigzone, relève que l’incertitude sur les pourparlers entre Washington et Téhéran a entretenu la volatilité du Brent."
     },
     {
-      "title": "Russian strikes kill one in Zaporizhzhia, two in Odesa",
-      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNeW5QSkVpZ1BJcFBDZ25uWTdpOVN0X2xQYnlUZjNncFo3N0x2QmtRekFuTlFjVDhfUnF0dTRsc1BfVE9uYUYtSVl3T2RDckdadm12OHM0aWdwXzJQaWQzLUpzZDAtTm4yUmRrcVFoVWRabV92M1JGbkxSRkt4U2ZtX3BNVkw1RXdjaGswa3k5TWZaVTA",
-      "publishedAt": "2026-11-13T18:51:43Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping",
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Gulf Oil Exports Recover as Hormuz Shipping Struggles",
       "url": "https://gcaptain.com/gulf-oil-exports-recover-as-hormuz-shipping-struggles/",
       "publishedAt": "2026-11-13T17:51:12Z",
@@ -1279,16 +1368,6 @@
         "shipping"
       ],
       "via": "rss"
-    },
-    {
-      "title": "Russia says Europeans can join Ukraine peace talks if they show 'readiness to contribute'",
-      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNeUZLZHJfVTJLQ0YwVGJBUmRIOXFKNW5VTU90Ni02a1EyWmc0NlZzX3NEay1fcE9INk1tdzYtYzF3Z2xWTU44NV8zRHRoRnR1U2hJM0xXWVllcFhyZDc5TldPbXUtaXVlX0Z5V0syOXBsb0s1QnpOMl9UYktfM2JHejl3dmVmd3ItcVp5Q0I5VTZGakVJaXU2Z1JTb1RqNktScGxEVEV0ZWpjeVBJZDZQVEFSMkNyRWpLY292Q0ticw",
-      "publishedAt": "2026-11-13T13:11:45Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
     },
     {
       "title": "Lack of Black Sea shipping agreement causes little market concern amid active Argentine exports",
@@ -1549,16 +1628,6 @@
       "via": "google"
     },
     {
-      "title": "IMO Chief Calls for Strict Enforcement of SOLAS Rules in Strait of Hormuz",
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOU2t3QXotM0dUY2JQRGtPQmkxbkpRelVqckxqTGpQUGxsZnc2X2UzeW9TVmJoWFFKaFlJNVh1b3hFdDBCbXJYXzF5ZG5BWGltbHRjT2d2eVYweDVlZmlmZnJtM0QwaEZWYk9lVG51bGRZMElLY3B1eEhnLXpOTVZIV2UxZG5zejBqckJsUjNKVndRTFZJM2lCOC11NA",
-      "publishedAt": "2026-11-11T16:37:16Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Saudi Oil Output Surges to One of Highest Levels in Years",
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNMU1UZzFGcHVQTS1lNzJZVXZKeFlhS3ltbjcwcDAyVGZOWkZsUkFobUhoT2d6TTMxN2l3Y0NGQ1lsZDJ0Y0Fzcl9lNkR0Q0o5ZmpCRnRERnVBSDhHVnEwNXcxQmJBZy1ZTHEySzh3TkkwMmpmZDRxTkVhUUw0SnNkXzJCd0NsZWpsQzJSRzl0dHpaMU9hQXZ4ZUtqc1FJSVpvbWZlcVpueTByUjk1akZr",
       "publishedAt": "2026-11-11T16:06:42Z",
@@ -1589,17 +1658,6 @@
       "via": "google"
     },
     {
-      "title": "Russian Diesel Tanker Awaits Orders Off U.S. Coast Amid Import Ban Dispute",
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNVmtubmpOME1qVlBzZWtOZEVXX0pPZXpub1VSakRzUENQVHZ6WlljamVCM0d6WWJBdlRJQktnSWtDVHdnSmwzOXN2MjNwclR1dEszVFdERDZOazRiUHdLZXFXZW14SWV0SzBTNE42bVJLbUZpYmV3OGxra0JaSHl6VUdQVF9iQnN5V0UzZXBYa0NWbUpuaVlDblJDUQ",
-      "publishedAt": "2026-11-11T00:22:43Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping",
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "UKMTO signale un incident impliquant un pétrolier dans le détroit d’Ormuz",
       "source": "UKMTO",
       "url": "https://www.ukmto.org/-/media/ukmto/products/20261111-ukmto_warning_202_26.pdf?rev=c16d26ad15904f0fb70edc01e13ca9a8",
@@ -1612,16 +1670,6 @@
       "via": "editorial"
     },
     {
-      "title": "strait of hormuz Archives – Page 50 of 50",
-      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE80RmkwQW85RGNJc1IzUkRzTXBHRWZUa1FOLXZUMllZUVFjTkhHdDlnTGVGcnN6UUNyU2JMaDdabUk5dnJOZTlqR2NuUVM2Ylczcy1RaDN4cWtfVk9OZlc0",
-      "publishedAt": "2026-11-10T21:32:51Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Strathcona, CN to Partner on Crude-by-Rail Project to BC",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxONlZ6MVdxZlRfNXM0bHRnVWk5SHdRRVg3VUNCcmpPaFU2dkJyVUxvZ09TWXl4VUR1bE1GZTNGWlZhTFpFXzVyNDFPS1h1bG5IdzdmdGc3WFZZMjdhY2UxZUdWVkN6RWstaTVLRVlLMk9GXzh4OFROYUgtcGthMUszX3JzeEtPV2JsdkpUM0ExTVQzS2lzSkg3SlhpWmtHaEt5cHl2TDdKRGgwel9RcjNuZ1ln",
       "publishedAt": "2026-11-10T20:51:54Z",
@@ -1632,62 +1680,12 @@
       "via": "google"
     },
     {
-      "title": "Oil Extends Drop as Trump Says Further Iran Strikes Unnecessary",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQaXNXQU9UR20zbU83d0JzZ2cwSGhBbVBoNXZ1ZHFhUVAwRlpxR0FPai1jUWtxaWlBb0tKTkJBMmdKTVdrU3JuZjdXM3dBZ3ZuTk5OdDRSOWpELTIyZkpCMzNSNUlZSTFNb3Qxck5WVTExXzNvbVNmWkFtTWJObWhoUW9BelliQTg5MUFaWUpSYmhpeDRfaUNDc2taZHBRdw",
-      "publishedAt": "2026-11-10T20:15:57Z",
-      "source": "Bloomberg",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "‘Nonsense Rate’: Iran War Exposes Turmoil Behind Key Tanker Benchmark",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPb2xzYWRxSXZNVU9BUmY2WVBCR1hLaWhRano5V0FQcGQzVmloRDZya2hJbUtyQ2xnTVlXX0hDWmI2MDcya0FUaUVfRWpLUlczZGs4MzlndXEzOW5iMDlpX0duR2RqY09fSUs1SXBoVXZpTlJfby03OGhTcW4wYlZ1bXdyNnBMTUFyYVhtZDVlZ1Zqdw",
-      "publishedAt": "2026-11-10T19:55:18Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "US Raises Forecasts for 2027 Gasoline and Diesel Prices",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNa3hQQ3lEMTBoVW5ZYnkxWlF3T05UWUVYY256UzZmVDRmTDU4UmZIN0tOTkc0QnU5eVoxMnlJZkFtOTBwbnNwbTZ5RTJyUTVSMTdBT2dMZnI0QWdnVm1vM0gyeWFQSjc5Q1g1U2E4WUc2U1l5Y3VwMWdGUW4xMm5wNm5iakhjal9mN19VM0pvTDBXOFp4Sm1MeEF6VHV3NU9JNDhSUWVYaFNQQQ",
-      "publishedAt": "2026-11-10T18:46:41Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "ADNOC Vessel Damaged in Gulf Attack as UKMTO Reports Fresh Tanker Strike Near Hormuz",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNN2x6eGtJcW9sblp3bU9KUkZpdFprRl93NXMyVGdKc0p1NS1EbW1Bd01Hek90NUdCTjdYT3pXdFZZc1pXMlN6enNnOUgxVGp1aUxObW02eWJ0M08xem56M2tpcXhYOFMtVkZ0SUNjako3RE40M1ludWczOGhNVXBvRUY3WHpfN3pPOVVfOG0wdmY4R01qVlZHSWtCSGszU0FGMi1LRDJZUUp1QQ",
-      "publishedAt": "2026-11-10T16:57:38Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Oil Prices Have Tumbled in November. Here’s Why.",
       "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOWnVPMUkyVDh0dXExZGJiZlNYOWZvd2E0MGxKcTRUbDlSaUN2dlg5OWljUWlKeVpCMjVKem9LYmdDSGtzaml3X1hCR1MySzhsbjd1ZWUzRzUzYnRrMFBROVdxQ1FWVm1JcTk4Mzk3bm5TdE5PbDFhU3gxek9yN09GV2xPWjNOSWtlcTI2UlBtYmRVb3p0LVh3",
       "publishedAt": "2026-11-10T14:04:40Z",
       "source": "The New York Times",
       "topics": [
         "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Russia Says It Hit Three Cargo Ships In Black Sea",
-      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE5mVHAzOXkyRzZyTm01bG95bkp4d1ljeDFaVkNMNjR0VDR2SzkweWRnQ29fM3R0NjJxbEZXV0VKdDdUZVhrOUw1QkczOTNjZTh6M09BbEVnSTVoTGxZU3JraXFlbnRnLW8yLXpZckE2QTQzZGg0RmRZWF9HUQ",
-      "publishedAt": "2026-11-09T03:48:47Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping"
       ],
       "via": "google"
     },
