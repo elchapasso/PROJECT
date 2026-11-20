@@ -1,129 +1,163 @@
 {
  "schema": 1,
- "checkedAt": "2026-11-20T17:50:12Z",
- "dataChangedAt": "2026-11-20T17:50:12Z",
+ "checkedAt": "2026-11-20T22:22:17Z",
+ "dataChangedAt": "2026-11-20T22:22:17Z",
  "today": "2026-11-20",
  "sources": {
   "ecb": {
    "name": "BCE · EXR",
    "ok": true,
-   "seconds": 30.3,
-   "lastSuccess": "2026-11-20T17:50:12Z"
+   "seconds": 7.5,
+   "lastSuccess": "2026-11-20T22:22:17Z"
   },
   "fred": {
    "name": "FRED (EIA, FMI)",
    "ok": true,
-   "seconds": 3.1,
-   "lastSuccess": "2026-11-20T17:50:12Z"
+   "seconds": 1.2,
+   "lastSuccess": "2026-11-20T22:22:17Z"
   },
   "mpob": {
    "name": "MPOB",
    "ok": true,
-   "seconds": 1.7,
-   "lastSuccess": "2026-11-20T17:50:12Z"
+   "seconds": 1.5,
+   "lastSuccess": "2026-11-20T22:22:17Z"
   },
   "iposs": {
    "name": "IPOSS Data",
    "ok": true,
-   "seconds": 0.6,
-   "lastSuccess": "2026-11-20T17:50:12Z"
+   "seconds": 0.5,
+   "lastSuccess": "2026-11-20T22:22:17Z"
   },
   "anp": {
    "name": "ANP · Brésil",
-   "ok": true,
-   "seconds": 3.9,
+   "ok": false,
+   "seconds": 10.7,
+   "error": "https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/ppidp/precos-medios-ponderados-semanais-2013.xls : <urlopen error [Errno 104] Connection reset by peer>",
+   "failingSince": "2026-11-20T22:22:17Z",
    "lastSuccess": "2026-11-20T17:50:12Z"
   },
   "magyp": {
    "name": "Secretaría de Agricultura · MAGyP",
    "ok": true,
-   "seconds": 17.4,
-   "lastSuccess": "2026-11-20T17:50:12Z"
+   "seconds": 16.6,
+   "lastSuccess": "2026-11-20T22:22:17Z",
+   "warning": "5 bulletin(s) illisible(s) : 2026-10-30 : MAGyP 2026-10-30 : réponse non JSON; 2026-11-10 : MAGyP 2026-11-10 : réponse non JSON; 2026-11-16 : MAGyP 2026-11-16 : réponse non JSON"
   }
  },
  "series": {
   "arSoyOil": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-20",
+     1183
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 270,
-   "last": "2026-11-19",
-   "lastValue": 1184
+   "warning": "5 bulletin(s) illisible(s) : 2026-10-30 : MAGyP 2026-10-30 : réponse non JSON; 2026-11-10 : MAGyP 2026-11-10 : réponse non JSON; 2026-11-16 : MAGyP 2026-11-16 : réponse non JSON",
+   "count": 271,
+   "last": "2026-11-20",
+   "lastValue": 1183
   },
   "arSoyMeal": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-20",
+     398
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 270,
-   "last": "2026-11-19",
-   "lastValue": 391
+   "warning": "5 bulletin(s) illisible(s) : 2026-10-30 : MAGyP 2026-10-30 : réponse non JSON; 2026-11-10 : MAGyP 2026-11-10 : réponse non JSON; 2026-11-16 : MAGyP 2026-11-16 : réponse non JSON",
+   "count": 271,
+   "last": "2026-11-20",
+   "lastValue": 398
   },
   "arSoySeed": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-20",
+     474
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 270,
-   "last": "2026-11-19",
-   "lastValue": 471
+   "warning": "5 bulletin(s) illisible(s) : 2026-10-30 : MAGyP 2026-10-30 : réponse non JSON; 2026-11-10 : MAGyP 2026-11-10 : réponse non JSON; 2026-11-16 : MAGyP 2026-11-16 : réponse non JSON",
+   "count": 271,
+   "last": "2026-11-20",
+   "lastValue": 474
   },
   "arSunOil": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-20",
+     1322
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 271,
-   "last": "2026-11-19",
+   "warning": "5 bulletin(s) illisible(s) : 2026-10-30 : MAGyP 2026-10-30 : réponse non JSON; 2026-11-10 : MAGyP 2026-11-10 : réponse non JSON; 2026-11-16 : MAGyP 2026-11-16 : réponse non JSON",
+   "count": 272,
+   "last": "2026-11-20",
    "lastValue": 1322
   },
   "arSunMeal": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-20",
+     193
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 283,
-   "last": "2026-11-19",
+   "warning": "5 bulletin(s) illisible(s) : 2026-10-30 : MAGyP 2026-10-30 : réponse non JSON; 2026-11-10 : MAGyP 2026-11-10 : réponse non JSON; 2026-11-16 : MAGyP 2026-11-16 : réponse non JSON",
+   "count": 284,
+   "last": "2026-11-20",
    "lastValue": 193
   },
   "arSunSeed": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-20",
+     593
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 283,
-   "last": "2026-11-19",
-   "lastValue": 606
+   "warning": "5 bulletin(s) illisible(s) : 2026-10-30 : MAGyP 2026-10-30 : réponse non JSON; 2026-11-10 : MAGyP 2026-11-10 : réponse non JSON; 2026-11-16 : MAGyP 2026-11-16 : réponse non JSON",
+   "count": 284,
+   "last": "2026-11-20",
+   "lastValue": 593
   },
   "eurUsd": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-20",
-     1.099
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -134,13 +168,8 @@
   "eurMyr": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-20",
-     4.5196
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -151,13 +180,8 @@
   "eurIdr": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-20",
-     20071.37
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -216,13 +240,8 @@
   "mpobCpo": {
    "source": "mpob",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-19",
-     4038
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -233,17 +252,8 @@
   "idPalmFob": {
    "source": "iposs",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-19",
-     1090
-    ],
-    [
-     "2026-11-20",
-     1085
-    ]
-   ],
-   "addedCount": 2,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -254,17 +264,8 @@
   "myPalmFob": {
    "source": "iposs",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-19",
-     1007
-    ],
-    [
-     "2026-11-20",
-     1002
-    ]
-   ],
-   "addedCount": 2,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -274,12 +275,8 @@
   },
   "b100": {
    "source": "anp",
-   "status": "ok",
-   "added": [],
-   "addedCount": 0,
-   "revised": [],
-   "confirmed": [],
-   "rejected": [],
+   "status": "error",
+   "message": "https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/ppidp/precos-medios-ponderados-semanais-2013.xls : <urlopen error [Errno 104] Connection reset by peer>",
    "count": 97,
    "last": "2026-11-08",
    "lastValue": 5.68469
