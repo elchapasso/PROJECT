@@ -1,8 +1,28 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-19T22:24:42Z",
-  "collectedAt": "2026-11-19T22:24:42Z",
+  "checkedAt": "2026-11-20T03:42:44Z",
+  "collectedAt": "2026-11-20T03:42:44Z",
   "articles": [
+    {
+      "title": "Oil prices edge higher as Houthi attacks on Riyadh raise supply concerns",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPb3pQREZDSHE2RmNHdDdGdExDUXhYeWljc2VualVoQ09oQV90WnFQQlZkYW1rWnl5ODJ6N2haaVBDVUY4VmFvRmtLSlZKbU5kR1lHNklrUUR3X3JGc181OHZCUHpXalZFUllBZXVEczJPUUdZZUt1MmpsTEN0MkJGSDNCVHhoa25pZFBSb1lldS1US0VJNVNBWWN1U2VwQmd0WmlQR1RKWmgyS2lyUDVfNHdWeWhzaFhmZ1E",
+      "publishedAt": "2026-11-20T02:00:00Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Latest Oil Market News and Analysis for Nov. 20",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-19/latest-oil-market-news-and-analysis-for-nov-20",
+      "publishedAt": "2026-11-19T23:05:51Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
     {
       "title": "At COP31, Venezuela touts AI as path to cleaner oil production",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQQmdwRmVVelpCME1XUFJaY205YnloQ1NrdDhSVDBiZkhjTU9oQlp4WUg5YXFRNWp5RzhhVlN2bC1mUHFrVEhKalZJMGhjeHNla3ppQTc1Y2FwcWwweDJydXlRVzI0aUE4S3JyWXpJaEs2WjJOQWNKNTNMeEVZRWgwT3I0SUZsbjBtcGlDbS0zSy11SlI4MjE1VkVUMGd6Q0w1LVFqUTE1Nko2SlE",
@@ -45,6 +65,16 @@
       "via": "rss"
     },
     {
+      "title": "US Sour Crude’s War Premium Vanishes as Oil Supply Surges",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-19/us-sour-crude-s-war-premium-vanishes-as-supply-surges",
+      "publishedAt": "2026-11-19T16:45:06Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
       "title": "Major Powers Vow to Increase Oil Supply Amid Global Energy Transition",
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPZEoxaHJPaXd5UXlkcXc4S0ZUcGtZMm9aS3VYSWE5ZjRXaDlFUWk4RVdhdFZPdUR2cnZaazktcmlQYmtDUzRZdHlLRnhyclFHTU9JNVJOT1EyQXlLX1BwMVM4ZDg0V0c0dnZERURRRzBrb1FWTndScXdLM0pJTlZOaHJsRkdkRVljcjN4NTZXNExUMnVxOEZVS0FlQ05GQQ",
       "publishedAt": "2026-11-19T16:31:31Z",
@@ -81,6 +111,17 @@
       "source": "Reuters",
       "topics": [
         "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Oil tanker loads Iranian crude in Gulf, TankerTrackers.com says",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOOXdpYkFVdXpMMHdtZk9Cdld4YjZyUnlieS1mZXZXT1VrTHM5SzhMR0k5dU56S1NiTWdlaVR0NHVBVVpqUXpqYW94RW11eWhYTkRHMmhEZ19VcjZDMS1nXzFRajZKdmpqZkNCc2dscm1DVjFhaVU4WmdodFRKSm0xU0lVRzZOME8xV25TRjVKQm8td1Jsd3R3RjVhVmJGQk03ZkdVUjctVy1uTGlBeUpN",
+      "publishedAt": "2026-11-19T12:47:33Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping",
+        "energy"
       ],
       "via": "google"
     },
@@ -220,6 +261,16 @@
       "title": "US dollar hovers near 19-month high, Aussie falls after soft jobs data",
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQQ0NIbEViM181TUJsZHFhV2J5d0lLbkVXVlBRYVJlb3YtMC1wVTlyc1NBV0RMQ0dBTXZlcHFvdnkzQm1SUWo3NFl3eGZ0SzgwTXhxTVQ3Y2VYSHg5LXZtRG9vUUp3eVlEQktJMk9JSllaQ1hRRjRuWmx0WGNJSFBLTHRpUS1tTVFoakw2dHlVRExKTU1jWE9McGswRWc5V05CYU4zR3JDdm9Jam4wTDlyNTlXRno0cXc4NVE",
       "publishedAt": "2026-11-19T02:01:00Z",
+      "source": "Reuters",
+      "topics": [
+        "fx"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Stocks fall as Anthropic debut fails to ease AI concerns; dollar rises",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBKVlNYZ0xucjVqQUMzV3BSemlBQ2ZPcmxTejY2bXF6bzUyZTR3OEhOc3FoQW5JS095Uzl2LWhJcDdpVXpoeWF3c245cllBNFRjeks3eTdta3kxU3BiWm1IcG1ScWIweFVBdTk0eFpURlFDZi1kUmVIQ0dVTQ",
+      "publishedAt": "2026-11-19T01:53:00Z",
       "source": "Reuters",
       "topics": [
         "fx"
@@ -1190,16 +1241,6 @@
       "via": "google"
     },
     {
-      "title": "World oil market is returning to surplus as Gulf exports recover, IEA says",
-      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOcWtzQXhRVUlUbWQ0VVloOTVjekFCcC1XQlNXNWNRcERHNDFEbnBNTTFhZjV3Qjk5bGxCaDhoRFE1Yi1mdGNoR3JCVXY5MmQ0ODVnUWRabHowUDhYSUNKOXV5X0lLQzRBbWNabUFMTzVlMzBNOUUyWTgyeUg1cW5sRjJtUHo3TldPOEY4S19xOGwwYjlkemFibktTVTltVF94WUg5ekdJczcyUlBHOHZ0V3EtdWdjU0JOVkY4",
-      "publishedAt": "2026-11-13T11:34:59Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Lack of Black Sea shipping agreement causes little market concern amid active Argentine exports",
       "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPMjdweEVyLXl6TVZXRk40UmxKN3piTzA1N3YyQ0tyM3RVcm04Z2dqdDgtcDdOQjR5OHVEejQzdkU4SDVJaUI1STJzQlRnU3ZqZTFRS2NIdWk2Ym1JQ1ZIblV5ZndVOEhuZWRKZm9zX0k1OHhVVVF1OTNRQ2FSRUZ0YVg5YW1ZcEZXem9iYTBVYnJnel81eXhxWVlQWERPbDlidEpWVGI1T210Q1VwNXh6bl9naUszXzZhbF81bUdRdmgyeS1vc2hYTEs0RQ",
       "publishedAt": "2026-11-13T11:27:43Z",
@@ -1216,16 +1257,6 @@
       "source": "UkrAgroConsult",
       "topics": [
         "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Russian fuel exports, oil output rebounded in October after deal with Trump, IEA says",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOOFNlVF9GTlRWM1U3SWlrS3ZOR2pzeFZnZXN0SnJvU0EzdXdqT1pBYnRGbkFUaWxoT1dWaEZFZndsejRaQ3JCOTJRMklLaXE4YU5WTDc5OWJGV2FfaGNwYjFhWUVseFItUjVab0V6aFpmajhRS0pIU2tIaXdVV3JWNkVaNlF6eXZvLWswaTM0WFJEVFNndWNVbDNfTUJEUnB5aXdWWHlqM0h5azN1QlhiQ3lsUDRzaHlxT0x2NDJVcFdNQ3hoQVl1bVA0LW0",
-      "publishedAt": "2026-11-13T09:14:29Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
       ],
       "via": "google"
     },
@@ -1258,20 +1289,6 @@
         "shipping"
       ],
       "via": "google"
-    },
-    {
-      "title": "Le pétrole termine une deuxième semaine de baisse sur fond d’excédent d’offre",
-      "originalTitle": "Oil prices set for second straight weekly drop on signs of growing supply surplus",
-      "source": "Reuters",
-      "url": "https://www.reuters.com/business/energy/oil-prices-set-second-weekly-decline-trump-stay-with-iran-blockade-2026-11-13/",
-      "publishedAt": "2026-11-13T00:00:00Z",
-      "dateOnly": true,
-      "topics": [
-        "energy",
-        "policy"
-      ],
-      "via": "editorial",
-      "summary": "Les contrats Brent et WTI ont clôturé vendredi à 95,84 et 88,56 USD/baril. Le marché met en balance la perspective d’un excédent de brut et le risque de nouvelles perturbations au Moyen-Orient."
     },
     {
       "title": "Des arrêts d’usines perturbent la trituration du tournesol en Ukraine",
@@ -1655,16 +1672,6 @@
       "via": "google"
     },
     {
-      "title": "Macron Talks to Gulf Countries About Providing Hormuz Insurance",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQbjhPS1A0bDM5OERSbjRJWTZVZXFhR0ZBZmlITXFlZzdoYXdCVmdDTXktcFEwRVJJOVlKemRNUXZuRzBrWEcwZndPS1B2QU9JZHBNNnNtSE5GSTFmVlYzaXFzOWJBVG16TmRHTEhwQWJxNmNldW42YlA0RUZySmpldVF2cWhaa1RUcWc3RnQ0SXZ3UVdSSUJEUjdiaHJYTFNLTHRlNDg1SlUwYVIyM05ZR0NFQTE",
-      "publishedAt": "2026-11-10T11:52:21Z",
-      "source": "Bloomberg",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Russia Says It Hit Three Cargo Ships In Black Sea",
       "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE5mVHAzOXkyRzZyTm01bG95bkp4d1ljeDFaVkNMNjR0VDR2SzkweWRnQ29fM3R0NjJxbEZXV0VKdDdUZVhrOUw1QkczOTNjZTh6M09BbEVnSTVoTGxZU3JraXFlbnRnLW8yLXpZckE2QTQzZGg0RmRZWF9HUQ",
       "publishedAt": "2026-11-09T03:48:47Z",
@@ -1739,16 +1746,6 @@
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNYURxT1U3eS1weU43YUhSRWdDOFl4c3ZjUlUxV1hKLUJhZDY4MloyQnVvS3V4Ylh5dHlLMUQxRVR6WGlVcm9lZEJ5NVZXMXNHZFplODl1UUhNTTZCSlA3VXBIbnRkbWI3R0c3bnU2NVR5SF9qNUN3emhlMjlLSnBsNXM2Mm1mZFc5Z1lZdXBZTm0zZXcyT0lKWTZWdzBJNHdCMkxkYWpIX1JSZnhCNGZ6dE5vOTVMbEZTVnpn",
       "publishedAt": "2026-10-31T07:00:00Z",
       "source": "UKMTO",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "DP World CEO Warns Hormuz Rerouting Will Feed Through to Prices",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOUXRUNndHWTFtcHlTcVFrR3ZpMGVvQURFRF9XUmxIb0cwRHFRdzNPcFRTVUhyXzc4NzYwd3lITEUySU1Ld1pvSUxFbnNhY3FxNzNSX1NnVm9JdzZ4cENoeFNXYkFkbGpVYVdPN2RBeUFUbVVPUk03NWpGSG9Ob2drTkZLUmNLSFRkQXBxTkVXNjYyc0VOVENndmJKSU9SczNvMndjNkMzanVBMnA5aWFuYWlWbFE",
-      "publishedAt": "2026-10-30T07:00:00Z",
-      "source": "Bloomberg",
       "topics": [
         "shipping"
       ],
