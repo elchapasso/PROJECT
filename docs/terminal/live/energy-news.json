@@ -1,10 +1,50 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-20T03:42:44Z",
-  "collectedAt": "2026-11-20T03:42:44Z",
+  "checkedAt": "2026-11-20T13:32:07Z",
+  "collectedAt": "2026-11-20T13:32:07Z",
   "articles": [
     {
-      "title": "Oil prices edge higher as Houthi attacks on Riyadh raise supply concerns",
+      "title": "Saudis Make Deal With Japan to Replenish Depleted Oil Stocks",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-20/saudis-make-deal-with-japan-to-replenish-depleted-oil-stockpiles",
+      "publishedAt": "2026-11-20T10:20:42Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "UK calls for restoration of safe grain exports through the Black Sea",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOOEhETDNFeXF0OVhZS1F5VzJXRC16VUJjOWFHRzBYQWhmc21jMXB1TXZsYWFjRU5vN2U5VG95ZWRXVTQtbFc2ZlJwZEdsbTJaNFI4NWotazRZNmQ1M2tWX2tXMWk4RXJzTG5IQjBCTGRBNFY3V2pydkZHbWYtU0stS2d3bUkyb2psZ1dzeVROU3BhNllWdHpZWDkyMWN3SlZvbUg0azctQQ",
+      "publishedAt": "2026-11-20T08:36:59Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Indonesia could cut palm oil exports by 4.4 mln tons in 2026/27",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOVmlVQTF4Y1F2WmpoczlEWl9MR2ZlZWotbDFLaGlHY2pDd1JlRVRJVmZVZ2ViQlRfbFVXMlY5a1VhSFNOc0tzR2ZtanpyUjY1dzJiX2tpU1dYSnRlZDVES194V0JuNTM3SnZTQ1pnb2RWd2JjaGhtUEFndTh2dDRVSGRFc3JyUzlpSHB4VWdYMjN1ejVqaFo1ZFRRcExKY2pM",
+      "publishedAt": "2026-11-20T08:14:55Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Palm Oil Poised for 3rd Weekly Drop Amid Supply Overhang",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE45MlZmaUY5dHJiOGFjLTU0NjlkbjNVOW5XQ2JpTWJ0ZmxUX09QMlhFdHg3LWl5cTBLc1hnRDNHeHY2ZHdKZzVNckZHN0tILXBHTHpFXzk0bU55VjFTeDh1WUlKV0dGYjFXYTJn",
+      "publishedAt": "2026-11-20T04:03:27Z",
+      "source": "Trading Economics",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Oil prices set for third straight weekly decline on strong Middle East export flows",
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPb3pQREZDSHE2RmNHdDdGdExDUXhYeWljc2VualVoQ09oQV90WnFQQlZkYW1rWnl5ODJ6N2haaVBDVUY4VmFvRmtLSlZKbU5kR1lHNklrUUR3X3JGc181OHZCUHpXalZFUllBZXVEczJPUUdZZUt1MmpsTEN0MkJGSDNCVHhoa25pZFBSb1lldS1US0VJNVNBWWN1U2VwQmd0WmlQR1RKWmgyS2lyUDVfNHdWeWhzaFhmZ1E",
       "publishedAt": "2026-11-20T02:00:00Z",
       "source": "Reuters",
@@ -73,6 +113,16 @@
         "energy"
       ],
       "via": "rss"
+    },
+    {
+      "title": "US Sour Crude’s War Premium Vanishes as Supply Surges",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQT0E4SzBJeVR5Zm9EdEI5Uk5GNTB5cGFDblVvTGxPeUtTME9wRVVtT05wZExkNkR4X000QUdNdTVVNVFIS1ZLbTZjcFZrLVZmRGt6WGJ1cEt5RVJSTkozeEVsb3lSSHlGQmJMTVF4TkxhR1dMV3RBcGJ4Y2gtN0Eybkl4djVTOVBDVkVzLW5GeFh1dWs4c1ZfRmpXRE9wWDlza0xlYk9HSQ",
+      "publishedAt": "2026-11-19T16:45:06Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
     },
     {
       "title": "Major Powers Vow to Increase Oil Supply Amid Global Energy Transition",
@@ -863,7 +913,7 @@
       "via": "google"
     },
     {
-      "title": "Wheat Falls on Optimism Trilateral Talks Will Free Up Black Sea",
+      "title": "Wheat Falls on Optimism About Black Sea Talks, Argentine Supply",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPelFYbGZob1hJMXFjS2pkSk5namd5YW5WX3ZxcXk0MWJGZFd3WmJOVWRVM1FDMGdFZ29obzhuQm9QYXViaVM3Z1JSak45aE5Fd21fZ2RmXzJyVmNPNmpCbTEzV0x1Q0dCS1J3cEpyNkdkcmplczZjd2J2NS1Xbll3Y3lGNDVuVk9CVjFBU3dVZnJoRkRwd0M3cFMzeVYteEozcmlscjVtSV9iMmF6cjh1aUZ5dDU",
       "publishedAt": "2026-11-16T13:00:24Z",
       "source": "Bloomberg",
@@ -1428,16 +1478,6 @@
       "via": "google"
     },
     {
-      "title": "Global edible oil prices decline amid falling crude oil prices and rising stocks",
-      "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQRFR5NkxWY3JRS2hKbmo0djV3T0hJaFVhNl9MakREdkxxVEF4bFROSDNVNkwxR18tU2hyT3Y0OVJwWXRwMy1DanJybmg5WnliUUJIR24tLUZBTlRyRUppdTFlR3VDQV9FaUE5QV9fb25uYnFkMFdiSlpvN1NYMk9ES2dERG9uUjVTVXJwM3ZWdW85OEFNZ2JWRlJlQU9KaWdQZEtlQmJTYkpjX01QNlhxUHk0Z3JzUzQ",
-      "publishedAt": "2026-11-12T10:22:23Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Oman Monitors Handling of Oil Tanker Run Aground Off Its Coast",
       "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQRFJ0OGN0ZWhqNG9WVFZ2Rk1NS0pmYjNybkFGMWRPU1R5VFNHbXYzTEIyWVV2ZUpVcDBnaVBDWjJvdHdoeVBwNndKeC1pSS1FTHUwem0weGFBSy1QYUVzR1dCTFpuMDNXZ05ER0FfZXlvMnB6WFAtZ3hTVWdneDMxUmt6cnlkcU1GbVFrLQ",
       "publishedAt": "2026-11-12T10:08:00Z",
@@ -1454,16 +1494,6 @@
       "source": "gCaptain",
       "topics": [
         "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Malaysia’s palm oil exports surge 56%, but stocks reach record high",
-      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNb29WekY0WHBOd2FITVp1ZHNjbnY2MlBickJTd215OHpYMXN5VU4wN29LY3dwQ0RqM2cyRGdHRzR3MGdpYVRmUmlUbmFIdVdvQnZSaXQtM2ZtWnZ4SjVTR1R4ZHUwUnMxdU1NN29fN0pQTTBmRWFTZmwtaE1pMTVXcnd4ejdQRnp6TVBZb0NmdFJ5UmNUTDhFU3NTMU5WcmhOc0E",
-      "publishedAt": "2026-11-12T09:53:36Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "oils"
       ],
       "via": "google"
     },
@@ -1642,30 +1672,10 @@
       "via": "google"
     },
     {
-      "title": "Adnoc Gas Sees LNG Exports Up This Quarter as Hormuz Flows Rise",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPSW9jbHgtbVdTOUxMeUQ0c1Nab0NsTWhPQ2s5azN3ZElhUGlDTXFUUTJ0Y3ktaXktR1A2Ri05YTV4RkRhMWN1ZWZhdjNvWEdYZDJXc0F6cFhDMDViazR5QnlPMXJVWXJZcWFYTWJlOUx2UDFCeUUwQlM3eUtHZUU5U1NVU3g1aE1SMi00a2pIQ25uOUpTT3JNSUUxdHdCdllxNzNYMFh5LXVKbnhQSExXRWthUVo",
-      "publishedAt": "2026-11-10T14:36:50Z",
-      "source": "Bloomberg",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Oil Prices Have Tumbled in November. Here’s Why.",
       "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOWnVPMUkyVDh0dXExZGJiZlNYOWZvd2E0MGxKcTRUbDlSaUN2dlg5OWljUWlKeVpCMjVKem9LYmdDSGtzaml3X1hCR1MySzhsbjd1ZWUzRzUzYnRrMFBROVdxQ1FWVm1JcTk4Mzk3bm5TdE5PbDFhU3gxek9yN09GV2xPWjNOSWtlcTI2UlBtYmRVb3p0LVh3",
       "publishedAt": "2026-11-10T14:04:40Z",
       "source": "The New York Times",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "UAE Cuts Flagship Oil Price as Mideast Supply Jump Stirs Rivalry",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNT01meHEyRUtyc0p1cC1QRW9RZjAyT1JLVU54RGlMcjN2NUN6cXYwY3dBQXY0VjhRWXJmbno1dFBrSkU5ejhpSEdYWGZ5RG1tRzhscjJTZUxFeEQzQjZ5dndxYlNCclpDaExzMjJVLVltUmF0QVFSWGdXREZmcjlBRzl5NGRGNWMtNUwtV0cySlRVd0hBSXhycVFDbmZfa05tdng4U29QQ0J3Yl92blVIT1JBVGpfUQ",
-      "publishedAt": "2026-11-10T12:41:54Z",
-      "source": "Bloomberg",
       "topics": [
         "energy"
       ],
@@ -1820,16 +1830,6 @@
         "energy"
       ],
       "via": "rss"
-    },
-    {
-      "title": "Palm Oil Edges Higher as Export Demand Offsets Ample Supply",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1XNElkaDRlWnlGaGZGcUFNR0lBZ0d6dGI1MFQ4ckNzZWxocDY2TW42bDhQYll6bnhmX0xnOGxIY3JoSjZFYWhwWFg4Vm5PbjJqUXVoNmwyZ25NaWNDQ2piWmpkTzJBR3Q2MHpr",
-      "publishedAt": "2026-10-21T07:00:00Z",
-      "source": "Trading Economics",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
     }
   ],
   "providers": [
