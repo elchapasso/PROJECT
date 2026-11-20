@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-15",
  "forexWeekEnd": "2026-11-21",
- "forexCheckedAt": "2026-11-20T03:29:35+00:00",
+ "forexCheckedAt": "2026-11-20T13:08:37+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -296,30 +296,12 @@
    "period": ""
   },
   {
-   "id": "usda-inspections-2026-10-05",
-   "kind": "usda-inspections",
-   "date": "2026-10-05",
-   "at": "2026-10-05T11:00:00-04:00",
-   "url": "https://esmis.nal.usda.gov/publication/grains-inspected-export-weekly",
-   "status": "usual",
-   "period": "Semaine close le 01/10"
-  },
-  {
    "id": "nass-progress-2026-10-05",
    "kind": "nass-progress",
    "date": "2026-10-05",
    "at": "2026-10-05T16:00:00-04:00",
    "url": "https://www.nass.usda.gov/data-and-statistics/calendar/release/6592",
    "status": "official",
-   "period": ""
-  },
-  {
-   "id": "conab-progress-2026-10-05",
-   "kind": "conab-progress",
-   "date": "2026-10-05",
-   "at": "2026-10-05T19:00:00-03:00",
-   "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/progresso-de-safra",
-   "status": "rule",
    "period": ""
   },
   {
@@ -737,15 +719,6 @@
    "period": ""
   },
   {
-   "id": "anec-2026-11-19",
-   "kind": "anec",
-   "date": "2026-11-19",
-   "at": "",
-   "url": "https://anec.com.br/",
-   "status": "usual",
-   "period": ""
-  },
-  {
    "id": "bcba-2026-11-19",
    "kind": "bcba",
    "date": "2026-11-19",
@@ -788,6 +761,15 @@
    "at": "2026-11-23T19:00:00-03:00",
    "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/progresso-de-safra",
    "status": "rule",
+   "period": ""
+  },
+  {
+   "id": "anec-2026-11-26",
+   "kind": "anec",
+   "date": "2026-11-26",
+   "at": "",
+   "url": "https://anec.com.br/",
+   "status": "usual",
    "period": ""
   },
   {
@@ -1799,6 +1781,24 @@
    "period": "2027-03"
   },
   {
+   "id": "usda-inspections-2027-04-19",
+   "kind": "usda-inspections",
+   "date": "2027-04-19",
+   "at": "2027-04-19T11:00:00-04:00",
+   "url": "https://esmis.nal.usda.gov/publication/grains-inspected-export-weekly",
+   "status": "usual",
+   "period": "Semaine close le 15/04"
+  },
+  {
+   "id": "conab-progress-2027-04-19",
+   "kind": "conab-progress",
+   "date": "2027-04-19",
+   "at": "2027-04-19T19:00:00-03:00",
+   "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/progresso-de-safra",
+   "status": "rule",
+   "period": ""
+  },
+  {
    "id": "wasde-2027-05-12",
    "kind": "wasde",
    "date": "2027-05-12",
@@ -1871,7 +1871,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-20T03:29:35+00:00",
+ "reportsCheckedAt": "2026-11-20T13:08:37+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2261,8 +2261,9 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-20T03:29:35+00:00",
+ "latestCheckedAt": "2026-11-20T13:08:37+00:00",
  "failingSince": {
+  "WASDE": "2026-11-20T13:08:37+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
   "Rapports · anec": "2026-11-17T23:33:34+00:00"
  }
