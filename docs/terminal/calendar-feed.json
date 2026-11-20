@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-15",
  "forexWeekEnd": "2026-11-21",
- "forexCheckedAt": "2026-11-20T13:08:37+00:00",
+ "forexCheckedAt": "2026-11-20T21:52:13+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -191,6 +191,15 @@
    "forecast": "",
    "previous": "4.3%",
    "url": "https://www.forexfactory.com/calendar/238-us-revised-uom-inflation-expectations"
+  },
+  {
+   "title": "President Trump Speaks",
+   "country": "USD",
+   "date": "2026-11-20T12:00:00-05:00",
+   "impact": "Medium",
+   "forecast": "",
+   "previous": "",
+   "url": "https://www.forexfactory.com/calendar/645-us-president-trump-speaks"
   }
  ],
  "nass": [
@@ -1871,7 +1880,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-20T13:08:37+00:00",
+ "reportsCheckedAt": "2026-11-20T21:52:13+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2261,10 +2270,11 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-20T13:08:37+00:00",
+ "latestCheckedAt": "2026-11-20T21:52:13+00:00",
  "failingSince": {
-  "WASDE": "2026-11-20T13:08:37+00:00",
+  "CONAB": "2026-11-20T21:52:13+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
+  "Rapports · conab": "2026-11-20T21:52:13+00:00",
   "Rapports · anec": "2026-11-17T23:33:34+00:00"
  }
 }
