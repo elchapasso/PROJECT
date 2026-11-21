@@ -1,8 +1,28 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-21T02:46:33Z",
-  "collectedAt": "2026-11-21T02:46:33Z",
+  "checkedAt": "2026-11-21T11:42:23Z",
+  "collectedAt": "2026-11-21T11:42:23Z",
   "articles": [
+    {
+      "title": "EU wheat exports jump 45% amid Black Sea supply disruptions",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPclBVSTVKN3I3N3A3XzdFbHJWU1o3MFpKYzkwRG80WTBKUHhmR3VLUGxoN1AxNnhLc0llSEZBZERhNmFZMmhsZVBIZlplWC1CMFVXVkF6R0ltLUM5aF9iRnBXeTdUeUdudnpGaGtGUmZzSWEzMmk4bDFqbk1NYk5xanJZSUF5aHp4cjZXRmlyeHZBRl94MXFGV05B",
+      "publishedAt": "2026-11-21T06:05:03Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Malaysia investigates possible falsification of palm oil origin for export",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOSEVpa190RGk2MHVuelF1ejV3RFd1MmhCQWNWLWZaTXBOY2tFdEVZVzR4dUJFNkdGRDA2RjM0V3N6WWtaMzBXd09tWkV5YzJYenlyU3MzUEFZVThwaTU2eUtBR0FQYXA0UXF6OW1sUzNXcF9KZjVrT2ZmWlJwcXJWaFRRR1ROUFhuUnliUncycmV2QmJGSDBzNk1XMS04N3I1QU1GRVAyUkZqa01FTGNj",
+      "publishedAt": "2026-11-21T06:01:03Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
     {
       "title": "More Than 110 Trade Groups Urge Deal as LA-Long Beach Port Strike Deadline Nears",
       "url": "https://gcaptain.com/more-than-110-trade-groups-urge-deal-as-la-long-beach-port-strike-deadline-nears/",
@@ -215,6 +235,26 @@
       "via": "rss"
     },
     {
+      "title": "Stocks fall as Anthropic debut fails to ease AI concerns; dollar rises",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBKVlNYZ0xucjVqQUMzV3BSemlBQ2ZPcmxTejY2bXF6bzUyZTR3OEhOc3FoQW5JS095Uzl2LWhJcDdpVXpoeWF3c245cllBNFRjeks3eTdta3kxU3BiWm1IcG1ScWIweFVBdTk0eFpURlFDZi1kUmVIQ0dVTQ",
+      "publishedAt": "2026-11-19T22:58:43Z",
+      "source": "Reuters",
+      "topics": [
+        "fx"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Oil settles flat as Hormuz disruptions offset global surplus fears",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOMnV0bXBXX1ZzNHpkcHFmanlPQ2FmczM3Z2xCcXRqRjYwTVB6SlFhZ29vbGcyM3V5a3lOMHZ3OXprMDM0ang4RVEwQmhFMTZ2QU1GT2lQN0ZPUXQyZWJ4MHR1S0JQTmE5Y0Z5dkZlemdFU0V6TWFId0pZZlFtbHVzaU1EeVl1S2RiSFdrcE95d1ZqQW9NRWlZUFNHWU9QVHNXRlZiTmEtckdWZEpScFREcVpPQ0x3MDNQeFhiZHJHMUlVQXFRNkE",
+      "publishedAt": "2026-11-19T21:02:01Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
       "title": "EXCLUSIVE: Canada's BMO returning to US oil and gas investment banking, sources say",
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPMEJnU0FpNlBIQVVrY3RZWkxwVzV5a0RJajBPLWpIZW5DX1Y1cDBuZnJsWU14dHBGcGV3aE9LRkx6aVg4VDRjVHB1UmphaWN1VVJCQVQ1bEhnel9rTnNzSmZVZUJlTHZsTHVsdWpmZjM2aHQ1R09mZEZTUVpqbV9VZ18tMC15WkhxOW5PN2FtNHRXMHkwUndMV3NBQVZtaGNKajVzZkZfMWNwd0pYS21Ea0ZBNkZtUQ",
       "publishedAt": "2026-11-19T19:00:02Z",
@@ -411,7 +451,7 @@
     {
       "title": "Why Are Gasoline Prices Falling? Thank the Diesel Shortage",
       "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOTlFkVG1FeDdLZmMtTVVOOFZSOUFSMVB6UDRQOHo1OXJ6d0l6X1hndTN2VUhFMXpwSGxWWmt5NEFTZ3FCX2dUeFJNdDRLNFhzbmZ6RFFXUldXcTJjQnZvZ1ZaZE82ZWlLal9hZ1JQaWtCdjduSldMUjhQMzBFcnJ2UFdManBzZ3BSeVh5dXdvUXd1NXhMVDYyMk5RTlhzdThOSFYzNVM5MVRvVXVhYkI2ZzhzTnE1ZnM",
-      "publishedAt": "2026-11-19T05:00:00Z",
+      "publishedAt": "2026-11-19T05:00:11Z",
       "source": "Bloomberg",
       "topics": [
         "energy"
@@ -439,29 +479,9 @@
       "via": "google"
     },
     {
-      "title": "Oil settles flat as Hormuz disruptions offset global surplus fears",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOMnV0bXBXX1ZzNHpkcHFmanlPQ2FmczM3Z2xCcXRqRjYwTVB6SlFhZ29vbGcyM3V5a3lOMHZ3OXprMDM0ang4RVEwQmhFMTZ2QU1GT2lQN0ZPUXQyZWJ4MHR1S0JQTmE5Y0Z5dkZlemdFU0V6TWFId0pZZlFtbHVzaU1EeVl1S2RiSFdrcE95d1ZqQW9NRWlZUFNHWU9QVHNXRlZiTmEtckdWZEpScFREcVpPQ0x3MDNQeFhiZHJHMUlVQXFRNkE",
-      "publishedAt": "2026-11-19T02:47:00Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "US dollar hovers near 19-month high, Aussie falls after soft jobs data",
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQQ0NIbEViM181TUJsZHFhV2J5d0lLbkVXVlBRYVJlb3YtMC1wVTlyc1NBV0RMQ0dBTXZlcHFvdnkzQm1SUWo3NFl3eGZ0SzgwTXhxTVQ3Y2VYSHg5LXZtRG9vUUp3eVlEQktJMk9JSllaQ1hRRjRuWmx0WGNJSFBLTHRpUS1tTVFoakw2dHlVRExKTU1jWE9McGswRWc5V05CYU4zR3JDdm9Jam4wTDlyNTlXRno0cXc4NVE",
       "publishedAt": "2026-11-19T02:01:00Z",
-      "source": "Reuters",
-      "topics": [
-        "fx"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Stocks fall as Anthropic debut fails to ease AI concerns; dollar rises",
-      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBKVlNYZ0xucjVqQUMzV3BSemlBQ2ZPcmxTejY2bXF6bzUyZTR3OEhOc3FoQW5JS095Uzl2LWhJcDdpVXpoeWF3c245cllBNFRjeks3eTdta3kxU3BiWm1IcG1ScWIweFVBdTk0eFpURlFDZi1kUmVIQ0dVTQ",
-      "publishedAt": "2026-11-19T01:53:00Z",
       "source": "Reuters",
       "topics": [
         "fx"
@@ -501,7 +521,7 @@
     {
       "title": "Oil prices settle lower as traders weigh surplus supply outlook",
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQbmp3REJQam1xdjkyMkpCN1JlSkotTnJNM0JEWDVFNmJqZ2FHbmNIN2E0V2twa2N3djBLTXlNNVJvcDJmZVNXMlBlQnk2VG1FTThnX0hQbVRqS2dKbVVBdXl6MWR5ZHo0S2VneWt2bUdwVjE4TnNxaHFLN0hHNU9IUVljVnNXLWJTeHdORFFJX3BfQXhPTThEbGFYQXhYaGNneHRHcVRGS2NyOFhxTzVN",
-      "publishedAt": "2026-11-18T19:52:29Z",
+      "publishedAt": "2026-11-18T21:24:43Z",
       "source": "Reuters",
       "topics": [
         "energy"
@@ -1461,6 +1481,16 @@
       "via": "google"
     },
     {
+      "title": "Russian analysts do not expect Black Sea shipping to normalize before spring 2027",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPOTY0Qmc4SUNjeU9SOFFWYUt6RUhlczlmME9zaGJNQ3hOSzhDU0p4aE1vY1czMDdQQ3F1V2JTa1BVcGkzcVY0VjFXa21rOFF4R0ZPR3hYeFNxNU1Eb24xMjFYaGxnX1V3eFRDNVJRa3B0RUJMXzFzOU12Q0NkWHBBU0xCbVdzQkRGQnpfZnIwQWdET1p3N1NtMThqVHlnZHpBLUVfRlQwamljYWNseTlETWxOQUpIUmxv",
+      "publishedAt": "2026-11-13T06:45:05Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Des arrêts d’usines perturbent la trituration du tournesol en Ukraine",
       "originalTitle": "Sunseed prices in Ukraine decline as crushing plants shut down following Russian attacks",
       "source": "UkrAgroConsult",
@@ -1529,7 +1559,7 @@
     },
     {
       "title": "Joint Maritime Information Center Update 113 to JMIC Advisory Note: 01 March – 12 November 2026",
-      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNUlpKb1VPcEFvS2RrTF9vM0l2M01lOTRBSWh2blZxN0F2a1pyVEVZOXM4TTVBR2FiTnpJTlZ2RHVHLVBrT0pHQlZQcWRWTFM1aTdPdnE0QVMtX2FfbWNQRWRhSDhOeFEtRG1TMWtCSFpTeXUwODdCUXdlQW84UEo1T25pcTF5bDA",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPRk1vVGtQVFpBbkRRNUowUFZrZUQ0UV9zR3NiYk1hRi1hY281YzRiLVdLYzNLRlNZX1c0Q3FldS00ZkdVVXVhUFg2R0xVY1RFMXZ3ZDEwVjQ2VzEwd3NUUFZFZUNvbUdCanIwMzAyZTZTbHJ4SmFaQnFRV2puSmR5ZVJEN0FTM1RUcEd2TmVRMTdCNzA0UE0ycUJRQ1FoRVN1Mk0tMHQxSkZnMEsxQ2tEb1ZjcXdLenN1",
       "publishedAt": "2026-11-12T15:33:51Z",
       "source": "UKMTO",
       "topics": [
@@ -1566,36 +1596,6 @@
         "energy"
       ],
       "via": "rss"
-    },
-    {
-      "title": "Biofuel mandate rollback could pressure US soybean prices and crushing industry",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNWFJPdGFnR0U1TV9tMDg0UzkxUWlUanJxQnF1ZHJNY2FCUURkMjhZS2kzekFpcHJ4dW13X3dTOFZQU1huOWJUYThlOEwweUZjWFNNd3hJMW5pZXVPa0czeUhQSHFpUEc4NFIxRXM2MUZsVlNlU3FqYjFZWTdib2EtOERvR2sxWVgzQ1Y0TjQ2MHBsc1NwSktCVkx4Y1lHelY1Mjd2VGdoem9sV2JrR0U2Ti03TmROZw",
-      "publishedAt": "2026-11-12T11:09:39Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "biofuels"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Black Sea disruption reshapes Ukraine’s grain trade and export forecasts",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNYnJLdVNEVk1UTkhRNm15Ym9jdDhXNkJsbXlzSkdsTHpvdTMwMDczWDcyVllwRksyMElaaFNjaGd5U09GYmFwUkEwaVVPaDB5eVBiMXZaT0dzOXFvblpka09LZlJLTVF2TWppTFVIX0hpMDZ1YWxRTzA5TWdzdHFxNVVBODg5MURVQTBJWXRINUR0RU5KZ00tWU1waTllb0NZd2xDQmdhNkxkTms",
-      "publishedAt": "2026-11-12T10:50:34Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Shipping activity in the Black Sea falls by 37%",
-      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNZ2oybWFCWGhWVlV2SFJvLU45Y210OEQzU2VrVDBOaTI4SDhDTjdPcHpiYU1ObE5XTHotdXhZeWh1VVpDejVfVHRZTm9aM3ZqS3NJVnhEMk1mdjRRak94ZkRfa1E4Z0NpZHVSNXFHYTlta29BWmw3RjdGcTRwS3dUd3hxQ085OGhtRUE",
-      "publishedAt": "2026-11-12T10:25:28Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
     },
     {
       "title": "Oman Monitors Handling of Oil Tanker Run Aground Off Its Coast",
