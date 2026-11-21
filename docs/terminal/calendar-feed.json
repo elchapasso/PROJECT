@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-15",
  "forexWeekEnd": "2026-11-21",
- "forexCheckedAt": "2026-11-21T03:16:46+00:00",
+ "forexCheckedAt": "2026-11-21T12:47:01+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -241,15 +241,6 @@
   }
  ],
  "reports": [
-  {
-   "id": "wasde-2026-08-12",
-   "kind": "wasde",
-   "date": "2026-08-12",
-   "at": "2026-08-12T12:00:00-04:00",
-   "url": "https://www.usda.gov/about-usda/general-information/staff-offices/office-chief-economist/commodity-markets/wasde-report",
-   "status": "official",
-   "period": "2026-08"
-  },
   {
    "id": "conab-2026-08-13",
    "kind": "conab",
@@ -1880,7 +1871,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-21T03:16:46+00:00",
+ "reportsCheckedAt": "2026-11-21T12:47:01+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2270,11 +2261,10 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-21T03:16:46+00:00",
+ "latestCheckedAt": "2026-11-21T12:47:01+00:00",
  "failingSince": {
   "CONAB": "2026-11-20T21:52:13+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
-  "Rapports · usda-inspections": "2026-11-21T03:16:46+00:00",
   "Rapports · conab": "2026-11-20T21:52:13+00:00",
   "Rapports · anec": "2026-11-17T23:33:34+00:00"
  }
