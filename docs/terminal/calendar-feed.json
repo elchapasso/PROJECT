@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-15",
  "forexWeekEnd": "2026-11-21",
- "forexCheckedAt": "2026-11-20T21:52:13+00:00",
+ "forexCheckedAt": "2026-11-21T03:16:46+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -1880,7 +1880,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-20T21:52:13+00:00",
+ "reportsCheckedAt": "2026-11-21T03:16:46+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2242,25 +2242,25 @@
    "figures": []
   },
   "cftc-cot": {
-   "title": "Positions au 10/11/2026",
-   "asOf": "2026-11-10",
+   "title": "Positions au 17/11/2026",
+   "asOf": "2026-11-17",
    "figures": [
     {
      "label": "Huile de soja (ZL) · position nette des fonds",
-     "value": 19562,
+     "value": 15134,
      "unit": "contrats",
-     "previous": 47413,
+     "previous": 19562,
      "previousLabel": "semaine précédente"
     },
     {
      "label": "Graines de soja (ZS) · position nette des fonds",
-     "value": 117586,
+     "value": 113630,
      "unit": "contrats",
-     "previous": 142727,
+     "previous": 117586,
      "previousLabel": "semaine précédente"
     }
    ],
-   "date": "2026-11-16",
+   "date": "2026-11-20",
    "url": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm",
    "documents": [
     {
@@ -2270,10 +2270,11 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-20T21:52:13+00:00",
+ "latestCheckedAt": "2026-11-21T03:16:46+00:00",
  "failingSince": {
   "CONAB": "2026-11-20T21:52:13+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
+  "Rapports · usda-inspections": "2026-11-21T03:16:46+00:00",
   "Rapports · conab": "2026-11-20T21:52:13+00:00",
   "Rapports · anec": "2026-11-17T23:33:34+00:00"
  }
