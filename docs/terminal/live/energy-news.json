@@ -1,8 +1,18 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-21T11:42:23Z",
-  "collectedAt": "2026-11-21T11:42:23Z",
+  "checkedAt": "2026-11-21T19:44:02Z",
+  "collectedAt": "2026-11-21T19:44:02Z",
   "articles": [
+    {
+      "title": "Global olive oil production could reach record 3.7 mln tons",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQa0Zab1VyMnNhN0JfTF92M2dEZUhoZURoVkRYUG8tYmZVT280NlFiMFBTOE9ONXJUR2UyZU40MFEtUGFwR0V6NlZkV1UtdFdGa21MTng5MkN6eUk0Nk5rUGs5TDM5aEpXNUJUQ20xanVLQVktYjhHNk9tOEZzRUc0SVhfMzBqMEw3d2d3MTd1aTE1bWV0bGhFSnpZUQ",
+      "publishedAt": "2026-11-21T06:25:08Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
     {
       "title": "EU wheat exports jump 45% amid Black Sea supply disruptions",
       "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPclBVSTVKN3I3N3A3XzdFbHJWU1o3MFpKYzkwRG80WTBKUHhmR3VLUGxoN1AxNnhLc0llSEZBZERhNmFZMmhsZVBIZlplWC1CMFVXVkF6R0ltLUM5aF9iRnBXeTdUeUdudnpGaGtGUmZzSWEzMmk4bDFqbk1NYk5xanJZSUF5aHp4cjZXRmlyeHZBRl94MXFGV05B",
@@ -165,6 +175,16 @@
       "via": "rss"
     },
     {
+      "title": "Ukraine increases rapeseed oil exports to EU, accounting for over 83% of imports",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxORzVtU1hBZlczZ1MySkc0cXlVazEwSkhOVUZ1UERCLThMdmtvcHE3NmhjUXpJVzktakF2Wk5RaWhoREJBREZXLWZKSE02c1ZPTExvMV9oRlFvcmZoSUhpODFWbU5jSGU5SlVtcE42TDlZbm16VGFMbWlrTVhxZ2xXMzdjbVFsakltbVdvdnZ6ZlRPbVptekZXMGl0akdNQkdjVXB2elJsYXJtNUh2VEsyU29xZmo",
+      "publishedAt": "2026-11-20T09:17:07Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
       "title": "UK calls for restoration of safe grain exports through the Black Sea",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOOEhETDNFeXF0OVhZS1F5VzJXRC16VUJjOWFHRzBYQWhmc21jMXB1TXZsYWFjRU5vN2U5VG95ZWRXVTQtbFc2ZlJwZEdsbTJaNFI4NWotazRZNmQ1M2tWX2tXMWk4RXJzTG5IQjBCTGRBNFY3V2pydkZHbWYtU0stS2d3bUkyb2psZ1dzeVROU3BhNllWdHpZWDkyMWN3SlZvbUg0azctQQ",
       "publishedAt": "2026-11-20T08:36:59Z",
@@ -179,6 +199,16 @@
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOVmlVQTF4Y1F2WmpoczlEWl9MR2ZlZWotbDFLaGlHY2pDd1JlRVRJVmZVZ2ViQlRfbFVXMlY5a1VhSFNOc0tzR2ZtanpyUjY1dzJiX2tpU1dYSnRlZDVES194V0JuNTM3SnZTQ1pnb2RWd2JjaGhtUEFndTh2dDRVSGRFc3JyUzlpSHB4VWdYMjN1ejVqaFo1ZFRRcExKY2pM",
       "publishedAt": "2026-11-20T08:14:55Z",
       "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "China Axes Palm Oil Purchases With Storage Space Running Out",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNZXlTdHBZWFVXTEtXQTYtd0dyNjV0ZjROSXVYOTRkYVRoTVZ1QXMyUzdWTU40WFBSZTEyMWUzOEdCblhldEJXdWVDWGRqeGVRT281UTE0a2lfWnJiVGNzMGFFS2RhLXMxZjRwWXgwLW5YNlh6azI5UDFmZDdROXV6WEI1ZlFIc0RqSmhXVUREb1RjS1Vab0Q1U0tYbjItOElVc1NxOVlYdk1UY1drQ0RmOQ",
+      "publishedAt": "2026-11-20T07:57:00Z",
+      "source": "Bloomberg",
       "topics": [
         "oils"
       ],
@@ -251,6 +281,16 @@
       "source": "Reuters",
       "topics": [
         "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Riyadh’s tallest skyscraper hit in Houthi strike on Saudi wealth fund HQ",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOUUVVMURmUjNxMHVQNThNQkRiUElQbkhnNVJNdkdVejBqLVVIRU1hUl9DWDhpYlFVWUtFZlo5dGNOSnFqTFU5VE93bXdGY3NaOEVmSERoWlJNOWhQN25NN3E1bGF1MEprczBsWFlkOHBDTUVLM21CSFJydjFzUFFaM2ozQU8wSTdnSENadVQ2UTNmSWhOMFBHNE1ZaDB5MURkMFM0cHZuU1BySDl0ZlQ2aDBEUEdmNUE5MnNzTnl2T2VBaV9sWUQ2Zg",
+      "publishedAt": "2026-11-19T19:36:15Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
       ],
       "via": "google"
     },
@@ -367,6 +407,16 @@
       "via": "google"
     },
     {
+      "title": "Malaysian palm oil prices fall amid high inventories in China",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOLVBoM1ZFcy1UQ3VTc3otakZnZEItYW1qenRqY3JuRDM2NTJSaEJhNF9RN1c1S19iVGs2c1dINm81ZGs2dnlFUU1QeUQ4dS16SWJGQnN6VGJrdlVJcVh6cGluNDREalNWWVFTbGNyR0ktR3RpcDFqUllSTzJyMHd4ZksxMmpyVkVNV1lTVlNPS0x4SzFnRVhQUy1Ha1lOQQ",
+      "publishedAt": "2026-11-19T12:33:08Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Tunisia boosts olive oil exports by 47%, but average prices decline",
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPc0pYLXNMNDlwV19EbUFZWDRZQk55Rzk3SEYzRWY0OUtaSTBvMmlkbW95YVlqUUZaRTFSSy1tX1BLdnVybEtrVzg1VXZidWxlbDRxTjVjUGo0VjczRDE2a3RtTW1VQjlXdTNQS3ZrYjEyZi1OemlEUlBKRFBxSjJ6QkVIVVQwSFdhZVd3YWZwcVlvSTM0bVh0SGY3OXlUNGV4aXRR",
       "publishedAt": "2026-11-19T10:23:43Z",
@@ -419,6 +469,16 @@
       "via": "google"
     },
     {
+      "title": "Kazakhstan boosts sunflower oil production by 57% despite raw material shortages",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNakQ2YnRkdHpweldfMlgzWnFIVF8yM1ZLWFczTnhaZ3N0SjVtRklCcUhRdkhEb3hUUzBVaExlZldnT2U2VnpfY0I2dHNkM1dUSnZtWDFnTjM3a1M1ZFpzM3A1dmNQdjF4QkJTNmx4Wk9HRnVuRmIzUmFsSy1CdVNUd3lJd2hoWGVaT3Nwckx4NUtqS3FCbThOWlhScHVlYmJOcnJSY0F5aXI5VkduWVZhRUl4UUlNQQ",
+      "publishedAt": "2026-11-19T08:04:14Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Soybean oil strengthens its position in India as sunflower oil imports decline",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQMmVubS1xMEkyMmlHWHFfMC1laHNHaFFaMUw0aUZ1cW9weFVHOWNBa1BVOFNDZEstNUUyNEZlTnBSSE9DYWctSWp5QmNFUXlpbzhRbU1mdDdaVFhvekdmdjVfcS1FYS1wU0pRbnpmVFR1UHRvdXRDTFNiOE1hQ2tBMTFiS1JManRpRnpjQi1uVlJNaDd6VHNXcVVjUy1SSFRjcjMzWnl2WEh0WmJYWXhjRkxjREU",
       "publishedAt": "2026-11-19T07:29:07Z",
@@ -465,16 +525,6 @@
       "source": "Trading Economics",
       "topics": [
         "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Riyadh’s tallest skyscraper hit in Houthi strike on Saudi wealth fund HQ",
-      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOUUVVMURmUjNxMHVQNThNQkRiUElQbkhnNVJNdkdVejBqLVVIRU1hUl9DWDhpYlFVWUtFZlo5dGNOSnFqTFU5VE93bXdGY3NaOEVmSERoWlJNOWhQN25NN3E1bGF1MEprczBsWFlkOHBDTUVLM21CSFJydjFzUFFaM2ozQU8wSTdnSENadVQ2UTNmSWhOMFBHNE1ZaDB5MURkMFM0cHZuU1BySDl0ZlQ2aDBEUEdmNUE5MnNzTnl2T2VBaV9sWUQ2Zg",
-      "publishedAt": "2026-11-19T03:19:00Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
       ],
       "via": "google"
     },
@@ -577,6 +627,16 @@
         "policy"
       ],
       "via": "rss"
+    },
+    {
+      "title": "Soaring Freight Sinks Venezuela-US Oil Exports to 2026 Low",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPbmZoZlRmNlZKaFhFcTJMSGN1akdaMWtBRE5sTXRfdWpHM0QtTWhxVHJXakNDUjJWdUl6czBtSlR1ajhVdDBHX2xZLWZpMGhfVkhiTFI2RzlPem8xajRNWTktS29xeXBwbVJ5T2Q5OXFlMUF3RDhtWFdsT0F5NjktVXlIRS1rVVVVVk9fZFJrb0FHOU9vaGRXQlYyeUpSS3FzdllHdWJaWExVUU5nNjRjWW9uNTE",
+      "publishedAt": "2026-11-18T17:28:50Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
     },
     {
       "title": "OPEC speaks up for fossil fuels at COP31 climate talks",
@@ -1297,6 +1357,16 @@
       "via": "google"
     },
     {
+      "title": "Kenya Exports of palm oil and its fractions, not chemically modified to Cambodia",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNRHRXZUhmZ1BhNi04X0loNmVzcW13TVdDWDNnNUFnejJMeU9kNnlfaDhnYVBaQmw5emNLQ1V6V2FtUHltV1l0Q0xuN1gzRHBDdExtOFp6MC1adDNXLV83Q0FXVDRpVF8zVnhlbk01U3ZHcFBaZTBHdzZSM0tiUlY5S0FXaEp3a0YxdWlNOXdsRFJQU190NEVjTm5B",
+      "publishedAt": "2026-11-14T19:35:04Z",
+      "source": "Trading Economics",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Oil Tanker On Fire After Hitting Mine In Hormuz",
       "url": "https://gcaptain.com/oil-tanker-on-fire-after-hitting-mine-in-hormuz/",
       "publishedAt": "2026-11-14T14:41:03Z",
@@ -1359,6 +1429,16 @@
         "energy"
       ],
       "via": "rss"
+    },
+    {
+      "title": "Further declines in wheat prices will depend on the resumption of Black Sea exports",
+      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNS3FhQVBxREJ4cW56MXhiWjVpNC12OHVjNVctdFM3RXg5Zzhpc0FVOEo4MWxiclRqQ1hhd2RHd2xXTHdiUnBvVWlLdWw4ajQ0WUJkYlRCTjhEcDlFX0lXeUt2dmg4VE50TjBNaDR3a3hSYzhaeWFYa3I0U0w0LW5sTklwMkFpZlE5MU1NX2tNazkyS2x1TU5yU2I2a1gtQzd3aVVoY3kwY2o1OEdwSmNSLWtUSUdMOFpJWEFv",
+      "publishedAt": "2026-11-13T17:31:56Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
     },
     {
       "title": "CMA CGM Net Profit More Than Triples to $2.32 Billion as Freight Rates Surge",
@@ -1481,30 +1561,6 @@
       "via": "google"
     },
     {
-      "title": "Russian analysts do not expect Black Sea shipping to normalize before spring 2027",
-      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPOTY0Qmc4SUNjeU9SOFFWYUt6RUhlczlmME9zaGJNQ3hOSzhDU0p4aE1vY1czMDdQQ3F1V2JTa1BVcGkzcVY0VjFXa21rOFF4R0ZPR3hYeFNxNU1Eb24xMjFYaGxnX1V3eFRDNVJRa3B0RUJMXzFzOU12Q0NkWHBBU0xCbVdzQkRGQnpfZnIwQWdET1p3N1NtMThqVHlnZHpBLUVfRlQwamljYWNseTlETWxOQUpIUmxv",
-      "publishedAt": "2026-11-13T06:45:05Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Des arrêts d’usines perturbent la trituration du tournesol en Ukraine",
-      "originalTitle": "Sunseed prices in Ukraine decline as crushing plants shut down following Russian attacks",
-      "source": "UkrAgroConsult",
-      "url": "https://ukragroconsult.com/en/news/sunseed-prices-in-ukraine-decline-as-crushing-plants-shut-down-following-russian-attacks/",
-      "publishedAt": "2026-11-13T00:00:00Z",
-      "dateOnly": true,
-      "topics": [
-        "oils",
-        "shipping"
-      ],
-      "via": "editorial",
-      "summary": "UkrAgroConsult rapporte des arrêts de trituration et une suspension des achats de graines par Kernel. À surveiller pour les offres d’huile et les dates de chargement."
-    },
-    {
       "title": "Rapport pétrolier de novembre de l’AIE",
       "originalTitle": "Oil Market Report - November 2026",
       "source": "AIE",
@@ -1548,42 +1604,12 @@
       "via": "rss"
     },
     {
-      "title": "Russia refuses to discuss de-escalation in the Black Sea – Zelenskyy",
-      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNR3p6cnBjNXFHeEpRbElrajVLNW5NX2JUQlc4VjJBZExoN2VlNzllS2stNzdqUFYzTTcySlhEYUY1MFJOalozTEEzcFgxa09lQ2lrcE1OTW1CTF9yMjJYbzlVRkFaU3FLVHRYQkcxMmhZQ001MjlTSUl6Q3VoQ25oQkN5WEJlTTctOC1CQ3MxT3k1OVRab3BqZU5xbmNkeHhyOGpFNw",
-      "publishedAt": "2026-11-12T16:38:11Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Joint Maritime Information Center Update 113 to JMIC Advisory Note: 01 March – 12 November 2026",
       "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPRk1vVGtQVFpBbkRRNUowUFZrZUQ0UV9zR3NiYk1hRi1hY281YzRiLVdLYzNLRlNZX1c0Q3FldS00ZkdVVXVhUFg2R0xVY1RFMXZ3ZDEwVjQ2VzEwd3NUUFZFZUNvbUdCanIwMzAyZTZTbHJ4SmFaQnFRV2puSmR5ZVJEN0FTM1RUcEd2TmVRMTdCNzA0UE0ycUJRQ1FoRVN1Mk0tMHQxSkZnMEsxQ2tEb1ZjcXdLenN1",
       "publishedAt": "2026-11-12T15:33:51Z",
       "source": "UKMTO",
       "topics": [
         "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Drought and fertilizer shortages could cut Indonesia’s palm oil production by 3 mln tons",
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQeUxtYnA0a1NjNnBBMHV5aUlDZ09ZWU1TbjE1VnVnNGRQeFl6NlV0YUJHTjA3UGxPcElMM3VJYnJNaU0wMW1obGxibmFFVzhtNXdhVWM4QlhGQ004dndkQ0N2bHpKN1E2TnpuMml2SXRlOGZIWWh3M2Fka1Fyb004OGg3UkpObjBOYU5qOGRDNXVJNXdOS1JKWFB4OUp3TVBYbVptQ2RnYjhrY01HYjJJeXY5a1NaQVotVmtmejJFZHI",
-      "publishedAt": "2026-11-12T14:43:58Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "China triples soybean oil exports amid rising domestic inventories",
-      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPVDVpbzJjczdFNUZCMDd2QTVqSmlldHNnbmpZZlNiNDJ3c0xUYWhtRm1sMm1zMXlvNWhJOEdQUl9FUzY3VGVqYTFacEhCTU9RS3E0RFNxT1NDVlVCTjhBaEYzajgtZ1Jyek1ockNRa2dUSWhoV0lJWTFBdzR2SU94WEN1NHBGYlF5RFg0VElBV29sdWk1MXRqMUhsZnBDYzBhUDFVNw",
-      "publishedAt": "2026-11-12T14:40:10Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "oils"
       ],
       "via": "google"
     },
@@ -1614,26 +1640,6 @@
       "source": "gCaptain",
       "topics": [
         "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Wizz Air’s Profit Tumbles by 67% on Rising Jet Fuel Prices",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQSFN2RHFmNHFVTzd5dzFjc3kxY05wdWRZMWpzeGM3ZEtSYnFRenR6RFBRcmg0TXFOU2FwUWlPbU40bU44WF9FVHBGYWJhdk5GeVpDZDBBWl8xWlNfMWgyTHlteDZsZE9KTUh1ZHBEMHRaaDM2aTlXb0FYQ0tNV2FiZHh4dUwwbndxQlBsX215RVkwX3pfa2c5dWt1QmkyNE1sdzJNeWpMb0o3SWFT",
-      "publishedAt": "2026-11-12T08:50:48Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Palm Oil Climbs as El Niño Threatens Indonesia’s 2027 Supplies",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNX1huR0FLNlV5eGpFM0c3azZPZE9yOVlKODZhRWJRSXp2MWtqRnpEdGwyU1BaUG83SFBpLXJPWEdVZFd0VDF1bWlNazNyYllqMXl2ZlhBeGhuZ3JxWEpXWlNsb1VxNEVRb2d4d3NyMDBWTjBLMUhnLWZLeGJNX1BHbmpYUEYtWnRfV2ZhUG5pMFRoZVBCQXNNZ0NCenplQWlXX0w2VzUxTzJiT2tOSjI0c2piUQ",
-      "publishedAt": "2026-11-12T04:07:35Z",
-      "source": "Bloomberg",
-      "topics": [
-        "oils"
       ],
       "via": "google"
     },
@@ -1818,16 +1824,6 @@
         "shipping"
       ],
       "via": "google"
-    },
-    {
-      "title": "U.S. refineries have been running at very high rates in 2026",
-      "url": "https://www.eia.gov/todayinenergy/detail.php?id=68344",
-      "publishedAt": "2026-10-22T14:00:00Z",
-      "source": "EIA",
-      "topics": [
-        "energy"
-      ],
-      "via": "rss"
     }
   ],
   "providers": [
@@ -1877,7 +1873,7 @@
       "channels": [
         "google"
       ],
-      "articles": 7
+      "articles": 8
     },
     {
       "name": "EIA",
@@ -1886,7 +1882,7 @@
       "channels": [
         "rss"
       ],
-      "articles": 5
+      "articles": 4
     },
     {
       "name": "AIE",
