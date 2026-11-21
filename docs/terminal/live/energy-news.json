@@ -1,8 +1,18 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-20T21:29:46Z",
-  "collectedAt": "2026-11-20T21:29:46Z",
+  "checkedAt": "2026-11-21T02:46:33Z",
+  "collectedAt": "2026-11-21T02:46:33Z",
   "articles": [
+    {
+      "title": "More Than 110 Trade Groups Urge Deal as LA-Long Beach Port Strike Deadline Nears",
+      "url": "https://gcaptain.com/more-than-110-trade-groups-urge-deal-as-la-long-beach-port-strike-deadline-nears/",
+      "publishedAt": "2026-11-20T22:33:04Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
     {
       "title": "Hedge Funds Slash Bullish Bets on European Diesel To Wartime Low",
       "url": "https://www.bloomberg.com/news/articles/2026-11-20/hedge-funds-slash-bullish-bets-on-european-diesel-to-wartime-low",
@@ -80,6 +90,27 @@
       "source": "Reuters",
       "topics": [
         "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "AI Selloff Spurs Haven Demand for Yen, Franc as Dollar Slips",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-20/ai-selloff-boosts-haven-demand-for-yen-franc-as-dollar-slips",
+      "publishedAt": "2026-11-20T17:00:06Z",
+      "source": "Bloomberg",
+      "topics": [
+        "fx"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Iranian Oil Moved Between Tankers as US Widens Blockade",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxObUNtdVJyTEZDb1BTbnhxeWpKdFdhU0YyQ19xTHQxYVNtR1ljZzIzbnYzTWR6eElWSk1QeTRVQ3RqQ05ZYi1VYV95QmdWaWxCeVE5b0dNdk1WbWN4XzVEZFdKOHdXejV0MTdHQkRnc2xyU2I1R2dZTlBySHA5b3Y1dnpNMFQxUVlGeEw3ZmV1ekh4ZDBIQWFRdlJ1NEdBOVBZRjBSa0tMWVZQQjVkM0FuNk53",
+      "publishedAt": "2026-11-20T14:02:33Z",
+      "source": "Bloomberg",
+      "topics": [
+        "shipping",
+        "policy"
       ],
       "via": "google"
     },
@@ -184,6 +215,16 @@
       "via": "rss"
     },
     {
+      "title": "EXCLUSIVE: Canada's BMO returning to US oil and gas investment banking, sources say",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPMEJnU0FpNlBIQVVrY3RZWkxwVzV5a0RJajBPLWpIZW5DX1Y1cDBuZnJsWU14dHBGcGV3aE9LRkx6aVg4VDRjVHB1UmphaWN1VVJCQVQ1bEhnel9rTnNzSmZVZUJlTHZsTHVsdWpmZjM2aHQ1R09mZEZTUVpqbV9VZ18tMC15WkhxOW5PN2FtNHRXMHkwUndMV3NBQVZtaGNKajVzZkZfMWNwd0pYS21Ea0ZBNkZtUQ",
+      "publishedAt": "2026-11-19T19:00:02Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "At COP31, Venezuela touts AI as path to cleaner oil production",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQQmdwRmVVelpCME1XUFJaY205YnloQ1NrdDhSVDBiZkhjTU9oQlp4WUg5YXFRNWp5RzhhVlN2bC1mUHFrVEhKalZJMGhjeHNla3ppQTc1Y2FwcWwweDJydXlRVzI0aUE4S3JyWXpJaEs2WjJOQWNKNTNMeEVZRWgwT3I0SUZsbjBtcGlDbS0zSy11SlI4MjE1VkVUMGd6Q0w1LVFqUTE1Nko2SlE",
       "publishedAt": "2026-11-19T18:13:50Z",
@@ -231,6 +272,16 @@
       "source": "The New York Times",
       "topics": [
         "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Putin says he will hit back hard after Ukraine strikes Crimea Bridge again",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOUzRFcTV3RC1acloyenJ5UXlCQjNfZ0tieEg5NXpGX3NObnlVMzVTR1BDX3VsNWlhOEZKak1ja3JGU3hBMTI3cjJsRlpGWTNhRm1iSkc4U1JHeUdBYXFYdVpjWW9maWJ6MTdMOEw5ZG1YRUJyTkctVGxlTk1hT0VKY2lGNDdGS0w3ZnRJdUQxUzBHeU9KNHdUODBNMEllMDR5Y1NZaFhsd1ZNYzh6ZmZTS0p3S0pCckJ4REUwYnJIN3NsUQ",
+      "publishedAt": "2026-11-19T15:57:31Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
       ],
       "via": "google"
     },
@@ -338,16 +389,6 @@
       "via": "google"
     },
     {
-      "title": "Putin says he will hit back hard after Ukraine strikes Crimea Bridge again",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOUzRFcTV3RC1acloyenJ5UXlCQjNfZ0tieEg5NXpGX3NObnlVMzVTR1BDX3VsNWlhOEZKak1ja3JGU3hBMTI3cjJsRlpGWTNhRm1iSkc4U1JHeUdBYXFYdVpjWW9maWJ6MTdMOEw5ZG1YRUJyTkctVGxlTk1hT0VKY2lGNDdGS0w3ZnRJdUQxUzBHeU9KNHdUODBNMEllMDR5Y1NZaFhsd1ZNYzh6ZmZTS0p3S0pCckJ4REUwYnJIN3NsUQ",
-      "publishedAt": "2026-11-19T07:10:00Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "France raises wheat export forecast amid Black Sea supply disruptions",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQUmVyNWpQRWh2Vk94bTFyTUlST1NRdG5wNXlYZUp3TDlDcHo5UldZWFJGdGFaTVRsdk52WEpHT3gxd1lRVndSQi1hVVJ6TEJvaE9UckxQT1dwc21pV2FOREpBSXctUjJ2X1RBb1puUnQ3MHhVYmtXNW83U2lXcmhneDZxT1dDVlg0QnJlVHVaRXhfVlFyLU5SVEVVM2xHdlN0X0VXSHVmOWU",
       "publishedAt": "2026-11-19T06:48:51Z",
@@ -424,6 +465,16 @@
       "source": "Reuters",
       "topics": [
         "fx"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Stocks slip with eyes on Anthropic and Nvidia, oil prices slide",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFB6allzaTc1SU8zUmVIeXRZRkU2dE9reVo1MXBLSllnX0lsb1FmemdwR2RnNzZvQ0tqSzR6cTgzVHI2bGlYWWxxLTJWY3V4OXBrczR5OXF5ZkdNQnBfak1tYUs1NlVOQVVSLTdacXdnaEt0Y2VHVmM4NEN2WQ",
+      "publishedAt": "2026-11-19T01:29:00Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
       ],
       "via": "google"
     },
@@ -640,16 +691,6 @@
       "via": "google"
     },
     {
-      "title": "Stocks slip with eyes on Anthropic and Nvidia, oil prices slide",
-      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFB6allzaTc1SU8zUmVIeXRZRkU2dE9reVo1MXBLSllnX0lsb1FmemdwR2RnNzZvQ0tqSzR6cTgzVHI2bGlYWWxxLTJWY3V4OXBrczR5OXF5ZkdNQnBfak1tYUs1NlVOQVVSLTdacXdnaEt0Y2VHVmM4NEN2WQ",
-      "publishedAt": "2026-11-18T01:46:00Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Latest Oil Market News and Analysis for Nov. 18",
       "url": "https://www.bloomberg.com/news/articles/2026-11-17/latest-oil-market-news-and-analysis-for-nov-18",
       "publishedAt": "2026-11-17T23:01:33Z",
@@ -688,6 +729,16 @@
         "shipping"
       ],
       "via": "rss"
+    },
+    {
+      "title": "Iran Threatens to Strike Civilian Sites If US Does the Same",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQTUc0TTVvbmIxVnhGV0hRTnkwSHJDZGJmcUVUT3owOW9ERHg0STFVMG43UTJzTEo0SDRweTZ6V0M5TFV2U25iSW0tLXpDUldHOUE5OHFiaHBYWGIzV0pYMFpUYUEya0NOWmFwSHVGaXhycnNoVkVoQXVYeEVJeTZTbTdOT0N3ZkFfMHRQajZWSGVGbDZ0aFZ6T0R0Y0p0ekFJNVE3TlVYU0cwUWQ4NmhN",
+      "publishedAt": "2026-11-17T15:20:07Z",
+      "source": "Bloomberg",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
     },
     {
       "title": "Sunflower Oil: Can China Rewrite the Rules of Black Sea Pricing?",
@@ -1257,16 +1308,6 @@
       "via": "google"
     },
     {
-      "title": "Iran's IRGC says two tankers hit sea mines in Hormuz",
-      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOWVUydG1mRVVtRzVScWR6N19NejF5VXVuUDlqaGxSSHdJN1hmYlBtZHRJMDNWbUJVSUMyRTBRM252dzFjSmtZOHlLYmg4Y2pqLXVrSndiS3dVLWVBa0tESWJtZW05MUprVkpXTE5sQXV0aXJRR1dQQ3FmWHk0SHpoSmQzRUZmRFZCaXdjLURicWxtRk1tSnZ1dEM2UTI1b1RmTzdwRw",
-      "publishedAt": "2026-11-13T21:14:55Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "La perspective d’un excédent pétrolier se heurte au risque sur l’offre du Moyen-Orient",
       "source": "Bloomberg",
       "url": "https://www.rigzone.com/news/wire/crude_fluctuates_as_iran_tensions_persist-13-nov-2026-185085-article/",
@@ -1597,17 +1638,6 @@
       "via": "google"
     },
     {
-      "title": "Canadian Heavy Crude Rebounds Amid Cheaper Tanker Costs",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPS3FOMFlHNFNZTzY1NHZvcGdwOEJVSFpBNXZpVmpYRWx3Z3pHVW5RblhxdTAyeEIyaDBISlJJcERteHJma1JMZjgtUDJpUElWekxVNEtmdEJLS0Jya0RYWl9NenVLN01OeEExUmVOeGFNQWZOQW5Kc01tS3hKUjFrS1ZxbnNnbEdJMzRaZGhvUUtzajJJQVRSZkxtUDZHMzVlSjdRRDlTam0wZw",
-      "publishedAt": "2026-11-11T20:52:51Z",
-      "source": "Bloomberg",
-      "topics": [
-        "shipping",
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "U.S. Efforts to Tighten Blockade of Iran Rely on Reluctant Neighbors",
       "url": "https://www.nytimes.com/2026/11/11/world/middleeast/us-blockade-iran-taskforce-iron-gate.html",
       "publishedAt": "2026-11-11T18:02:52Z",
@@ -1616,26 +1646,6 @@
         "policy"
       ],
       "via": "rss"
-    },
-    {
-      "title": "Tankers Continue to Burn in the Middle East Despite Hopes for De-escalation",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOVmxwZ2ZQZUVxY3dLT214SlFyNl9pYk81THhCWWdiVHIycGlySTlHeHZQdXR3V3Q0TnhhS0F4enlLako4Wkt2bWlOY05fSzJ2NWtrQ21XNk5MaTQ1VXNRTW12T0dBQWZLZ0dPcldCQTUxeFMxb0dLeXlNdXpvaFl5VkxRb1Y2RXhlMkgyeEp6Z1MtdkF2Y0RsYnVLU0tnQQ",
-      "publishedAt": "2026-11-11T17:20:22Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Saudi Oil Output Surges to One of Highest Levels in Years",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNMU1UZzFGcHVQTS1lNzJZVXZKeFlhS3ltbjcwcDAyVGZOWkZsUkFobUhoT2d6TTMxN2l3Y0NGQ1lsZDJ0Y0Fzcl9lNkR0Q0o5ZmpCRnRERnVBSDhHVnEwNXcxQmJBZy1ZTHEySzh3TkkwMmpmZDRxTkVhUUw0SnNkXzJCd0NsZWpsQzJSRzl0dHpaMU9hQXZ4ZUtqc1FJSVpvbWZlcVpueTByUjk1akZr",
-      "publishedAt": "2026-11-11T16:06:42Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
     },
     {
       "title": "Opinion | Think Diesel Prices Are Bad? Wait Until Your House Needs Heating.",
@@ -1668,16 +1678,6 @@
         "energy"
       ],
       "via": "editorial"
-    },
-    {
-      "title": "Strathcona, CN to Partner on Crude-by-Rail Project to BC",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxONlZ6MVdxZlRfNXM0bHRnVWk5SHdRRVg3VUNCcmpPaFU2dkJyVUxvZ09TWXl4VUR1bE1GZTNGWlZhTFpFXzVyNDFPS1h1bG5IdzdmdGc3WFZZMjdhY2UxZUdWVkN6RWstaTVLRVlLMk9GXzh4OFROYUgtcGthMUszX3JzeEtPV2JsdkpUM0ExTVQzS2lzSkg3SlhpWmtHaEt5cHl2TDdKRGgwel9RcjNuZ1ln",
-      "publishedAt": "2026-11-10T20:51:54Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
     },
     {
       "title": "Oil Prices Have Tumbled in November. Here’s Why.",
