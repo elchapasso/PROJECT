@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-22T08:45:19Z",
-  "collectedAt": "2026-11-22T08:45:19Z",
+  "checkedAt": "2026-11-22T17:21:18Z",
+  "collectedAt": "2026-11-22T17:21:18Z",
   "articles": [
     {
       "title": "Argentina increases sunseed exports to EU nearly 42-fold",
@@ -142,6 +142,16 @@
         "shipping"
       ],
       "via": "rss"
+    },
+    {
+      "title": "Commodity Crude Oil News",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
+      "publishedAt": "2026-11-20T17:19:31Z",
+      "source": "Trading Economics",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
     },
     {
       "title": "US Treasury Presses Singapore and Malaysia on Iran Sanctions Compliance",
@@ -408,7 +418,7 @@
     {
       "title": "Major Powers Vow to Increase Oil Supply Amid Global Energy Transition",
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPZEoxaHJPaXd5UXlkcXc4S0ZUcGtZMm9aS3VYSWE5ZjRXaDlFUWk4RVdhdFZPdUR2cnZaazktcmlQYmtDUzRZdHlLRnhyclFHTU9JNVJOT1EyQXlLX1BwMVM4ZDg0V0c0dnZERURRRzBrb1FWTndScXdLM0pJTlZOaHJsRkdkRVljcjN4NTZXNExUMnVxOEZVS0FlQ05GQQ",
-      "publishedAt": "2026-11-19T16:31:31Z",
+      "publishedAt": "2026-11-19T16:40:45Z",
       "source": "The New York Times",
       "topics": [
         "energy"
@@ -619,16 +629,6 @@
       "via": "rss"
     },
     {
-      "title": "Commodity Crude Oil News",
-      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
-      "publishedAt": "2026-11-18T23:47:13Z",
-      "source": "Trading Economics",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Latest Oil Market News and Analysis for Nov. 19",
       "url": "https://www.bloomberg.com/news/articles/2026-11-18/latest-oil-market-news-and-analysis-for-nov-19",
       "publishedAt": "2026-11-18T23:03:35Z",
@@ -645,6 +645,16 @@
       "source": "Reuters",
       "topics": [
         "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "US sanctions Hezbollah-linked charity in push against Iran's proxies, Treasury says",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOYTM2TVZTRTVjaWp6c2VodVYwVm5MeEFVMXZ0eFctVzZVaU94eGxScWNRMHlQb1ZJRzZ0YXpFekJ6SmJkR2RWcU4wVUNTWkJMU3J0NTFaSmw5clBIYWhFQklMM3NiSzZtV3dWYThROEZIRWlJWmpKWUhaM2w4cGIzMjhjVk5IREJRaHBnVjhpZVRjcWdoMF9MeUhRQXRqUi1RSWJ1LWxVcFVwNUxOVGc1WmQ1N2tKWEhrd2ZpQmxLY0dQdFFUS0p4ZGR5dEY",
+      "publishedAt": "2026-11-18T19:48:32Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
       ],
       "via": "google"
     },
@@ -715,6 +725,16 @@
       "source": "Reuters",
       "topics": [
         "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Israeli spy chief lobbied for joint Iran strikes on US visit, sources say",
+      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOMkJqT2oyYk82bDFiWGJYTVlhX2hxNWs5NzFWY01GTUZVLV8zbWgycFhsTjhuOEcxUTF4Y1BiTWNxUWp4THZhdjBYVnMxd1lCY0d0YlpIWlltUV9JckxaMG5zSURFaW5VV1hGVnBzcm04TENiQWpjWFVwU211MW9qYTdwbERzX19CQkY4UVNseVFMSERmemJPTGY5bmRScXRmaUNEOGhhbm4yOHVGRmtZLXgyN1VBRnJvVngw",
+      "publishedAt": "2026-11-18T15:46:19Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
       ],
       "via": "google"
     },
@@ -948,6 +968,16 @@
       "source": "UkrAgroConsult",
       "topics": [
         "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "US Gas Pump Price Hits Lowest Since March as Oil Supply Recovers",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNdmhoWFZOQzZkczNTNmcydWd1UVRmMU1BcnVoMGdEMzI1R29iajltc01nTHRINWFQX3ZvYlBrMFEtRWZHMHVRV05yZEV6SzM5ZFJjUF9NYTltX2VVOUhPbGotdTl0dFJFUWNNNGxrR2trbFBjXzExeE94SWtuN2JfODJRUFdkekV1Rk16N1B5VWp5Nmp3QnhuR25BSnMycnRxVFRHQnN1bzhCSl9OY2pGdllTMGtGQQ",
+      "publishedAt": "2026-11-17T11:39:07Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
       ],
       "via": "google"
     },
@@ -1324,26 +1354,6 @@
       "via": "rss"
     },
     {
-      "title": "Steering problem on tanker caused collision in New Orleans, NTSB says",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPbXBEMnhoWXdETmQ4d2JPM3Q2OUw0MDByaUV2di1Nc3ZVcmJHaGJ6bnNLN1lsc3gzeG5hSGlEYnBKaHJOajU2SzlrRXp4UUZtdU5Dc0I1TlNmYlFxWThaUFZvRk11UVJSY2YyakpJSFFGNWlVbmZrMDNXTXkyLXM2MWlydzN1YWwydGc5dmM3WVZjeFVVZDlIVGR2aGFEMzZrUkE3QnRXU1hibDlpU2RWQkkwTkRyZw",
-      "publishedAt": "2026-11-15T21:23:00Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Anti-Houthi forces retreat in Yemen as Iran strikes Bahrain",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOdTFBcWR1YzJhai1UdGgzMHpvdm40VExxeXFqM0NtbU9YVmNSNXpNeDlXTGllRXFtczhIUzVsaFFWdVV5TGxESWdneGlXbER1Qlg2b2VhQ2lqMmxVaEd4U01nZmNXcFY2bmNhSTdIN0VycE84MWJDRXdZOGxMRGo0U1k1UjhiamFNQ1JIQmp1MUdxNlZGRm1UanBvaENxR3V2N25NdFVOaWpXX1E",
-      "publishedAt": "2026-11-15T18:59:19Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Three Ships Struck By Drones In Black Sea Near Romanian Shipping Canal",
       "url": "https://gcaptain.com/three-ships-struck-by-drones-in-black-sea-near-romanian-shipping-canal/",
       "publishedAt": "2026-11-15T17:31:34Z",
@@ -1570,16 +1580,6 @@
       "via": "google"
     },
     {
-      "title": "Global Oil Market Swings to Surplus on Gulf Exports, IEA Says",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNdk45TmZ0SDVZOXY5Mm1XRXVldzFCTUJYTld4MURmUkdkVXRQQU44TGRVaWQ1dzE3MXN2UVR6Vml4NFRKZ3hoYUoyN3R2SExaRmc5eFdvcnFzeVN1bWFGdmQ4WkxDSlVWRjhxdmZJY1k3Z3REdFpVRlhyV0lIbFVjMnBULTBRNjFWenpQVl8wdDV5SHBqQUgwYk1hbEJQeTNnMTRMRGZ5SGR2aXZ4YjNhSw",
-      "publishedAt": "2026-11-13T09:00:00Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Joint Maritime Information Center Update 114 to JMIC Advisory Note: 01 March – 15 November 2026",
       "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPSlNkNEtaR2hrSEFicG4xV3FGd3VwSlQwS0o3SXRnaWdJZG9VX1AxaER4T1FWZ2hqRWI1enoyZTEzd3A0anB4aFplaUtRSUx3VjFGS3Jzcm1uRTVYUC15OVBta0N5RVNVRmFTWlFQemhaU0toY3FaNXUxREhBRktnOE45M1JhV1U",
       "publishedAt": "2026-11-13T08:00:00Z",
@@ -1785,16 +1785,6 @@
       "via": "google"
     },
     {
-      "title": "Palm Oil Hovers Near MYR 4,500 as Bearish Factors Weigh",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFA0RWZOVTBCRS14SVlPUXFFT2RqQVhRdVh4UUppbWVTaS1yQmpaNUswOVZmcmJOTEI2RUNIeFAwMXBvVmEzM3Jjai1QNkk3RzBtMHIxMG0wb3FLN1JxcldkZi1rOTRJclRacG1R",
-      "publishedAt": "2026-11-03T08:00:00Z",
-      "source": "Trading Economics",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Joint Maritime Information Center Update 111 to JMIC Advisory Note: 01 March – 05 November 2026",
       "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNNDZWd0lZWGtjb0dKSmdvWUhBMWNTVnI0ZmZwQnVwY3BQMGsxQ2dSa0k0ZEJuMkpsLXVfSFRjbXZKbUF3R01VMXpUM2dLdnA0QXhTejdCTUxKSS00ZlBMUURvaDRWc2ljOTJWRlMxbHRKVHNXZ2pyajBSUVdrdUVtOGNrZkZMR2ZpNTg3bFM1S0paQWUzZXlMbTYzSDFLOW1QWTJ5VDdGeUVoeHZ6eGllQzhkZWZ2dWhq",
       "publishedAt": "2026-11-03T08:00:00Z",
@@ -1805,9 +1795,29 @@
       "via": "google"
     },
     {
+      "title": "Palm Oil Hovers Near MYR 4,500 as Bearish Factors Weigh",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFA0RWZOVTBCRS14SVlPUXFFT2RqQVhRdVh4UUppbWVTaS1yQmpaNUswOVZmcmJOTEI2RUNIeFAwMXBvVmEzM3Jjai1QNkk3RzBtMHIxMG0wb3FLN1JxcldkZi1rOTRJclRacG1R",
+      "publishedAt": "2026-11-03T08:00:00Z",
+      "source": "Trading Economics",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Joint Maritime Information Center Update 110 to JMIC Advisory Note: 01 March – 01 November 2026",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNYURxT1U3eS1weU43YUhSRWdDOFl4c3ZjUlUxV1hKLUJhZDY4MloyQnVvS3V4Ylh5dHlLMUQxRVR6WGlVcm9lZEJ5NVZXMXNHZFplODl1UUhNTTZCSlA3VXBIbnRkbWI3R0c3bnU2NVR5SF9qNUN3emhlMjlLSnBsNXM2Mm1mZFc5Z1lZdXBZTm0zZXcyT0lKWTZWdzBJNHdCMkxkYWpIX1JSZnhCNGZ6dE5vOTVMbEZTVnpn",
       "publishedAt": "2026-10-31T07:00:00Z",
+      "source": "UKMTO",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Joint Maritime Information Center Update 109 to JMIC Advisory Note: 01 March – 29 October 2026",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbi1KNFBHMHVSYzRnWmZCMF9JUVRqTzZ2SVJ2b1podG4za2R1X0QxdTBUR1RBY1BSMDEtVW9KUEd5bnB3d0tUMVBfakpJXy1mR0Rib2x4b1hGNTBpUmJTLS1wc256cEg1dUR2VlR2bndabVZGM1FHb3ZqaHpsdW9Kd0NTUUQ0QjJkVXBJTG5PQzNtU2NtRjhKZHdXaG41TW9VbDNmT0ZLRngtNzJvQjZIalVHbmlVSktW",
+      "publishedAt": "2026-10-29T07:00:00Z",
       "source": "UKMTO",
       "topics": [
         "shipping"
@@ -1825,16 +1835,6 @@
       "via": "google"
     },
     {
-      "title": "Joint Maritime Information Center Update 109 to JMIC Advisory Note: 01 March – 29 October 2026",
-      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbi1KNFBHMHVSYzRnWmZCMF9JUVRqTzZ2SVJ2b1podG4za2R1X0QxdTBUR1RBY1BSMDEtVW9KUEd5bnB3d0tUMVBfakpJXy1mR0Rib2x4b1hGNTBpUmJTLS1wc256cEg1dUR2VlR2bndabVZGM1FHb3ZqaHpsdW9Kd0NTUUQ0QjJkVXBJTG5PQzNtU2NtRjhKZHdXaG41TW9VbDNmT0ZLRngtNzJvQjZIalVHbmlVSktW",
-      "publishedAt": "2026-10-29T07:00:00Z",
-      "source": "UKMTO",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Federal Reserve issues FOMC statement",
       "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
       "publishedAt": "2026-10-28T18:00:00Z",
@@ -1845,22 +1845,22 @@
       "via": "rss"
     },
     {
-      "title": "Palm Oil Slips to 2-Week Low as Bearish Factors Mount",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1iLThpb0NncEF2azRfUWYyVi0waFA0UDZpX2NORXY5Mm50cFVqVHppSlYzbzI5VU5DZDA2M2s3SlA2ZVA2TkczNmpIRlhRVnMtbjJhYlFNRElHT3owOGlKQ090T0hLbFJHRUpF",
-      "publishedAt": "2026-10-28T07:00:00Z",
-      "source": "Trading Economics",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Joint Maritime Information Center JMIC Advisory Note: 016-26 | October 28, 2026",
       "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPbEZOTnpNWUNabDU2ME5jRDdLUGpMTTdiRGRyVFNOZG5kU2JZWTFTbHBlYWhya051Z2l1bDZ5UGVNMi12Ym96Zms5QVV1MnBTYWVzQ2VwS2FGVDcxOWxyMzJJQzB6VmdhQU5CaW1DcXdUTUpMazBzTHVrZkxNR0F2VjZxU3U5eWlTZk5DTkVxQ0RJQk84cmZvRTZObEpnMTBEMC00VUdwMVRrcEEtMHVObUxjU0R3em02UXpRanlHN3BaTmlKbXJMQmxQVQ",
       "publishedAt": "2026-10-28T07:00:00Z",
       "source": "UKMTO",
       "topics": [
         "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Palm Oil Slips to 2-Week Low as Bearish Factors Mount",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1iLThpb0NncEF2azRfUWYyVi0waFA0UDZpX2NORXY5Mm50cFVqVHppSlYzbzI5VU5DZDA2M2s3SlA2ZVA2TkczNmpIRlhRVnMtbjJhYlFNRElHT3owOGlKQ090T0hLbFJHRUpF",
+      "publishedAt": "2026-10-28T07:00:00Z",
+      "source": "Trading Economics",
+      "topics": [
+        "oils"
       ],
       "via": "google"
     },
