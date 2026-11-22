@@ -1,8 +1,28 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-22T17:21:18Z",
-  "collectedAt": "2026-11-22T17:21:18Z",
+  "checkedAt": "2026-11-22T22:45:24Z",
+  "collectedAt": "2026-11-22T22:45:24Z",
   "articles": [
+    {
+      "title": "Bond Market’s Go-To Trade for Fed Hikes Roiled by Stocks Retreat",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-22/bond-market-s-go-to-trade-for-fed-hikes-roiled-by-stocks-retreat",
+      "publishedAt": "2026-11-22T20:00:00Z",
+      "source": "Bloomberg",
+      "topics": [
+        "fx"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Yemen's Houthis say they attacked Saudi Rabigh oil refinery",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQSjZLZW5ua05hQkRTLVhvZnNHZnpUM05mT3ZxNl9FUUoyMEhMN0gtTUVfT0Zhb0g2eUxaeHlvZWlIWXNTVGlSMlczMHdBUERvRjVsQVZVSW92MlFESWlmTGxVaWM2aXYwZ0NtUTlna3k4ZkV2S0k4YkhVOFRjaWRrcmhZeWg5NHpQaW9pRGIybUFpalV3U2lzdlZ5QzYteENUSWpWdm90SXNFWVU4OWxBaGx3",
+      "publishedAt": "2026-11-22T17:52:15Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
     {
       "title": "Argentina increases sunseed exports to EU nearly 42-fold",
       "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNMlBWRzU5eTZwUmQtTUtaUGMydWd5bXdaZlc0dnlXMDRoQkstZzBCU2tQbU9wNVBuNTFaOTRLYUhENEtucWdycnBYWTNZaG04MEY0U0RJc1lJZzlmTXFRdjNRd1hmdnJsX1FhUEk0RDdJbHhhQkIyM1ZkaFR5Nm55d3hWdUprSTd6RmdMSmdzZEFoUVhPeVg4",
@@ -62,6 +82,16 @@
         "shipping"
       ],
       "via": "rss"
+    },
+    {
+      "title": "Commodity Crude Oil News",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
+      "publishedAt": "2026-11-20T22:10:48Z",
+      "source": "Trading Economics",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
     },
     {
       "title": "AI Selloff Boosts Haven Demand for Yen, Franc as Dollar Slips",
@@ -142,16 +172,6 @@
         "shipping"
       ],
       "via": "rss"
-    },
-    {
-      "title": "Commodity Crude Oil News",
-      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
-      "publishedAt": "2026-11-20T17:19:31Z",
-      "source": "Trading Economics",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
     },
     {
       "title": "US Treasury Presses Singapore and Malaysia on Iran Sanctions Compliance",
@@ -378,6 +398,16 @@
       "title": "At COP31, Venezuela touts AI as path to cleaner oil production",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQQmdwRmVVelpCME1XUFJaY205YnloQ1NrdDhSVDBiZkhjTU9oQlp4WUg5YXFRNWp5RzhhVlN2bC1mUHFrVEhKalZJMGhjeHNla3ppQTc1Y2FwcWwweDJydXlRVzI0aUE4S3JyWXpJaEs2WjJOQWNKNTNMeEVZRWgwT3I0SUZsbjBtcGlDbS0zSy11SlI4MjE1VkVUMGd6Q0w1LVFqUTE1Nko2SlE",
       "publishedAt": "2026-11-19T18:13:50Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "India's October crude oil imports rise over 4% month-on-month",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNaC1ES29YSWdoUk4wWEo0X0o5bWgzQlZ4dnpyWi1XaUJCUlZmemFBNi1WUVVsVEIyX25uRlZrODM0R1BYVDlKc3MweWo2LWxEcDlzNWRuVm9sQmNPa2hMNVU3aHhoaHZ1ZktkUDctVnd2QldwalNyZ3NzSGY1OE1ndmo0RWw4aWJUNERPTmhqWUZoZUtHUFo0TXFRSUpjMGRhTTIwcUxyWEw2VE0",
+      "publishedAt": "2026-11-19T18:09:01Z",
       "source": "Reuters",
       "topics": [
         "energy"
@@ -1234,16 +1264,6 @@
       "via": "google"
     },
     {
-      "title": "EU adds Russian online retailer Wildberries' CEO to Russia sanctions list",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNMDViUTRuRmxGQmI1RjhrV3pjZTdZS0NLMXZDQkFXX3RSNU1CLW03WjlwSVhRaDhvbFl1MlFPblV3YjJ4WFZoaDBRRzVKdThBYjFTWEpVMWdiaFJsTGVKa1pCeXVtZE42Mk1mWmdpd2FhaC1kVzduR01OdHByd2dnTUNmeFpRNFI5dC1MWDg5QWQwV253dTZzMFd6dUZfcGtzWlFjN2xzeTFjaG9FcUx3eg",
-      "publishedAt": "2026-11-16T13:11:19Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Wheat Falls on Optimism Trilateral Talks Will Free Up Black Sea",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPelFYbGZob1hJMXFjS2pkSk5namd5YW5WX3ZxcXk0MWJGZFd3WmJOVWRVM1FDMGdFZ29obzhuQm9QYXViaVM3Z1JSak45aE5Fd21fZ2RmXzJyVmNPNmpCbTEzV0x1Q0dCS1J3cEpyNkdkcmplczZjd2J2NS1Xbll3Y3lGNDVuVk9CVjFBU3dVZnJoRkRwd0M3cFMzeVYteEozcmlscjVtSV9iMmF6cjh1aUZ5dDU",
       "publishedAt": "2026-11-16T13:00:24Z",
@@ -1280,16 +1300,6 @@
       "source": "UkrAgroConsult",
       "topics": [
         "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "India's wholesale inflation accelerates to 12.29% in October on fuel price surge",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPOTZCYmwwajlmSXIyWWx2WXhZaE81VjdHTS1vc0wtdUpBNG01WnFDdVF1bXlmNXNwalQ2N2lKT1hXODMydGtUY25fcDgxQW5jVnFTVUNXQ09NN2twb1hiNE9kVHowRUZhenVIY2dDUzhPTkFaTzBqaUF5emNlaHdLc3JEcWhrTlBuemFxR01HNUNJV1FjVnlxYTJ0bWpIcks0YUFv",
-      "publishedAt": "2026-11-16T08:16:40Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
       ],
       "via": "google"
     },
@@ -1566,16 +1576,6 @@
       "source": "UkrAgroConsult",
       "topics": [
         "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Iraq October Oil Output Jumps to Highest Since 2019, IEA Says",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNMnUtQXpjOHBHeFFwUnVhMW5rR3ZpTk5hdUdDRTdQVlRZRHJ0R3JTVEJoRGhYRFJsdFdaWWN5ZVBCdXBSSDgwS3hBZnY4SlhZNzdWY0ZwX3pvWDYzclp4QVM3VWNCYzNCcXYtMnFhSUpKOVJybTBobXhPbnRydjVXVGpVd1JfLUprTE9uMXBWT2VkSzVRRHpQNVFIdTNMejh6dkdFZmRFY0lqX2F4aTRLcQ",
-      "publishedAt": "2026-11-13T09:05:30Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
       ],
       "via": "google"
     },
