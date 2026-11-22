@@ -1,37 +1,37 @@
 {
  "schema": 1,
- "checkedAt": "2026-11-21T16:48:43Z",
+ "checkedAt": "2026-11-22T17:10:42Z",
  "dataChangedAt": "2026-11-20T22:22:17Z",
- "today": "2026-11-21",
+ "today": "2026-11-22",
  "sources": {
   "ecb": {
    "name": "BCE · EXR",
    "ok": true,
-   "seconds": 4.6,
-   "lastSuccess": "2026-11-21T16:48:43Z"
+   "seconds": 6.0,
+   "lastSuccess": "2026-11-22T17:10:42Z"
   },
   "fred": {
    "name": "FRED (EIA, FMI)",
    "ok": true,
-   "seconds": 2.0,
-   "lastSuccess": "2026-11-21T16:48:43Z"
+   "seconds": 2.3,
+   "lastSuccess": "2026-11-22T17:10:42Z"
   },
   "mpob": {
    "name": "MPOB",
    "ok": true,
-   "seconds": 3.6,
-   "lastSuccess": "2026-11-21T16:48:43Z"
+   "seconds": 2.9,
+   "lastSuccess": "2026-11-22T17:10:42Z"
   },
   "iposs": {
    "name": "IPOSS Data",
    "ok": true,
    "seconds": 0.5,
-   "lastSuccess": "2026-11-21T16:48:43Z"
+   "lastSuccess": "2026-11-22T17:10:42Z"
   },
   "anp": {
    "name": "ANP · Brésil",
    "ok": false,
-   "seconds": 10.8,
+   "seconds": 10.6,
    "error": "https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/ppidp/precos-medios-ponderados-semanais-2013.xls : <urlopen error [Errno 104] Connection reset by peer>",
    "failingSince": "2026-11-21T16:48:43Z",
    "lastSuccess": "2026-11-21T02:25:21Z"
@@ -39,8 +39,8 @@
   "magyp": {
    "name": "Secretaría de Agricultura · MAGyP",
    "ok": true,
-   "seconds": 17.8,
-   "lastSuccess": "2026-11-21T16:48:43Z"
+   "seconds": 118.4,
+   "lastSuccess": "2026-11-22T17:10:42Z"
   }
  },
  "series": {
