@@ -1,8 +1,18 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-21T19:44:02Z",
-  "collectedAt": "2026-11-21T19:44:02Z",
+  "checkedAt": "2026-11-22T00:38:47Z",
+  "collectedAt": "2026-11-22T00:38:47Z",
   "articles": [
+    {
+      "title": "Two Tanker Incidents Reported Near Oman; Vessel Hit Mine East Of Hormuz",
+      "url": "https://gcaptain.com/two-tanker-incidents-reported-near-oman-vessel-hit-mine-east-of-hormuz/",
+      "publishedAt": "2026-11-21T19:38:29Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
     {
       "title": "Global olive oil production could reach record 3.7 mln tons",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQa0Zab1VyMnNhN0JfTF92M2dEZUhoZURoVkRYUG8tYmZVT280NlFiMFBTOE9ONXJUR2UyZU40MFEtUGFwR0V6NlZkV1UtdFdGa21MTng5MkN6eUk0Nk5rUGs5TDM5aEpXNUJUQ20xanVLQVktYjhHNk9tOEZzRUc0SVhfMzBqMEw3d2d3MTd1aTE1bWV0bGhFSnpZUQ",
@@ -42,6 +52,16 @@
         "shipping"
       ],
       "via": "rss"
+    },
+    {
+      "title": "AI Selloff Boosts Haven Demand for Yen, Franc as Dollar Slips",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOMGVIODlldlpGNjhfeGJZQk1jNjEtN0dINDFYNTREQ2hkNmJ2eDd5YmxoTmZsakdfUnhJRnhVUDRYbjF2YmdiZllpTUUwZUUyendZOG5HZFVtQXR1RlRZeFRPeTZfTHJHNjBvWXZHaUszbndhcmNydlBERVdneEdFS1NMa0wxbkVSbWJCTk5fQzBJVnVUaDVrandpek53V3VYWEFwSXpBdkRyRE1PSXNWcA",
+      "publishedAt": "2026-11-20T21:40:24Z",
+      "source": "Bloomberg",
+      "topics": [
+        "fx"
+      ],
+      "via": "google"
     },
     {
       "title": "Hedge Funds Slash Bullish Bets on European Diesel To Wartime Low",
@@ -211,6 +231,16 @@
       "source": "Bloomberg",
       "topics": [
         "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Explosion at Indonesia oil refinery kills one worker, investigation underway",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQRlZTUGFRRV83M0NrdXJpRzAyMGNjZVBDX1lobElUOGhSQk9TQzFnSGpWYUh6cW0zZGpIQmZaenF2Ny1JbXZhcGt5WG5CSzU4LWNwN0owbXRlRWNnTHNHY2ZSZ3RwWWNjRXdWWEVwaFE2NzF5c1A5LVExOWhOWm02SXhzVlRIMkZlMkg0NEZXOWN0RVI4UVBCMmV1a1JjWk10cXN5d3A2U3R2VzlSSGJVUUJfdFFHM3lyVUpocWx4ME5UdkZ6Vmc",
+      "publishedAt": "2026-11-20T04:45:09Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
       ],
       "via": "google"
     },
@@ -557,6 +587,16 @@
         "shipping"
       ],
       "via": "rss"
+    },
+    {
+      "title": "Commodity Crude Oil News",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
+      "publishedAt": "2026-11-18T23:47:13Z",
+      "source": "Trading Economics",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
     },
     {
       "title": "Latest Oil Market News and Analysis for Nov. 19",
@@ -1144,7 +1184,7 @@
       "via": "google"
     },
     {
-      "title": "Wheat Falls on Optimism About Black Sea Talks, Argentine Supply",
+      "title": "Wheat Falls on Optimism Trilateral Talks Will Free Up Black Sea",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPelFYbGZob1hJMXFjS2pkSk5namd5YW5WX3ZxcXk0MWJGZFd3WmJOVWRVM1FDMGdFZ29obzhuQm9QYXViaVM3Z1JSak45aE5Fd21fZ2RmXzJyVmNPNmpCbTEzV0x1Q0dCS1J3cEpyNkdkcmplczZjd2J2NS1Xbll3Y3lGNDVuVk9CVjFBU3dVZnJoRkRwd0M3cFMzeVYteEozcmlscjVtSV9iMmF6cjh1aUZ5dDU",
       "publishedAt": "2026-11-16T13:00:24Z",
       "source": "Bloomberg",
@@ -1343,16 +1383,6 @@
       "source": "UkrAgroConsult",
       "topics": [
         "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Iran's navy says three tankers on fire after hitting mines in Hormuz",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPZWt1cHFualJEVktnTTVvd21uVnljc0FqR2dRaWpaRnYwZ3luZ2t1dUlJNVUtLTVlWHJFOS1ocDBlaVZsTFNZdjRMeldFVFE1Q0Jqem9FbU9fMmp1YTBUTUhqTmYzR3FJN1Z1Y1dHY2d0Yjlzb2lBR0JvNllyT3pScjI2SEpkbkhiYzZSWW9Tb3dwemdWaVVmMjBPbXZqd0hOZzdpRDVSZlVlbzBnV1BjMQ",
-      "publishedAt": "2026-11-14T22:54:19Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
       ],
       "via": "google"
     },
@@ -1574,16 +1604,6 @@
       "summary": "Le rapport mensuel donne les perspectives d’offre et de demande, les stocks et l’activité de raffinage."
     },
     {
-      "title": "Oil Supertanker Squeeze Is Crimping US Crude Exports, Texas Port CEO Says",
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNa2hndEg0b05EV1lBQ1ZKbDdydEhsV0t6TnZwdG9TVVpWZXJDeXA5c0ltbUdxZVNrNkE2bWZiQ21nalNzODduNUp0cS1tWlRZNEVmcng0NjdBaGFHVHlmTmxFZ1pqYm5aVHJGTDhpWkdldUhxV01fZDEzTEh1NjdnaW51c19NNzRFbXFmOUdPY2wxVGk0Tkdxc2hlelJ6WDFFSmV4OFZ5bzA0eEI4Y2FlVUxyLTREek1wMHNCM2t0WEQ",
-      "publishedAt": "2026-11-12T21:33:45Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Tanker Ablaze Off UAE as More Attacks Rattle Gulf Shipping",
       "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQaVA2LWE5ekxkcGtUU2Y1b2dTSEZTZHhHeF9GeWM0NFNla3BrSVJFT25SWDdwQjNPbGRPNFRKOU5EYXN6QXdvLW41dEFFWmlxcFNQSGtmVnlFRGdCY3dvWVJKYjJWLThpcjFqWDYzVjNQM2ZNeVRKbzNuSGVnQXRzNTFQcngtd0E",
       "publishedAt": "2026-11-12T18:20:34Z",
@@ -1630,16 +1650,6 @@
       "source": "gCaptain",
       "topics": [
         "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Benin Ships First Crude Cargo for Decades From Revived Oil Field",
-      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPYk85RWNuV3lVTllxaXZ2c0ZCQ2ZHTXA2cTEwbmJENUxQVFVtUjBLNGtwX0NVMFg3TjZySndHVml3MTh0N2JPZzVsSWk0Wk1vZ1lzUTRjY2ZZNGhZZXNXNnpEaGRTSDkyLU9NeUJhck5zcGU2dTFZYmppemc0VHUyaTNsRFlaTGlsTnQ3MVhrcw",
-      "publishedAt": "2026-11-12T10:03:00Z",
-      "source": "gCaptain",
-      "topics": [
-        "energy"
       ],
       "via": "google"
     },
@@ -1873,7 +1883,7 @@
       "channels": [
         "google"
       ],
-      "articles": 8
+      "articles": 9
     },
     {
       "name": "EIA",
