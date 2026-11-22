@@ -1,7 +1,7 @@
 {
- "forexWeekStart": "2026-11-15",
- "forexWeekEnd": "2026-11-21",
- "forexCheckedAt": "2026-11-22T02:20:05+00:00",
+ "forexWeekStart": "2026-11-22",
+ "forexWeekEnd": "2026-11-28",
+ "forexCheckedAt": "2026-11-22T09:55:55+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -200,6 +200,114 @@
    "forecast": "",
    "previous": "",
    "url": "https://www.forexfactory.com/calendar/645-us-president-trump-speaks"
+  },
+  {
+   "title": "French Flash Manufacturing PMI",
+   "country": "EUR",
+   "date": "2026-11-23T03:15:00-05:00",
+   "impact": "Medium",
+   "forecast": "49.8",
+   "previous": "49.3",
+   "url": "https://www.forexfactory.com/calendar/268-fr-flash-manufacturing-pmi"
+  },
+  {
+   "title": "French Flash Services PMI",
+   "country": "EUR",
+   "date": "2026-11-23T03:15:00-05:00",
+   "impact": "Medium",
+   "forecast": "47.4",
+   "previous": "48.4",
+   "url": "https://www.forexfactory.com/calendar/269-fr-flash-services-pmi"
+  },
+  {
+   "title": "German Flash Manufacturing PMI",
+   "country": "EUR",
+   "date": "2026-11-23T03:30:00-05:00",
+   "impact": "Medium",
+   "forecast": "54.1",
+   "previous": "54.2",
+   "url": "https://www.forexfactory.com/calendar/266-ge-flash-manufacturing-pmi"
+  },
+  {
+   "title": "German Flash Services PMI",
+   "country": "EUR",
+   "date": "2026-11-23T03:30:00-05:00",
+   "impact": "Medium",
+   "forecast": "52.4",
+   "previous": "51.7",
+   "url": "https://www.forexfactory.com/calendar/267-ge-flash-services-pmi"
+  },
+  {
+   "title": "Flash Manufacturing PMI",
+   "country": "USD",
+   "date": "2026-11-23T09:45:00-05:00",
+   "impact": "Medium",
+   "forecast": "54.5",
+   "previous": "56.0",
+   "url": "https://www.forexfactory.com/calendar/552-us-flash-manufacturing-pmi"
+  },
+  {
+   "title": "Flash Services PMI",
+   "country": "USD",
+   "date": "2026-11-23T09:45:00-05:00",
+   "impact": "Medium",
+   "forecast": "55.6",
+   "previous": "57.9",
+   "url": "https://www.forexfactory.com/calendar/583-us-flash-services-pmi"
+  },
+  {
+   "title": "CB Consumer Confidence",
+   "country": "USD",
+   "date": "2026-11-24T10:00:00-05:00",
+   "impact": "Medium",
+   "forecast": "92.1",
+   "previous": "91.7",
+   "url": "https://www.forexfactory.com/calendar/208-us-cb-consumer-confidence"
+  },
+  {
+   "title": "Core PCE Price Index m/m",
+   "country": "USD",
+   "date": "2026-11-25T08:30:00-05:00",
+   "impact": "High",
+   "forecast": "0.3%",
+   "previous": "0.3%",
+   "url": "https://www.forexfactory.com/calendar/85-us-core-pce-price-index-mm"
+  },
+  {
+   "title": "Prelim GDP q/q",
+   "country": "USD",
+   "date": "2026-11-25T08:30:00-05:00",
+   "impact": "High",
+   "forecast": "3.5%",
+   "previous": "3.4%",
+   "url": "https://www.forexfactory.com/calendar/27-us-prelim-gdp-qq"
+  },
+  {
+   "title": "Prelim GDP Price Index q/q",
+   "country": "USD",
+   "date": "2026-11-25T08:30:00-05:00",
+   "impact": "Medium",
+   "forecast": "2.3%",
+   "previous": "2.3%",
+   "url": "https://www.forexfactory.com/calendar/45-us-prelim-gdp-price-index-qq"
+  },
+  {
+   "title": "Unemployment Claims",
+   "country": "USD",
+   "date": "2026-11-25T08:30:00-05:00",
+   "impact": "Medium",
+   "forecast": "201K",
+   "previous": "203K",
+   "url": "https://www.forexfactory.com/calendar/11-us-unemployment-claims"
+  },
+  {
+   "title": "Bank Holiday",
+   "country": "USD",
+   "date": "2026-11-26T08:00:00-05:00",
+   "impact": "Holiday",
+   "forecast": "",
+   "previous": "",
+   "url": "https://www.forexfactory.com/calendar/370-us-bank-holiday"
   }
  ],
  "nass": [
@@ -241,15 +349,6 @@
   }
  ],
  "reports": [
-  {
-   "id": "conab-2026-08-13",
-   "kind": "conab",
-   "date": "2026-08-13",
-   "at": "",
-   "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/safra-de-graos",
-   "status": "official",
-   "period": "11e relevé · récolte 2025/26"
-  },
   {
    "id": "nopa-2026-08-17",
    "kind": "nopa",
@@ -1871,7 +1970,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-22T02:20:05+00:00",
+ "reportsCheckedAt": "2026-11-22T09:55:55+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2261,11 +2360,10 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-22T02:20:05+00:00",
+ "latestCheckedAt": "2026-11-22T09:55:55+00:00",
  "failingSince": {
-  "CONAB": "2026-11-20T21:52:13+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
-  "Rapports · conab": "2026-11-20T21:52:13+00:00",
+  "MPOB": "2026-11-22T09:55:55+00:00",
   "Rapports · anec": "2026-11-17T23:33:34+00:00"
  }
 }
