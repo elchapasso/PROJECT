@@ -1,8 +1,28 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-22T22:45:24Z",
-  "collectedAt": "2026-11-22T22:45:24Z",
+  "checkedAt": "2026-11-23T03:57:43Z",
+  "collectedAt": "2026-11-23T03:57:43Z",
   "articles": [
+    {
+      "title": "Oil prices fall amid equity selloff though Iran war attacks limit losses",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQb016TW1Rc3N2Q0h6TVJZUFBSeXZqWklRWXgwZ2QyUnRCa0tnWnI4b0Z2YkVVZlVGWTJwa0E3SEVqNnotSE4zOFpOdjJUSE5GcjB5RHJxaklsM0I2U1owemZ4aUJmYkRhUUM2VjVFd09paWhIWHhFUWxmcmhzT3Y5RWhCTENfNE00a3RaYnhnOGgweEJoNEVtNTVKS0pLTWNiY2ZfM1pvbFNieG5DbWpGcUdOM19xZFF5QXl5LWZXNVRrZw",
+      "publishedAt": "2026-11-23T02:24:00Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Latest Oil Market News and Analysis for Nov. 23",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-22/latest-oil-market-news-and-analysis-for-nov-23",
+      "publishedAt": "2026-11-22T23:06:06Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
     {
       "title": "Bond Market’s Go-To Trade for Fed Hikes Roiled by Stocks Retreat",
       "url": "https://www.bloomberg.com/news/articles/2026-11-22/bond-market-s-go-to-trade-for-fed-hikes-roiled-by-stocks-retreat",
@@ -44,6 +64,16 @@
       "via": "rss"
     },
     {
+      "title": "Russia's Wildberries CEO steps down days after EU sanctions, media report",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPUHlnc2RFZFltcC0zMXMtb1VfaEx6VFhrWVJfS2tpaHF2Vm4yMnRDYjVLX3FSTWNHaDJKdUYwZ3o5SUJfNVpvRERfcEladlQ2RkRCaFhxaEVZRGdwUTAwOVdSRDZDWjlSYXVucW83NS1aMVN0QzFKbFhVXzhBSEZtUmxKdHpYT3gwNXdCUWZxbU9MbVh3bEU3Ul9ZcXQxZTI5QjlyTHgtTUNDdWVINk9qbUwwNmo1eUt3aFFsaWlTNEJfQnZYNkVOMlVDRkY",
+      "publishedAt": "2026-11-21T12:59:16Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Global olive oil production could reach record 3.7 mln tons",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQa0Zab1VyMnNhN0JfTF92M2dEZUhoZURoVkRYUG8tYmZVT280NlFiMFBTOE9ONXJUR2UyZU40MFEtUGFwR0V6NlZkV1UtdFdGa21MTng5MkN6eUk0Nk5rUGs5TDM5aEpXNUJUQ20xanVLQVktYjhHNk9tOEZzRUc0SVhfMzBqMEw3d2d3MTd1aTE1bWV0bGhFSnpZUQ",
       "publishedAt": "2026-11-21T06:25:08Z",
@@ -74,6 +104,16 @@
       "via": "google"
     },
     {
+      "title": "Commodity Crude Oil News",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
+      "publishedAt": "2026-11-21T03:01:32Z",
+      "source": "Trading Economics",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "More Than 110 Trade Groups Urge Deal as LA-Long Beach Port Strike Deadline Nears",
       "url": "https://gcaptain.com/more-than-110-trade-groups-urge-deal-as-la-long-beach-port-strike-deadline-nears/",
       "publishedAt": "2026-11-20T22:33:04Z",
@@ -82,16 +122,6 @@
         "shipping"
       ],
       "via": "rss"
-    },
-    {
-      "title": "Commodity Crude Oil News",
-      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
-      "publishedAt": "2026-11-20T22:10:48Z",
-      "source": "Trading Economics",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
     },
     {
       "title": "AI Selloff Boosts Haven Demand for Yen, Franc as Dollar Slips",
@@ -1224,26 +1254,6 @@
       "via": "google"
     },
     {
-      "title": "Euro zone yields edge up as traders bet on three ECB hikes by late 2027",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPSGFhVl8yczRkQ2lOQTNKYUhIZVl4ejE3a3hxZGVVLXhZUWY2S3pGek1KVXh0bkVSRF9lcGthdG9WamtpLU5GTDJNNG1DZE5Idzd1c2VJNExuMG55cEJ5U2NBNlItSC14OXprdG1ySXFjS1hPc0tNLXFMcHRwVDNNd0V1djlFU3ZJU010d3R6XzZzNTc3THBDWGs5anIwbkxYWHZLYWo5cXJnYjBGczlGR19uRQ",
-      "publishedAt": "2026-11-16T16:51:03Z",
-      "source": "Reuters",
-      "topics": [
-        "fx"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Drone strike behind sinking of cargo ship off Bulgaria's coast, maritime security sources say",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNUUs2NE56Z2hUTXR1OHUtM3RLaUFRdkYzeS1IdkZaV1BfbkM2N29XamhOa2lhUkM2TUxNTkdNY0JyQWQ1LVJ1SlhnbEZHZ1RxSjZOeGp3WXljM0xkd3VyekJHUldSYmd2YlY3NUJjWHpFUkRDc3ZrRXpwN3hha1RrbFRVMjBMdHZVeVJVdzVUdWg4OThDWjJYSXFCUWdsclFLWHVCZFJTSnlEODg",
-      "publishedAt": "2026-11-16T16:12:19Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Maersk, Hapag-Lloyd Expand Suez Canal Return With Three More Gemini Services",
       "url": "https://gcaptain.com/maersk-hapag-lloyd-expand-suez-canal-return-with-three-more-gemini-services/",
       "publishedAt": "2026-11-16T15:45:05Z",
@@ -1526,16 +1536,6 @@
       "source": "Bloomberg",
       "topics": [
         "policy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Russian Diesel Exports Drop as Ukraine Renews Refinery Attacks",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQQ1JOVWp5VDdxMjdRZ0RDY3pFdVhYbWJ5NmNWSnphblNqa3lkdnZod2lzbGpXQTl0bW1WU2c4ZF90bF9hTVkxczZSQ0pCQ1dreFgxUjg3VndPSVV6LW45Wm5BSlY3TmNlQkZEaElpT0Z1WEhlbHJpdHp3TkQ3S2FacmdhSEI0NEpJUjNTdTBFSkFkbHBqRjhoMU01LThrVnRjUHVpeFlaM1J0VmpSQ1N6dlZ3UQ",
-      "publishedAt": "2026-11-13T14:59:35Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
       ],
       "via": "google"
     },
