@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-22",
  "forexWeekEnd": "2026-11-28",
- "forexCheckedAt": "2026-11-23T07:52:00+00:00",
+ "forexCheckedAt": "2026-11-23T20:19:56+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -290,15 +290,6 @@
    "forecast": "2.3%",
    "previous": "2.3%",
    "url": "https://www.forexfactory.com/calendar/45-us-prelim-gdp-price-index-qq"
-  },
-  {
-   "title": "Unemployment Claims",
-   "country": "USD",
-   "date": "2026-11-25T08:30:00-05:00",
-   "impact": "Medium",
-   "forecast": "201K",
-   "previous": "203K",
-   "url": "https://www.forexfactory.com/calendar/11-us-unemployment-claims"
   },
   {
    "title": "Bank Holiday",
@@ -1970,7 +1961,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-23T07:52:00+00:00",
+ "reportsCheckedAt": "2026-11-23T20:19:56+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2257,8 +2248,8 @@
    ]
   },
   "usda-inspections": {
-   "date": "2026-11-16",
-   "title": "Semaine close le 12/11",
+   "date": "2026-11-23",
+   "title": "Semaine close le 19/11",
    "url": "https://www.ams.usda.gov/mnreports/wa_gr101.txt",
    "documents": [
     {
@@ -2268,12 +2259,12 @@
    ],
    "figures": [
     {
-     "label": "Soja inspecté · semaine au 12/11",
-     "value": 1708.296,
+     "label": "Soja inspecté · semaine au 19/11",
+     "value": 1555.054,
      "unit": "kt",
-     "previous": 1914.145,
+     "previous": 1734.7,
      "previousLabel": "semaine précédente",
-     "note": "campagne : 15,87 Mt"
+     "note": "campagne : 17,46 Mt"
     }
    ]
   },
@@ -2360,8 +2351,9 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-23T07:52:00+00:00",
+ "latestCheckedAt": "2026-11-23T20:19:56+00:00",
  "failingSince": {
+  "WASDE": "2026-11-23T20:19:56+00:00",
   "CONAB": "2026-11-22T23:39:26+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
   "Rapports · conab": "2026-11-22T23:39:26+00:00",
