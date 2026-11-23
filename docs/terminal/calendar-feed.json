@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-22",
  "forexWeekEnd": "2026-11-28",
- "forexCheckedAt": "2026-11-22T23:39:26+00:00",
+ "forexCheckedAt": "2026-11-23T07:52:00+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -402,24 +402,6 @@
    "url": "https://www.nass.usda.gov/data-and-statistics/calendar/release/6592",
    "status": "official",
    "period": ""
-  },
-  {
-   "id": "bcba-2026-10-08",
-   "kind": "bcba",
-   "date": "2026-10-08",
-   "at": "",
-   "url": "https://www.bolsadecereales.com/estimaciones-informes",
-   "status": "usual",
-   "period": ""
-  },
-  {
-   "id": "fas-export-sales-2026-10-08",
-   "kind": "fas-export-sales",
-   "date": "2026-10-08",
-   "at": "2026-10-08T08:30:00-04:00",
-   "url": "https://www.fas.usda.gov/programs/export-sales-reporting-program",
-   "status": "rule",
-   "period": "Semaine close le 01/10"
   },
   {
    "id": "nass-production-2026-10-09",
@@ -1898,6 +1880,24 @@
    "period": ""
   },
   {
+   "id": "bcba-2027-04-22",
+   "kind": "bcba",
+   "date": "2027-04-22",
+   "at": "",
+   "url": "https://www.bolsadecereales.com/estimaciones-informes",
+   "status": "usual",
+   "period": ""
+  },
+  {
+   "id": "fas-export-sales-2027-04-22",
+   "kind": "fas-export-sales",
+   "date": "2027-04-22",
+   "at": "2027-04-22T08:30:00-04:00",
+   "url": "https://www.fas.usda.gov/programs/export-sales-reporting-program",
+   "status": "rule",
+   "period": "Semaine close le 15/04"
+  },
+  {
    "id": "wasde-2027-05-12",
    "kind": "wasde",
    "date": "2027-05-12",
@@ -1970,7 +1970,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-22T23:39:26+00:00",
+ "reportsCheckedAt": "2026-11-23T07:52:00+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2360,11 +2360,10 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-22T23:39:26+00:00",
+ "latestCheckedAt": "2026-11-23T07:52:00+00:00",
  "failingSince": {
   "CONAB": "2026-11-22T23:39:26+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
-  "Rapports · usda-inspections": "2026-11-22T23:39:26+00:00",
   "Rapports · conab": "2026-11-22T23:39:26+00:00",
   "Rapports · anec": "2026-11-17T23:33:34+00:00"
  }
