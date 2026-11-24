@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-22",
  "forexWeekEnd": "2026-11-28",
- "forexCheckedAt": "2026-11-24T04:51:40+00:00",
+ "forexCheckedAt": "2026-11-24T17:55:34+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -410,15 +410,6 @@
    "at": "2026-10-09T12:00:00-04:00",
    "url": "https://www.usda.gov/about-usda/general-information/staff-offices/office-chief-economist/commodity-markets/wasde-report",
    "status": "official",
-   "period": "2026-10"
-  },
-  {
-   "id": "fas-oilseeds-2026-10-09",
-   "kind": "fas-oilseeds",
-   "date": "2026-10-09",
-   "at": "2026-10-09T12:15:00-04:00",
-   "url": "https://www.fas.usda.gov/data/oilseeds-world-markets-and-trade",
-   "status": "rule",
    "period": "2026-10"
   },
   {
@@ -1961,7 +1952,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-24T04:51:40+00:00",
+ "reportsCheckedAt": "2026-11-24T17:55:34+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2030,18 +2021,18 @@
    "documents": [
     {
      "label": "PDF",
-     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796158/prog4726.pdf"
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796160/prog4726.pdf"
     },
     {
      "label": "Texte",
-     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796158/prog4726.txt"
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796160/prog4726.txt"
     },
     {
      "label": "Tableaux (zip)",
-     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796158/prog4726.zip"
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796160/prog4726.zip"
     }
    ],
-   "source": "https://esmis.nal.usda.gov/sites/default/release-files/796158/prog4726.txt",
+   "source": "https://esmis.nal.usda.gov/sites/default/release-files/796160/prog4726.txt",
    "figures": [],
    "title": ""
   },
@@ -2342,7 +2333,7 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-24T04:51:40+00:00",
+ "latestCheckedAt": "2026-11-24T17:55:34+00:00",
  "failingSince": {
   "CONAB": "2026-11-22T23:39:26+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
