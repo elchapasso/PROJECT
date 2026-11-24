@@ -1,37 +1,37 @@
 {
  "schema": 1,
- "checkedAt": "2026-11-23T21:27:07Z",
- "dataChangedAt": "2026-11-23T21:27:07Z",
- "today": "2026-11-23",
+ "checkedAt": "2026-11-24T05:21:40Z",
+ "dataChangedAt": "2026-11-24T05:21:40Z",
+ "today": "2026-11-24",
  "sources": {
   "ecb": {
    "name": "BCE · EXR",
    "ok": true,
-   "seconds": 2.1,
-   "lastSuccess": "2026-11-23T21:27:07Z"
+   "seconds": 2.9,
+   "lastSuccess": "2026-11-24T05:21:40Z"
   },
   "fred": {
    "name": "FRED (EIA, FMI)",
    "ok": true,
-   "seconds": 1.7,
-   "lastSuccess": "2026-11-23T21:27:07Z"
+   "seconds": 1.9,
+   "lastSuccess": "2026-11-24T05:21:40Z"
   },
   "mpob": {
    "name": "MPOB",
    "ok": true,
    "seconds": 1.6,
-   "lastSuccess": "2026-11-23T21:27:07Z"
+   "lastSuccess": "2026-11-24T05:21:40Z"
   },
   "iposs": {
    "name": "IPOSS Data",
    "ok": true,
-   "seconds": 0.4,
-   "lastSuccess": "2026-11-23T21:27:07Z"
+   "seconds": 0.2,
+   "lastSuccess": "2026-11-24T05:21:40Z"
   },
   "anp": {
    "name": "ANP · Brésil",
    "ok": false,
-   "seconds": 10.5,
+   "seconds": 10.6,
    "error": "https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/ppidp/precos-medios-ponderados-semanais-2013.xls : <urlopen error [Errno 104] Connection reset by peer>",
    "failingSince": "2026-11-23T21:27:07Z",
    "lastSuccess": "2026-11-23T01:47:44Z"
@@ -39,8 +39,8 @@
   "magyp": {
    "name": "Secretaría de Agricultura · MAGyP",
    "ok": true,
-   "seconds": 18.0,
-   "lastSuccess": "2026-11-23T21:27:07Z"
+   "seconds": 18.3,
+   "lastSuccess": "2026-11-24T05:21:40Z"
   }
  },
  "series": {
@@ -119,13 +119,8 @@
   "eurUsd": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-23",
-     1.0939
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -136,13 +131,8 @@
   "eurMyr": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-23",
-     4.5101
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -153,13 +143,8 @@
   "eurIdr": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-23",
-     19932.94
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -220,28 +205,23 @@
    "status": "ok",
    "added": [
     [
-     "2026-11-20",
-     4029.5
+     "2026-11-23",
+     3981.5
     ]
    ],
    "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 456,
-   "last": "2026-11-20",
-   "lastValue": 4029.5
+   "count": 457,
+   "last": "2026-11-23",
+   "lastValue": 3981.5
   },
   "idPalmFob": {
    "source": "iposs",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-23",
-     1065
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -252,13 +232,8 @@
   "myPalmFob": {
    "source": "iposs",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-23",
-     972
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
