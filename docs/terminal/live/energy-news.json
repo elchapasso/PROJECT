@@ -1,13 +1,103 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-23T15:16:34Z",
-  "collectedAt": "2026-11-23T15:16:34Z",
+  "checkedAt": "2026-11-24T02:32:34Z",
+  "collectedAt": "2026-11-24T02:32:34Z",
   "articles": [
+    {
+      "title": "Petrobras Makes $470 Million Ethanol Bet in Brazil With Neomille Stake",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-24/petrobras-makes-470-million-ethanol-bet-in-brazil-with-neomille-stake",
+      "publishedAt": "2026-11-24T00:08:20Z",
+      "source": "Bloomberg",
+      "topics": [
+        "biofuels"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Trump Administration Imposes Sanctions on Megaspeed, Singaporean Firm at Center of Nvidia Scandal",
+      "url": "https://www.nytimes.com/2026/11/23/business/trump-administration-megaspeed-trade-blacklist-nvidia.html",
+      "publishedAt": "2026-11-23T23:18:58Z",
+      "source": "The New York Times",
+      "topics": [
+        "policy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Latest Oil Market News and Analysis for Nov. 24",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-23/latest-oil-market-news-and-analysis-for-nov-24",
+      "publishedAt": "2026-11-23T23:04:12Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Yankees sign Brent Suter, deepening bullpen with Adrian Morejon still on market: Source - The Athletic",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNWTdBOVkwdnFNWlBkNHpLbHo0MkFJMWVQNldmNmk2VVBSRG0wczQ4LUxpeXo4NTktcWg1bWZmVkh6NktzUEh6ZWNTc19sdk45Q3JrODBtVFA2LTg2NS1DbEprV09VWGRKT3FjOWlPXzM2THVrVXRfNkhvRXdjRG5HMVZGLTZONHhwZ2VrSWNn",
+      "publishedAt": "2026-11-23T21:36:04Z",
+      "source": "The New York Times",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "strait of hormuz Archives – Page 51 of 51",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE00UTNnQWV0a2lRaE1iYmpuOU9Wc3FRV2VYMmhXQV9PaEhKd1RJNEVFQXhncnJObWxSYmRMOVVZcmstLUk2UlVvSl9POUVad3lzV2c0QTJkQ09kTVpuMjlB",
+      "publishedAt": "2026-11-23T21:22:01Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "U.S. Targets Financial Networks Behind Iran’s Tanker Fleet and Oil Trade",
+      "url": "https://gcaptain.com/u-s-targets-financial-networks-behind-irans-tanker-fleet-and-oil-trade/",
+      "publishedAt": "2026-11-23T20:36:51Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "US imposes sanctions on dozens linked to Iran's shadow banking networks",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxON2NaMVlXcGRFQ3BpRFVieGtVRzR4bXFtTXRTRnpSV3JmNzY1REhheG5xNlV5MlptZ1lIM1BQWUhGcTBZNWpHckdxZG1kWUZoZUdxSnRneHJhVzBpUzg0ZGpXQ1lQblItbHg5WXpNUXBqbHpWZ0NqZzdQZEdhNTZKbDZXaHNydXhYM05hd2YtY1lvU0JkVnJBQ3diRVNDV210Z0pZdm5mRnMtUEk4TTNkOXNDMGpvbmpD",
+      "publishedAt": "2026-11-23T19:39:43Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Drone-Hit Russian Cargo Ship Leaves Finnish Waters Despite Sanctions Hold",
+      "url": "https://gcaptain.com/drone-hit-russian-cargo-ship-leaves-finnish-waters-despite-sanctions-hold/",
+      "publishedAt": "2026-11-23T16:01:55Z",
+      "source": "gCaptain",
+      "topics": [
+        "policy"
+      ],
+      "via": "rss"
+    },
     {
       "title": "India considers raising rice export duty to 30% amid rising domestic prices",
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNR2tiN29xWlZfMHUzVHB4dEt4RmgtME95Q2EyLUtkU2prb2hERFR2ajN1eE8tck5peldqRHRYdmFlQ0xIc0t3b21qS3BEV3l3b2dHYmZTb1pzemtVbTN2WDhKeUFoM2x1ZkVUMDRHZWxUQ3R0YVZrM3dlNEdmemhaT1NCcjdnVV9xMFd4dzNvel9iWDEzdFdBNmRUQmJBWU8tejNidjZWX3UyX3c3eFlV",
       "publishedAt": "2026-11-23T14:12:29Z",
       "source": "UkrAgroConsult",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "India considers rice export duties as domestic prices rise, sources say",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOdVFVRlVtNzZDZlUtUU9oVnh5SG92VFJ1b1ZzZWtPeXpfXzV2R1p6SE1CY2lOc1ZtdEhLX2xwOXNCbnN6MmxsR0Zoa3AzQXVrZ3NhUE5pbzhFY1lrVFg2ay1jWmdXZmRiNzJ6a2YtTWpyZTJvOG5qWEFqeUZrcEpYc282MS1MUDBoVjVuSW1IaEZZMjFwaXRtQjBEZWdnc2l4YzgxcEJYLTdwZFBjMGRYcGpybkpsZw",
+      "publishedAt": "2026-11-23T13:52:09Z",
+      "source": "Reuters",
       "topics": [
         "policy"
       ],
@@ -222,6 +312,16 @@
       "source": "Reuters",
       "topics": [
         "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Joint Maritime Information Center Update 116 to JMIC Advisory Note: 01 March – 22 November 2026",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOeE1yZmx0a2x2cVBJYkVNdnozUTZDekdVeWlpbkhlWXNQaUp0M1NERWZYVll3SUc1NzZJeXBONmpJLWVKRVhZd0hTU25TanlNN0M1bG1sSEhBaFc1ZE9mY0VDX0ZRUE8xS3Z0NURWMW5sZjdEM2x0MEFmWHJmRXNsazJhcGJLeDQ",
+      "publishedAt": "2026-11-21T08:00:00Z",
+      "source": "UKMTO",
+      "topics": [
+        "shipping"
       ],
       "via": "google"
     },
@@ -1194,26 +1294,6 @@
       "via": "google"
     },
     {
-      "title": "Iraq resumes crude oil pumping for export purposes via pipeline to Turkey, oil minister says",
-      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNOEZmQVphZVUyV05SUmZOazhJeVRrUGZneGhyX2xTT0g5SkM0eEQwS2ZjVE1YUjQyR1l4WDAxMURzV19QeUk5dFRVU0R3eVF0TjZRZTlJUDk4TGVXMHJmOWVUVEJjX1k3UnF0b0hzemRLZGtQaFRCTXJoNFA3bVZVZjhPZndwYzRxQlpvcDVFRDZ5ZWhRX21FN2FWQzVSckZoYl8xWWJ6anVsd092eFRZVno5ZWJvVmJKRmJ4THJXREt0ZEF6WlFYQjFVTQ",
-      "publishedAt": "2026-11-17T10:34:06Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Crew of tanker unaccounted for after second attack north of Oman's Khasab, UKMTO says",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQYW55RnRFY2o3QVQ5M0ZRRElNUGhWUlhPaDkyODFYbEprTWw5NHhyTUFKSDQ5RE1TOWZWaElmSkY0UnZZeGUyMnFRbXpaOHo2SkxyaTFDUEowd3ZVUS1VaG9TRF9aTmNldHJyUGZtNnFuc2E2NGd0c0NNeDB5ai1rUTVQXzhZNzA5QUlUcTFINUJBZEYzMVRtREg5TTdCWjA2aEFXdWoydENMbTJyTlo3MDJxSHJTTnhlSm53YjJaTmFrRHV3ZEE",
-      "publishedAt": "2026-11-17T09:47:48Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Malaysia’s Palm Oil Industry Wants Swift Decision on Tax Waiver",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNaVgyM2VYV3lMQ3lyRDJkZlZVbVRSNlhyVVB3T2sxOU9sU2RMQ0pUbVZJQlZ1ZEVHMGVCbHpkUlEwZjUzZ2RUYWR6SkwyRU9hVVR5LW9YUjNKcGxZcWd6VExxeFRvN0xhc2VneFhDQmFSa29XRkRLYlA2a2hRNk12TXhleFBUQnVhQ1hOaTVCamd6b0RaamN3YTU5VDMtMjFkR1FjcHhINEI3bTZwRkIwM2w4eHI",
       "publishedAt": "2026-11-17T07:58:00Z",
@@ -1446,16 +1526,6 @@
       "via": "google"
     },
     {
-      "title": "Goldman Sachs Warns of ‘Sizable’ Oil Market Surplus in 2027",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOcGlrVWdaUnhwcDBydlg3aUV4Vk4zQk9BelRKUC1tajFKVkV1VFhYbGF1aFNvT0Q1bXRYQXRJTFJXckVveTgyRWp3bllkUXpyMXpyX2RUYUt3aWpRN002Q0hvUnBNSHBBQXFxXy01X3ZyUEVLQnhEbFdSZHNQUTFQMWRaYU5PTzNpcml2RHJ1WDNaNzd1NWVCSVduZjlVaFBKYTRWcXJPYmxRZGNaQlB0NG5LUQ",
-      "publishedAt": "2026-11-16T07:45:56Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Palm Oil Hits Near 2-Week High on Seasonal Supply Concerns",
       "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE52al9zT1RsOHVIUVRncVB4X0RNZzJ5S2FvdXlBUVZVcTROSHBpdHZQbWp2SXBxazhjaGJXeVVyMl82WlFOMGxVMWY3XzRTNHFQYzRYOXIzbW9PaGFWU05ROXZVc1B3ZUFSWHdJ",
       "publishedAt": "2026-11-16T04:44:58Z",
@@ -1472,16 +1542,6 @@
       "source": "gCaptain",
       "topics": [
         "shipping"
-      ],
-      "via": "rss"
-    },
-    {
-      "title": "Latest Oil Market News and Analysis for Nov. 16",
-      "url": "https://www.bloomberg.com/news/articles/2026-11-15/latest-oil-market-news-and-analysis-for-nov-16",
-      "publishedAt": "2026-11-15T23:03:50Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
       ],
       "via": "rss"
     },
@@ -1567,26 +1627,6 @@
       "via": "rss"
     },
     {
-      "title": "Russia Oil Revenues Hit Five-Month High on Crude Rally, IEA Says",
-      "url": "https://gcaptain.com/russia-oil-revenues-hit-five-month-high-on-crude-rally-iea-says/",
-      "publishedAt": "2026-11-13T14:39:48Z",
-      "source": "gCaptain",
-      "topics": [
-        "energy"
-      ],
-      "via": "rss"
-    },
-    {
-      "title": "Iran Says Tanker Carrying LNG Hit Mine, Suffered Explosion in Hormuz",
-      "url": "https://gcaptain.com/iran-says-tanker-carrying-lng-hit-mine-suffered-explosion-in-hormuz/",
-      "publishedAt": "2026-11-13T14:37:27Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping"
-      ],
-      "via": "rss"
-    },
-    {
       "title": "Joint Maritime Information Center Update 114 to JMIC Advisory Note: 01 March – 15 November 2026",
       "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPSlNkNEtaR2hrSEFicG4xV3FGd3VwSlQwS0o3SXRnaWdJZG9VX1AxaER4T1FWZ2hqRWI1enoyZTEzd3A0anB4aFplaUtRSUx3VjFGS3Jzcm1uRTVYUC15OVBta0N5RVNVRmFTWlFQemhaU0toY3FaNXUxREhBRktnOE45M1JhV1U",
       "publishedAt": "2026-11-13T08:00:00Z",
@@ -1608,16 +1648,6 @@
       ],
       "via": "editorial",
       "summary": "Le rapport mensuel donne les perspectives d’offre et de demande, les stocks et l’activité de raffinage."
-    },
-    {
-      "title": "Tanker Ablaze Off UAE as More Attacks Rattle Gulf Shipping",
-      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQaVA2LWE5ekxkcGtUU2Y1b2dTSEZTZHhHeF9GeWM0NFNla3BrSVJFT25SWDdwQjNPbGRPNFRKOU5EYXN6QXdvLW41dEFFWmlxcFNQSGtmVnlFRGdCY3dvWVJKYjJWLThpcjFqWDYzVjNQM2ZNeVRKbzNuSGVnQXRzNTFQcngtd0E",
-      "publishedAt": "2026-11-12T18:20:34Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
     },
     {
       "title": "Federal Reserve announces revised tentative schedule of Federal Open Market Committee meetings in 2027",
@@ -1910,7 +1940,7 @@
         "google",
         "rss"
       ],
-      "articles": 9
+      "articles": 11
     },
     {
       "name": "UkrAgroConsult",
@@ -1966,7 +1996,7 @@
       "channels": [
         "google"
       ],
-      "articles": 9
+      "articles": 10
     },
     {
       "name": "Fed",
