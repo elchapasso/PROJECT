@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-22",
  "forexWeekEnd": "2026-11-28",
- "forexCheckedAt": "2026-11-23T20:19:56+00:00",
+ "forexCheckedAt": "2026-11-24T04:51:40+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -260,7 +260,7 @@
    "country": "USD",
    "date": "2026-11-24T10:00:00-05:00",
    "impact": "Medium",
-   "forecast": "92.1",
+   "forecast": "92.4",
    "previous": "91.7",
    "url": "https://www.forexfactory.com/calendar/208-us-cb-consumer-confidence"
   },
@@ -1961,7 +1961,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-23T20:19:56+00:00",
+ "reportsCheckedAt": "2026-11-24T04:51:40+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2025,33 +2025,24 @@
    "title": "Campagne 2026/27"
   },
   "nass-progress": {
-   "date": "2026-11-16",
+   "date": "2026-11-23",
    "url": "https://esmis.nal.usda.gov/publication/crop-progress",
    "documents": [
     {
      "label": "PDF",
-     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796149/prog4626.pdf"
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796158/prog4726.pdf"
     },
     {
      "label": "Texte",
-     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796149/prog4626.txt"
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796158/prog4726.txt"
     },
     {
      "label": "Tableaux (zip)",
-     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796149/prog4626.zip"
+     "url": "https://esmis.nal.usda.gov/sites/default/release-files/796158/prog4726.zip"
     }
    ],
-   "source": "https://esmis.nal.usda.gov/sites/default/release-files/796149/prog4626.txt",
-   "figures": [
-    {
-     "label": "Soja récolté",
-     "value": 96.0,
-     "unit": "%",
-     "previous": 92.0,
-     "previousLabel": "semaine précédente",
-     "note": "moyenne 5 ans 95 %"
-    }
-   ],
+   "source": "https://esmis.nal.usda.gov/sites/default/release-files/796158/prog4726.txt",
+   "figures": [],
    "title": ""
   },
   "nass-fats-oils": {
@@ -2351,9 +2342,8 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-23T20:19:56+00:00",
+ "latestCheckedAt": "2026-11-24T04:51:40+00:00",
  "failingSince": {
-  "WASDE": "2026-11-23T20:19:56+00:00",
   "CONAB": "2026-11-22T23:39:26+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
   "Rapports · conab": "2026-11-22T23:39:26+00:00",
