@@ -1,8 +1,68 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-24T23:14:34Z",
-  "collectedAt": "2026-11-24T23:14:34Z",
+  "checkedAt": "2026-11-25T05:38:49Z",
+  "collectedAt": "2026-11-25T05:38:49Z",
   "articles": [
+    {
+      "title": "Oil Edges Lower as Expanding Supply Vies With Hormuz Attacks",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOenJ4V3FnWU1IVG94dUxRcE1YeTd1Y0Y0U1RWdkg4b1QwS2pPbFNhLUtmdGhwcE5XZWhnVXgzNVo2RkE2azdqdU53cW5KdDNVdWR3Z2JKc1RHX0Z2OWl0YjJsN3ZUTk9UbXhLNzR1Q19wOHVzVi00QmVxbUVWbVpJTk5rZldoalJRbW1hNmh2dnhqR216UlRpUTZDV1RZQQ",
+      "publishedAt": "2026-11-25T05:20:00Z",
+      "source": "Bloomberg",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Commodity Crude Oil News",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
+      "publishedAt": "2026-11-25T04:39:59Z",
+      "source": "Trading Economics",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Dangote Refinery Set to Become Africa’s Biggest Listed Company",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-25/dangote-refinery-set-to-become-africa-s-biggest-listed-company",
+      "publishedAt": "2026-11-25T04:15:00Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Yemen's Houthis threaten to target Jeddah and other Saudi Red Sea ports",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbmE5cEFGWGFLVzVEUlVvWlE5NzJaT2p0MTUxclgxejJ2ZHJPbTQ5d1BLNzh6R2tFb251aWQ4dHBUTDRtaTlETkVick9uV1hKVkdZSjNPbFk5M2NBd1oxQXptdzAtLS1zVzlidDBDVXBmWFAyVnRzMGRmZHNGZVk4T3Y1aV9ycGZFcWxGejZ0T29BbG9EUks5QjZ0bzFVRG05YlVQemt4UDdDSEY5cUZrYzNsSU9VMGVX",
+      "publishedAt": "2026-11-25T02:42:00Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Latest Oil Market News and Analysis for Nov. 25",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-24/latest-oil-market-news-and-analysis-for-nov-25",
+      "publishedAt": "2026-11-24T23:06:29Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "COMMENTARY: Middle East crude oil exports trend lower amid fake Iran stalemate",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPVzZpMHFTclFHbWV5MGFQbmJCOHhtaS02NUQyVmFmU09tZHVJRXZCeHRNWTFNQ0hVenFvQ1JnS2p0aHd0LVFjRE5KTi0tQkVZdElhcko2YXRmWnpkbGtkc0lJX0JjVGtXSE1TbWwyVklTcHVrSWNaTExxT1hYV3JEdG92Ny03TEFNWEJ0Q1hIY2lReVVlZHhkRS0zUUlkZkFiTHhiV0UwVF9RMVdxS2RlS1pseXBJQ3ZwaDBqak5zd29Hd3NGYW5nNUVfZERkR0pI",
+      "publishedAt": "2026-11-24T22:18:25Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
     {
       "title": "Bond Traders Rush to Hedge Risk of Fed Hikes Stalling Economy",
       "url": "https://www.bloomberg.com/news/articles/2026-11-24/bond-traders-rush-to-hedge-risk-of-fed-hikes-stalling-economy",
@@ -44,10 +104,10 @@
       "via": "rss"
     },
     {
-      "title": "Commodity Crude Oil News",
-      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
-      "publishedAt": "2026-11-24T17:56:38Z",
-      "source": "Trading Economics",
+      "title": "Iraq Rejects OPEC+ Assessment of Its Oil Production Capacity",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPalAzWlRlOWZNWE5rTXFHTmp4TmNfdlZOS2VJa0pZck8tZmczNGgtSl81VFB4bFpTcXVHMmwxV0ZuRVhlOGh0MUtrWTIydGo1NlYyVXZsNXdxSXdEbEpuY3ZacjRlV2hUOGJER0ljZzUyMDk1TVFkbXhwZktvQk5aSDBPUEdTRVYyaVR3eVdDaVdWR1RYOXB4UmJfOUdvY0t3bk9rZFlFUjBBTFYtdFVr",
+      "publishedAt": "2026-11-24T18:01:45Z",
+      "source": "Bloomberg",
       "topics": [
         "energy"
       ],
@@ -134,6 +194,16 @@
       "via": "google"
     },
     {
+      "title": "Japan accelerates ICC funding as US sanctions threaten court",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQeVlqQzhUUnlVXy11enMtemVoQURZSDZ4cFZ4czFBM091NW9GWDZVUmE2dGg2V2xCeHhzS2JINGI3RDdJdGw5N0t5bThLWDNGTk5DUVk0bnZJeEZSYWZTRElIbTQ5dzVMb2NySUhHaVZEZTNPZks2eldrbmt4ckx4YWpXR3UzWnE4bWhmS3BRdE5SZDZlam5vbC1VQndoWnQtcjgzMnhZRzVaalQ1",
+      "publishedAt": "2026-11-24T08:15:28Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Thailand to increase palm oil consumption for biodiesel production by 24%",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNbXhGUEpNSmtGbW5rTmhtaVc4c2hGTjA4VHo2NVJ5NWdsTG5mNkRuSzF3ZUJDcTRWZFEzakFNZTlmWWpma3pxemsxamRHbzJxaTA0cjJwWUgzM2NzZ243cVdZUER3YzIyQ2NnVEVMTFd2NnprU215NnFLRENhYnBzSFp5WWVpX1IxT1BtV2MySHN4YW9JZG45dllGanlmek9jWndLdjNMazRuSWhC",
       "publishedAt": "2026-11-24T07:41:31Z",
@@ -191,16 +261,6 @@
       "source": "Reuters",
       "topics": [
         "fx"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "COMMENTARY: Middle East crude oil exports trend lower amid fake Iran stalemate",
-      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPVzZpMHFTclFHbWV5MGFQbmJCOHhtaS02NUQyVmFmU09tZHVJRXZCeHRNWTFNQ0hVenFvQ1JnS2p0aHd0LVFjRE5KTi0tQkVZdElhcko2YXRmWnpkbGtkc0lJX0JjVGtXSE1TbWwyVklTcHVrSWNaTExxT1hYV3JEdG92Ny03TEFNWEJ0Q1hIY2lReVVlZHhkRS0zUUlkZkFiTHhiV0UwVF9RMVdxS2RlS1pseXBJQ3ZwaDBqak5zd29Hd3NGYW5nNUVfZERkR0pI",
-      "publishedAt": "2026-11-24T00:58:06Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
       ],
       "via": "google"
     },
@@ -1162,26 +1222,6 @@
       "via": "rss"
     },
     {
-      "title": "Oil prices settle lower as traders weigh surplus supply outlook",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQbmp3REJQam1xdjkyMkpCN1JlSkotTnJNM0JEWDVFNmJqZ2FHbmNIN2E0V2twa2N3djBLTXlNNVJvcDJmZVNXMlBlQnk2VG1FTThnX0hQbVRqS2dKbVVBdXl6MWR5ZHo0S2VneWt2bUdwVjE4TnNxaHFLN0hHNU9IUVljVnNXLWJTeHdORFFJX3BfQXhPTThEbGFYQXhYaGNneHRHcVRGS2NyOFhxTzVN",
-      "publishedAt": "2026-11-18T21:24:43Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "US sanctions Hezbollah-linked charity in push against Iran's proxies, Treasury says",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOYTM2TVZTRTVjaWp6c2VodVYwVm5MeEFVMXZ0eFctVzZVaU94eGxScWNRMHlQb1ZJRzZ0YXpFekJ6SmJkR2RWcU4wVUNTWkJMU3J0NTFaSmw5clBIYWhFQklMM3NiSzZtV3dWYThROEZIRWlJWmpKWUhaM2w4cGIzMjhjVk5IREJRaHBnVjhpZVRjcWdoMF9MeUhRQXRqUi1RSWJ1LWxVcFVwNUxOVGc1WmQ1N2tKWEhrd2ZpQmxLY0dQdFFUS0p4ZGR5dEY",
-      "publishedAt": "2026-11-18T19:48:32Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Joint Maritime Information Center JMIC Advisory: 017-26 | November 18, 2026",
       "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNY3FuNkdHdEtfdXVoVExUNzMwNWsyRVVPMmRQaUk4NV8xYkQybXhSVGRYRFR4cVBDVWNxOEh2Z1NWRGo0blVsMnZTeS00N0tNMUJXeDNPZGVueEtYMzVZTnlLNVFzX21GckxHX1VBNVppS193OXFyTkgzdS15cmYxYlZHZ0tkZmFjUEx5MDcxTm1VQXZ2dUJoT2VBY0tJMXczcTBncmYtSXdYNVhtZ2dpSkZmVEF6X0hVWDhFYW9tbFNmZW1Q",
       "publishedAt": "2026-11-18T19:30:30Z",
@@ -1404,16 +1444,6 @@
       "via": "rss"
     },
     {
-      "title": "Russia Exports Most Crude Since July as Drones Hammer Refineries",
-      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPNGhrYloyLVl0Q1dXWTNTdVpwQXNSLXFQazlvZl9XRkljNDdPVnRqWUxpWDFianNhdHVKVkZoX18wZUczMWV5d1I4ZGRpcDltVHlNbmloaU4tOGJBS2E0QXY1RTV1aGdiZFo1UDB0UGo3cFAzS1V2bkcyNTNOeGVRS3JQU2FMdkgwRWlOcTFBZ3k5eEFSYVFCdnpFTi1peUttampfeTI2SnZqeTh2SEV6Tk9XdzlPOWc5UEg3TERRbE0wRkk",
-      "publishedAt": "2026-11-17T13:47:28Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "LPG Tanker Reported to Have Sunk Off Bulgaria’s Black Sea Coast",
       "url": "https://gcaptain.com/lpg-tanker-reported-to-have-sunk-off-bulgarias-black-sea-coast/",
       "publishedAt": "2026-11-17T13:37:26Z",
@@ -1430,26 +1460,6 @@
       "source": "UkrAgroConsult",
       "topics": [
         "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "US Gas Pump Price Hits Lowest Since March as Oil Supply Recovers",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNdmhoWFZOQzZkczNTNmcydWd1UVRmMU1BcnVoMGdEMzI1R29iajltc01nTHRINWFQX3ZvYlBrMFEtRWZHMHVRV05yZEV6SzM5ZFJjUF9NYTltX2VVOUhPbGotdTl0dFJFUWNNNGxrR2trbFBjXzExeE94SWtuN2JfODJRUFdkekV1Rk16N1B5VWp5Nmp3QnhuR25BSnMycnRxVFRHQnN1bzhCSl9OY2pGdllTMGtGQQ",
-      "publishedAt": "2026-11-17T11:39:07Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Malaysia’s Palm Oil Industry Wants Swift Decision on Tax Waiver",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNaVgyM2VYV3lMQ3lyRDJkZlZVbVRSNlhyVVB3T2sxOU9sU2RMQ0pUbVZJQlZ1ZEVHMGVCbHpkUlEwZjUzZ2RUYWR6SkwyRU9hVVR5LW9YUjNKcGxZcWd6VExxeFRvN0xhc2VneFhDQmFSa29XRkRLYlA2a2hRNk12TXhleFBUQnVhQ1hOaTVCamd6b0RaamN3YTU5VDMtMjFkR1FjcHhINEI3bTZwRkIwM2w4eHI",
-      "publishedAt": "2026-11-17T07:58:00Z",
-      "source": "Bloomberg",
-      "topics": [
-        "oils"
       ],
       "via": "google"
     },
@@ -1490,16 +1500,6 @@
       "source": "gCaptain",
       "topics": [
         "policy"
-      ],
-      "via": "rss"
-    },
-    {
-      "title": "Latest Oil Market News and Analysis for Nov. 17",
-      "url": "https://www.bloomberg.com/news/articles/2026-11-16/latest-oil-market-news-and-analysis-for-nov-17",
-      "publishedAt": "2026-11-16T23:02:55Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
       ],
       "via": "rss"
     },
