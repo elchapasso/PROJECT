@@ -1,37 +1,37 @@
 {
  "schema": 1,
- "checkedAt": "2026-11-24T20:10:50Z",
- "dataChangedAt": "2026-11-24T20:10:50Z",
- "today": "2026-11-24",
+ "checkedAt": "2026-11-25T00:07:34Z",
+ "dataChangedAt": "2026-11-25T00:07:34Z",
+ "today": "2026-11-25",
  "sources": {
   "ecb": {
    "name": "BCE · EXR",
    "ok": true,
-   "seconds": 6.3,
-   "lastSuccess": "2026-11-24T20:10:50Z"
+   "seconds": 5.9,
+   "lastSuccess": "2026-11-25T00:07:34Z"
   },
   "fred": {
    "name": "FRED (EIA, FMI)",
    "ok": true,
-   "seconds": 2.1,
-   "lastSuccess": "2026-11-24T20:10:50Z"
+   "seconds": 1.6,
+   "lastSuccess": "2026-11-25T00:07:34Z"
   },
   "mpob": {
    "name": "MPOB",
    "ok": true,
-   "seconds": 1.4,
-   "lastSuccess": "2026-11-24T20:10:50Z"
+   "seconds": 1.5,
+   "lastSuccess": "2026-11-25T00:07:34Z"
   },
   "iposs": {
    "name": "IPOSS Data",
    "ok": true,
-   "seconds": 0.6,
-   "lastSuccess": "2026-11-24T20:10:50Z"
+   "seconds": 1.1,
+   "lastSuccess": "2026-11-25T00:07:34Z"
   },
   "anp": {
    "name": "ANP · Brésil",
    "ok": false,
-   "seconds": 10.8,
+   "seconds": 10.6,
    "error": "https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/ppidp/precos-medios-ponderados-semanais-2013.xls : <urlopen error [Errno 104] Connection reset by peer>",
    "failingSince": "2026-11-23T21:27:07Z",
    "lastSuccess": "2026-11-23T01:47:44Z"
@@ -39,93 +39,118 @@
   "magyp": {
    "name": "Secretaría de Agricultura · MAGyP",
    "ok": true,
-   "seconds": 20.6,
-   "lastSuccess": "2026-11-24T20:10:50Z"
+   "seconds": 17.1,
+   "lastSuccess": "2026-11-25T00:07:34Z"
   }
  },
  "series": {
   "arSoyOil": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
-   "revised": [],
-   "confirmed": [],
-   "rejected": [],
-   "count": 271,
-   "last": "2026-11-20",
-   "lastValue": 1183
-  },
-  "arSoyMeal": {
-   "source": "magyp",
-   "status": "ok",
-   "added": [],
-   "addedCount": 0,
-   "revised": [],
-   "confirmed": [],
-   "rejected": [],
-   "count": 271,
-   "last": "2026-11-20",
-   "lastValue": 398
-  },
-  "arSoySeed": {
-   "source": "magyp",
-   "status": "ok",
-   "added": [],
-   "addedCount": 0,
-   "revised": [],
-   "confirmed": [],
-   "rejected": [],
-   "count": 271,
-   "last": "2026-11-20",
-   "lastValue": 474
-  },
-  "arSunOil": {
-   "source": "magyp",
-   "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-24",
+     1148
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
    "count": 272,
-   "last": "2026-11-20",
-   "lastValue": 1322
+   "last": "2026-11-24",
+   "lastValue": 1148
+  },
+  "arSoyMeal": {
+   "source": "magyp",
+   "status": "ok",
+   "added": [
+    [
+     "2026-11-24",
+     408
+    ]
+   ],
+   "addedCount": 1,
+   "revised": [],
+   "confirmed": [],
+   "rejected": [],
+   "count": 272,
+   "last": "2026-11-24",
+   "lastValue": 408
+  },
+  "arSoySeed": {
+   "source": "magyp",
+   "status": "ok",
+   "added": [
+    [
+     "2026-11-24",
+     482
+    ]
+   ],
+   "addedCount": 1,
+   "revised": [],
+   "confirmed": [],
+   "rejected": [],
+   "count": 272,
+   "last": "2026-11-24",
+   "lastValue": 482
+  },
+  "arSunOil": {
+   "source": "magyp",
+   "status": "ok",
+   "added": [
+    [
+     "2026-11-24",
+     1321
+    ]
+   ],
+   "addedCount": 1,
+   "revised": [],
+   "confirmed": [],
+   "rejected": [],
+   "count": 273,
+   "last": "2026-11-24",
+   "lastValue": 1321
   },
   "arSunMeal": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-24",
+     193
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 284,
-   "last": "2026-11-20",
+   "count": 285,
+   "last": "2026-11-24",
    "lastValue": 193
   },
   "arSunSeed": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-24",
+     593
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 284,
-   "last": "2026-11-20",
+   "count": 285,
+   "last": "2026-11-24",
    "lastValue": 593
   },
   "eurUsd": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-24",
-     1.0963
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -136,13 +161,8 @@
   "eurMyr": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-24",
-     4.5118
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -153,13 +173,8 @@
   "eurIdr": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-24",
-     19983.58
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -220,13 +235,7 @@
    "status": "ok",
    "added": [],
    "addedCount": 0,
-   "revised": [
-    [
-     "2026-11-23",
-     3981.5,
-     3982.5
-    ]
-   ],
+   "revised": [],
    "confirmed": [],
    "rejected": [],
    "count": 457,
@@ -238,13 +247,7 @@
    "status": "ok",
    "added": [],
    "addedCount": 0,
-   "revised": [
-    [
-     "2026-11-23",
-     1065,
-     1055
-    ]
-   ],
+   "revised": [],
    "confirmed": [],
    "rejected": [],
    "count": 14,
@@ -256,13 +259,7 @@
    "status": "ok",
    "added": [],
    "addedCount": 0,
-   "revised": [
-    [
-     "2026-11-23",
-     972,
-     966
-    ]
-   ],
+   "revised": [],
    "confirmed": [],
    "rejected": [],
    "count": 11,
