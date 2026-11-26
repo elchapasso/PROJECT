@@ -1,57 +1,54 @@
 {
  "schema": 1,
- "checkedAt": "2026-11-25T23:47:56Z",
+ "checkedAt": "2026-11-26T03:37:47Z",
  "dataChangedAt": "2026-11-25T23:47:56Z",
- "today": "2026-11-25",
+ "today": "2026-11-26",
  "sources": {
   "ecb": {
    "name": "BCE · EXR",
    "ok": true,
-   "seconds": 10.2,
-   "lastSuccess": "2026-11-25T23:47:56Z"
+   "seconds": 6.3,
+   "lastSuccess": "2026-11-26T03:37:47Z"
   },
   "fred": {
    "name": "FRED (EIA, FMI)",
    "ok": true,
    "seconds": 2.0,
-   "lastSuccess": "2026-11-25T23:47:56Z"
+   "lastSuccess": "2026-11-26T03:37:47Z"
   },
   "mpob": {
    "name": "MPOB",
    "ok": true,
-   "seconds": 1.7,
-   "lastSuccess": "2026-11-25T23:47:56Z"
+   "seconds": 1.4,
+   "lastSuccess": "2026-11-26T03:37:47Z"
   },
   "iposs": {
    "name": "IPOSS Data",
    "ok": true,
-   "seconds": 0.6,
-   "lastSuccess": "2026-11-25T23:47:56Z"
+   "seconds": 0.4,
+   "lastSuccess": "2026-11-26T03:37:47Z"
   },
   "anp": {
    "name": "ANP · Brésil",
-   "ok": true,
-   "seconds": 6.4,
+   "ok": false,
+   "seconds": 10.8,
+   "error": "https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/ppidp/precos-medios-ponderados-semanais-2013.xls : <urlopen error [Errno 104] Connection reset by peer>",
+   "failingSince": "2026-11-26T03:37:47Z",
    "lastSuccess": "2026-11-25T23:47:56Z"
   },
   "magyp": {
    "name": "Secretaría de Agricultura · MAGyP",
    "ok": true,
-   "seconds": 20.2,
-   "lastSuccess": "2026-11-25T23:47:56Z"
+   "seconds": 20.4,
+   "lastSuccess": "2026-11-26T03:37:47Z"
   }
  },
  "series": {
   "arSoyOil": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-25",
-     1155
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -62,13 +59,8 @@
   "arSoyMeal": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-25",
-     417
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -79,13 +71,8 @@
   "arSoySeed": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-25",
-     486
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -96,13 +83,8 @@
   "arSunOil": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-25",
-     1319
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -113,13 +95,8 @@
   "arSunMeal": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-25",
-     193
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -130,13 +107,8 @@
   "arSunSeed": {
    "source": "magyp",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-25",
-     593
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -266,17 +238,8 @@
   },
   "b100": {
    "source": "anp",
-   "status": "ok",
-   "added": [
-    [
-     "2026-11-15",
-     5.66121
-    ]
-   ],
-   "addedCount": 1,
-   "revised": [],
-   "confirmed": [],
-   "rejected": [],
+   "status": "error",
+   "message": "https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/ppidp/precos-medios-ponderados-semanais-2013.xls : <urlopen error [Errno 104] Connection reset by peer>",
    "count": 98,
    "last": "2026-11-15",
    "lastValue": 5.66121
