@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-22",
  "forexWeekEnd": "2026-11-28",
- "forexCheckedAt": "2026-11-26T00:30:58+00:00",
+ "forexCheckedAt": "2026-11-26T11:02:33+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -340,15 +340,6 @@
   }
  ],
  "reports": [
-  {
-   "id": "nopa-2026-08-17",
-   "kind": "nopa",
-   "date": "2026-08-17",
-   "at": "2026-08-17T12:00:00-04:00",
-   "url": "https://www.nopa.org/resources/nopa-monthly-crush-report/",
-   "status": "official",
-   "period": "2026-07"
-  },
   {
    "id": "wasde-2026-09-11",
    "kind": "wasde",
@@ -1952,7 +1943,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-26T00:30:58+00:00",
+ "reportsCheckedAt": "2026-11-26T11:02:33+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2333,7 +2324,7 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-26T00:30:58+00:00",
+ "latestCheckedAt": "2026-11-26T11:02:33+00:00",
  "failingSince": {
   "CONAB": "2026-11-22T23:39:26+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
