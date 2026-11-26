@@ -1,8 +1,58 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-25T17:34:49Z",
-  "collectedAt": "2026-11-25T17:34:49Z",
+  "checkedAt": "2026-11-26T01:08:38Z",
+  "collectedAt": "2026-11-26T01:08:38Z",
   "articles": [
+    {
+      "title": "Latest Oil Market News and Analysis for Nov. 26",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-25/latest-oil-market-news-and-analysis-for-nov-26",
+      "publishedAt": "2026-11-25T23:03:15Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Road Fire Near Cairo Kills Dozens After Petroleum-Laden Truck Crashes",
+      "url": "https://www.nytimes.com/2026/11/25/world/middleeast/road-fire-near-cairo-kills-dozens-after-petroleum-laden-truck-crashes.html",
+      "publishedAt": "2026-11-25T21:37:07Z",
+      "source": "The New York Times",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Oil Edges Lower as Expanding Supply Vies With Hormuz Attacks",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOenJ4V3FnWU1IVG94dUxRcE1YeTd1Y0Y0U1RWdkg4b1QwS2pPbFNhLUtmdGhwcE5XZWhnVXgzNVo2RkE2azdqdU53cW5KdDNVdWR3Z2JKc1RHX0Z2OWl0YjJsN3ZUTk9UbXhLNzR1Q19wOHVzVi00QmVxbUVWbVpJTk5rZldoalJRbW1hNmh2dnhqR216UlRpUTZDV1RZQQ",
+      "publishedAt": "2026-11-25T20:15:03Z",
+      "source": "Bloomberg",
+      "topics": [
+        "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "OPEC blames EU for COP31 collapse",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNblVnV0tQbjBnOTRFVnp6bWFwUjBRQ2hXcHg4QmhVRHBUUXdjNXk3UVY3aGJza0RxMEw1Qnprc2VGNE9rbFhLWHJRcFFOZ0RIbkRpeHB3bmtsNTVIbk9aOXFza2JiaTJTdVI4bzFQd0lrTlBHb0p0TWkzSjZoS2FsMlFFOUgycUd3bWl6aQ",
+      "publishedAt": "2026-11-25T19:22:01Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Red Sea and Indian Ocean Nations Advance Plans for Combined Maritime Security Force",
+      "url": "https://gcaptain.com/red-sea-and-indian-ocean-nations-advance-plans-for-combined-maritime-security-force/",
+      "publishedAt": "2026-11-25T17:30:24Z",
+      "source": "gCaptain",
+      "topics": [
+        "shipping"
+      ],
+      "via": "rss"
+    },
     {
       "title": "Russian Refinery Runs Drop to Lowest in Decades, Rystad Says",
       "url": "https://www.bloomberg.com/news/articles/2026-11-25/russian-refinery-runs-plunge-to-lowest-in-decades-rystad-says",
@@ -34,12 +84,12 @@
       "via": "google"
     },
     {
-      "title": "Oil Edges Lower as Expanding Supply Vies With Hormuz Attacks",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOenJ4V3FnWU1IVG94dUxRcE1YeTd1Y0Y0U1RWdkg4b1QwS2pPbFNhLUtmdGhwcE5XZWhnVXgzNVo2RkE2azdqdU53cW5KdDNVdWR3Z2JKc1RHX0Z2OWl0YjJsN3ZUTk9UbXhLNzR1Q19wOHVzVi00QmVxbUVWbVpJTk5rZldoalJRbW1hNmh2dnhqR216UlRpUTZDV1RZQQ",
-      "publishedAt": "2026-11-25T14:08:29Z",
-      "source": "Bloomberg",
+      "title": "Kazakhstan also seeks higher oil output capacity estimate ahead of 2027 OPEC+ quota debate, sources say",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQUmZkWG52MVRvamtENGF3YmViWno3ckhhV1JIeFBzcnVTeG5ueG55S0M1amhYa1c3U1NVUldNV3c3UTRzTG9lcnVsUmJoYzV2ckJsY2c2cmtFdFlLckpLRk91NTdnSEtJQ3lDSVlYNzEwdklnUkFvb1R6dUpZLWV2TnM5d0dldC00NnBCWkZ1RVRjQ0NqMFA2OEp2SThlVlQ5OXZNbDVHN2tLVjFjbmJhSHlPUGZCSXR0aUxLZGQ3RjZIdWlwOElBWmZPUQ",
+      "publishedAt": "2026-11-25T14:18:48Z",
+      "source": "Reuters",
       "topics": [
-        "shipping"
+        "energy"
       ],
       "via": "google"
     },
@@ -71,6 +121,16 @@
       "source": "Bloomberg",
       "topics": [
         "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Russia’s Elevated Crude Shipments Stoke Global Supply Surplus",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQc2hkdGdsRUNWb2xfbVZDMGx4QkZoMl9QeVdJdUNja1NGYV9uY2VVTjhNYURpMkRrOG5iRGtvaG9WTGJuRmhTWnVaSmYtQ1JodzNOSnBRTTFQenl1dE9la0pkdlZTdXM4YjVjTk9ma1RsUm5YQ2VsaEFJWWRmV3BSQ2N6Q2RDQUNmMklfMkJ6bDdxZ2wtazRxcFlaRU85aEpZb0dMckV0NnlDVTUwcVE",
+      "publishedAt": "2026-11-25T12:02:40Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
       ],
       "via": "google"
     },
@@ -125,6 +185,16 @@
       "via": "google"
     },
     {
+      "title": "Yemen's Houthis claim attack on Saudi Arabia's largest refinery",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOakM0aVEtei1RVzZkTUVZYlFabWlDYWpzTktyaGU2WHZqaGRkU0hJOHdsNDFUdU5GYzNOYzdZYnkwWnFYZ2daNlNvYkJ3ZWNjeDNTRm5HOUFtNW5nRjNYSVpaaGF0SF9xbjN6S1FpbVJ6MmFBYkdUeF9CMTZKRUdJT2RITmVSelAzWUJtTEIxQTN5Ry1YZEczX29iOHVuc0Q1bllidlBoN0VDNWVzYzZqU2RaNm5JRUctRDdsdGt2ZkEydWRVMV9wQUdHYw",
+      "publishedAt": "2026-11-25T07:24:00Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Dangote Refinery Set to Become Africa’s Biggest Listed Company",
       "url": "https://www.bloomberg.com/news/articles/2026-11-25/dangote-refinery-set-to-become-africa-s-biggest-listed-company",
       "publishedAt": "2026-11-25T04:15:00Z",
@@ -145,12 +215,22 @@
       "via": "google"
     },
     {
-      "title": "Oil rises after alleged Houthi attack on Saudi refinery",
+      "title": "Oil prices rise after Houthis claim attack on Saudi refinery",
       "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOVGl4Nzdfc01ReTB5TnAxUkVLTXlaRVFvbGM5aTZDOEtVUXlrVDQtMHJwcWh2WldoMnVyb0QxU1pEQUoyN09sNU1SZXR3NVUzdTZXeWpkdGNTZW95MUtmdjV3dWFxTEZsRW5WUlF1djVTTWZxUGVxcHhPNEptMnBEcmZ0MURhX0JxTDFqc19HblpWd2hLSEs5SXRYTXB6bzFwNzZqOUFTc1ZOM3ItVDFZWmM2a0R5YkxsdnlsMTZWQ1ZEUQ",
       "publishedAt": "2026-11-25T01:58:00Z",
       "source": "Reuters",
       "topics": [
         "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Oil settles up $2 as traders weigh continued Hormuz ship attacks",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQMDQ4RU9qMFd6TWl0WkFDUGVsdk5Gb3Q1dURMcjcwbGxUV3ItdjhZUGdQUTBZOVUyZEZlRzdmSEtjM3EwQTNUam1nRVZNdXFRbmNfeHhpUnNVQjNPbjNyOGtSZHVnNEZmbnpJdC1VdVA5X25rWndhMnZqemNGVWdVU1Y5OE8ybExyT2xLelF6dnZsNkM0OU55b1dKc1NuNF9sWkVGSGZJaUNxLXc4eEdGZTl3LUtFTDFuUUE",
+      "publishedAt": "2026-11-25T01:26:50Z",
+      "source": "Reuters",
+      "topics": [
+        "shipping"
       ],
       "via": "google"
     },
@@ -162,6 +242,16 @@
       "topics": [
         "shipping",
         "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "US stocks slide as Nvidia rally fizzles out, dollar falls",
+      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPVGQ3cVhHXzJBLXEybDVWX21xeWcxbUVEOHA1ZV9IU0lacEM2a3dKbmFLSGk2Y1MwLXk0OVFzWV8yT1JNQ3FnX3hWNGxidEZvbDZwTl8tdjNoUDV6MU45ZnJSa3lSMnZJNXdwWk5VRUFOYzJlTk11TmZaS1hocXhPVUE4bw",
+      "publishedAt": "2026-11-24T23:33:16Z",
+      "source": "Reuters",
+      "topics": [
+        "fx"
       ],
       "via": "google"
     },
@@ -373,26 +463,6 @@
       "source": "Trading Economics",
       "topics": [
         "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Oil settles up $2 as traders weigh continued Hormuz ship attacks",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQMDQ4RU9qMFd6TWl0WkFDUGVsdk5Gb3Q1dURMcjcwbGxUV3ItdjhZUGdQUTBZOVUyZEZlRzdmSEtjM3EwQTNUam1nRVZNdXFRbmNfeHhpUnNVQjNPbjNyOGtSZHVnNEZmbnpJdC1VdVA5X25rWndhMnZqemNGVWdVU1Y5OE8ybExyT2xLelF6dnZsNkM0OU55b1dKc1NuNF9sWkVGSGZJaUNxLXc4eEdGZTl3LUtFTDFuUUE",
-      "publishedAt": "2026-11-24T02:56:00Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "US stocks slide as Nvidia rally fizzles out, dollar falls",
-      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPVGQ3cVhHXzJBLXEybDVWX21xeWcxbUVEOHA1ZV9IU0lacEM2a3dKbmFLSGk2Y1MwLXk0OVFzWV8yT1JNQ3FnX3hWNGxidEZvbDZwTl8tdjNoUDV6MU45ZnJSa3lSMnZJNXdwWk5VRUFOYzJlTk11TmZaS1hocXhPVUE4bw",
-      "publishedAt": "2026-11-24T01:29:00Z",
-      "source": "Reuters",
-      "topics": [
-        "fx"
       ],
       "via": "google"
     },
@@ -1080,36 +1150,6 @@
       "via": "google"
     },
     {
-      "title": "Oil settles flat as Hormuz disruptions offset global surplus fears",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOMnV0bXBXX1ZzNHpkcHFmanlPQ2FmczM3Z2xCcXRqRjYwTVB6SlFhZ29vbGcyM3V5a3lOMHZ3OXprMDM0ang4RVEwQmhFMTZ2QU1GT2lQN0ZPUXQyZWJ4MHR1S0JQTmE5Y0Z5dkZlemdFU0V6TWFId0pZZlFtbHVzaU1EeVl1S2RiSFdrcE95d1ZqQW9NRWlZUFNHWU9QVHNXRlZiTmEtckdWZEpScFREcVpPQ0x3MDNQeFhiZHJHMUlVQXFRNkE",
-      "publishedAt": "2026-11-19T21:02:01Z",
-      "source": "Reuters",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "EXCLUSIVE: Canada's BMO returning to US oil and gas investment banking, sources say",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPMEJnU0FpNlBIQVVrY3RZWkxwVzV5a0RJajBPLWpIZW5DX1Y1cDBuZnJsWU14dHBGcGV3aE9LRkx6aVg4VDRjVHB1UmphaWN1VVJCQVQ1bEhnel9rTnNzSmZVZUJlTHZsTHVsdWpmZjM2aHQ1R09mZEZTUVpqbV9VZ18tMC15WkhxOW5PN2FtNHRXMHkwUndMV3NBQVZtaGNKajVzZkZfMWNwd0pYS21Ea0ZBNkZtUQ",
-      "publishedAt": "2026-11-19T19:00:02Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "At COP31, Venezuela touts AI as path to cleaner oil production",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQQmdwRmVVelpCME1XUFJaY205YnloQ1NrdDhSVDBiZkhjTU9oQlp4WUg5YXFRNWp5RzhhVlN2bC1mUHFrVEhKalZJMGhjeHNla3ppQTc1Y2FwcWwweDJydXlRVzI0aUE4S3JyWXpJaEs2WjJOQWNKNTNMeEVZRWgwT3I0SUZsbjBtcGlDbS0zSy11SlI4MjE1VkVUMGd6Q0w1LVFqUTE1Nko2SlE",
-      "publishedAt": "2026-11-19T18:13:50Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Iran Intensifies Hormuz Tanker Attacks Just as Oil Prices Slide",
       "url": "https://gcaptain.com/iran-intensifies-hormuz-tanker-attacks-just-as-oil-prices-slide/",
       "publishedAt": "2026-11-19T17:26:25Z",
@@ -1353,16 +1393,6 @@
       "via": "rss"
     },
     {
-      "title": "Soaring Freight Sinks Venezuela-US Oil Exports to 2026 Low",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPbmZoZlRmNlZKaFhFcTJMSGN1akdaMWtBRE5sTXRfdWpHM0QtTWhxVHJXakNDUjJWdUl6czBtSlR1ajhVdDBHX2xZLWZpMGhfVkhiTFI2RzlPem8xajRNWTktS29xeXBwbVJ5T2Q5OXFlMUF3RDhtWFdsT0F5NjktVXlIRS1rVVVVVk9fZFJrb0FHOU9vaGRXQlYyeUpSS3FzdllHdWJaWExVUU5nNjRjWW9uNTE",
-      "publishedAt": "2026-11-18T17:28:50Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Malaysian palm oil prices fall amid high stocks and weak demand",
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQWkpkSVAwdnE3T1FYUmRtdzRON1R1bGhra1JxNkE2ZWNRRC10alVHcUxDQ3ZvNDRqbHcwLWRuU2VIQTdDb1Z2UHNLMjJ3TTdxdTB1U0VDWEhNM1B4bXU2Z2ZBUkk2MHh6eHFTdTFTUVNIWGtaamVhTGxUTGRxVGRLUUU4LUNpZ0hrUFVqU3g3WHR6Nk5ab3FuQmlGSENRbmRx",
       "publishedAt": "2026-11-18T15:28:56Z",
@@ -1391,16 +1421,6 @@
         "oils"
       ],
       "via": "google"
-    },
-    {
-      "title": "Nvidia Offers Relief to AI Trade, US Hits Island in Hormuz",
-      "url": "https://www.bloomberg.com/news/videos/2026-11-18/the-opening-trade-11-18-2026-video",
-      "publishedAt": "2026-11-18T12:12:37Z",
-      "source": "Bloomberg",
-      "topics": [
-        "shipping"
-      ],
-      "via": "rss"
     },
     {
       "title": "Moldova exports over 660 thsd tons of sunseed but relies on sunflower oil imports from Ukraine",
@@ -1634,16 +1654,6 @@
         "shipping"
       ],
       "via": "google"
-    },
-    {
-      "title": "Three Ships Struck By Drones In Black Sea Near Romanian Shipping Canal",
-      "url": "https://gcaptain.com/three-ships-struck-by-drones-in-black-sea-near-romanian-shipping-canal/",
-      "publishedAt": "2026-11-15T17:31:34Z",
-      "source": "gCaptain",
-      "topics": [
-        "shipping"
-      ],
-      "via": "rss"
     },
     {
       "title": "Saudi-Backed Forces in Yemen Retreat From Red Sea as Houthis Advance",
@@ -1949,7 +1959,7 @@
         "google",
         "rss"
       ],
-      "articles": 11
+      "articles": 12
     },
     {
       "name": "UkrAgroConsult",
@@ -3147,6 +3157,26 @@
       [
         "2026-11-17",
         92.94
+      ],
+      [
+        "2026-11-18",
+        92.88
+      ],
+      [
+        "2026-11-19",
+        95.17
+      ],
+      [
+        "2026-11-20",
+        92.76
+      ],
+      [
+        "2026-11-23",
+        91.2
+      ],
+      [
+        "2026-11-24",
+        91.8
       ]
     ],
     "wti": [
@@ -4253,6 +4283,26 @@
       [
         "2026-11-17",
         89.53
+      ],
+      [
+        "2026-11-18",
+        86.81
+      ],
+      [
+        "2026-11-19",
+        86.78
+      ],
+      [
+        "2026-11-20",
+        87.59
+      ],
+      [
+        "2026-11-23",
+        81.42
+      ],
+      [
+        "2026-11-24",
+        82.24
       ]
     ]
   }
