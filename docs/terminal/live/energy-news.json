@@ -1,8 +1,28 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-27T13:02:26Z",
-  "collectedAt": "2026-11-27T13:02:26Z",
+  "checkedAt": "2026-11-27T22:17:52Z",
+  "collectedAt": "2026-11-27T22:17:52Z",
   "articles": [
+    {
+      "title": "US disables ship trying to leave Iran, as Tehran vows to confront blockade",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPbzhtZElCdnJJN0hCYkdsQ1lTWHc5UDRtNGE4cF9sWE14dlpacmk2blU5cXJMTHp0MGNaMElaQzdSem91dXNpNVRtd1k4ekZza09jVEpubTh3cjlpbE9CNWdMSU1seV9vNDFEeGQ1aDZBY1J1R0JoNVdlcjJaQnlWcU5Ib3ZISHVmNHA4eklQclI2WDIzR0VtNVp0NEJjaDZfcTlKNHRNbW54bGF2TExrR1NaSFJvLUxRcnc",
+      "publishedAt": "2026-11-27T20:06:57Z",
+      "source": "Reuters",
+      "topics": [
+        "policy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Iraq Talking to OPEC About Its Production Ceiling, Minister Says",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQZlhOTmRNUnJnc20tNEFQN3FXY2NERWJWNGJWMllVd29jWktnRXVLNzJydFZvanE4OFRJX1NWSDkzMFBQTjgtendwelkyeFNHNGRCQW9FYkhkdHBKMlRwVjNyZkMzSXpadHJNNzhWZmhYM09nTHp4emhhWlJNOXRBd3MxVGxmeTdtNFduYVZWMUw1OE1sQlZPRmJ0czlyYm4tSXY3VXh6SG4wdkpnU1F4eUprTDk",
+      "publishedAt": "2026-11-27T15:03:28Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
     {
       "title": "Malaysian palm oil prices rise amid gains in other vegetable oils",
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQYTZ3Mko4cXpOdXVHa2J1bTRUbnhpejV5X2pZWFpKQWpFSmU1RGhGaF9ITHhOVVNZT2FRTk54UFd3ZlRJYXByS0dVc01oZ1dKbDRfY0EwUnBiNXZtc2NXLXBxeE5KWmR3RkZGX2NMb3c0cGFyQVR5bC1FbnBuSGNnc3paeUQxSXFXYWhTalZOQjJRMF9EN3RDZkxTMjBTX3VvcFZ3",
@@ -10,6 +30,16 @@
       "source": "UkrAgroConsult",
       "topics": [
         "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Global diesel market to run into deficit in second quarter of 2027",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNLUh5OURIMC1MRmNIM3pMa2ZMUnBhZjl4TjRVUWl6QTg4Mk9FdXluQWVubzNSOUNMUmROMGdnWGp2Wlp3Y1NxdFdaQ0tubFFoZTVlS3hydlBkcDJUWURvLVZKamppQTlvSm8yYkV0NE5rRlp6TVUtSzNsOUtGYUJtR1pWMl94TjA5UFRta3lPVldBaGtxQm95Wng2UVlwckszVVhaTHFYQ044cjNPQUE",
+      "publishedAt": "2026-11-27T12:25:44Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
       ],
       "via": "google"
     },
@@ -28,6 +58,16 @@
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNa3ZZVHhwY0VBdzhkbGtvUGR5UjBIOUF6ZWxIaDBDb3cxV1EyQkVFVzJZa2h3SHVvT1hjUGNyZ1Z1R3JnY1ZsZXZ1WVRNTUhmSzFFQXFmSzVSWVFFRXc0TVc0QWdpVTAwUV9xQnFRYnpFYTVoRVo1MFBOQlBfNlpFU1FtSmhqUk1tUEZzS0taMkU5WFFMZHNxbUc1b0xsaVQ5Y1hSWG1lRmljNnNk",
       "publishedAt": "2026-11-27T09:04:35Z",
       "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Indonesia Palm Oil Tenders Stall on Weak Demand and Tight Supply",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOaU0tNUNSc2VkNWRHTGpkWF9TZTdpOVA0MXEzVExSeUhWMHlJZzBUXzFxNHQ4T0E5em02eV9oamRPWGl0M0Mwd3RKaTFMRWlQZGlOQ2FUUGE4dVhYOXpMZWR3azBRQ3NucVpKMF9nTU4wSERqWnpGdldZeTdjdENvbDRaRUV1ajVYYUhBalp6Y1VJb3o0UHExSDdHSnpYTy15Z1J0ZnhQNzIyRXJZUC1sR2pRd3ZzUQ",
+      "publishedAt": "2026-11-27T07:36:00Z",
+      "source": "Bloomberg",
       "topics": [
         "oils"
       ],
@@ -980,16 +1020,6 @@
       "via": "google"
     },
     {
-      "title": "Eco Atlantic says Falklands oil production could tie back to Navitas Sea Lion project",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNV254ZGRxbTRTNWNjYTZfRGF3Ty00cUhJNlhfdFlnY3lZTklNNDZ2bWcwUkx5b2V1WmNfSTZhWVVuNV8tX1VLelFrWWFEUThycFlHd2UwY3ppVUt5cDQwZE9qY2h1SENxd0RqSW5zNUdUalVycW9hWERQY2NkVTVQcmVUbVdLN0Rpc0c1S2N1Wkd5b3BabjVzc0NqYU1tbDc5Z3I4UnJXRVJ3UzB5cGlGU1VRd2xLcmZ5VVlER2hSeGF0eVRP",
-      "publishedAt": "2026-11-23T13:25:22Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "India’s soybean oil imports rise 7% in October to record high",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOZnRrOTZzNFpabnRtSFcwWldyOXJBU1VNQmk1UTNjaWRvVTFPdURseDFnX3FFaGJxYm5FcFR6UjZMTEZZYVZlc1hoTHZod1hxNE9mcmliN1lEY014Y0NJVldfckFpQXNQRmp6aGZGUnRxVlNLMlpacmVrRUZGbHVOTlBzSmx3MC1iQlZEbDhaUzNaY2FqY3MwOE9UYw",
       "publishedAt": "2026-11-23T12:50:05Z",
@@ -1037,16 +1067,6 @@
       "source": "UkrAgroConsult",
       "topics": [
         "oils"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Russian western oil exports curbed by bad weather, drones",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNdGhoUnJnMTZmZ3BZVWQweFd2S3hZUlFYTnJMNTRUSEJ4d3R1eWlFc24yV0NfNnRaRHJ6TDNhR0RCbkkyYlFIYjg4QjlIWEtnNVVyaUMxZ21CV2lqRnpvMlZNM0xydXVueG14VWFNdXpwSjdybVl3VmtoRzhvdnZzU2w2WjM1bi11RzREMmFzV0tNTGZTX3RzbVpuX0pVcU1tVHY5M1huQ1RvSENS",
-      "publishedAt": "2026-11-23T09:03:09Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
       ],
       "via": "google"
     },
@@ -1282,17 +1302,6 @@
       "via": "rss"
     },
     {
-      "title": "Iranian Oil Moved Between Tankers as US Widens Blockade",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxObUNtdVJyTEZDb1BTbnhxeWpKdFdhU0YyQ19xTHQxYVNtR1ljZzIzbnYzTWR6eElWSk1QeTRVQ3RqQ05ZYi1VYV95QmdWaWxCeVE5b0dNdk1WbWN4XzVEZFdKOHdXejV0MTdHQkRnc2xyU2I1R2dZTlBySHA5b3Y1dnpNMFQxUVlGeEw3ZmV1ekh4ZDBIQWFRdlJ1NEdBOVBZRjBSa0tMWVZQQjVkM0FuNk53",
-      "publishedAt": "2026-11-20T14:02:33Z",
-      "source": "Bloomberg",
-      "topics": [
-        "shipping",
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Iranian Oil Transferred Between Tankers as US Widens Blockade",
       "url": "https://gcaptain.com/iranian-oil-transferred-between-tankers-as-us-widens-blockade/",
       "publishedAt": "2026-11-20T13:57:02Z",
@@ -1301,16 +1310,6 @@
         "shipping"
       ],
       "via": "rss"
-    },
-    {
-      "title": "Indian Refiners Race to Secure Oil Tankers as Freight Costs Rise",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPMzlfYUx6YmpabGNHbnFqUUd6aUQzbnhtcFAwZldEY19VUFRjdzM5MUJPc0EzZERPa1VlR2lKT0pxWlB3d2JSenJ3bzhrWmZUc3Vtd0NVR1J3am5HXzlnZktmdlpaanBhaVRWaUtXTVBKUjc0dmVBYzAtQjBQT2x4QVplZ0U1Nk9TVl9aTHpCQm5fTDRsVjEyc3pIS2tvdmRMNUM0TC03RS1yRUJWMm9ZZmZfQkpMQQ",
-      "publishedAt": "2026-11-20T10:34:25Z",
-      "source": "Bloomberg",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
     },
     {
       "title": "Ukraine increases rapeseed oil exports to EU, accounting for over 83% of imports",
@@ -1982,16 +1981,6 @@
       "via": "google"
     },
     {
-      "title": "Brent Rises as Middle East Supply Risks Persist",
-      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5Wa1ZDYTBFZEJNSlNlRElkS0VmQmlRNTRiTG14Tjh3NTRuOFRJNUlHWkdWM1c3SGZRUkl6emRYLUtFREdZdzNkZFJjSTN1QjZMZFdLdGh0QnEyZDk5Zjd3V0cwMExaVEctR251VWQxN1NOWDdn",
-      "publishedAt": "2026-11-05T08:00:00Z",
-      "source": "Trading Economics",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Brent Above $96",
       "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBRemdRTkNtYURfd0JqNmlBTmJtVVhVZDRYR1dvTnFiZ1p3blZlcHRLTExPR3lUWHYtWFF1Qi03aEN3QmI2dmphNDBMVEw0YTRGS0hxQUFRTWZGdlFmaHdGcmZFZU5VNURjWFFhZXU5Nm5CQzFU",
       "publishedAt": "2026-11-05T08:00:00Z",
@@ -2004,6 +1993,16 @@
     {
       "title": "Brent Set for Sharp Weekly Decline",
       "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5LYXV5WEFBUktYU3pBaS1PUmw2WDc2LTB2NkdTZXRVYy1KektLamNxV3pjZlp2clJZOFAyLVVRX0RpRHRIaHRkWExXYWd2R3d0RkFfUWJyMElzQjFBUHB6VVhLLWFaLVY2UFdIZGlQbHBiSGJD",
+      "publishedAt": "2026-11-05T08:00:00Z",
+      "source": "Trading Economics",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Brent Rises as Middle East Supply Risks Persist",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5Wa1ZDYTBFZEJNSlNlRElkS0VmQmlRNTRiTG14Tjh3NTRuOFRJNUlHWkdWM1c3SGZRUkl6emRYLUtFREdZdzNkZFJjSTN1QjZMZFdLdGh0QnEyZDk5Zjd3V0cwMExaVEctR251VWQxN1NOWDdn",
       "publishedAt": "2026-11-05T08:00:00Z",
       "source": "Trading Economics",
       "topics": [
@@ -2072,16 +2071,6 @@
       "via": "google"
     },
     {
-      "title": "Palm Oil Set for First Weekly Loss in Four, Monthly Gain Intact",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1CMXB1S2Y4Y3IwcTk0anUtY3UydHJyR1Q0S1E2NE9fOG11X0JpVV9QcUNZRlJGZnAyWF84dHJfUV9ZMFRpQy1MdGNUOG12WW51aERNaHJkcE5HNExPTmhMb2hndnNnNUlZZkww",
-      "publishedAt": "2026-10-29T07:00:00Z",
-      "source": "Trading Economics",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Joint Maritime Information Center Update 109 to JMIC Advisory Note: 01 March – 29 October 2026",
       "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbi1KNFBHMHVSYzRnWmZCMF9JUVRqTzZ2SVJ2b1podG4za2R1X0QxdTBUR1RBY1BSMDEtVW9KUEd5bnB3d0tUMVBfakpJXy1mR0Rib2x4b1hGNTBpUmJTLS1wc256cEg1dUR2VlR2bndabVZGM1FHb3ZqaHpsdW9Kd0NTUUQ0QjJkVXBJTG5PQzNtU2NtRjhKZHdXaG41TW9VbDNmT0ZLRngtNzJvQjZIalVHbmlVSktW",
       "publishedAt": "2026-10-29T07:00:00Z",
@@ -2092,14 +2081,14 @@
       "via": "google"
     },
     {
-      "title": "Federal Reserve issues FOMC statement",
-      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
-      "publishedAt": "2026-10-28T18:00:00Z",
-      "source": "Fed",
+      "title": "Palm Oil Set for First Weekly Loss in Four, Monthly Gain Intact",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1CMXB1S2Y4Y3IwcTk0anUtY3UydHJyR1Q0S1E2NE9fOG11X0JpVV9QcUNZRlJGZnAyWF84dHJfUV9ZMFRpQy1MdGNUOG12WW51aERNaHJkcE5HNExPTmhMb2hndnNnNUlZZkww",
+      "publishedAt": "2026-10-29T07:00:00Z",
+      "source": "Trading Economics",
       "topics": [
-        "fx"
+        "oils"
       ],
-      "via": "rss"
+      "via": "google"
     }
   ],
   "providers": [
@@ -2195,7 +2184,7 @@
       "channels": [
         "rss"
       ],
-      "articles": 4
+      "articles": 3
     },
     {
       "name": "Federal Register · EPA",
