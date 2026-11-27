@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-22",
  "forexWeekEnd": "2026-11-28",
- "forexCheckedAt": "2026-11-27T04:19:21+00:00",
+ "forexCheckedAt": "2026-11-27T13:59:32+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -404,24 +404,6 @@
    "period": "2026-10"
   },
   {
-   "id": "mpob-2026-10-12",
-   "kind": "mpob",
-   "date": "2026-10-12",
-   "at": "2026-10-12T12:30:00+08:00",
-   "url": "https://bepi.mpob.gov.my/",
-   "status": "rule",
-   "period": "2026-09"
-  },
-  {
-   "id": "conab-progress-2026-10-12",
-   "kind": "conab-progress",
-   "date": "2026-10-12",
-   "at": "2026-10-12T19:00:00-03:00",
-   "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/progresso-de-safra",
-   "status": "rule",
-   "period": ""
-  },
-  {
    "id": "sea-2026-10-13",
    "kind": "sea",
    "date": "2026-10-13",
@@ -429,15 +411,6 @@
    "url": "https://seaofindia.com/category/statistical-update/import-of-vegetable-oil/",
    "status": "usual",
    "period": "2026-09"
-  },
-  {
-   "id": "usda-inspections-2026-10-13",
-   "kind": "usda-inspections",
-   "date": "2026-10-13",
-   "at": "2026-10-13T11:00:00-04:00",
-   "url": "https://esmis.nal.usda.gov/publication/grains-inspected-export-weekly",
-   "status": "usual",
-   "period": "Semaine close le 08/10"
   },
   {
    "id": "nass-progress-2026-10-13",
@@ -818,15 +791,6 @@
    "period": ""
   },
   {
-   "id": "anec-2026-11-26",
-   "kind": "anec",
-   "date": "2026-11-26",
-   "at": "",
-   "url": "https://anec.com.br/",
-   "status": "usual",
-   "period": ""
-  },
-  {
    "id": "bcba-2026-11-26",
    "kind": "bcba",
    "date": "2026-11-26",
@@ -878,6 +842,15 @@
    "at": "2026-12-01T15:00:00-05:00",
    "url": "https://www.nass.usda.gov/data-and-statistics/calendar/release/6661",
    "status": "official",
+   "period": ""
+  },
+  {
+   "id": "anec-2026-12-03",
+   "kind": "anec",
+   "date": "2026-12-03",
+   "at": "",
+   "url": "https://anec.com.br/",
+   "status": "usual",
    "period": ""
   },
   {
@@ -1871,6 +1844,24 @@
    "period": "Semaine close le 15/04"
   },
   {
+   "id": "usda-inspections-2027-04-26",
+   "kind": "usda-inspections",
+   "date": "2027-04-26",
+   "at": "2027-04-26T11:00:00-04:00",
+   "url": "https://esmis.nal.usda.gov/publication/grains-inspected-export-weekly",
+   "status": "usual",
+   "period": "Semaine close le 22/04"
+  },
+  {
+   "id": "conab-progress-2027-04-26",
+   "kind": "conab-progress",
+   "date": "2027-04-26",
+   "at": "2027-04-26T19:00:00-03:00",
+   "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/progresso-de-safra",
+   "status": "rule",
+   "period": ""
+  },
+  {
    "id": "wasde-2027-05-12",
    "kind": "wasde",
    "date": "2027-05-12",
@@ -1943,7 +1934,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-27T04:19:21+00:00",
+ "reportsCheckedAt": "2026-11-27T13:59:32+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2179,35 +2170,35 @@
    "title": ""
   },
   "fas-export-sales": {
-   "date": "2026-11-19",
-   "title": "Semaine close le 12/11",
+   "date": "2026-11-27",
+   "title": "Semaine close le 19/11",
    "figures": [
     {
      "label": "Graines de soja · ventes nettes",
-     "value": 1500.958,
+     "value": 755.816,
      "unit": "kt",
-     "previous": 1154.772,
+     "previous": 1500.958,
      "previousLabel": "semaine précédente",
-     "note": "expéditions 1 839 kt"
+     "note": "expéditions 1 463 kt"
     },
     {
      "label": "Tourteau de soja · ventes nettes",
-     "value": 198.051,
+     "value": 543.547,
      "unit": "kt",
-     "previous": 360.944,
+     "previous": 198.051,
      "previousLabel": "semaine précédente",
-     "note": "expéditions 280 kt"
+     "note": "expéditions 364 kt"
     },
     {
      "label": "Huile de soja · ventes nettes",
-     "value": 0.877,
+     "value": 0.258,
      "unit": "kt",
-     "previous": 1.694,
+     "previous": 0.877,
      "previousLabel": "semaine précédente",
-     "note": "expéditions 1 kt"
+     "note": "expéditions 2 kt"
     }
    ],
-   "stamp": "2026-11-19T08:30:06.083",
+   "stamp": "2026-11-27T08:30:15.48",
    "url": "https://www.fas.usda.gov/programs/export-sales-reporting-program",
    "documents": [
     {
@@ -2324,7 +2315,7 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-27T04:19:21+00:00",
+ "latestCheckedAt": "2026-11-27T13:59:32+00:00",
  "failingSince": {
   "CONAB": "2026-11-27T04:19:21+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
