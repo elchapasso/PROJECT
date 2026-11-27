@@ -1,7 +1,7 @@
 {
  "forexWeekStart": "2026-11-22",
  "forexWeekEnd": "2026-11-28",
- "forexCheckedAt": "2026-11-26T21:42:49+00:00",
+ "forexCheckedAt": "2026-11-27T04:19:21+00:00",
  "forex": [
   {
    "title": "FOMC Member Waller Speaks",
@@ -1943,7 +1943,7 @@
    "period": "2027-12"
   }
  ],
- "reportsCheckedAt": "2026-11-26T21:42:49+00:00",
+ "reportsCheckedAt": "2026-11-27T04:19:21+00:00",
  "latest": {
   "wasde": {
    "date": "2026-11-10",
@@ -2324,9 +2324,11 @@
    ]
   }
  },
- "latestCheckedAt": "2026-11-26T21:42:49+00:00",
+ "latestCheckedAt": "2026-11-27T04:19:21+00:00",
  "failingSince": {
+  "CONAB": "2026-11-27T04:19:21+00:00",
   "ANEC": "2026-11-17T23:33:34+00:00",
+  "Rapports · conab": "2026-11-27T04:19:21+00:00",
   "Rapports · anec": "2026-11-17T23:33:34+00:00"
  }
 }
