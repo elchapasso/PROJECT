@@ -1,8 +1,48 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-26T19:47:24Z",
-  "collectedAt": "2026-11-26T19:47:24Z",
+  "checkedAt": "2026-11-27T03:13:41Z",
+  "collectedAt": "2026-11-27T03:13:41Z",
   "articles": [
+    {
+      "title": "Gold Steadies as Fed Rate Path and AI Stocks Frame Volatile Week",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQdjBId0RKMFpkWFQ3R3VMeVV3T0VOMEI5dzRuWWZaMGNLVFBtRXZoWjJlWHhsdXVqdGNYT2NNc3ctSU9zdXpCR3ZaSXFENDhwQ1BQa1RqV01palJ3LWcxOWFnRXZFRm40NGRTaU9XYU9yOGF2WXAtV0lxOEdDcWZmSUxfYlZfZENjV3JUX0k5YmstSkk3V1ZWVWpkR1VjdDNzdkF6ZGxSNXpOZ1AxZmlGNThJTE0zUQ",
+      "publishedAt": "2026-11-27T02:32:00Z",
+      "source": "Bloomberg",
+      "topics": [
+        "fx"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Latest Oil Market News and Analysis for Nov. 27",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-26/latest-oil-market-news-and-analysis-for-nov-27",
+      "publishedAt": "2026-11-26T23:05:38Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Strike on Saudi Jazan Refinery Halts Some Operations, Kills One",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPdnRCOV9oVk5kcUpkQW5HOGFFMVNVdlFtRXpmVmV4bGNFX0pKdkE2SUpQdkFoRDFoSWJaZTl0Y3JJNks5MmU2S05fTkFBWmtGQm5neXljY210c0xmNXlsVnVwcEwzVGVnc3huTDVhQXZwODJzdjZZbFBZQS05N0F2c2drLWlaMXlqaVo3YVYxR1NCcTdNYjdNSHhIUHo1cUx1ZzhvVjRJRWszLUprcDNpQWZRTQ",
+      "publishedAt": "2026-11-26T21:05:21Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Attack on Saudi Aramco's Jazan refinery kills worker, halts some operations",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxORnNINWJlUzU0bDVSQ1Z5TWhtZTl1dzVxa01lbWhiMTg0bjBKZzQtbld6RmpIQ3NOSkctT29wTmdmR3VCcHpMbzdBQUdQSU0wVWItQU1COHhCS1BzYnpoOTJsRzl2TWp0aVNNZWVpZVFhS2cwWXVtNnA0bzRfUXNTRTJRTEVHem5BY2V2SURxZG9Vb3VkT3FNa1RuR3RfZWJQUE15WTdGaVFudnJaeVJIdVhXdE9PcWFuY2c",
+      "publishedAt": "2026-11-26T20:56:28Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
     {
       "title": "Congo Gold Trader Plans Two Refineries with 68-Ton Capacity",
       "url": "https://www.bloomberg.com/news/articles/2026-11-26/congo-gold-trader-plans-two-refineries-with-68-ton-capacity",
@@ -14,12 +54,12 @@
       "via": "rss"
     },
     {
-      "title": "Saudi-led coalition says Houthis attacked Aramco's Jazan refinery",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxORnNINWJlUzU0bDVSQ1Z5TWhtZTl1dzVxa01lbWhiMTg0bjBKZzQtbld6RmpIQ3NOSkctT29wTmdmR3VCcHpMbzdBQUdQSU0wVWItQU1COHhCS1BzYnpoOTJsRzl2TWp0aVNNZWVpZVFhS2cwWXVtNnA0bzRfUXNTRTJRTEVHem5BY2V2SURxZG9Vb3VkT3FNa1RuR3RfZWJQUE15WTdGaVFudnJaeVJIdVhXdE9PcWFuY2c",
-      "publishedAt": "2026-11-26T16:05:09Z",
+      "title": "Egyptians mourn, demand accountability after deadly tanker explosion kills 31",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQRTl5WjBUX0txaW41ckZVaWczbF8wYjRPTXlTX19BNFpYai1lOU5PbHNKY0RxODBydy0tVjBtWFZ1T0RYVHB1RDI0YmhELVFpSDNoMk1KYWZua2RyU0VmWENQVV9NZG11MzFJSmhlX3ZUMk4yNmV2SG1GRnUtMlowbS1IYmFnb2FSb2pZdFlwN3hTSUd3aVM2VEhtZDVDYXZsMGRQN2NiNjFYNGxKV2RFZG5yem1Mcks1V3VsUDc0Y2tnRzQ",
+      "publishedAt": "2026-11-26T15:55:43Z",
       "source": "Reuters",
       "topics": [
-        "energy"
+        "shipping"
       ],
       "via": "google"
     },
@@ -207,6 +247,16 @@
       "via": "rss"
     },
     {
+      "title": "Oil prices rise after Houthis claim attack on Saudi refinery",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOVGl4Nzdfc01ReTB5TnAxUkVLTXlaRVFvbGM5aTZDOEtVUXlrVDQtMHJwcWh2WldoMnVyb0QxU1pEQUoyN09sNU1SZXR3NVUzdTZXeWpkdGNTZW95MUtmdjV3dWFxTEZsRW5WUlF1djVTTWZxUGVxcHhPNEptMnBEcmZ0MURhX0JxTDFqc19HblpWd2hLSEs5SXRYTXB6bzFwNzZqOUFTc1ZOM3ItVDFZWmM2a0R5YkxsdnlsMTZWQ1ZEUQ",
+      "publishedAt": "2026-11-25T20:57:17Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Oil Edges Lower as Expanding Supply Vies With Hormuz Attacks",
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOenJ4V3FnWU1IVG94dUxRcE1YeTd1Y0Y0U1RWdkg4b1QwS2pPbFNhLUtmdGhwcE5XZWhnVXgzNVo2RkE2azdqdU53cW5KdDNVdWR3Z2JKc1RHX0Z2OWl0YjJsN3ZUTk9UbXhLNzR1Q19wOHVzVi00QmVxbUVWbVpJTk5rZldoalJRbW1hNmh2dnhqR216UlRpUTZDV1RZQQ",
       "publishedAt": "2026-11-25T20:15:03Z",
@@ -370,7 +420,7 @@
     {
       "title": "Commodity Crude Oil News",
       "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
-      "publishedAt": "2026-11-25T09:24:22Z",
+      "publishedAt": "2026-11-25T09:31:34Z",
       "source": "Trading Economics",
       "topics": [
         "energy"
@@ -424,16 +474,6 @@
       "source": "Reuters",
       "topics": [
         "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Oil prices rise after Houthis claim attack on Saudi refinery",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOVGl4Nzdfc01ReTB5TnAxUkVLTXlaRVFvbGM5aTZDOEtVUXlrVDQtMHJwcWh2WldoMnVyb0QxU1pEQUoyN09sNU1SZXR3NVUzdTZXeWpkdGNTZW95MUtmdjV3dWFxTEZsRW5WUlF1djVTTWZxUGVxcHhPNEptMnBEcmZ0MURhX0JxTDFqc19HblpWd2hLSEs5SXRYTXB6bzFwNzZqOUFTc1ZOM3ItVDFZWmM2a0R5YkxsdnlsMTZWQ1ZEUQ",
-      "publishedAt": "2026-11-25T01:58:00Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
       ],
       "via": "google"
     },
@@ -680,7 +720,7 @@
     },
     {
       "title": "Joint Maritime Information Center Update 117 to JMIC Advisory Note: 01 March – 26 November 2026",
-      "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPd2tKcFpFUXhTVzhRQk9iTEZoWG1xMGlHOXBUUDk0LUk2cFZrbmU1NFpzZEpXOUp2dTBOY3ZkWkFsNVB4S0p6NWZBejFrWkR5X0FERHNzblR1bXdlS18wMVNvaHpVM0F1Mk5CcHV3blQyT3Q1N3lSTW5IN2hfQlE4OWlmUjRxZTh3QnFWejNfU05OTk1HQ2ZQTnFwb1l6dUJmQnAyeHowdEJ2VGlQVmhDYW5UOXg0bVFIbnBzTzJYdExubU9MV1AxVGFvUTJmeTAzOW9WMC1Jbw",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPM3o4ZkxSNlh0eUNfcE1VdkMwVjgtLXVkMmVjRGZDaGJBY0xWa2VCSDQ1T0dEZFc5NXk4VUhDRFdHZENWUHhTYXRLeFlkLUZ4ZDJnTklONE93YVMtYnhTTTJvSTNVUmVoR25jSGNaTHlabGhjVUR6U1l0QmRsVEtXYzZjR055SHc",
       "publishedAt": "2026-11-24T08:00:00Z",
       "source": "UKMTO",
       "topics": [
@@ -1052,16 +1092,6 @@
       "via": "rss"
     },
     {
-      "title": "Russia's Wildberries CEO steps down days after EU sanctions, media report",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPUHlnc2RFZFltcC0zMXMtb1VfaEx6VFhrWVJfS2tpaHF2Vm4yMnRDYjVLX3FSTWNHaDJKdUYwZ3o5SUJfNVpvRERfcEladlQ2RkRCaFhxaEVZRGdwUTAwOVdSRDZDWjlSYXVucW83NS1aMVN0QzFKbFhVXzhBSEZtUmxKdHpYT3gwNXdCUWZxbU9MbVh3bEU3Ul9ZcXQxZTI5QjlyTHgtTUNDdWVINk9qbUwwNmo1eUt3aFFsaWlTNEJfQnZYNkVOMlVDRkY",
-      "publishedAt": "2026-11-21T12:59:16Z",
-      "source": "Reuters",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Joint Maritime Information Center Update 116 to JMIC Advisory Note: 01 March – 22 November 2026",
       "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOeE1yZmx0a2x2cVBJYkVNdnozUTZDekdVeWlpbkhlWXNQaUp0M1NERWZYVll3SUc1NzZJeXBONmpJLWVKRVhZd0hTU25TanlNN0M1bG1sSEhBaFc1ZE9mY0VDX0ZRUE8xS3Z0NURWMW5sZjdEM2x0MEFmWHJmRXNsazJhcGJLeDQ",
       "publishedAt": "2026-11-21T08:00:00Z",
@@ -1273,16 +1303,6 @@
       "via": "google"
     },
     {
-      "title": "China Axes Palm Oil Purchases With Storage Space Running Out",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNZXlTdHBZWFVXTEtXQTYtd0dyNjV0ZjROSXVYOTRkYVRoTVZ1QXMyUzdWTU40WFBSZTEyMWUzOEdCblhldEJXdWVDWGRqeGVRT281UTE0a2lfWnJiVGNzMGFFS2RhLXMxZjRwWXgwLW5YNlh6azI5UDFmZDdROXV6WEI1ZlFIc0RqSmhXVUREb1RjS1Vab0Q1U0tYbjItOElVc1NxOVlYdk1UY1drQ0RmOQ",
-      "publishedAt": "2026-11-20T07:57:00Z",
-      "source": "Bloomberg",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Palm Oil Poised for 3rd Weekly Drop Amid Supply Overhang",
       "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE45MlZmaUY5dHJiOGFjLTU0NjlkbjNVOW5XQ2JpTWJ0ZmxUX09QMlhFdHg3LWl5cTBLc1hnRDNHeHY2ZHdKZzVNckZHN0tILXBHTHpFXzk0bU55VjFTeDh1WUlKV0dGYjFXYTJn",
       "publishedAt": "2026-11-20T04:03:27Z",
@@ -1291,26 +1311,6 @@
         "oils"
       ],
       "via": "google"
-    },
-    {
-      "title": "US Sour Crude’s War Premium Vanishes as Supply Surges",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQT0E4SzBJeVR5Zm9EdEI5Uk5GNTB5cGFDblVvTGxPeUtTME9wRVVtT05wZExkNkR4X000QUdNdTVVNVFIS1ZLbTZjcFZrLVZmRGt6WGJ1cEt5RVJSTkozeEVsb3lSSHlGQmJMTVF4TkxhR1dMV3RBcGJ4Y2gtN0Eybkl4djVTOVBDVkVzLW5GeFh1dWs4c1ZfRmpXRE9wWDlza0xlYk9HSQ",
-      "publishedAt": "2026-11-20T01:56:00Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Latest Oil Market News and Analysis for Nov. 20",
-      "url": "https://www.bloomberg.com/news/articles/2026-11-19/latest-oil-market-news-and-analysis-for-nov-20",
-      "publishedAt": "2026-11-19T23:05:51Z",
-      "source": "Bloomberg",
-      "topics": [
-        "energy"
-      ],
-      "via": "rss"
     },
     {
       "title": "Iran Intensifies Hormuz Tanker Attacks Just as Oil Prices Slide",
@@ -2022,22 +2022,22 @@
       "via": "google"
     },
     {
-      "title": "Palm Oil Set for First Weekly Loss in Four, Monthly Gain Intact",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1CMXB1S2Y4Y3IwcTk0anUtY3UydHJyR1Q0S1E2NE9fOG11X0JpVV9QcUNZRlJGZnAyWF84dHJfUV9ZMFRpQy1MdGNUOG12WW51aERNaHJkcE5HNExPTmhMb2hndnNnNUlZZkww",
-      "publishedAt": "2026-10-29T07:00:00Z",
-      "source": "Trading Economics",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Joint Maritime Information Center Update 109 to JMIC Advisory Note: 01 March – 29 October 2026",
       "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbi1KNFBHMHVSYzRnWmZCMF9JUVRqTzZ2SVJ2b1podG4za2R1X0QxdTBUR1RBY1BSMDEtVW9KUEd5bnB3d0tUMVBfakpJXy1mR0Rib2x4b1hGNTBpUmJTLS1wc256cEg1dUR2VlR2bndabVZGM1FHb3ZqaHpsdW9Kd0NTUUQ0QjJkVXBJTG5PQzNtU2NtRjhKZHdXaG41TW9VbDNmT0ZLRngtNzJvQjZIalVHbmlVSktW",
       "publishedAt": "2026-10-29T07:00:00Z",
       "source": "UKMTO",
       "topics": [
         "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Palm Oil Set for First Weekly Loss in Four, Monthly Gain Intact",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1CMXB1S2Y4Y3IwcTk0anUtY3UydHJyR1Q0S1E2NE9fOG11X0JpVV9QcUNZRlJGZnAyWF84dHJfUV9ZMFRpQy1MdGNUOG12WW51aERNaHJkcE5HNExPTmhMb2hndnNnNUlZZkww",
+      "publishedAt": "2026-10-29T07:00:00Z",
+      "source": "Trading Economics",
+      "topics": [
+        "oils"
       ],
       "via": "google"
     },
@@ -2052,22 +2052,22 @@
       "via": "rss"
     },
     {
-      "title": "Palm Oil Slips to 2-Week Low as Bearish Factors Mount",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1iLThpb0NncEF2azRfUWYyVi0waFA0UDZpX2NORXY5Mm50cFVqVHppSlYzbzI5VU5DZDA2M2s3SlA2ZVA2TkczNmpIRlhRVnMtbjJhYlFNRElHT3owOGlKQ090T0hLbFJHRUpF",
-      "publishedAt": "2026-10-28T07:00:00Z",
-      "source": "Trading Economics",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Joint Maritime Information Center JMIC Advisory Note: 016-26 | October 28, 2026",
       "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPbEZOTnpNWUNabDU2ME5jRDdLUGpMTTdiRGRyVFNOZG5kU2JZWTFTbHBlYWhya051Z2l1bDZ5UGVNMi12Ym96Zms5QVV1MnBTYWVzQ2VwS2FGVDcxOWxyMzJJQzB6VmdhQU5CaW1DcXdUTUpMazBzTHVrZkxNR0F2VjZxU3U5eWlTZk5DTkVxQ0RJQk84cmZvRTZObEpnMTBEMC00VUdwMVRrcEEtMHVObUxjU0R3em02UXpRanlHN3BaTmlKbXJMQmxQVQ",
       "publishedAt": "2026-10-28T07:00:00Z",
       "source": "UKMTO",
       "topics": [
         "shipping"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Palm Oil Slips to 2-Week Low as Bearish Factors Mount",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1iLThpb0NncEF2azRfUWYyVi0waFA0UDZpX2NORXY5Mm50cFVqVHppSlYzbzI5VU5DZDA2M2s3SlA2ZVA2TkczNmpIRlhRVnMtbjJhYlFNRElHT3owOGlKQ090T0hLbFJHRUpF",
+      "publishedAt": "2026-10-28T07:00:00Z",
+      "source": "Trading Economics",
+      "topics": [
+        "oils"
       ],
       "via": "google"
     }
