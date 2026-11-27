@@ -1,37 +1,37 @@
 {
  "schema": 1,
- "checkedAt": "2026-11-26T19:01:56Z",
- "dataChangedAt": "2026-11-26T19:01:56Z",
- "today": "2026-11-26",
+ "checkedAt": "2026-11-27T00:01:15Z",
+ "dataChangedAt": "2026-11-27T00:01:15Z",
+ "today": "2026-11-27",
  "sources": {
   "ecb": {
    "name": "BCE · EXR",
    "ok": true,
-   "seconds": 5.6,
-   "lastSuccess": "2026-11-26T19:01:56Z"
+   "seconds": 5.8,
+   "lastSuccess": "2026-11-27T00:01:15Z"
   },
   "fred": {
    "name": "FRED (EIA, FMI)",
    "ok": true,
-   "seconds": 1.6,
-   "lastSuccess": "2026-11-26T19:01:56Z"
+   "seconds": 2.1,
+   "lastSuccess": "2026-11-27T00:01:15Z"
   },
   "mpob": {
    "name": "MPOB",
    "ok": true,
    "seconds": 1.6,
-   "lastSuccess": "2026-11-26T19:01:56Z"
+   "lastSuccess": "2026-11-27T00:01:15Z"
   },
   "iposs": {
    "name": "IPOSS Data",
    "ok": true,
-   "seconds": 0.1,
-   "lastSuccess": "2026-11-26T19:01:56Z"
+   "seconds": 0.5,
+   "lastSuccess": "2026-11-27T00:01:15Z"
   },
   "anp": {
    "name": "ANP · Brésil",
    "ok": false,
-   "seconds": 10.5,
+   "seconds": 10.7,
    "error": "https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/ppidp/precos-medios-ponderados-semanais-2013.xls : <urlopen error [Errno 104] Connection reset by peer>",
    "failingSince": "2026-11-26T03:37:47Z",
    "lastSuccess": "2026-11-25T23:47:56Z"
@@ -39,93 +39,118 @@
   "magyp": {
    "name": "Secretaría de Agricultura · MAGyP",
    "ok": true,
-   "seconds": 18.5,
-   "lastSuccess": "2026-11-26T19:01:56Z"
+   "seconds": 17.3,
+   "lastSuccess": "2026-11-27T00:01:15Z"
   }
  },
  "series": {
   "arSoyOil": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-26",
+     1163
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 273,
-   "last": "2026-11-25",
-   "lastValue": 1155
+   "count": 274,
+   "last": "2026-11-26",
+   "lastValue": 1163
   },
   "arSoyMeal": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-26",
+     414
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 273,
-   "last": "2026-11-25",
-   "lastValue": 417
+   "count": 274,
+   "last": "2026-11-26",
+   "lastValue": 414
   },
   "arSoySeed": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-26",
+     486
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 273,
-   "last": "2026-11-25",
+   "count": 274,
+   "last": "2026-11-26",
    "lastValue": 486
   },
   "arSunOil": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-26",
+     1319
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 274,
-   "last": "2026-11-25",
+   "count": 275,
+   "last": "2026-11-26",
    "lastValue": 1319
   },
   "arSunMeal": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-26",
+     193
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 286,
-   "last": "2026-11-25",
+   "count": 287,
+   "last": "2026-11-26",
    "lastValue": 193
   },
   "arSunSeed": {
    "source": "magyp",
    "status": "ok",
-   "added": [],
-   "addedCount": 0,
+   "added": [
+    [
+     "2026-11-26",
+     593
+    ]
+   ],
+   "addedCount": 1,
    "revised": [],
    "confirmed": [],
    "rejected": [],
-   "count": 286,
-   "last": "2026-11-25",
+   "count": 287,
+   "last": "2026-11-26",
    "lastValue": 593
   },
   "eurUsd": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-26",
-     1.0975
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -136,13 +161,8 @@
   "eurMyr": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-26",
-     4.519
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -153,13 +173,8 @@
   "eurIdr": {
    "source": "ecb",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-26",
-     20187.03
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -218,13 +233,8 @@
   "mpobCpo": {
    "source": "mpob",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-25",
-     4007
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -235,13 +245,8 @@
   "idPalmFob": {
    "source": "iposs",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-26",
-     1038
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
@@ -252,13 +257,8 @@
   "myPalmFob": {
    "source": "iposs",
    "status": "ok",
-   "added": [
-    [
-     "2026-11-26",
-     986
-    ]
-   ],
-   "addedCount": 1,
+   "added": [],
+   "addedCount": 0,
    "revised": [],
    "confirmed": [],
    "rejected": [],
