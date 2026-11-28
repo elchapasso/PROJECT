@@ -1,8 +1,39 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-28T04:11:58Z",
-  "collectedAt": "2026-11-28T04:11:58Z",
+  "checkedAt": "2026-11-28T13:31:45Z",
+  "collectedAt": "2026-11-28T13:31:45Z",
   "articles": [
+    {
+      "title": "Ukraine’s Deep Strikes Grow in Scale and Scope Across Russia and Beyond",
+      "url": "https://www.nytimes.com/2026/11/28/world/europe/ukraine-russia-long-range-strikes.html",
+      "publishedAt": "2026-11-28T13:25:26Z",
+      "source": "The New York Times",
+      "topics": [
+        "policy"
+      ],
+      "via": "rss"
+    },
+    {
+      "title": "Russia seeks to include oil exports in Black Sea grain ceasefire agreement",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOdTFPbTVjbXVpYlN5cXJTOUhDX2M4aU1LcXRQUVlUUG9DWUIya1VNTmh3NXR0ay1EaUhPR1ZQX1JmVkVjQUg4N0MxNzhPa2hUVTJSeXlsZlRDWlRBQnVUYVdta1pudFZUSEgtMlNuRnZKZEYzRVUyM2dQRlQ3SW9uRzJoZVVjUWY4eFZ1MzE0WmRTV051Y0VXeVBOUGRHdVJDUVcxOTVLb3Z0Z3V5T1g0",
+      "publishedAt": "2026-11-28T12:54:18Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "shipping",
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Plunging Fuel Prices Bring Relief for Drivers and Central Banks",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-28/plunging-fuel-prices-bring-relief-for-drivers-and-central-banks",
+      "publishedAt": "2026-11-28T10:00:00Z",
+      "source": "Bloomberg",
+      "topics": [
+        "energy"
+      ],
+      "via": "rss"
+    },
     {
       "title": "US disables ship trying to leave Iran, as Tehran vows to confront blockade",
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPbzhtZElCdnJJN0hCYkdsQ1lTWHc5UDRtNGE4cF9sWE14dlpacmk2blU5cXJMTHp0MGNaMElaQzdSem91dXNpNVRtd1k4ekZza09jVEpubTh3cjlpbE9CNWdMSU1seV9vNDFEeGQ1aDZBY1J1R0JoNVdlcjJaQnlWcU5Ib3ZISHVmNHA4eklQclI2WDIzR0VtNVp0NEJjaDZfcTlKNHRNbW54bGF2TExrR1NaSFJvLUxRcnc",
@@ -74,6 +105,16 @@
       "via": "google"
     },
     {
+      "title": "Iraq says oil exports that bypass SOMO amount to smuggling, state new agency says",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPSEFLUWhpVjJtMnI0OFh1TEdVVHp5TkRIN1ZQeHUxRDQ3bTd3clhnR0JETXhSbHBhMGZNUThhdlFPY2FYZFVURmR5aHhqVWFQTkRHbV9hUng4M0Z2NGM4X1cwYXJZNzBmWTV3enE3S0N0TXZoaURvY2lkVVVRcE1aMWV2QjBuV0YydkFpVGNVMnI4WmUyYUJKcnBjN1ItUEpJM3JtWjE2OWZfdlR3ZnFiaE00c0ZvemdjcVhNLUhobTQtM3lKNER1ag",
+      "publishedAt": "2026-11-27T10:48:09Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "JSE Courts Dangote Refinery Secondary Listing in Expansion Push",
       "url": "https://www.bloomberg.com/news/articles/2026-11-27/jse-courts-dangote-refinery-secondary-listing-in-expansion-push",
       "publishedAt": "2026-11-27T10:21:56Z",
@@ -107,6 +148,16 @@
       "title": "EXCLUSIVE: US pushed Venezuela, Iraq to consider leaving OPEC, sources say",
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNeVZ6VDRqcUU2ZDJ1UWdyUmYwNXRPMHAzR0pjRk8zLTJqYlF6YTVFV1Q5V3ZKV1IzZ0NDN2tKdkNxVmUtSmxpNnBNVmkzRWp5NkZ4SFdkaXZ6Zy1hUlhIUkdOY3ozaWVCLVI3M1FaRE9CQVZacHZ0c0tGM3AtUlFWaVR1Tnp4T084eVFjWDIxbVJQa1F0Z1RQRUdkU0YzdnZWMWJWNHRMT0JiQ1NHeDJF",
       "publishedAt": "2026-11-27T06:02:00Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Indonesia considers subsidised fuel price hike as fiscal pressure mounts, sources say",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPQ3FHY0lKeGNiU2dYNEtfT1JlNFBqZDZVUFMwNHJ0WUI2MllTNF84dFprX1hYcG1oZThOeVoya0VXcnZWS2E0MnBXdUtqaXUzRGg2RGw2RHVmeG42VERkUkl5Y2dIRkF3VjUyeHI2XzlxclN1Nmc2ZjBEZUU5SFNId0FCVEdYVmxPWHBzNlVqeWZsQm9SRHE0eU5TSjNyMll1ZTJzSEp5NUtHMHhJWmg3N1pKTl9fdlBQcEtlRUYzcEpTUmZRbjRMSw",
+      "publishedAt": "2026-11-27T05:48:00Z",
       "source": "Reuters",
       "topics": [
         "energy"
@@ -285,6 +336,16 @@
       "via": "google"
     },
     {
+      "title": "Spike in oil prices partly reverses rupee rally, forward premiums surge",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOcVVHMmNCU2duUTNWNkVyNzMzUmhKMWxJZExIQVJwc1hhcDlMNS1KUzYxMnFjc3dGeTViMGg1YmhJUGhjR3REQjRqbks5cTMzMmVpaWtyWHhCOHo0YVg5ZHNfYkJ1NmgtMWxZRU1ib0pUejloVVExcmxqeGJXZ1NQNTJ4YTc5WWEzN3BOaFpnNVIxTk1Gc1ZLbE1PNjQ4c2dmS2Yw",
+      "publishedAt": "2026-11-26T11:36:07Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Yemen's Houthis claim attack on Saudi Arabia's largest refinery",
       "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOakM0aVEtei1RVzZkTUVZYlFabWlDYWpzTktyaGU2WHZqaGRkU0hJOHdsNDFUdU5GYzNOYzdZYnkwWnFYZ2daNlNvYkJ3ZWNjeDNTRm5HOUFtNW5nRjNYSVpaaGF0SF9xbjN6S1FpbVJ6MmFBYkdUeF9CMTZKRUdJT2RITmVSelAzWUJtTEIxQTN5Ry1YZEczX29iOHVuc0Q1bllidlBoN0VDNWVzYzZqU2RaNm5JRUctRDdsdGt2ZkEydWRVMV9wQUdHYw",
       "publishedAt": "2026-11-26T11:13:09Z",
@@ -383,16 +444,6 @@
       "source": "Reuters",
       "topics": [
         "fx"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Spike in oil prices partly reverses rupee rally, forward premiums surge",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOcVVHMmNCU2duUTNWNkVyNzMzUmhKMWxJZExIQVJwc1hhcDlMNS1KUzYxMnFjc3dGeTViMGg1YmhJUGhjR3REQjRqbks5cTMzMmVpaWtyWHhCOHo0YVg5ZHNfYkJ1NmgtMWxZRU1ib0pUejloVVExcmxqeGJXZ1NQNTJ4YTc5WWEzN3BOaFpnNVIxTk1Gc1ZLbE1PNjQ4c2dmS2Yw",
-      "publishedAt": "2026-11-26T02:38:00Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
       ],
       "via": "google"
     },
@@ -1000,16 +1051,6 @@
       "via": "google"
     },
     {
-      "title": "Canadian dollar falls for 10th straight session as oil slides",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPSGxKSDUwUzVISjNFazZQdXYySkdiVzlRWlkxT0t6Z2toY2lxNjQ4bkVHQmYwcDhreHc3bk11eWFySGRqMUtaZkxndm9HelJrQS1EalFfT1ZRYlZ6Vk1zOGJqREwteVpvck1wai1DRklkNFBTSDNtaWdBYmZzRjJBNUVtVUk3bXpBeDhwbXRBejBLUUJJN0tFcXU5VGR4N1dJT1Nr",
-      "publishedAt": "2026-11-23T18:27:43Z",
-      "source": "Reuters",
-      "topics": [
-        "fx"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Drone-Hit Russian Cargo Ship Leaves Finnish Waters Despite Sanctions Hold",
       "url": "https://gcaptain.com/drone-hit-russian-cargo-ship-leaves-finnish-waters-despite-sanctions-hold/",
       "publishedAt": "2026-11-23T16:01:55Z",
@@ -1024,16 +1065,6 @@
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNR2tiN29xWlZfMHUzVHB4dEt4RmgtME95Q2EyLUtkU2prb2hERFR2ajN1eE8tck5peldqRHRYdmFlQ0xIc0t3b21qS3BEV3l3b2dHYmZTb1pzemtVbTN2WDhKeUFoM2x1ZkVUMDRHZWxUQ3R0YVZrM3dlNEdmemhaT1NCcjdnVV9xMFd4dzNvel9iWDEzdFdBNmRUQmJBWU8tejNidjZWX3UyX3c3eFlV",
       "publishedAt": "2026-11-23T14:12:29Z",
       "source": "UkrAgroConsult",
-      "topics": [
-        "policy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "India considers rice export duties as domestic prices rise, sources say",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOdVFVRlVtNzZDZlUtUU9oVnh5SG92VFJ1b1ZzZWtPeXpfXzV2R1p6SE1CY2lOc1ZtdEhLX2xwOXNCbnN6MmxsR0Zoa3AzQXVrZ3NhUE5pbzhFY1lrVFg2ay1jWmdXZmRiNzJ6a2YtTWpyZTJvOG5qWEFqeUZrcEpYc282MS1MUDBoVjVuSW1IaEZZMjFwaXRtQjBEZWdnc2l4YzgxcEJYLTdwZFBjMGRYcGpybkpsZw",
-      "publishedAt": "2026-11-23T13:52:09Z",
-      "source": "Reuters",
       "topics": [
         "policy"
       ],
@@ -1322,16 +1353,6 @@
       "via": "rss"
     },
     {
-      "title": "AI Selloff Spurs Haven Demand for Yen, Franc as Dollar Slips",
-      "url": "https://www.bloomberg.com/news/articles/2026-11-20/ai-selloff-boosts-haven-demand-for-yen-franc-as-dollar-slips",
-      "publishedAt": "2026-11-20T17:00:06Z",
-      "source": "Bloomberg",
-      "topics": [
-        "fx"
-      ],
-      "via": "rss"
-    },
-    {
       "title": "Iranian Oil Transferred Between Tankers as US Widens Blockade",
       "url": "https://gcaptain.com/iranian-oil-transferred-between-tankers-as-us-widens-blockade/",
       "publishedAt": "2026-11-20T13:57:02Z",
@@ -1491,16 +1512,6 @@
       "source": "AIE",
       "topics": [
         "energy"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Kazakhstan boosts sunflower oil production by 57% despite raw material shortages",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNakQ2YnRkdHpweldfMlgzWnFIVF8yM1ZLWFczTnhaZ3N0SjVtRklCcUhRdkhEb3hUUzBVaExlZldnT2U2VnpfY0I2dHNkM1dUSnZtWDFnTjM3a1M1ZFpzM3A1dmNQdjF4QkJTNmx4Wk9HRnVuRmIzUmFsSy1CdVNUd3lJd2hoWGVaT3Nwckx4NUtqS3FCbThOWlhScHVlYmJOcnJSY0F5aXI5VkduWVZhRUl4UUlNQQ",
-      "publishedAt": "2026-11-19T08:04:14Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "oils"
       ],
       "via": "google"
     },
@@ -2089,26 +2100,6 @@
         "shipping"
       ],
       "via": "google"
-    },
-    {
-      "title": "Joint Maritime Information Center Update 109 to JMIC Advisory Note: 01 March – 29 October 2026",
-      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbi1KNFBHMHVSYzRnWmZCMF9JUVRqTzZ2SVJ2b1podG4za2R1X0QxdTBUR1RBY1BSMDEtVW9KUEd5bnB3d0tUMVBfakpJXy1mR0Rib2x4b1hGNTBpUmJTLS1wc256cEg1dUR2VlR2bndabVZGM1FHb3ZqaHpsdW9Kd0NTUUQ0QjJkVXBJTG5PQzNtU2NtRjhKZHdXaG41TW9VbDNmT0ZLRngtNzJvQjZIalVHbmlVSktW",
-      "publishedAt": "2026-10-29T07:00:00Z",
-      "source": "UKMTO",
-      "topics": [
-        "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Palm Oil Set for First Weekly Loss in Four, Monthly Gain Intact",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1CMXB1S2Y4Y3IwcTk0anUtY3UydHJyR1Q0S1E2NE9fOG11X0JpVV9QcUNZRlJGZnAyWF84dHJfUV9ZMFRpQy1MdGNUOG12WW51aERNaHJkcE5HNExPTmhMb2hndnNnNUlZZkww",
-      "publishedAt": "2026-10-29T07:00:00Z",
-      "source": "Trading Economics",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
     }
   ],
   "providers": [
@@ -2139,7 +2130,7 @@
         "google",
         "rss"
       ],
-      "articles": 12
+      "articles": 13
     },
     {
       "name": "UkrAgroConsult",
@@ -2153,12 +2144,10 @@
     },
     {
       "name": "Trading Economics",
-      "available": true,
+      "available": false,
       "partial": false,
-      "channels": [
-        "google"
-      ],
-      "articles": 33
+      "channels": [],
+      "articles": 32
     },
     {
       "name": "EIA",
@@ -2181,9 +2170,8 @@
     {
       "name": "gCaptain",
       "available": true,
-      "partial": false,
+      "partial": true,
       "channels": [
-        "google",
         "rss"
       ],
       "articles": 35
@@ -2195,7 +2183,7 @@
       "channels": [
         "google"
       ],
-      "articles": 11
+      "articles": 10
     },
     {
       "name": "Fed",
