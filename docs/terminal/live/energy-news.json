@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "checkedAt": "2026-11-27T22:17:52Z",
-  "collectedAt": "2026-11-27T22:17:52Z",
+  "checkedAt": "2026-11-28T04:11:58Z",
+  "collectedAt": "2026-11-28T04:11:58Z",
   "articles": [
     {
       "title": "US disables ship trying to leave Iran, as Tehran vows to confront blockade",
@@ -14,12 +14,42 @@
       "via": "google"
     },
     {
+      "title": "Brent Crude Trims Weekly Gains to Less than 3%",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9iazBPY3V3ZW9hUHB1R1lsSkVOamRaRjVpVHU1Vy1WdWRCajFuZVBIWVNPdlRESHQwSzRJalBiRmJ3bzZkTkJxYlB3OE5XSFA3aEpKZlhSejlvcVkyVkFwMUs5ckVlanVSVUhmeXRpX0FRTzZT",
+      "publishedAt": "2026-11-27T15:52:24Z",
+      "source": "Trading Economics",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Crude Oil Falls, Books Small Weekly Gain",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5GVGhldll2cXdNemVEdGNYSXRodzlzc3Rqai1QbFlQYTZPNVN2LUhVYU5waGtVNWZFWWtRbHlXWTJvRzB1TVdhOFNwMFFEcW1WZzFqLXNlS0NJS1oyTWJxSmFfSHJwM1BrUy1zWA",
+      "publishedAt": "2026-11-27T15:52:24Z",
+      "source": "Trading Economics",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Iraq Talking to OPEC About Its Production Ceiling, Minister Says",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQZlhOTmRNUnJnc20tNEFQN3FXY2NERWJWNGJWMllVd29jWktnRXVLNzJydFZvanE4OFRJX1NWSDkzMFBQTjgtendwelkyeFNHNGRCQW9FYkhkdHBKMlRwVjNyZkMzSXpadHJNNzhWZmhYM09nTHp4emhhWlJNOXRBd3MxVGxmeTdtNFduYVZWMUw1OE1sQlZPRmJ0czlyYm4tSXY3VXh6SG4wdkpnU1F4eUprTDk",
       "publishedAt": "2026-11-27T15:03:28Z",
       "source": "Bloomberg",
       "topics": [
         "energy"
+      ],
+      "via": "google"
+    },
+    {
+      "title": "Egypt increases soybean oil supplies to the EU eightfold amid declining Ukrainian exports",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPb2VOTGpTNlN0ZkpMRDRIa1hYdzBSaVoybkdkbkQ5R0JVdW44UDFYdzZ5QjhSTjVEdkVqYWxIbUFCc2VITzMteldraWRuRGMwODBmNkpCM3UzNUl1anZ0eGNCbWxVRnlUVjFLcVFTWU1lT2s1OWEwdE1ScTZiNVk3WWdwTE8yYk9DYThudUU1dVRRRnNrYllybzVucWNIbHE2ZUdNMjRoV1pwUFB0U2l4dmp0LW1CZEluS0dUSHpYZEhfZDQ",
+      "publishedAt": "2026-11-27T14:30:26Z",
+      "source": "UkrAgroConsult",
+      "topics": [
+        "oils"
       ],
       "via": "google"
     },
@@ -144,6 +174,16 @@
       "via": "google"
     },
     {
+      "title": "Brent settles higher as mine strikes, refinery attack stoke Middle East supply concerns",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPWHpfX3p2RFoxU2l0SGZVbVdSejdGYkc0NFpERWlxVEtab0pQbGd1NUtqQ3c0cXprdWItUF9fRmVVVElET3BNbklnbElwaC1UZ0xoNnd4dE9Wb2dFVDFGN2JyQ3YyUVhfTWxsNGFWNFNURG5kX1pMdVBtb2QyLXFMaXZPM0ZPdGdud1hWdHFuTEpNQXBtdUh6RmpWcW1jelhTU0JHdmp3dWphb0hB",
+      "publishedAt": "2026-11-26T20:56:47Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Attack on Saudi Aramco's Jazan refinery kills worker, halts some operations",
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxORnNINWJlUzU0bDVSQ1Z5TWhtZTl1dzVxa01lbWhiMTg0bjBKZzQtbld6RmpIQ3NOSkctT29wTmdmR3VCcHpMbzdBQUdQSU0wVWItQU1COHhCS1BzYnpoOTJsRzl2TWp0aVNNZWVpZVFhS2cwWXVtNnA0bzRfUXNTRTJRTEVHem5BY2V2SURxZG9Vb3VkT3FNa1RuR3RfZWJQUE15WTdGaVFudnJaeVJIdVhXdE9PcWFuY2c",
       "publishedAt": "2026-11-26T20:56:28Z",
@@ -245,6 +285,16 @@
       "via": "google"
     },
     {
+      "title": "Yemen's Houthis claim attack on Saudi Arabia's largest refinery",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOakM0aVEtei1RVzZkTUVZYlFabWlDYWpzTktyaGU2WHZqaGRkU0hJOHdsNDFUdU5GYzNOYzdZYnkwWnFYZ2daNlNvYkJ3ZWNjeDNTRm5HOUFtNW5nRjNYSVpaaGF0SF9xbjN6S1FpbVJ6MmFBYkdUeF9CMTZKRUdJT2RITmVSelAzWUJtTEIxQTN5Ry1YZEczX29iOHVuc0Q1bllidlBoN0VDNWVzYzZqU2RaNm5JRUctRDdsdGt2ZkEydWRVMV9wQUdHYw",
+      "publishedAt": "2026-11-26T11:13:09Z",
+      "source": "Reuters",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "India needs a Black Sea export corridor for both grain and edible oils",
       "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPTzUyMHE3WUFMVjNSS2JDOUY3c0tkWkJoRjN4TldtcjJxV1l1UnBnVWpQc0h1QVNrcWw1dWlIZ1FQaDh3NWZITVVlMzhHck5VdGhRMFg4R3JXVWU3LThpa0pIRmpKTUpMY2RRbDRVaU1VTldOekVBUlZvM3JuNU1KV25QaGF0UmlwUGI1c19mVVBWTFhobmpOXzkyZUN6MU41OWxxMGhhV056dw",
       "publishedAt": "2026-11-26T10:46:17Z",
@@ -317,22 +367,22 @@
       "via": "google"
     },
     {
+      "title": "Commodity Crude Oil News",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
+      "publishedAt": "2026-11-26T03:50:46Z",
+      "source": "Trading Economics",
+      "topics": [
+        "energy"
+      ],
+      "via": "google"
+    },
+    {
       "title": "Gold drifts lower as Fed rate-hike fears loom",
       "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNczNWcXJNQVFwUEZ5UjlTc1o0ZFE5NVFYZzA2eTJURHRsMmRMRmc1LTZ1TWszbFYyN05QRHRiQ1VIb1ZxUE9pTUs5WDVya1M0WFJEQ3lCN3J0T3h4bndfa1NyZFB4VFFaby1NWVdRRlFZeGlKdDNnYkRZN0c0eFZQY3VSWS11NW9SbUdndElMZk9oNk1kd0haVWh0Rl9VcTA1MDg1REE1cHZXWk14Umc",
       "publishedAt": "2026-11-26T03:39:00Z",
       "source": "Reuters",
       "topics": [
         "fx"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Brent settles higher as mine strikes, refinery attack stoke Middle East supply concerns",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPWHpfX3p2RFoxU2l0SGZVbVdSejdGYkc0NFpERWlxVEtab0pQbGd1NUtqQ3c0cXprdWItUF9fRmVVVElET3BNbklnbElwaC1UZ0xoNnd4dE9Wb2dFVDFGN2JyQ3YyUVhfTWxsNGFWNFNURG5kX1pMdVBtb2QyLXFMaXZPM0ZPdGdud1hWdHFuTEpNQXBtdUh6RmpWcW1jelhTU0JHdmp3dWphb0hB",
-      "publishedAt": "2026-11-26T03:08:00Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
       ],
       "via": "google"
     },
@@ -558,16 +608,6 @@
       "via": "google"
     },
     {
-      "title": "Commodity Crude Oil News",
-      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1iUWw0a0cxSDNjcEFJbURSY1RwUkRtY0hWeWJCTWpEZFFBSUFiS2RXVHdUbFNWUXQ2dVJETGo2UFRxc1BrRGFQd2NXZXFGSThielZPaGVFQ3BNVHhtekY0X0l6RQ",
-      "publishedAt": "2026-11-25T09:31:34Z",
-      "source": "Trading Economics",
-      "topics": [
-        "energy"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Iran says it is prepared to withstand US blockade, seeks to curb price rises",
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOQUtreFI1ZkdfaWRTMFJZWElnOFJtM2E1ZlZ6OVhiSDlVTnFOLVQtZTExQWZjbWRvRjR0SFJ3ZUotcEV5Z3RFaE5Wb1RsUEFSdUVoVUhvaXU1bFFNckhHcHdDZjdkRTNMUVlzR0ZVcUx1VWRLeV9DSnFtQjJrOUU1NjJSM1VyTEc3QUltV2p6bFpvSGVLd3dKMXRkaXpnVEJrUWcycHI5UVBNOTAwWTIzTTloYlZSeXpiUjJIcS1HOWQ",
       "publishedAt": "2026-11-25T08:29:22Z",
@@ -584,16 +624,6 @@
       "source": "UkrAgroConsult",
       "topics": [
         "shipping"
-      ],
-      "via": "google"
-    },
-    {
-      "title": "Yemen's Houthis claim attack on Saudi Arabia's largest refinery",
-      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOakM0aVEtei1RVzZkTUVZYlFabWlDYWpzTktyaGU2WHZqaGRkU0hJOHdsNDFUdU5GYzNOYzdZYnkwWnFYZ2daNlNvYkJ3ZWNjeDNTRm5HOUFtNW5nRjNYSVpaaGF0SF9xbjN6S1FpbVJ6MmFBYkdUeF9CMTZKRUdJT2RITmVSelAzWUJtTEIxQTN5Ry1YZEczX29iOHVuc0Q1bllidlBoN0VDNWVzYzZqU2RaNm5JRUctRDdsdGt2ZkEydWRVMV9wQUdHYw",
-      "publishedAt": "2026-11-25T07:24:00Z",
-      "source": "Reuters",
-      "topics": [
-        "energy"
       ],
       "via": "google"
     },
@@ -1475,16 +1505,6 @@
       "via": "google"
     },
     {
-      "title": "Soybean oil strengthens its position in India as sunflower oil imports decline",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQMmVubS1xMEkyMmlHWHFfMC1laHNHaFFaMUw0aUZ1cW9weFVHOWNBa1BVOFNDZEstNUUyNEZlTnBSSE9DYWctSWp5QmNFUXlpbzhRbU1mdDdaVFhvekdmdjVfcS1FYS1wU0pRbnpmVFR1UHRvdXRDTFNiOE1hQ2tBMTFiS1JManRpRnpjQi1uVlJNaDd6VHNXcVVjUy1SSFRjcjMzWnl2WEh0WmJYWXhjRkxjREU",
-      "publishedAt": "2026-11-19T07:29:07Z",
-      "source": "UkrAgroConsult",
-      "topics": [
-        "oils"
-      ],
-      "via": "google"
-    },
-    {
       "title": "Brent Steadies Amid Rising US-Iran Tensions",
       "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBIeThwUFVSamtjZGVQM1pqQUpmZ19zc2NMek5UbjV2Q2pHVzdDY1hyaGUtVDR3MDFjZVJnTGcyREIxRFBuQk5femFKcm9udFd1UlRHeWROcU9hQkpVOGlXUGFyb01LYzFGVjNFaFlROTNHNmdm",
       "publishedAt": "2026-11-19T07:07:40Z",
@@ -2138,7 +2158,7 @@
       "channels": [
         "google"
       ],
-      "articles": 31
+      "articles": 33
     },
     {
       "name": "EIA",
